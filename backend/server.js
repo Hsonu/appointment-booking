@@ -6,10 +6,13 @@ const booking = require("./booking");
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
+const path = require("path");
+app.use(express.static(path.join(__dirname,"../frontend")));
 
 
 app.get("/", (req, res) => {
-    res.send("server is live ")
+    // res.send("server is live ")
+    res.sendFile(path.join(__dirname,"../frontend/index.html"));
 })
 app.post("/newClient", async (req, res) => {
     try {
