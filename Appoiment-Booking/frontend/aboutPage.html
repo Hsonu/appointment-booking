@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #headerMainDiv {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background-color: black;
+            padding: 1.5vw;
+        }
+
+        #MainLogo,
+        #CartBtn {
+            width: 3vw;
+            cursor: pointer;
+        }
+
+        #searchInput {
+            width: 40vw;
+            padding: 8px;
+        }
+
+        .Plogin {
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        #aboutUSHeading {
+            font-size: 2.5vw;
+            border-bottom: 1px solid black;
+            color: #9A0162 !important;
+        }
+
+        #aboutusDIv {
+            display: flex;
+            justify-content: center;
+            padding: 1vw;
+        }
+
+        #AboutPageP {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 2vw;
+        }
+
+        #KeyDIv {
+            display: flex;
+            justify-content: center;
+            color: #9A0162 !important;
+            padding: 12px;
+        }
+
+        #AboutPageP1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2vw;
+        }
+
+        #imagePhoto {
+            display: flex;
+            justify-content: center;
+        }
+
+        .imagesIcon {
+            width: 13vw;
+            height: auto;
+        }
+
+        #d-img {
+
+            display: flex;
+            padding: 20px;
+            background-color: #e6e6e680;
+            margin-top: 10px;
+        }
+
+        #main-li {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            gap: 4vw;
+            font-size: 1.5vw;
+            gap: 16.6vw;
+        }
+
+        .li-end {
+            display: flex;
+            flex-direction: column;
+        }
+
+        li:hover {
+            color: pink;
+            border-bottom: 2px solid pink;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div id="headerMainDiv">
+
+            <a href="./index.html"><img id="MainLogo" src="https://cdn-icons-png.freepik.com/512/5278/5278590.png"> </a>
+
+
+            <input id="searchInput" type="text" placeholder="Search">
+
+            <div>
+                <p class="Plogin">Login / Sign up</p>
+                <p class="Plogin">My Account</p>
+            </div>
+
+            <img id="CartBtn"
+                src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-2.jpg">
+        </div>
+    </header>
+    <section>
+        <div>
+            <div>
+
+                <img style="width: 100%;"
+                    src="https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/AT_Offer/01/Desktop.jpg">
+            </div>
+        </div>
+    </section>
+    <section>
+        <div id="aboutusDIv">
+            <h1 id="aboutUSHeading">About US</h1>
+        </div>
+        <div id="AboutPageP1">
+            <p id="AboutPageP">Sunflower Company is a leading jewellery brand and the flagship company of Sunflower
+                Group, a diversified
+                business conglomerate. The company has established a strong presence in the global jewellery market with
+                its wide network of showrooms and operations across multiple countries.</p>
+        </div>
+    </section>
+    <section>
+        <div>
+            <div id="KeyDIv">
+                <h1>KEY FIGURES</h1>
+            </div>
+        </div>
+        <div id="imagePhoto">
+            <img class="imagesIcon"
+                src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/turnover.jpg">
+            <img class="imagesIcon"
+                src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/shareholders.jpg">
+            <img class="imagesIcon"
+                src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/employes.jpg">
+            <img class="imagesIcon"
+                src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/years.jpg">
+            <img class="imagesIcon"
+                src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/countries.jpg">
+            <img class="imagesIcon"
+                src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/business-unit.jpg">
+        </div>
+    </section>
+    <footer>
+        <div id="d-img">
+            <div id="main-li">
+                <div>
+                    <ul>
+                        <b>
+                            <li class="li-end">SHOP</li>
+                        </b>
+                        <a href="./allProduct.html">
+                            <li class="li-end">All Jewelry</li>
+                        </a>
+                        <li class="li-end">Rings</li>
+                        <li class="li-end">Necklaces</li>
+                        <li class="li-end">New Arrivals</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <b>
+                            <li class="li-end">COMPANY</li>
+                        </b>
+                        <a href="./aboutPage.html">
+                            <li class="li-end">About Us</li>
+                        </a>
+                        <a href="./ContactPage.html">
+                            <li class="li-end">Contact</li>
+                        </a>
+                        <li class="li-end">FAQ</li>
+                        <li class="li-end">Shipping Info</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <b>
+                            <li class="li-end">LEGAL</li>
+                        </b>
+                        <li class="li-end">Terms of Service</li>
+                        <li class="li-end">Privacy</li>
+                        <li class="li-end">Refund Policy</li>
+                        <li class="li-end">Shipping Policy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
