@@ -245,6 +245,7 @@
 
 
         submitBtn.addEventListener("click", async () => {
+            e.preventDefault();
             if (fullName.value == "" || mobileNumber.value == "" || emailId.value == "") {
                 alert("Fill In the blank")
                 return;
@@ -263,10 +264,10 @@
                     body: JSON.stringify(data)
                 });
                 let bookingDone = await response.json();
-                alert("✅Appointment Booked Successfully ✅" + fullName.value)
+                alert("✅Appointment Booked Successfully ✅" + fullName.value);
                 console.log("Booking Done");
                 setTimeout(() => {
-                    location.reload();  
+                    location.reload();
                 }, 100);
             }
             catch (err) {
