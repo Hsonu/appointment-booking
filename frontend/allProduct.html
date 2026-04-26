@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    #headerMainDiv {
+        display: flex;
+        justify-content: center;
+        background-color: black;
+        padding: 2vw;
+        justify-content: space-around;
+
+    }
+
+    #CartBtn {
+        width: 3vw;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #MainLogo {
+        width: 3vw;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #searchInput {
+        width: 45vw;
+        padding: 10px;
+
+    }
+
+    .Plogin {
+        color: #fff;
+        cursor: pointer;
+    }
+
+    #VideoDiv {
+        position: relative;
+        width: 100%;
+    }
+
+    video {
+        display: block;
+        width: 100%;
+        height: 70vh;
+        object-fit: cover;
+    }
+
+
+    #VideoDiv::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+
+        background:
+            linear-gradient(to bottom,
+                rgba(255, 255, 255, 0) 30%,
+                rgba(255, 255, 255, 0.6) 60%,
+                rgba(255, 255, 255, 1) 100%),
+            radial-gradient(at top center,
+                rgba(255, 255, 255, 0.4),
+                transparent 60%);
+        pointer-events: none;
+    }
+
+    #ProductImage {
+        height: 36vh;
+        width: auto;
+        cursor: pointer;
+    }
+
+    #CardDiv {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid pink;
+        width: 40vh;
+        margin-left: 15px;
+        padding: 12px;
+        border-radius: 4px;
+    }
+
+    #CardDiv:hover {
+        box-shadow: 0px 0px 8px 0px pink;
+
+    }
+
+    /* #titleName{
+        display: flex;
+        justify-content: center;
+    } */
+    #imgdiv {
+        display: flex;
+        justify-content: center;
+    }
+
+    #titleP {
+        font-size: 19px;
+        flex-wrap: wrap;
+        padding: 8px;
+    }
+
+    #PriceP {
+        font-size: 22px;
+        flex-wrap: wrap;
+        padding: 8px;
+    }
+
+    #mainDivCard {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .PriceAndBuyBtn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .BuyBtn {
+        border: 1px solid pink;
+        padding: 10px;
+        cursor: pointer;
+
+    }
+
+    .BuyBtn:hover {
+        background-color: pink;
+        color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 8px 0px pink;
+    }
+
+    #d-img {
+
+        display: flex;
+        padding: 20px;
+        background-color: #00000056;
+        margin-top: 10px;
+    }
+
+    #main-li {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        gap: 4vw;
+        font-size: 1.5vw;
+        gap: 16.6vw;
+    }
+
+    .li-end {
+        display: flex;
+        flex-direction: column;
+    }
+
+    li:hover {
+        color: pink;
+        border-bottom: 2px solid pink;
+        cursor: pointer;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+
+<body>
+    <header>
+        <div>
+            <div id="headerMainDiv">
+                <div>
+                    <a href="./index.html"> <img id="MainLogo"
+                            src="https://cdn-icons-png.freepik.com/512/5278/5278590.png"> </a>
+                </div>
+                <div>
+                    <input id="searchInput" placeholder="Search" type="text">
+                </div>
+                <div>
+                    <p class="Plogin">Login/Sign up</p>
+                    <p class="Plogin">My Account</p>
+                </div>
+                <div>
+                    <img id="CartBtn"
+                        src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-2.jpg">
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- <section>
+        <div id="VideoDiv">
+            <video src="https://kinvid1.bluestone.com/output/mp4/VL_VIDEO_1.mp4/VL_VIDEO_1.mp4" autoplay loop
+                muted></video>
+        </div>
+    </section> -->
+    <section>
+        <div id="mainDivCard">
+            <div id="CardDiv">
+                <div id="imgdiv">
+                    <img id="ProductImage"
+                        src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
+                </div>
+                <div id="titleName">
+                    <p id="titleP">The Nomi Bridal Ring Set</p>
+                </div>
+                <div class="PriceAndBuyBtn">
+                    <p id="PriceP">₹ 1,34,725</p>
+                    <p class="BuyBtn">BUY NOW</p>
+                </div>
+            </div>
+            <div id="CardDiv">
+                <div id="imgdiv">
+                    <img id="ProductImage"
+                        src="https://kinclimg8.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BIAB0560N13_YAA18DIG6XXXXXXXX_ABCD00-PICS-00003-1024-73088.png">
+                </div>
+                <div id="titleName">
+                    <p id="titleP">The Afza Necklace</p>
+                </div>
+                <div class="PriceAndBuyBtn">
+                    <p id="PriceP">₹ 5,04,972</p>
+                    <p class="BuyBtn">BUY NOW</p>
+                </div>
+            </div>
+            <div id="CardDiv">
+                <div id="imgdiv">
+                    <img id="ProductImage"
+                        src="https://kinclimg4.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BIAB0669O09_YAA18DIG6XXXXXXXX_ABCD00-PICS-00002-1024-50581.png">
+                </div>
+                <div id="titleName">
+                    <p id="titleP">The Milami Oval Bangle</p>
+                </div>
+                <div class="PriceAndBuyBtn">
+                    <p id="PriceP">₹ 1,47,275</p>
+                    <p class="BuyBtn">BUY NOW</p>
+                </div>
+            </div>
+            <div id="CardDiv">
+                <div id="imgdiv">
+                    <img id="ProductImage"
+                        src="https://kinclimg6.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BIDG0396T02_YAA18DIG6XXXXXXXX_ABCD00-PICS-00004-1024-31376.png">
+                </div>
+                <div id="titleName">
+                    <p id="titleP">The Iqra Mangalsutra Pendant</p>
+                </div>
+                <div class="PriceAndBuyBtn">
+                    <p id="PriceP">₹ 91,465</p>
+                    <p class="BuyBtn">BUY NOW</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div id="d-img">
+            <div id="main-li">
+                <div>
+                    <ul>
+                        <b>
+                            <li class="li-end">SHOP</li>
+                        </b>
+                        <a href="./allProduct.html">
+                            <li class="li-end">All Jewelry</li>
+                        </a>
+                        <li class="li-end">Rings</li>
+                        <li class="li-end">Necklaces</li>
+                        <li class="li-end">New Arrivals</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <b>
+                            <li class="li-end">COMPANY</li>
+                        </b>
+                        <a href="./aboutPage.html">
+                            <li class="li-end">About Us</li>
+                        </a>
+                        <a href="./ContactPage.html">
+                            <li class="li-end">Contact</li>
+                        </a>
+                        <li class="li-end">FAQ</li>
+                        <li class="li-end">Shipping Info</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <b>
+                            <li class="li-end">LEGAL</li>
+                        </b>
+                        <li class="li-end">Terms of Service</li>
+                        <li class="li-end">Privacy</li>
+                        <li class="li-end">Refund Policy</li>
+                        <li class="li-end">Shipping Policy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
