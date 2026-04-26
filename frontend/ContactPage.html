@@ -263,7 +263,7 @@
                     body: JSON.stringify(data)
                 });
                 let bookingDone = await response.json();
-                alert("✅Appointment Booked Successfully ✅" + fullName)
+                alert("✅Appointment Booked Successfully ✅" + fullName.value)
                 console.log("Booking Done");
                 setTimeout(() => {
                     location.reload();  
