@@ -119,6 +119,7 @@
         display: flex;
         justify-content: center;
         padding: 10px;
+        flex-wrap: wrap;
     }
 
     .PriceAndBuyBtn {
@@ -173,6 +174,55 @@
         text-decoration: none;
         color: black;
     }
+
+    @media only screen and (max-width: 768px) {
+        /* #headerMainDiv {
+            width: 100%;
+        } */
+
+        #MainLogo {
+            width: 10vw;
+            max-width: 10vw;
+            height: auto;
+            cursor: pointer;
+        }
+
+        #mainDivCard {
+            display: flex;
+            justify-content: center;
+
+        }
+
+        #CardDiv {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid pink;
+            width: 17vh;
+            margin-left: 15px;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        #ProductImage {
+            height: 15vh;
+            width: auto;
+            cursor: pointer;
+        }
+
+        #titleP {
+            font-size: 4vw;
+            flex-wrap: wrap;
+            padding: 8px;
+        }
+
+        #PriceP {
+            font-size: 4vw;
+            flex-wrap: wrap;
+            padding: 8px;
+        }
+
+    }
 </style>
 
 <body>
@@ -215,7 +265,7 @@
                 </div>
                 <div class="PriceAndBuyBtn">
                     <p id="PriceP">₹ 1,34,725</p>
-                    <p class="BuyBtn">BUY NOW</p>
+                    <!-- <p class="BuyBtn">BUY NOW</p> -->
                 </div>
             </div>
             <div id="CardDiv">
@@ -228,7 +278,7 @@
                 </div>
                 <div class="PriceAndBuyBtn">
                     <p id="PriceP">₹ 5,04,972</p>
-                    <p class="BuyBtn">BUY NOW</p>
+                    <!-- <p class="BuyBtn">BUY NOW</p> -->
                 </div>
             </div>
             <div id="CardDiv">
@@ -241,7 +291,7 @@
                 </div>
                 <div class="PriceAndBuyBtn">
                     <p id="PriceP">₹ 1,47,275</p>
-                    <p class="BuyBtn">BUY NOW</p>
+                    <!-- <p class="BuyBtn">BUY NOW</p> -->
                 </div>
             </div>
             <div id="CardDiv">
@@ -254,7 +304,7 @@
                 </div>
                 <div class="PriceAndBuyBtn">
                     <p id="PriceP">₹ 91,465</p>
-                    <p class="BuyBtn">BUY NOW</p>
+                    <!-- <p class="BuyBtn">BUY NOW</p> -->
                 </div>
             </div>
         </div>
