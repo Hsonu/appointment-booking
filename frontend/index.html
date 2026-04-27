@@ -118,6 +118,7 @@
     #mainDivCard {
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
     }
 
     .PriceAndBuyBtn {
@@ -171,6 +172,54 @@
     a {
         text-decoration: none;
         color: black;
+    }
+
+    @media only screen and (max-width: 768px) {
+        /* #headerMainDiv {
+            width: 100%;
+        } */
+
+        #MainLogo {
+            width: 10vw;
+            max-width: 10vw;
+            height: auto;
+            cursor: pointer;
+        }
+
+        #mainDivCard {
+            display: flex;
+            justify-content: center;
+
+        }
+
+        #CardDiv {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid pink;
+            width: 18vh;
+            margin-left: 15px;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        #ProductImage {
+            height: 15vh;
+            width: auto;
+            cursor: pointer;
+        }
+
+        #titleP {
+            font-size: 4vw;
+            flex-wrap: wrap;
+            padding: 8px;
+        }
+
+        #PriceP {
+            font-size: 4vw;
+            flex-wrap: wrap;
+            padding: 8px;
+        }
     }
 </style>
 
