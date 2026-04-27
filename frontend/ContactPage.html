@@ -336,7 +336,7 @@
         let submitBtn = document.getElementById("btn");
 
 
-        submitBtn.addEventListener("click", async () => {
+        submitBtn.addEventListener("click", async (e) => {
             e.preventDefault();
             if (fullName.value == "" || mobileNumber.value == "" || emailId.value == "") {
                 alert("Fill In the blank")
