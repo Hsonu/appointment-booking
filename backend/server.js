@@ -7,12 +7,22 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 const path = require("path");
-app.use(express.static(path.join(__dirname,"../frontend")));
+app.use(express.static(path.join(__dirname, "../frontend")));
+const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+        user: "sonurajsonuraj4515@gmail.com",
+        pass: "iznitdhhvsbwrmty"
+    }
+})
 
 
 app.get("/", (req, res) => {
     // res.send("server is live ")
-    res.sendFile(path.join(__dirname,"../frontend/index.html"));
+    res.sendFile(path.join(__dirname, "../frontend/index.html"));
 })
 app.post("/newClient", async (req, res) => {
     try {
@@ -20,6 +30,21 @@ app.post("/newClient", async (req, res) => {
         const viewData = new booking(data);
         const response = await viewData.save();
         console.log("✅date saved succefully✅");
+        //email send 
+        await transporter.sendMail({
+            from: "sonurajsonuraj4515@gmail.com",
+            to: "sonurajsonuraj4515@gmail.com",
+            subject: "New Appoinment Booking",
+            html: `
+                <h2>New Booking</h2>
+                <p><b>Name: </b>${data.FullName}</p>
+                <p><b>Phone: </b>${data.mobileNumber}</p>
+                <p><b>Email: </b>${data.email}</p>
+            
+            `
+        });
+        console.log("Email sent ssuccesfuly");
+
         res.status(200).json(response);
     }
     catch (error) {
