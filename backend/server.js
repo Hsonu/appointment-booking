@@ -30,8 +30,10 @@ app.post("/newClient", async (req, res) => {
         const viewData = new booking(data);
         const response = await viewData.save();
         console.log("✅date saved succefully✅");
+        res.status(200).json(response);
         //email send 
-        await transporter.sendMail({
+        // await
+        transporter.sendMail({
             from: "sonurajsonuraj4515@gmail.com",
             to: "sonurajsonuraj4515@gmail.com",
             subject: "New Appoinment Booking",
@@ -42,11 +44,21 @@ app.post("/newClient", async (req, res) => {
                 <p><b>Email: </b>${data.email}</p>
             
             `
-        });
-        console.log("Email sent ssuccesfuly");
+        })
+            .then((info) => {
+                console.log("Email sent ssuccesfuly")
 
-        res.status(200).json(response);
+            })
+            .catch((err)=>{
+                console.log(err);
+                
+            })
+
     }
+    // console.log("Email sent ssuccesfuly");
+
+    // res.status(200).json(response);
+
     catch (error) {
         res.status(500).json("interal server error")
         console.log(error);
