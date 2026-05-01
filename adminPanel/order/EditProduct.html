@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial;
+        }
+
+        /* Layout */
+        #main {
+            display: flex;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            width: 220px;
+            height: 100vh;
+            background: #222d32;
+            color: white;
+        }
+
+        #sidebar h2 {
+            padding: 15px;
+            background: #1a2226;
+        }
+
+        #sidebar ul {
+            list-style: none;
+        }
+
+        #sidebar ul li {
+            padding: 12px 15px;
+            border-bottom: 1px solid #2c3b41;
+            cursor: pointer;
+        }
+
+        #sidebar ul li:hover {
+            background: #1e282c;
+        }
+
+        /* Links */
+        #sidebar a {
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Content */
+        section {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .statusProduct {
+            display: flex;
+            justify-content: center;
+            /* gap: 6vw; */
+        }
+
+        .statusp,
+        .statusp1 {
+            border: 1px solid #ccc;
+            padding: 0.50vw;
+            background: #f9f9f9;
+            font-weight: bold;
+            width: 9vw;
+            display: flex;
+            justify-content: center;
+            font-size: 1vw;
+        }
+
+        .statusp1 {
+            display: flex;
+            font-size: 0.8vw;
+            font-weight: normal;
+            padding: 00.08vw;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .maindivOrder {
+            box-shadow: 0px 0px 2px 0px #93f02d;
+            width: auto;
+        }
+
+        #jpg1 {
+            height: 1.3vw;
+            width: auto;
+            background-color: black;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <h2>Admin Panel</h2>
+            <ul>
+                <a href="../Dashboard.html">
+                    <li>Dashboard</li>
+                </a>
+                <a href="./Order.html">
+                    <li>Product</li>
+                </a>
+                <a href="status.html">
+                    <li>Status</li>
+                </a>
+            </ul>
+        </div>
+
+        <!-- Content -->
+        <section>
+            <div class="maindivOrder">
+                <div class="statusProduct">
+                    <p class="statusp">Edit</p>
+                    <p class="statusp">Product Name</p>
+                    <p class="statusp">Category</p>
+                    <p class="statusp">Units</p>
+                    <p class="statusp">Rate</p>
+                    <p class="statusp">Amount</p>
+                    <p class="statusp">Status</p>
+                    <p class="statusp">Address</p>
+                    <p class="statusp">Order Date</p>
+                </div>
+                <div id="showDateTable">
+                    <!-- <p class="statusp1"> <img id="jpg1" src="https://img.icons8.com/?size=256w&id=114170&format=png">
+                    </p>
+                    <p class="statusp1">iPhone 17 Pro Max (Silver, 2 TB)</p>
+                    <p class="statusp1">Electronics</p>
+                    <p class="statusp1">1</p>
+                    <p class="statusp1">₹2,29,900</p>
+                    <p class="statusp1">₹2,29,900</p>
+                    <p class="statusp1">Order placed</p>
+                    <p class="statusp1">Address</p>
+                    <p class="statusp1">25/03/2026</p> -->
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        async function getData() {
+            let res = await fetch("http://localhost:8080/backeddata")
+            let data = await res.json()
+            console.log(data);
+            showDate(data)  
+        }
+        getData()
+        function showDate(data) {
+            let showDateTable = document.getElementById("showDateTable")
+
+            // showDateTable.innerHTML = ""
+            data.forEach((item) => {
+                let totalAmount = item.units * item.rate;
+
+                showDateTable.innerHTML += `
+            <div class="statusProduct">
+                     <p class="statusp1"> <img id="jpg1" src="https://img.icons8.com/?size=256w&id=114170&format=png">
+                    </p>
+                    <p class="statusp1">${item.productName}</p>
+                    <p class="statusp1">${item.category}</p>
+                    <p class="statusp1">${item.units}</p>
+                    <p class="statusp1">₹${item.rate}</p>
+                    <p class="statusp1">₹${totalAmount}</p>
+                    <p class="statusp1">Order placed</p>
+                    <p class="statusp1">Address</p>
+                    <p class="statusp1">${new Date().toLocaleDateString()}</p>
+                </div>`;
+            }
+            )
+        };
+
+    </script>
+</body>
+
+
+</html>

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const url = "mongodb://localhost:27018/appoiment";
-// const url = "mongodb+srv://sonurajsonuraj4515_db_user:Sonu%40123@cluster0.cxyxqda.mongodb.net/mydb";
+// const url = "mongodb://localhost:27018/appoiment";
+const url = "mongodb+srv://sonurajsonuraj4515_db_user:Sonu%40123@cluster0.cxyxqda.mongodb.net/mydb";
 
 mongoose.connect(url);
 

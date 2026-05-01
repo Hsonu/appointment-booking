@@ -3,6 +3,7 @@ const app = express();
 const port = 8080;
 const db = require("./db")
 const booking = require("./booking");
+const addProducts = require("./addProductSchema");
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
@@ -49,9 +50,9 @@ app.post("/newClient", async (req, res) => {
                 console.log("Email sent ssuccesfuly")
 
             })
-            .catch((err)=>{
+            .catch((err) => {
                 console.log(err);
-                
+
             })
 
     }
@@ -64,6 +65,29 @@ app.post("/newClient", async (req, res) => {
         console.log(error);
 
     }
+})
+
+app.post("/addProduct", async (req, res) => {
+    try{
+    const addProductdata = req.body;
+    const viewaddPoduct = new addProducts(addProductdata);
+    const responseaddProduct = await viewaddPoduct.save()
+    console.log("✅date saved succefully✅");
+    res.status(200).json(responseaddProduct);
+    }
+    catch(err){
+        res.status(500).json("internal server error")
+        console.log(err);
+        
+    }
+
+})
+
+//view all product
+
+app.get("/addProduct" , async (req ,res)=>{
+    const viewProduct = await addProducts.find();
+    res.json(viewProduct);
 })
 
 app.listen(port, () => {
