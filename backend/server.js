@@ -68,27 +68,82 @@ app.post("/newClient", async (req, res) => {
 })
 
 app.post("/addProduct", async (req, res) => {
-    try{
-    const addProductdata = req.body;
-    const viewaddPoduct = new addProducts(addProductdata);
-    const responseaddProduct = await viewaddPoduct.save()
-    console.log("✅date saved succefully✅");
-    res.status(200).json(responseaddProduct);
+    try {
+        const addProductdata = req.body;
+        const viewaddPoduct = new addProducts(addProductdata);
+        const responseaddProduct = await viewaddPoduct.save()
+        console.log("✅date saved succefully✅");
+        res.status(200).json(responseaddProduct);
     }
-    catch(err){
-        res.status(500).json("internal server error")
+    catch (err) {
+        res.status(500).json({ message: "Dublicate SubCategory not allowed" })
         console.log(err);
-        
+
     }
 
 })
 
 //view all product
 
-app.get("/addProduct" , async (req ,res)=>{
+app.get("/addProduct", async (req, res) => {
     const viewProduct = await addProducts.find();
     res.json(viewProduct);
 })
+//delete Product
+
+app.delete("/DelProduct/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const deleted = await addProducts.findByIdAndDelete(id);
+        if (!deleted) {
+            return res.status(404).json({ message: "Product not Found" })
+        }
+        res.status(200).json({ message: "Data Delete SuccessFully" })
+
+    }
+    catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+})
+
+app.put("/updateProduct/:id", async (req, res) => {
+    try {
+        const updateDataID = req.params.id;
+        const { Productname, Category, SubCategory, Units, Rate } = req.body;
+        const updateProductName = await addProducts.findByIdAndUpdate(updateDataID,
+            {
+                Productname,
+                Category,
+                SubCategory,
+                Units,
+                Rate
+            },
+            { new: true })
+        if (!updateProductName) {
+            return res.status(404).json({
+                message: "Product Not Found"
+            })
+        }
+        res.status(200).json({
+            message: "Product Updated Successfully",
+            data: updateProductName
+        })
+    }
+    catch (err) {
+        if (err.code === 11000) {
+            return res.status(400).json({
+                message: "Duplicate Category And subCategory not allowed"
+            })
+        }
+        res.status(500).json({
+            error: err.message
+        })
+    }
+})
+
+
+
+
 
 app.listen(port, () => {
     console.log(`server is live on ${port}`);

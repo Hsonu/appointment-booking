@@ -9,6 +9,11 @@ const addProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    SubCategory: {
+        type: String,
+        required: true,
+        unique: true
+    },
     Units: {
         type: Number,
         required: true
