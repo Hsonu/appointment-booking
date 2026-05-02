@@ -11,8 +11,8 @@ const addProductSchema = new mongoose.Schema({
     },
     SubCategory: {
         type: String,
-        required: true,
-        unique: true
+        // required: true,
+        // unique: true
     },
     Units: {
         type: Number,
@@ -21,6 +21,10 @@ const addProductSchema = new mongoose.Schema({
     Rate: {
         type: Number,
         required: true
+    },
+    description:{
+        type : String,
+        required :true
     }
 })
 const addProducts = mongoose.model("addProduct", addProductSchema);

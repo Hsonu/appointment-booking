@@ -258,10 +258,10 @@
             }
 
             const data = {
-                productName: inputProductName.value,
-                category: inputCategoryName.value,
-                rate: Number(inputRate.value),
-                units: Number(inputUnits.value),
+                Productname: inputProductName.value,
+                Category: inputCategoryName.value,
+                Rate: Number(inputRate.value),
+                Units: Number(inputUnits.value),
                 description: inputDescription.value
             }
             let response = await fetch("http://localhost:8080/addProduct", {
@@ -277,5 +277,4 @@
         })
     </script>
 </body>
-
 </html>

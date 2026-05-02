@@ -9,6 +9,7 @@ app.use(cors());
 app.use(express.json());
 const path = require("path");
 app.use(express.static(path.join(__dirname, "../frontend")));
+app.use(express.static(path.join(__dirname, "../adminPanel")))
 const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -24,6 +25,10 @@ const transporter = nodemailer.createTransport({
 app.get("/", (req, res) => {
     // res.send("server is live ")
     res.sendFile(path.join(__dirname, "../frontend/index.html"));
+})
+// admin Login
+app.get("/admin", (req, res) => {
+    res.sendFile(path.join(__dirname, "../adminPanel/order/addProduct.html"))
 })
 app.post("/newClient", async (req, res) => {
     try {
@@ -70,7 +75,11 @@ app.post("/newClient", async (req, res) => {
 app.post("/addProduct", async (req, res) => {
     try {
         const addProductdata = req.body;
+        console.log(req.body);
+
         const viewaddPoduct = new addProducts(addProductdata);
+        // console.log(viewaddPoduct);
+
         const responseaddProduct = await viewaddPoduct.save()
         console.log("✅date saved succefully✅");
         res.status(200).json(responseaddProduct);

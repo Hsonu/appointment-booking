@@ -147,40 +147,51 @@
             </div>
         </section>
     </div>
-    <script>
-        async function getData() {
-            let res = await fetch("http://localhost:8080/backeddata")
-            let data = await res.json()
-            console.log(data);
-            showDate(data)  
-        }
-        getData()
-        function showDate(data) {
-            let showDateTable = document.getElementById("showDateTable")
-
-            // showDateTable.innerHTML = ""
-            data.forEach((item) => {
-                let totalAmount = item.units * item.rate;
-
-                showDateTable.innerHTML += `
-            <div class="statusProduct">
-                     <p class="statusp1"> <img id="jpg1" src="https://img.icons8.com/?size=256w&id=114170&format=png">
-                    </p>
-                    <p class="statusp1">${item.productName}</p>
-                    <p class="statusp1">${item.category}</p>
-                    <p class="statusp1">${item.units}</p>
-                    <p class="statusp1">₹${item.rate}</p>
-                    <p class="statusp1">₹${totalAmount}</p>
-                    <p class="statusp1">Order placed</p>
-                    <p class="statusp1">Address</p>
-                    <p class="statusp1">${new Date().toLocaleDateString()}</p>
-                </div>`;
+        <script>
+            // let updateBtn = document.getElementById("updateBtn");
+            async function getData() {
+                let res = await fetch("http://localhost:8080/addProduct")
+                let data = await res.json()
+                console.log(data);
+                showDate(data)
             }
-            )
-        };
+            getData()
+            function showDate(data) {
+                let showDateTable = document.getElementById("showDateTable")
 
-    </script>
+                // showDateTable.innerHTML = ""
+                data.forEach((item) => {
+                    let totalAmount = item.Units * item.Rate;
+
+                    showDateTable.innerHTML += `
+                <div class="statusProduct">
+                        <p class="statusp1 updateBtn" data-id="${item._id}"> <img id="jpg1" src="https://img.icons8.com/?size=256w&id=114170&format=png">
+                        </p>
+                        <p class="statusp1">${item.Productname}</p>
+                        <p class="statusp1">${item.Category}</p>
+                        <p class="statusp1">${item.Units}</p>
+                        <p class="statusp1">₹${item.Rate}</p>
+                        <p class="statusp1">₹${totalAmount}</p>
+                        <p class="statusp1">Order placed</p>
+                        <p class="statusp1">Address</p>
+                        <p class="statusp1">${new Date().toLocaleDateString()}</p>
+                    </div>`;
+                }
+                )
+            };
+        document.addEventListener("click" ,(e) =>{
+            let btn = e.target.closest(".updateBtn")
+            if(btn){
+                let id = btn.getAttribute("data-id");
+                console.log("Clicked ID" , id);
+            }
+        })
+
+
+
+
+
+        </script>
 </body>
-
 
 </html>
