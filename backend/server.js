@@ -123,7 +123,7 @@ app.put("/updateProduct/:id", async (req, res) => {
             {
                 Productname,
                 Category,
-                SubCategory,
+                // SubCategory,
                 Units,
                 Rate
             },

@@ -83,6 +83,7 @@
             padding: 00.08vw;
             justify-content: center;
             align-items: center;
+            gap: 1.1vw;
         }
 
         .maindivOrder {
@@ -147,43 +148,145 @@
             </div>
         </section>
     </div>
-        <script>
-            // let updateBtn = document.getElementById("updateBtn");
-            async function getData() {
-                let res = await fetch("http://localhost:8080/addProduct")
-                let data = await res.json()
-                console.log(data);
-                showDate(data)
-            }
-            getData()
-            function showDate(data) {
-                let showDateTable = document.getElementById("showDateTable")
+    <script>
+        // let updateBtn = document.getElementById("updateBtn");
+        async function getData() {
+            let res = await fetch("http://localhost:8080/addProduct")
+            let data = await res.json()
+            console.log(data);
+            showDate(data)
+        }
+        getData()
+        function showDate(data) {
+            let showDateTable = document.getElementById("showDateTable")
 
-                // showDateTable.innerHTML = ""
-                data.forEach((item) => {
-                    let totalAmount = item.Units * item.Rate;
+            // showDateTable.innerHTML = ""
+            data.forEach((item) => {
+                let totalAmount = item.Units * item.Rate;
 
-                    showDateTable.innerHTML += `
+                showDateTable.innerHTML += `
                 <div class="statusProduct">
-                        <p class="statusp1 updateBtn" data-id="${item._id}"> <img id="jpg1" src="https://img.icons8.com/?size=256w&id=114170&format=png">
-                        </p>
-                        <p class="statusp1">${item.Productname}</p>
-                        <p class="statusp1">${item.Category}</p>
-                        <p class="statusp1">${item.Units}</p>
-                        <p class="statusp1">₹${item.Rate}</p>
+                          <div id="DelEdit">
+                                 <p class="statusp1 "> <img id="jpg1" class="updateBtn" data-id="${item._id}" src="https://img.icons8.com/?size=256w&id=114170&format=png">
+                                    <img id="jpg1" data-id="${item._id}" class="deleteBtn" src="https://static.vecteezy.com/system/resources/previews/000/437/144/non_2x/delete-vector-icon.jpg">
+                              </p>
+                         </div>  
+                        <p class="statusp1 name">${item.Productname}</p>
+                        <p class="statusp1 category">${item.Category}</p>
+                        <p class="statusp1 units">${item.Units}</p>
+                        <p class="statusp1 rate">₹${item.Rate}</p>
                         <p class="statusp1">₹${totalAmount}</p>
                         <p class="statusp1">Order placed</p>
                         <p class="statusp1">Address</p>
                         <p class="statusp1">${new Date().toLocaleDateString()}</p>
+                  <!-- 🔥 Edit Form -->
+            <div class="editForm" style="display:none;">
+                <input class="editName" placeholder="Name">
+                <input class="editCategory" placeholder="Category">
+                <input class="editUnits" placeholder="Units">
+                <input class="editRate" placeholder="Rate">
+                <button class="saveUpdate">Save</button>
+            </div>
                     </div>`;
+            }
+            )
+        };
+        document.addEventListener("click", async (e) => {
+            if (e.target.classList.contains("updateBtn")) {
+                let card = e.target.closest(".statusProduct");
+                let form = card.querySelector(".editForm");
+                // let id = card.querySelector(".updateBtn").dataset.id;
+                form.style.display = "block";
+
+                form.querySelector(".editName").value = card.querySelector(".name").innerText;
+                form.querySelector(".editCategory").value = card.querySelector(".category").innerText;
+                form.querySelector(".editUnits").value = card.querySelector(".units").innerText;
+                form.querySelector(".editRate").value = card.querySelector(".rate").innerText;
+                // card.querySelector("editForm").style.display = "none"
+                console.log(e.target.dataset.id);
+            }
+            //save and update btn
+
+            if (e.target.classList.contains("saveUpdate")) {
+                let card = e.target.closest(".statusProduct")
+                let id = card.querySelector(".updateBtn").dataset.id;
+
+                let newData = {
+                    Productname: card.querySelector(".editName").value,
+                    Category: card.querySelector(".editCategory").value,
+                    Units: Number(card.querySelector(".editUnits").value),
+                    Rate: Number(card.querySelector(".editRate").value),
                 }
-                )
-            };
-        document.addEventListener("click" ,(e) =>{
-            let btn = e.target.closest(".updateBtn")
-            if(btn){
-                let id = btn.getAttribute("data-id");
-                console.log("Clicked ID" , id);
+
+                console.log(newData);
+                
+
+                try {
+                    let updateRes = await fetch(`http://localhost:8080/updateProduct/${id}`, {
+                        // let id = e.target.dataset.id;
+
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(newData)
+                    });
+
+                    if (!updateRes.ok) throw new Error("Data Failed")
+                    let data = await updateRes.json();
+                    console.log(data);
+
+                    // UI updateRes
+                    card.querySelector(".name").innerText = newData.Productname;
+                    card.querySelector(".category").innerText = newData.Category;
+                    card.querySelector(".units").innerText = newData.Units;
+                    card.querySelector(".rate").innerText = newData.Rate;
+
+                    card.querySelector(".editForm").style.display = "none"
+
+                } catch (err) {
+                    console.log(err);
+
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            if (e.target.classList.contains("deleteBtn")) {
+                let id = e.target.dataset.id;
+                if (!confirm("Delete This Product?")) return;
+                try {
+                    let delRes = await fetch(`http://localhost:8080/DelProduct/${id}`, {
+                        method: "DELETE"
+                    })
+                    console.log("Delete Btn", id);
+                    if (!delRes.ok) throw new Error("Delete Failed");
+                    let card = e.target.closest(".statusProduct")
+                    let data = await delRes.json()
+                    if (card) card.remove()
+                    console.log("data Delete SuccessFully", data);
+
+                }
+                catch (err) {
+                    console.log(err);
+
+                }
+
             }
         })
 
@@ -191,7 +294,10 @@
 
 
 
-        </script>
+
+
+
+    </script>
 </body>
 
 </html>
