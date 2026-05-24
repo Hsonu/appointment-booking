@@ -88,6 +88,7 @@
         margin-left: 15px;
         padding: 12px;
         border-radius: 4px;
+        margin-bottom: 10px;
     }
 
     #CardDiv:hover {
@@ -133,6 +134,7 @@
         border: 1px solid pink;
         padding: 10px;
         cursor: pointer;
+        transition: 0.3s;
 
     }
 
@@ -177,7 +179,11 @@
     }
 
     ::placeholder {
-        color: black;
+        color: #000000;
+    }
+
+    #CardDiv {
+        transition: 0.3s;
     }
 
     @media only screen and (max-width: 768px) {
@@ -209,6 +215,17 @@
             margin-bottom: 10px;
         }
 
+        .BuyBtn {
+            border: 1px solid pink;
+            padding: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            /* font-size: 1.5vw; */
+            /* font-size: clamp(12px, 1.2vw, 40px); */
+            font-size: clamp(8px, 1.2vw, 40px);
+
+        }
+
         #ProductImage {
             height: 14vh;
             width: auto;
@@ -216,15 +233,17 @@
         }
 
         #titleP {
-            font-size: 3vw;
+            /* font-size: 3vw; */
+            font-size: clamp(10px, 1.2vw, 40px);
             flex-wrap: wrap;
             padding: 4px;
         }
 
         #PriceP {
-            font-size: 4vw;
+            /* font-size: 1.5vw; */
             flex-wrap: wrap;
-            padding: 8px;
+            font-size: clamp(9px, 1.2vw, 40px);
+            /* padding: 8px; */
         }
 
         .li-end {
@@ -259,7 +278,7 @@
                 </div>
                 <div>
                     <img id="CartBtn"
-                        src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-2.jpg">
+                        src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png">
                 </div>
             </div>
         </div>

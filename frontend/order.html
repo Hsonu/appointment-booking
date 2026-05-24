@@ -38,6 +38,7 @@
     .DetailsIMGmainDiv {
         display: flex;
         padding: 10px;
+        background-color: #fff;
     }
 
     .DetailsProducatName {
@@ -49,6 +50,7 @@
         flex-direction: column;
         gap: 10px;
         width: 80%;
+        cursor: pointer;
     }
 
     .DetailsBuyBtn {
@@ -121,7 +123,6 @@
     footer {
         margin-top: auto;
     }
-
 </style>
 
 <body>
@@ -149,20 +150,7 @@
     <section>
         <div class="MainDivDesing" style="padding: 10px;">
             <div class="TwoDivMarger">
-                <div class="cardDetaislDiv">
-                    <div>
-                        <p>Deliver to:</p>
-                    </div>
-                    <div>
-                        <p id="customerNamePlaceOrder">Sonu Raj</p>
-                        <p id="customeradd">Nagwa kali mai, Simri Subdistrict, Buxar District 802133</p>
-                        <p id="customerMobileNumber">8603632642</p>
-                    </div>
-                    <div class="DetailsBuyBtn">
-                        <button type="button" class="BuyBtn">Change</button>
-                    </div>
-                </div>
-                <div class="cardDetaislDiv" id="showDataDiv">
+                <!-- <div class="cardDetaislDiv" id="showDataDiv">
                     <div class="DetailsIMGmainDiv">
                         <div>
                             <img class="DetailsImgShow"
@@ -172,23 +160,10 @@
                             <p class="ProductNamesummary">The Nomi Bridal Ring Set</p>
                             <p class="productSummaryrate">₹ 1,34,725</p>
                         </div>
-                    </div>
-                    <div class="DetailsBuyBtn">
-                        <button type="button" class="BuyBtn">Continue</button>
-                    </div>
-                </div>
-                <div class="cardDetaislDiv" id="showDataDivv">
-                    <div id="paymentMethodDivmain">
-                        <p class="paymentMethodDiv">Payment Method</p>
-                    </div>
-                    <div>
-                        <p class="CashOnDelivery">Cash on Delivery</p>
-                    </div>
-                    <div class="DetailsBuyBtn">
-                        <button type="button" id="PlaceOrderBtn" class="BuyBtn">Place Order</button>
-                    </div>
-                </div>  
+                    </div> -->
             </div>
+
+        </div>
         </div>
     </section>
     <footer>
@@ -238,89 +213,42 @@
     </footer>
 </body>
 <script>
-    const customerNamePlaceOrder = document.getElementById("customerNamePlaceOrder");
-    const customerMobileNumber = document.getElementById("customerMobileNumber");
-    const customeradd = document.getElementById("customeradd")
-    async function getData() {
-        let res = await fetch("http://localhost:8080/addProduct")
-        let data = await res.json()
-        console.log(data);
-        // showDate(data);
-
+    async function allOrder() {
+        let res = await fetch("http://localhost:8080/viwePlaceOrder");
+        let resOrder = await res.json();
+        // console.log(resOrder);
+        allorderView(resOrder);
     }
-    getData()
+    allOrder()
+    async function allorderView(resOrder) {
+        let showDataDiv = document.querySelector(".TwoDivMarger");
 
-    async function getsingleProductSummar() {
-        let parmas = new URLSearchParams(window.location.search);
-        let id = parmas.get("id")
-        console.log(id);
-        let res = await fetch(`http://localhost:8080/singleProduct/${id}`)
-        let data = await res.json();
-        console.log(data);
-        console.log(data.description);
+        resOrder.forEach((item) => {
+            showDataDiv.innerHTML += `
         
+            <div class="DetailsIMGmainDiv" data-id="${item._id}">
+                        <div>
+                            <img class="DetailsImgShow"
+                                src="${item.photo}">
+                        </div>
+                        <div class="DetailsProducatName">
+                            <p class="ProductNamesummary">${item.productName}</p>
+                            <p class="productSummaryrate">₹ ${item.rate}</p>
+                        </div>
+                    </div>
+                    
+            `
 
-        document.querySelector(".DetailsImgShow").src = data.photo;
-        document.querySelector(".ProductNamesummary").innerText = data.Productname
-        document.querySelector(".productSummaryrate").innerText = `₹${data.Rate}`;
-        const BuyBtn = document.querySelector("#PlaceOrderBtn");
-        BuyBtn.addEventListener("click", () => {
-            fetch("http://localhost:8080/placeOrder", {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify({
-                    customerName: customerNamePlaceOrder.innerText,
-                    customerMobileNumber: customerMobileNumber.innerText,
-                    customerAdd: customeradd.innerText,
-                    productName: data.Productname,
-                    rate: data.Rate,
-                    photo: data.photo,
-                    description: data.description,
-                    // orderStatus :"Order Placed"
+        })
+        // console.log(item._id);
+        showDataDiv.addEventListener("click", (event) => {
+            let card = event.target.closest(".DetailsIMGmainDiv");
+            let id = card.dataset.id;
+            console.log(id);
+            window.location.href = `orderDetails.html?id=${id}`
 
-                })
-            });
-            console.log("Order PlacedSuccessFully");
-            alert("Order Place")
-            window.location.reload()
-            window.location.href = "./allProduct.html"
         })
     }
-    getsingleProductSummar()
-
-    // function showDate (data){
-    // let cardDetaislDiv = document.querySelector("#showDataDiv");
-
-    // data.forEach((showItem) => {
-    //     cardDetaislDiv.innerHTML += `<div class="DetailsIMGmainDiv">
-    //                     <div>
-    //                         <img class="DetailsImgShow"
-    //                             src="${showItem.photo}">
-    //                     </div>
-    //                     <div class="DetailsProducatName">
-    //                         <p>${showItem.Productname}</p>
-    //                         <p>₹ ${showItem.Rate}</p>
-    //                     </div>
-    //                 </div>
-    //                 <div class="DetailsBuyBtn">
-    //                     <button type="button" class="BuyBtn">Continue</button>
-    //                 </div>
-
-    //         `
-    // })
-
-
-    // }
-    let CashOnDelivery = document.querySelector(".CashOnDelivery");
-    CashOnDelivery.addEventListener("click", () => {
-        console.log("Cash On Deliver Selected");
-        CashOnDelivery.style.backgroundColor = "#00000014";
-    })
-
-
-
 
 </script>
 

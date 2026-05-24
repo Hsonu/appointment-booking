@@ -230,11 +230,36 @@ app.get("/viwePlaceOrder", async (req, res) => {
     res.json(viewDataPlaceOrder);
 });
 
+//status Single data
+app.get("/statusSingleData/:id", async (req, res) => {
+    const statusparams = req.params.id;
+    const idStatuse = await placeOrderData.findById(statusparams);
+    res.json(idStatuse)
+})
+
+//updateorderStatus
+
+app.put("/updateOrderStatus/:id", async (req, res) => {
+    const updateOrderStatus = req.params.id;
+    const finddatabaseid = await placeOrderData.findById(updateOrderStatus)
+    const updateStatus = req.body;
+    console.log(finddatabaseid);
+    finddatabaseid.orderStatus = updateStatus.status;
+    await finddatabaseid.save()
 
 
+    res.json({
+        message: "working"
+    })
+
+})
 
 
 app.listen(port, () => {
     console.log(`server is live on ${port}`);
 
 })
+
+console.log(
+    (process.memoryUsage().rss / 1024 / 1024).toFixed(2) + " MB"
+);

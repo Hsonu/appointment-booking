@@ -20,8 +20,14 @@ const placeOrderDataSchema = new mongoose.Schema({
     },
     photo: {
         type: String
+    },
+    description: {
+        type: String,
+    },
+    orderStatus: {
+        type: String,
+        default: "Order Placed"
     }
-
 });
 
 const placeOrderData = mongoose.model("placeOrderData", placeOrderDataSchema);

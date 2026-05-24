@@ -171,7 +171,7 @@
                     <p class="statusp">Rate</p>
                     <p class="statusp">Amount</p>
                     <!-- <p class="statusp">Description</p> -->
-                    <p class="statusp">Address</p>
+                    <!-- <p class="statusp">Address</p> -->
                     <p class="statusp">Order Date</p>
                 </div>
                 <div id="showDateTable">
@@ -215,10 +215,10 @@
                         <p class="statusp1 name">${item.Productname}</p>
                         <p class="statusp1 category">${item.Category}</p>
                         <p class="statusp1 units">${item.Units}</p>
-                        <p class="statusp1 rate">${item.Rate}</p>
-                        <p class="statusp1">${totalAmount}</p>
+                        <p class="statusp1 rate">₹${item.Rate}</p>
+                        <p class="statusp1">₹${totalAmount}</p>
                        <!--  <p class="statusp1 description">${item.description}</p> -->
-                        <p class="statusp1">Address</p>
+                       <!-- <p class="statusp1">${item.customerAdd}</p> -->
                         <p class="statusp1">${new Date().toLocaleDateString()}</p>
                   <!-- 🔥 Edit Form -->
             <div class="editForm"  style="display:none">
@@ -234,7 +234,7 @@
             )
         };
         document.addEventListener("click", async (e) => {
-            
+
             if (e.target.classList.contains("updateBtn")) {
                 let card = e.target.closest(".statusProduct");
                 let form = card.querySelector(".editForm");
@@ -287,16 +287,14 @@
                     card.querySelector(".units").innerText = newData.Units;
                     card.querySelector(".rate").innerText = newData.Rate;
                     card.querySelector(".description").innerText = newData.description;
-                    
+
                     card.querySelector(".editForm").style.display = "none"
 
                 } catch (err) {
                     console.log(err);
 
                 }
-
             }
-
             if (e.target.classList.contains("deleteBtn")) {
                 let id = e.target.dataset.id;
                 if (!confirm("Delete This Product?")) return;
@@ -310,16 +308,12 @@
                     let data = await delRes.json()
                     if (card) card.remove()
                     console.log("data Delete SuccessFully", data);
-
                 }
                 catch (err) {
                     console.log(err);
-
                 }
-
             }
         })
     </script>
 </body>
-
 </html>

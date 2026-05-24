@@ -90,6 +90,20 @@
             /* display: flex; */
 
         }
+
+        #updatebtn {
+            background: #0b5ed7;
+            color: white;
+        }
+
+        #updatebtn:hover {
+            /* background-color: #0d6efd; */
+            background: #0b5ed7;
+            cursor: pointer;
+            border: 1px solid black;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
     </style>
 </head>
 
@@ -123,6 +137,7 @@
                     <p class="statusp">Status</p>
                     <p class="statusp">Address</p>
                     <p class="statusp">Mobile Number</p>
+                    <p class="statusp">Button</p>
                 </div>
             </div>
     </div>
@@ -147,15 +162,86 @@
                     <p class="statusp1">1</p>
                     <p class="statusp1">₹${item.rate}</p>
                     <p class="statusp1">₹${item.rate}</p>
-                    <p class="statusp1">Order placed</p>
+        
+
+    <select class="statusp1">
+
+    <option value="Order Confirmed"
+    ${item.orderStatus === "Order Confirmed" ? "selected" : ""}>
+    Order Confirmed
+    </option>
+
+    <option value="Order Packed"
+    ${item.orderStatus === "Order Packed" ? "selected" : ""}>
+    Order Packed
+    </option>
+
+    <option value="Shipped"
+    ${item.orderStatus === "Shipped" ? "selected" : ""}>
+    Shipped
+    </option>
+
+    <option value="In Transit"
+    ${item.orderStatus === "In Transit" ? "selected" : ""}>
+    In Transit
+    </option>
+
+    <option value="Out For Delivery"
+    ${item.orderStatus === "Out For Delivery" ? "selected" : ""}>
+    Out For Delivery
+    </option>
+
+    <option value="Delivered"
+    ${item.orderStatus === "Delivered" ? "selected" : ""}>
+    Delivered
+    </option>
+
+    <option value="Cancelled"
+    ${item.orderStatus === "Cancelled" ? "selected" : ""}>
+    Cancelled
+    </option>
+
+    <option value="Return Requested"
+    ${item.orderStatus === "Return Requested" ? "selected" : ""}>
+    Return Requested
+    </option>
+
+    <option value="Return Completed"
+    ${item.orderStatus === "Return Completed" ? "selected" : ""}>
+    Return Completed
+    </option>
+        </select>
                     <p class="statusp1">${item.customerAdd}</p>
                     <p class="statusp1">${item.customerMobileNumber}</p>
+                    <button  class="statusp1" data-id="${item._id}" id="updatebtn">Update</button>
             </div>
             `
+            //update satuse
+            document.querySelectorAll("#updatebtn").forEach((btn) => {
+                btn.addEventListener("click", async () => {
+                    let orderDataId = btn.dataset.id;
+                    let status = btn.closest(".statusProduct").querySelector("select").value;
+                    console.log(orderDataId);
+                    console.log(status);
+                    let response = await fetch(`http://localhost:8080/updateOrderStatus/${orderDataId}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
 
+                            status: status
 
+                        })
+                    })
+                    let data = await response.json()
+                    console.log(data);
+                    alert("Order Status Updated");
+
+                })
+
+            })
         })
-
     }
 </script>
 

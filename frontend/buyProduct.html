@@ -92,6 +92,7 @@
         padding: 3vh;
         gap: 30px;
 
+
     }
 
     .buybtn,
@@ -108,6 +109,7 @@
         border-radius: 10px;
         box-shadow: 0px 0px 3px 0px black;
         /* font-style: unset; */
+        transition: 0.3s;
     }
 
     .addtocardbtn:hover {
@@ -126,6 +128,7 @@
         justify-content: center;
         gap: 10px;
         flex-wrap: wrap;
+        padding: 10px;
     }
 
     #CardDiv {
@@ -136,6 +139,7 @@
         margin-left: 15px;
         padding: 12px;
         border-radius: 4px;
+        transition: 0.3s;
     }
 
     #imgdiv {
@@ -172,6 +176,7 @@
         padding: 10px;
         cursor: pointer;
 
+
     }
 
     .BuyBtn:hover {
@@ -179,7 +184,11 @@
         color: #fff;
         border-radius: 10px;
         box-shadow: 0px 0px 8px 0px pink;
+        transition: 0.3s;
+
     }
+
+
 
     #d-img {
 
@@ -246,6 +255,7 @@
         #mainDivCard {
             display: flex;
             justify-content: center;
+            padding: 10px;
 
         }
 
@@ -258,6 +268,7 @@
             padding: 12px;
             border-radius: 4px;
             margin-bottom: 10px;
+            transition: 0.3s;
         }
 
         #ProductImage {
@@ -267,15 +278,28 @@
         }
 
         #titleP {
-            font-size: 4vw;
+            /* font-size: 3vw; */
+            font-size: clamp(10px, 1.2vw, 40px);
             flex-wrap: wrap;
-            padding: 8px;
+            padding: 4px;
         }
 
         #PriceP {
-            font-size: 4vw;
+            /* font-size: 1.5vw; */
             flex-wrap: wrap;
+            font-size: clamp(9px, 1.2vw, 40px);
+            /* padding: 8px; */
+        }
+
+        .BuyBtn {
+            border: 1px solid pink;
             padding: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            /* font-size: 1.5vw; */
+            /* font-size: clamp(12px, 1.2vw, 40px); */
+            font-size: clamp(6px, 1.2vw, 40px);
+
         }
 
         video {
@@ -333,9 +357,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15vh;
+            justify-content: space-around;
+            /* gap: 15vh;
             margin-top: 0vh;
-            padding: 18px
+            padding: 18px */
         }
 
         .product-name-price {
@@ -353,16 +378,18 @@
             /* border: 1px solid black; */
             border: none;
             padding: 10px;
-            width: 75vw;
+            width: 40vw;
             cursor: pointer;
             /* background-color: #f5644e; */
             background-color: rgba(255, 62, 94, 0.74);
             color: #fff;
-            font-size: 5.2vw;
+            font-size: 3.2vw;
             border-radius: 10px;
             box-shadow: 0px 0px 3px 0px black;
             /* font-style: unset; */
+            transition: 0.3s;
         }
+
 
         .Plogin {
             color: #fff;
@@ -399,7 +426,7 @@
 
             <div>
                 <img id="CartBtn"
-                    src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-2.jpg">
+                    src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png">
             </div>
 
         </div>

@@ -286,8 +286,7 @@
         justify-content: center;
         margin-bottom: 0;
     }
-
-
+    
     @media only screen and (max-width: 768px) {
         /* #headerMainDiv {
             width: 100%;
@@ -315,7 +314,7 @@
             padding: 12px;
             border-radius: 4px;
             margin-bottom: 10px;
-            padding: 2.5vw;
+            padding: 1vw;
         }
 
         #ProductImage {
@@ -325,14 +324,16 @@
         }
 
         #titleP {
-            font-size: 3vw;
+            /* font-size: 3vw; */
+            font-size: clamp(10px, 1.2vw, 40px);
             flex-wrap: wrap;
             padding: 4px;
         }
 
         #PriceP {
-            font-size: 2.5vw;
+            /* font-size: 1.5vw; */
             flex-wrap: wrap;
+            font-size: clamp(9px, 1.2vw, 40px);
             /* padding: 8px; */
         }
 
@@ -406,7 +407,10 @@
             padding: 8px;
             cursor: pointer;
             transition: 0.3s;
-            font-size: 2vw;
+            /* font-size: 1.5vw; */
+            /* font-size: clamp(12px, 1.2vw, 40px); */
+            font-size: clamp(8px, 1.2vw, 40px);
+
         }
 
 
@@ -433,7 +437,7 @@
                 </div>
                 <div>
                     <img id="CartBtn"
-                        src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-2.jpg">
+                        src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png">
                 </div>
             </div>
         </div>
