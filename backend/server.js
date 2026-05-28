@@ -5,6 +5,7 @@ const db = require("./db")
 const booking = require("./booking");
 const addProducts = require("./addProductSchema");
 const placeOrderData = require("./placeOrderSchema");
+const Card = require("./cardSchema");
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
@@ -250,6 +251,56 @@ app.put("/updateOrderStatus/:id", async (req, res) => {
     res.json({
         message: "working"
     })
+
+})
+
+// add card
+
+app.post("/Card", async (req, res) => {
+    try {
+        const addCardData = req.body;
+        const addCardDataall = new Card(addCardData)
+        const saveCard = await addCardDataall.save();
+        console.log(saveCard);
+        res.status(200).json(saveCard);
+    }
+    catch (err) {
+        res.status(500).json("Internal Server Error")
+        console.log(err);
+
+    }
+})
+
+//view addCardDate
+
+app.get("/Card", async (req, res) => {
+    try {
+        const viewAllData = await Card.find();
+        res.status(200).json(viewAllData);
+    }
+    catch (err) {
+        res.status(500).json("interal Server Error")
+        console.log(err);
+
+    }
+})
+//delete card
+
+app.delete("/card/:id", async (req, res) => {
+
+    try {
+        const deleteCardData = await Card.findByIdAndDelete(req.params.id);
+        res.status(200).json({
+           message: "Data Delete SuccFullY",
+            deleteCardData
+        })
+
+    }
+    catch (err) {
+        res.status(500).json("Interal Server Error")
+        console.log(err);
+
+    }
 
 })
 

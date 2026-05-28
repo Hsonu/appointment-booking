@@ -249,10 +249,12 @@
 </body>
 <script>
     async function allOrder() {
-        let res = await fetch("http://localhost:8080/viwePlaceOrder");
+        let res = await fetch("http://localhost:8080/Card");
         let resOrder = await res.json();
         // console.log(resOrder);
         allorderView(resOrder);
+        console.log(resOrder);
+        
     }
     allOrder()
     async function allorderView(resOrder) {
@@ -299,6 +301,7 @@
             `
 
         })
+        
 
     }
 

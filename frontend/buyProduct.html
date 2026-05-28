@@ -454,7 +454,7 @@
                     <div id="btndiv">
                         <!-- <div> <a href="./ContactPage.html"><Button class="buybtn">Book Appointment</Button></a></div> -->
                         <div><Button class="buybtn" data-id="${item._id}">BUY NOW</Button></div>
-                        <div><Button class="addtocardbtn">ADD TO CART</Button></div>
+                        <div><Button class="addtocardbtn" data-id="$item._id">ADD TO CART</Button></div>
                     </div>
                 </div>
             </div>
@@ -688,8 +688,33 @@
             window.location.href = `productDetails.html?id=${id}`
 
         })
+        document.querySelector(".addtocardbtn").addEventListener("click", async () => {
+            try {
+                const addtocardbtn = await fetch("http://localhost:8080/Card", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        productName: data.Productname,
+                        rate: data.Rate,
+                        photo: data.photo,
+                        mobileNumber: "8603632642"
+                    })
+                });
+                const CardData = await addtocardbtn.json()
+                console.log(CardData);
+                console.log(data);
 
+                alert("Added To Card")
+                window.location.reload()
+            }
+            catch (err) {
+                console.log(err);
 
+            }
+
+        })
 
     }
     getSingleProduct()
