@@ -38,7 +38,6 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-
 app.get("/", (req, res) => {
     // res.send("server is live ")
     res.sendFile(path.join(__dirname, "../frontend/index.html"));

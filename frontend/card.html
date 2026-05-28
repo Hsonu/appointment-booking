@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<style>
+    body {
+        /* background-color: rgb(2 2 2 / 3%); */
+        background-color: rgb(2 2 2 / 9%);
+    }
+
+    .cardDetaislDiv {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 90%;
+        background-color: #fff;
+        padding: 12px;
+        border-radius: 5px;
+    }
+
+    .MainDivDesing {
+
+        display: flex;
+        justify-content: center;
+        /* width: 90%; */
+
+    }
+
+    .DetailsImgShow {
+        height: 15vh;
+    }
+
+    .DetailsIMGmainDiv {
+        display: flex;
+        padding: 10px;
+        background-color: #fff;
+    }
+
+    .DetailsProducatName {
+        padding: 20px;
+    }
+
+    .TwoDivMarger {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 80%;
+        /* cursor: pointer; */
+    }
+
+    .DetailsBuyBtn {
+        display: flex;
+        justify-content: end;
+    }
+
+    .BuyBtn {
+        transition: 0.3s;
+        background-color: pink;
+
+    }
+
+    .BuyBtn:hover {
+        background-color: rgba(255, 62, 94, 0.74);
+    }
+
+    .paymentMethodDiv {
+        font-size: 1.9vw;
+        padding: 1vh;
+
+    }
+
+    .CashOnDelivery {
+        /* margin-left: 2vw;
+            margin-top: 3vh; */
+        padding: 2vh;
+        padding-left: 1vw;
+        cursor: pointer;
+        /* background-color: #00000014; */
+        border-radius: 3px;
+
+    }
+
+    #showDataDivv {
+        display: flex;
+        gap: 1vh;
+    }
+
+    .btndiv {
+        display: flex;
+        align-items: center;
+    }
+
+    .btnmainDiv {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .css-146c3p1 {
+        cursor: pointer;
+    }
+
+    @media only screen and (max-width:768px) {
+
+        #customerNamePlaceOrder,
+        #customeradd,
+        #customerMobileNumber,
+        .ProductNamesummary {
+            font-size: clamp(10px, 1.5vh, 30px);
+
+        }
+
+        .paymentMethodDiv {
+            font-size: clamp(10px, 1.8vh, 30px);
+        }
+
+        .DetailsImgShow {
+            height: 9vh;
+        }
+
+        .CashOnDelivery {
+            padding: 1vh;
+            padding-left: 1vw;
+            cursor: pointer;
+            /* background-color: #00000014; */
+            border-radius: 3px;
+            font-size: clamp(10px, 1.5vh, 40px);
+        }
+
+    }
+
+    footer {
+        margin-top: auto;
+    }
+</style>
+
+<body>
+    <header>
+        <div>
+            <div id="headerMainDiv">
+                <div>
+                    <a href="./index.html"> <img id="MainLogo"
+                            src="https://cdn-icons-png.freepik.com/512/5278/5278590.png"> </a>
+                </div>
+                <div>
+                    <input id="searchInput" placeholder="Search" type="text">
+                </div>
+                <div id="LoginBtnClickF">
+                    <p class="Plogin">Login/Sign up</p>
+                    <p class="Plogin">My Account</p>
+                </div>
+                <div>
+                    <img id="CartBtn" src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png">
+                </div>
+            </div>
+        </div>
+    </header>
+    <section>
+        <div class="MainDivDesing" style="padding: 10px;">
+            <div class="TwoDivMarger">
+                <div class="cardDetaislDiv" id="showDataDiv">
+                    <div class="DetailsIMGmainDiv">
+                        <div>
+                            <img class="DetailsImgShow"
+                                src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
+                        </div>
+                        <div class="DetailsProducatName">
+                            <p class="ProductNamesummary">The Nomi Bridal Ring Set</p>
+                            <p class="productSummaryrate">₹ 1,34,725</p>
+                        </div>
+                    </div>
+                    <div class="btnmainDiv">
+                        <div class="btndiv">
+                            <svg width="16" height="16" viewBox="0 0 256 256">
+                                <path fill="none" stroke="#717478" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="16"
+                                    d="M216 56H40M104 104v64M152 104v64M200 56v152a8 8 0 0 1-8 8H64a8 8 0 0 1-8-8V56M168 56V40a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v16">
+                                </path>
+                            </svg>
+                            <div dir="auto" class="css-146c3p1"
+                                style="color: rgb(113, 116, 120); flex-shrink: 1; text-align: center; background-color: rgba(0, 0, 0, 0); font-size: 17px; line-height: 24px; font-family: inter_semi_bold; letter-spacing: -0.01px;">
+                                Remove</div>
+                        </div>
+                        <div class="btndiv">
+                            <svg width="16" height="16" viewBox="0 0 256 256">
+                                <path fill="none" d="M0 0h256v256H0z"></path>
+                                <path fill="none" stroke="#717478" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="12" d="m96 240 16-80-64-24L160 16l-16 80 64 24L96 240z"></path>
+                            </svg>
+                            <div dir="auto" class="css-146c3p1"
+                                style="color: rgb(113, 116, 120); flex-shrink: 1; text-align: center; background-color: rgba(0, 0, 0, 0); font-size: 17px; line-height: 20px; font-family: inter_semi_bold; letter-spacing: -0.01px;">
+                                Buy this now</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div id="d-img">
+            <div id="main-li">
+                <div>
+                    <ul>
+                        <b>
+                            <li class="li-end">SHOP</li>
+                        </b>
+                        <a href="./allProduct.html">
+                            <li class="li-end">All Jewelry</li>
+                        </a>
+                        <li class="li-end">Rings</li>
+                        <li class="li-end">Necklaces</li>
+                        <li class="li-end">New Arrivals</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <b>
+                            <li class="li-end">COMPANY</li>
+                        </b>
+                        <a href="./aboutPage.html">
+                            <li class="li-end">About Us</li>
+                        </a>
+                        <a href="./ContactPage.html">
+                            <li class="li-end">Contact</li>
+                        </a>
+                        <li class="li-end">FAQ</li>
+                        <li class="li-end">Shipping Info</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <b>
+                            <li class="li-end">LEGAL</li>
+                        </b>
+                        <li class="li-end">Terms of Service</li>
+                        <li class="li-end">Privacy</li>
+                        <li class="li-end">Refund Policy</li>
+                        <li class="li-end">Shipping Policy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+<script>
+    async function allOrder() {
+        let res = await fetch("http://localhost:8080/viwePlaceOrder");
+        let resOrder = await res.json();
+        // console.log(resOrder);
+        allorderView(resOrder);
+    }
+    allOrder()
+    async function allorderView(resOrder) {
+        let showDataDiv = document.querySelector(".TwoDivMarger");
+
+        resOrder.forEach((item) => {
+            showDataDiv.innerHTML += `
+        <div class="cardDetaislDiv" id="showDataDiv">
+            <div class="DetailsIMGmainDiv" data-id="${item._id}">
+                        <div>
+                            <img class="DetailsImgShow"
+                                src="${item.photo}">
+                        </div>
+                        <div class="DetailsProducatName">
+                            <p class="ProductNamesummary">${item.productName}</p>
+                            <p class="productSummaryrate">₹ ${item.rate}</p>
+                        </div>
+                        </div>
+                        <div class="btnmainDiv">
+                                   <div class="btndiv">
+                                       <svg width="16" height="16" viewBox="0 0 256 256">
+                                           <path fill="none" stroke="#717478" stroke-linecap="round" stroke-linejoin="round"
+                                               stroke-width="16"
+                                               d="M216 56H40M104 104v64M152 104v64M200 56v152a8 8 0 0 1-8 8H64a8 8 0 0 1-8-8V56M168 56V40a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v16">
+                                           </path>
+                                       </svg>
+                                       <div dir="auto" class="css-146c3p1"
+                                           style="color: rgb(113, 116, 120); flex-shrink: 1; text-align: center; background-color: rgba(0, 0, 0, 0); font-size: 17px; line-height: 24px; font-family: inter_semi_bold; letter-spacing: -0.01px;">
+                                           Remove</div>
+                                   </div>
+                                   <div class="btndiv">
+                                       <svg width="16" height="16" viewBox="0 0 256 256">
+                                           <path fill="none" d="M0 0h256v256H0z"></path>
+                                           <path fill="none" stroke="#717478" stroke-linecap="round" stroke-linejoin="round"
+                                               stroke-width="12" d="m96 240 16-80-64-24L160 16l-16 80 64 24L96 240z"></path>
+                                       </svg>
+                                       <div dir="auto" class="css-146c3p1"
+                                           style="color: rgb(113, 116, 120); flex-shrink: 1; text-align: center; background-color: rgba(0, 0, 0, 0); font-size: 17px; line-height: 20px; font-family: inter_semi_bold; letter-spacing: -0.01px;">
+                                           Buy this now</div>
+                                   </div>
+                               </div>
+                    </div>
+             </div>
+            `
+
+        })
+
+    }
+
+</script>
+
+</html>

@@ -13,6 +13,7 @@ p {
     background-color: black;
     padding: 2vw;
     justify-content: space-around;
+    align-items: center;
 
 }
 
@@ -178,7 +179,7 @@ a {
 
 #LoginMainDiv {
     border: 1px solid black;
-    position: absolute;
+    /* position: absolute; */
     /* position: relative; */
     height: 40vh;
     width: 50%;
@@ -187,13 +188,19 @@ a {
     align-items: center;
     background-color: #ffffff9d;
     border-radius: 9px;
+    transition: 0.3s;
+    margin: 1vw;
+    /* box-shadow: 10px 10px; */
+}
 
+#LoginMainDiv:hover {
+    box-shadow: 0px 0px 8px 0px pink;
 }
 
 #mainf {
     display: flex;
     justify-content: center;
-    display: none;
+    /* display: none; */
 }
 
 #loginSystem {
@@ -208,6 +215,7 @@ a {
     justify-content: center;
     /* outline-color: #0d6efd; */
     border: 1.5px solid #0d6efd;
+    transition: 0.3s;
 }
 
 input {
@@ -221,6 +229,7 @@ input {
     height: 30px;
     border-radius: 3px;
     border: 1px solid black;
+    padding: 0.4vw;
 }
 
 /* 
@@ -345,7 +354,7 @@ input {
 
     #LoginMainDiv {
         border: 1px solid black;
-        position: absolute;
+        /* position: absolute; */
         /* position: relative; */
         height: 35vh;
         width: 80%;
@@ -355,13 +364,14 @@ input {
         /* background-color: #ffffff9d; */
         background-color: #fff;
         border-radius: 9px;
+        transition: 0.3s;
     }
 
     #loginSystem {
         display: flex;
         justify-content: center;
         margin-bottom: 2vw;
-        font-size: 7.5vw;
+        font-size: 3.5vw;
     }
 
 
