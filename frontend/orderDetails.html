@@ -235,6 +235,8 @@
         document.querySelector(".ProductNameDetails").innerHTML = data.description;
         document.querySelector(".productSummaryrate").innerHTML = `₹${data.rate}`
         document.querySelector(".productSummarystatus").innerHTML = data.orderStatus;
+        document.querySelector(".DetailsImgShow").src = data.photo;
+
     }
     orderstatuse()
 </script>

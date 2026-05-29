@@ -151,8 +151,10 @@ video {
     justify-content: center;
     width: 100%;
     gap: 4vw;
-    font-size: 1.5vw;
-    gap: 16.6vw;
+    /* font-size: 1.5vw; */
+    font-size: clamp(1vw, 1vw, 1vw);
+    /* gap: 16.6vw; */
+    justify-content: space-evenly;
 }
 
 .li-end {
@@ -248,7 +250,7 @@ input {
         box-shadow: 10px 10px;
     }  */
 #loginBtn {
-    width: 33vh;
+    width: 24vh;
     cursor: pointer;
     border: 1px solid black;
     border-radius: 3px;
@@ -282,6 +284,10 @@ input {
     display: flex;
     justify-content: center;
     margin-bottom: 0;
+}
+.v_7pKG{
+    height: 20px;
+    width: 20px;
 }
 
 
