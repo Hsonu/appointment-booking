@@ -6,6 +6,7 @@ const booking = require("./booking");
 const addProducts = require("./addProductSchema");
 const placeOrderData = require("./placeOrderSchema");
 const Card = require("./cardSchema");
+const login = require("./loginSchema");
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
@@ -291,7 +292,7 @@ app.delete("/card/:id", async (req, res) => {
     try {
         const deleteCardData = await Card.findByIdAndDelete(req.params.id);
         res.status(200).json({
-           message: "Data Delete SuccFullY",
+            message: "Data Delete SuccFullY",
             deleteCardData
         })
 
@@ -304,6 +305,50 @@ app.delete("/card/:id", async (req, res) => {
 
 })
 
+//login-otp
+
+// app.post("/send-otp", async (req, res) => {
+//     try {
+
+//     }
+//     catch (err) {
+
+//     }
+
+
+// })
+app.post("/send-otp", async (req, res) => {
+    try {
+        const { number } = req.body;
+
+        const otp = Math.floor(1000 + Math.random() * 9000).toString();
+
+        let user = await login.findOne({ number });
+
+        if (!user) {
+            user = new login({
+                number,
+                otp
+            });
+        } else {
+            user.otp = otp;
+        }
+
+        await user.save();
+
+        res.json({
+            message: "OTP Sent",
+            otp
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            message: "Server Error", err
+        });
+        console.log(err);
+
+    }
+});
 
 app.listen(port, () => {
     console.log(`server is live on ${port}`);
