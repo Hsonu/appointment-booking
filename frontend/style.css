@@ -18,6 +18,14 @@ p {
 }
 
 #CartBtn {
+    min-width: 30px;
+    /* width: 3vw; */
+    max-width: 3vw;
+    height: auto;
+    cursor: pointer;
+}
+
+#CartBtn {
     width: 3vw;
     height: auto;
     cursor: pointer;
@@ -285,7 +293,8 @@ input {
     justify-content: center;
     margin-bottom: 0;
 }
-.v_7pKG{
+
+.v_7pKG {
     height: 20px;
     width: 20px;
 }

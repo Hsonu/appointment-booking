@@ -88,6 +88,13 @@
         gap: 1vh;
     }
 
+    #CartBtn {
+        min-width: 30px;
+        /* width: 3vw; */
+        max-width: 3vw;
+        height: auto;
+        cursor: pointer;
+    }
 
     @media only screen and (max-width:768px) {
 
@@ -121,7 +128,6 @@
     footer {
         margin-top: auto;
     }
-
 </style>
 
 <body>
@@ -140,8 +146,7 @@
                     <p class="Plogin">My Account</p>
                 </div>
                 <div>
-                    <img id="CartBtn"
-                        src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png">
+                    <img id="CartBtn" src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png">
                 </div>
             </div>
         </div>
@@ -187,7 +192,7 @@
                     <div class="DetailsBuyBtn">
                         <button type="button" id="PlaceOrderBtn" class="BuyBtn">Place Order</button>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </section>
@@ -258,7 +263,7 @@
         let data = await res.json();
         console.log(data);
         console.log(data.description);
-        
+
 
         document.querySelector(".DetailsImgShow").src = data.photo;
         document.querySelector(".ProductNamesummary").innerText = data.Productname
