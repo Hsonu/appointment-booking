@@ -241,92 +241,93 @@
             </div>
         </div>
     </footer>
-</body>
-<script>
-    const customerNamePlaceOrder = document.getElementById("customerNamePlaceOrder");
-    const customerMobileNumber = document.getElementById("customerMobileNumber");
-    const customeradd = document.getElementById("customeradd")
-    async function getData() {
-        let res = await fetch("http://localhost:8080/addProduct")
-        let data = await res.json()
-        console.log(data);
-        // showDate(data);
-
-    }
-    getData()
-
-    async function getsingleProductSummar() {
-        let parmas = new URLSearchParams(window.location.search);
-        let id = parmas.get("id")
-        console.log(id);
-        let res = await fetch(`http://localhost:8080/singleProduct/${id}`)
-        let data = await res.json();
-        console.log(data);
-        console.log(data.description);
-
-
-        document.querySelector(".DetailsImgShow").src = data.photo;
-        document.querySelector(".ProductNamesummary").innerText = data.Productname
-        document.querySelector(".productSummaryrate").innerText = `₹${data.Rate}`;
-        const BuyBtn = document.querySelector("#PlaceOrderBtn");
-        BuyBtn.addEventListener("click", () => {
-            fetch("http://localhost:8080/placeOrder", {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify({
-                    customerName: customerNamePlaceOrder.innerText,
-                    customerMobileNumber: customerMobileNumber.innerText,
-                    customerAdd: customeradd.innerText,
-                    productName: data.Productname,
-                    rate: data.Rate,
-                    photo: data.photo,
-                    description: data.description,
-                    // orderStatus :"Order Placed"
-
-                })
-            });
-            console.log("Order PlacedSuccessFully");
-            alert("Order Place")
-            window.location.reload()
-            window.location.href = "./allProduct.html"
+    <script src="./config.js"></script>
+    <script>
+        const customerNamePlaceOrder = document.getElementById("customerNamePlaceOrder");
+        const customerMobileNumber = document.getElementById("customerMobileNumber");
+        const customeradd = document.getElementById("customeradd")
+        async function getData() {
+            let res = await fetch(`${BASE_URL}/addProduct`)
+            let data = await res.json()
+            console.log(data);
+            // showDate(data);
+    
+        }
+        getData()
+    
+        async function getsingleProductSummar() {
+            let parmas = new URLSearchParams(window.location.search);
+            let id = parmas.get("id")
+            console.log(id);
+            let res = await fetch(`${BASE_URL}/singleProduct/${id}`)
+            let data = await res.json();
+            console.log(data);
+            console.log(data.description);
+    
+    
+            document.querySelector(".DetailsImgShow").src = data.photo;
+            document.querySelector(".ProductNamesummary").innerText = data.Productname
+            document.querySelector(".productSummaryrate").innerText = `₹${data.Rate}`;
+            const BuyBtn = document.querySelector("#PlaceOrderBtn");
+            BuyBtn.addEventListener("click", () => {
+                fetch("${BASE_URL}/placeOrder", {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        customerName: customerNamePlaceOrder.innerText,
+                        customerMobileNumber: customerMobileNumber.innerText,
+                        customerAdd: customeradd.innerText,
+                        productName: data.Productname,
+                        rate: data.Rate,
+                        photo: data.photo,
+                        description: data.description,
+                        // orderStatus :"Order Placed"
+    
+                    })
+                });
+                console.log("Order PlacedSuccessFully");
+                alert("Order Place")
+                window.location.reload()
+                window.location.href = "./allProduct.html"
+            })
+        }
+        getsingleProductSummar()
+    
+        // function showDate (data){
+        // let cardDetaislDiv = document.querySelector("#showDataDiv");
+    
+        // data.forEach((showItem) => {
+        //     cardDetaislDiv.innerHTML += `<div class="DetailsIMGmainDiv">
+        //                     <div>
+        //                         <img class="DetailsImgShow"
+        //                             src="${showItem.photo}">
+        //                     </div>
+        //                     <div class="DetailsProducatName">
+        //                         <p>${showItem.Productname}</p>
+        //                         <p>₹ ${showItem.Rate}</p>
+        //                     </div>
+        //                 </div>
+        //                 <div class="DetailsBuyBtn">
+        //                     <button type="button" class="BuyBtn">Continue</button>
+        //                 </div>
+    
+        //         `
+        // })
+    
+    
+        // }
+        let CashOnDelivery = document.querySelector(".CashOnDelivery");
+        CashOnDelivery.addEventListener("click", () => {
+            console.log("Cash On Deliver Selected");
+            CashOnDelivery.style.backgroundColor = "#00000014";
         })
-    }
-    getsingleProductSummar()
-
-    // function showDate (data){
-    // let cardDetaislDiv = document.querySelector("#showDataDiv");
-
-    // data.forEach((showItem) => {
-    //     cardDetaislDiv.innerHTML += `<div class="DetailsIMGmainDiv">
-    //                     <div>
-    //                         <img class="DetailsImgShow"
-    //                             src="${showItem.photo}">
-    //                     </div>
-    //                     <div class="DetailsProducatName">
-    //                         <p>${showItem.Productname}</p>
-    //                         <p>₹ ${showItem.Rate}</p>
-    //                     </div>
-    //                 </div>
-    //                 <div class="DetailsBuyBtn">
-    //                     <button type="button" class="BuyBtn">Continue</button>
-    //                 </div>
-
-    //         `
-    // })
-
-
-    // }
-    let CashOnDelivery = document.querySelector(".CashOnDelivery");
-    CashOnDelivery.addEventListener("click", () => {
-        console.log("Cash On Deliver Selected");
-        CashOnDelivery.style.backgroundColor = "#00000014";
-    })
-
-
-
-
-</script>
+    
+    
+    
+    
+    </script>
+</body>
 
 </html>

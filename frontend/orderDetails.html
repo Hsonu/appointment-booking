@@ -229,24 +229,25 @@
             </div>
         </div>
     </footer>
+    <script src="./config.js"></script>
+    <script>
+        async function orderstatuse() {
+            let parmas = new URLSearchParams(window.location.search)
+            let id = parmas.get("id");
+            console.log(id);
+            let res = await fetch(`${BASE_URL}/statusSingleData/${id}`);
+            let data = await res.json()
+            console.log(data);
+    
+            document.querySelector(".ProductNamesummary").innerHTML = data.productName;
+            document.querySelector(".ProductNameDetails").innerHTML = data.description;
+            document.querySelector(".productSummaryrate").innerHTML = `₹${data.rate}`
+            document.querySelector(".productSummarystatus").innerHTML = data.orderStatus;
+            document.querySelector(".DetailsImgShow").src = data.photo;
+    
+        }
+        orderstatuse()
+    </script>
 </body>
-<script>
-    async function orderstatuse() {
-        let parmas = new URLSearchParams(window.location.search)
-        let id = parmas.get("id");
-        console.log(id);
-        let res = await fetch(`http://localhost:8080/statusSingleData/${id}`);
-        let data = await res.json()
-        console.log(data);
-
-        document.querySelector(".ProductNamesummary").innerHTML = data.productName;
-        document.querySelector(".ProductNameDetails").innerHTML = data.description;
-        document.querySelector(".productSummaryrate").innerHTML = `₹${data.rate}`
-        document.querySelector(".productSummarystatus").innerHTML = data.orderStatus;
-        document.querySelector(".DetailsImgShow").src = data.photo;
-
-    }
-    orderstatuse()
-</script>
 
 </html>

@@ -47,6 +47,12 @@
                     <p id="pLoginBtn">
                         <button id="loginBtn">Send OTP</button>
                     </p>
+
+                    <p id="inpute-p"><input id="OTP" type="number" style="display: none;" placeholder="OTP"></p>
+                    <p id="OTPP" style="display: none;">Deemo OTP</p>
+                    <p id="pLoginBtn">
+                        <button id="VerifyOTP" style="display: none;">Verify OTP</button>
+                    </p>
                 </div>
             </div>
         </div>
@@ -96,11 +102,13 @@
             </div>
         </div>
     </footer>
+    <script src="./config.js"></script>
     <script>
+        let generatedOTP = ""
         document.querySelector("#loginBtn").addEventListener("click", async () => {
             const number = document.querySelector("#loginNUmber").value;
             console.log(number);
-            const response = await fetch("http://localhost:8080/send-otp", {
+            const response = await fetch(`${BASE_URL}/send-otp`, {
 
                 method: "POST",
                 headers: {
@@ -109,10 +117,31 @@
                 body: JSON.stringify({ number })
             });
             const data = await response.json()
-            alert("Deemo OTP " +  data.otp)
+            // alert("Deemo OTP " +  data.otp)
+            generatedOTP = data.otp;
+            document.querySelector("#OTPP").innerHTML = "Deemo OTP " + data.otp;
+            document.querySelector("#OTPP").style.display = "block"
+            document.querySelector("#OTP").style.display = "block"
+            document.querySelector("#loginNUmber").style.display = "none"
+            document.querySelector("#loginBtn").style.display = "none"
+            document.querySelector("#VerifyOTP").style.display = "block"
 
-
+        });
+        document.querySelector("#VerifyOTP").addEventListener("click", async (e) => {
+            e.preventDefault()
+            let number = document.querySelector("#loginNUmber").value;
+            let inPuteOTP = document.querySelector("#OTP").value;
+            if ((Number(inPuteOTP)) === Number(generatedOTP)) {
+                alert("Login Successful ✅");
+                localStorage.setItem("isLoggedIn", "true")
+                localStorage.setItem("userNumber" , number)
+                window.location.href = "./index.html"
+            }
+            else {
+                alert("Wrong OTP ❌");
+            }
         })
+
 
     </script>
 </body>

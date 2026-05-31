@@ -580,6 +580,7 @@
             </div>
         </div>
     </footer>
+    <script src="./config.js"></script>
     <script>
         let coloseBtn = document.getElementById("colse-btn")
         let bodyf = document.getElementById("bodyf")
@@ -588,7 +589,9 @@
         let loginBtn = document.getElementById("loginBtn");
 
         async function getData() {
-            let res = await fetch("http://localhost:8080/addProduct")
+            let res = await fetch(`${BASE_URL}/addProduct`)
+            // let res = await fetch(`${BASE_URL}/addProduct`)
+
             let data = await res.json();
             console.log(data);
             showDate(data)

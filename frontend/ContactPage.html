@@ -354,6 +354,7 @@
             </div>
         </div>
     </footer>
+    <script src="./config.js"></script>
     <script>
         let fullName = document.getElementById("fullName");
         let mobileNumber = document.getElementById("mobileNumber");
@@ -373,9 +374,9 @@
                     mobileNumber: mobileNumber.value,
                     email: emailId.value
                 }
-                //http://localhost:8080/newClient
+                //${BASE_URL}/newClient
                 //https://appointment-booking-z0zg.onrender.com/newClient
-                let response = await fetch("http://localhost:8080/newClient", {
+                let response = await fetch(`${BASE_URL}/newClient`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

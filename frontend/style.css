@@ -235,7 +235,8 @@ input {
     outline: none;
 }
 
-#loginNUmber {
+#loginNUmber,
+#OTP {
     height: 30px;
     border-radius: 3px;
     border: 1px solid black;
@@ -257,7 +258,8 @@ input {
         border-radius: 9px;
         box-shadow: 10px 10px;
     }  */
-#loginBtn {
+#loginBtn,
+#VerifyOTP {
     width: 24vh;
     cursor: pointer;
     border: 1px solid black;
@@ -275,6 +277,15 @@ input {
     /* background-color: #0d6efd; */
     color: white;
     box-shadow: 0px 0px 7px 1px black;
+
+}
+
+#VerifyOTP:hover {
+    background-color: rgb(44, 40, 40);
+    /* background-color: #0d6efd; */
+    color: white;
+    box-shadow: 0px 0px 7px 1px black;
+    transition: 0.3s;
 
 }
 

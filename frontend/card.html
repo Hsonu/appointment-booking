@@ -262,9 +262,10 @@
         </div>
     </footer>
 </body>
+<script src="./config.js"></script>
 <script>
     async function allOrder() {
-        let res = await fetch("http://localhost:8080/Card");
+        let res = await fetch(`${BASE_URL}/Card`);
         let resOrder = await res.json();
         // console.log(resOrder);
         allorderView(resOrder);

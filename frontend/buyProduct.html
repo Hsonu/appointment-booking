@@ -643,11 +643,11 @@
         </div>
     </footer>
 </body>
-
+<script src="./config.js"></script>
 <script>
 
     async function getData() {
-        let res = await fetch("http://localhost:8080/addProduct")
+        let res = await fetch(`${BASE_URL}/addProduct`)
         let data = await res.json();
         console.log(data);
         showDate(data)
@@ -684,7 +684,7 @@
         let parmas = new URLSearchParams(window.location.search);
         let id = parmas.get("id");
         console.log(id);
-        let res = await fetch(`http://localhost:8080/singleProduct/${id}`)
+        let res = await fetch(`${BASE_URL}/singleProduct/${id}`)
         let data = await res.json()
         console.log(data);
         document.querySelector(".product-name-p").innerText = data.Productname;
@@ -704,7 +704,7 @@
         })
         document.querySelector(".addtocardbtn").addEventListener("click", async () => {
             try {
-                const addtocardbtn = await fetch("http://localhost:8080/Card", {
+                const addtocardbtn = await fetch("${BASE_URL}/Card", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

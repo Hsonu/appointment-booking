@@ -90,6 +90,14 @@
         gap: 1vh;
     }
 
+    #CartBtn {
+        min-width: 30px;
+        /* width: 3vw; */
+        max-width: 3vw;
+        height: auto;
+        cursor: pointer;
+    }
+
 
     @media only screen and (max-width:768px) {
 
@@ -137,17 +145,11 @@
                     <input id="searchInput" placeholder="Search" type="text">
                 </div>
                 <div id="LoginBtnClickF">
-                  <span>
-                        <a href="./order.html"> <svg class="v_7pKG" width="20" height="20" viewBox="0 0 16 16">
-                                <path
-                                    d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86"
-                                    fill="#fff"></path>
-                            </svg></a>
-                    </span>
+                    <p class="Plogin">Login/Sign up</p>
+                    <p class="Plogin">My Account</p>
                 </div>
                 <div>
-                    <img id="CartBtn"
-                        src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png">
+                    <img id="CartBtn" src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png">
                 </div>
             </div>
         </div>
@@ -216,47 +218,47 @@
             </div>
         </div>
     </footer>
-</body>
-<script>
-    async function allOrder() {
-        let res = await fetch("http://localhost:8080/viwePlaceOrder");
-        let resOrder = await res.json();
-        // console.log(resOrder);
-        allorderView(resOrder);
-    }
-    allOrder()
-    async function allorderView(resOrder) {
-        let showDataDiv = document.querySelector(".TwoDivMarger");
-
-        resOrder.forEach((item) => {
-            showDataDiv.innerHTML += `
-        
-            <div class="DetailsIMGmainDiv" data-id="${item._id}">
-                        <div>
-                            <img class="DetailsImgShow"
-                                src="${item.photo}">
-                        </div>
-                        <div class="DetailsProducatName">
-                            <p class="ProductNamesummary">${item.productName}</p>
-                            <p class="productSummaryrate">₹ ${item.rate}</p>
-                        </div>
-                    </div>
-                    
-            `
-
-        })
-        // console.log(item._id);
-        showDataDiv.addEventListener("click", (event) => {
-            let card = event.target.closest(".DetailsIMGmainDiv");
-            let id = card.dataset.id;
-            console.log(id);
-            window.location.href = `orderDetails.html?id=${id}`
-            console.log(id);
+    <script src="./config.js"></script>
+    <script>
+        async function allOrder() {
+            let res = await fetch(`${BASE_URL}/viwePlaceOrder`);
+            let resOrder = await res.json();
+            // console.log(resOrder);
+            allorderView(resOrder);
+        }
+        allOrder()
+        async function allorderView(resOrder) {
+            let showDataDiv = document.querySelector(".TwoDivMarger");
+    
+            resOrder.forEach((item) => {
+                showDataDiv.innerHTML += `
             
+                <div class="DetailsIMGmainDiv" data-id="${item._id}">
+                            <div>
+                                <img class="DetailsImgShow"
+                                    src="${item.photo}">
+                            </div>
+                            <div class="DetailsProducatName">
+                                <p class="ProductNamesummary">${item.productName}</p>
+                                <p class="productSummaryrate">₹ ${item.rate}</p>
+                            </div>
+                        </div>
+                        
+                `
+    
+            })
+            // console.log(item._id);
+            showDataDiv.addEventListener("click", (event) => {
+                let card = event.target.closest(".DetailsIMGmainDiv");
+                let id = card.dataset.id;
+                console.log(id);
+                window.location.href = `orderDetails.html?id=${id}`
+    
+            })
+        }
+    
+    </script>
+</body>
 
-        })
-    }
-
-</script>
 
 </html>

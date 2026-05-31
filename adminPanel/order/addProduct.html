@@ -225,7 +225,7 @@
 
         </div>
     </div>
-
+    <script src="./config.js"></script>
     <script>
 
         //Input
@@ -286,7 +286,7 @@
             formData.append("photo", FillPhotoInput.files[0]);
             formData.append("SubCategory", inputSubCategoryName.value);
 
-            let response = await fetch("http://localhost:8080/addProduct", {
+            let response = await fetch(`${BASE_URL}/addProduct`, {
                 method: "POST",
                 body: formData
                 // headers: {
