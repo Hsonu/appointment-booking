@@ -270,7 +270,7 @@
             document.querySelector(".productSummaryrate").innerText = `₹${data.Rate}`;
             const BuyBtn = document.querySelector("#PlaceOrderBtn");
             BuyBtn.addEventListener("click", () => {
-                fetch("${BASE_URL}/placeOrder", {
+                fetch(`${BASE_URL}/placeOrder`, {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json"

@@ -7,6 +7,7 @@ const addProducts = require("./addProductSchema");
 const placeOrderData = require("./placeOrderSchema");
 const Card = require("./cardSchema");
 const login = require("./loginSchema");
+const address = require("./addressSchema")
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
@@ -349,6 +350,28 @@ app.post("/send-otp", async (req, res) => {
 
     }
 });
+
+
+//address
+
+app.post("/addAdress", async (req, res) => {
+
+    try {
+        const addressData = req.body;
+        const addressResponse = new Address(addressData);
+        const saveaddress = await addressResponse.save();
+        console.log(saveaddress);
+        res.status(200).json({
+            message: "address Saved"
+        })
+    }
+    
+    catch (err) {
+        res.status(500).json("interal server Error")
+
+    }
+
+})
 
 app.listen(port, () => {
     console.log(`server is live on ${port}`);
