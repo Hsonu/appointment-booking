@@ -354,24 +354,65 @@ app.post("/send-otp", async (req, res) => {
 
 //address
 
-app.post("/addAdress", async (req, res) => {
+app.post("/address", async (req, res) => {
 
     try {
         const addressData = req.body;
-        const addressResponse = new Address(addressData);
+        const addressResponse = new address(addressData);
         const saveaddress = await addressResponse.save();
         console.log(saveaddress);
         res.status(200).json({
-            message: "address Saved"
+            message: "address Saved",
+            data: saveaddress
         })
     }
-    
+
     catch (err) {
         res.status(500).json("interal server Error")
+        console.log(err);
 
     }
 
 })
+//viwe all address
+app.get("/address", async (req, res) => {
+    try {
+        let viweaddress = await address.find();
+        res.status(200).json(viweaddress);
+    }
+    catch (err) {
+        res.status(500).json("interal server error")
+        console.log(err);
+    }
+})
+
+
+//update address
+app.put("/address/:phone", async (req, res) => {
+
+    try {
+        let phone = req.params.phone;
+        let updateData = req.body;
+        // console.log(req.params.phone);
+
+        let findaddress = await address.findOneAndUpdate({ phone: phone },
+            updateData,
+            { new: true }
+        );
+
+
+        res.status(200).json({
+            message: "address Successfully",
+            data: findaddress
+        })
+    } catch (err) {
+        res.status(500).json("intranal Server Error")
+        console.log(err);
+
+    }
+
+})
+
 
 app.listen(port, () => {
     console.log(`server is live on ${port}`);

@@ -96,6 +96,19 @@
         cursor: pointer;
     }
 
+    .inputcss {
+        width: 100%;
+        padding: 1vh;
+        border: 1px solid #00000014;
+        border-radius: 3px;
+    }
+
+    #customerDetailsForm {
+        display: flex;
+        flex-direction: column;
+        gap: 1vh;
+    }
+
     @media only screen and (max-width:768px) {
 
         #customerNamePlaceOrder,
@@ -159,12 +172,25 @@
                         <p>Deliver to:</p>
                     </div>
                     <div>
-                        <p id="customerNamePlaceOrder">Sonu Raj</p>
+                        <!-- <p id="customerNamePlaceOrder">Sonu Raj</p>
                         <p id="customeradd">Nagwa kali mai, Simri Subdistrict, Buxar District 802133</p>
-                        <p id="customerMobileNumber">8603632642</p>
+                        <p id="customerMobileNumber">8603632642</p> -->
+                    </div>
+                    <div>
+                        <form id="customerDetailsForm" style="display: none;">
+                            <input class="inputcss" id="customerNameInput" type="text" placeholder="Enter Name">
+                            <input class="inputcss" id="customerMobileInput" type="number"
+                                placeholder="Enter Mobile Number">
+                            <input class="inputcss" id="customerEmailInput" type="email" placeholder="Enter Email">
+                            <input class="inputcss" id="customerAddressInput" type="text" placeholder="Full Address">
+                            <input class="inputcss" id="customerCityInput" type="text" placeholder="City">
+                            <input class="inputcss" id="customerDistrictInput" type="text" placeholder="District">
+                            <input class="inputcss" id="customerStateInput" type="text" placeholder="State">
+                            <input class="inputcss" id="customerPincodeInput" type="text" placeholder="Pincode">
+                        </form>
                     </div>
                     <div class="DetailsBuyBtn">
-                        <button type="button" class="BuyBtn">Change</button>
+                        <button type="button" id="BuyBtnChangeaddress" class="BuyBtn">Add Address</button>
                     </div>
                 </div>
                 <div class="cardDetaislDiv" id="showDataDiv">
@@ -251,10 +277,10 @@
             let data = await res.json()
             console.log(data);
             // showDate(data);
-    
+
         }
         getData()
-    
+
         async function getsingleProductSummar() {
             let parmas = new URLSearchParams(window.location.search);
             let id = parmas.get("id")
@@ -263,8 +289,8 @@
             let data = await res.json();
             console.log(data);
             console.log(data.description);
-    
-    
+
+
             document.querySelector(".DetailsImgShow").src = data.photo;
             document.querySelector(".ProductNamesummary").innerText = data.Productname
             document.querySelector(".productSummaryrate").innerText = `₹${data.Rate}`;
@@ -284,7 +310,7 @@
                         photo: data.photo,
                         description: data.description,
                         // orderStatus :"Order Placed"
-    
+
                     })
                 });
                 console.log("Order PlacedSuccessFully");
@@ -294,10 +320,10 @@
             })
         }
         getsingleProductSummar()
-    
+
         // function showDate (data){
         // let cardDetaislDiv = document.querySelector("#showDataDiv");
-    
+
         // data.forEach((showItem) => {
         //     cardDetaislDiv.innerHTML += `<div class="DetailsIMGmainDiv">
         //                     <div>
@@ -312,21 +338,46 @@
         //                 <div class="DetailsBuyBtn">
         //                     <button type="button" class="BuyBtn">Continue</button>
         //                 </div>
-    
+
         //         `
         // })
-    
-    
+
+
         // }
         let CashOnDelivery = document.querySelector(".CashOnDelivery");
         CashOnDelivery.addEventListener("click", () => {
             console.log("Cash On Deliver Selected");
             CashOnDelivery.style.backgroundColor = "#00000014";
         })
-    
-    
-    
-    
+
+        document.querySelector("#BuyBtnChangeaddress").addEventListener("click", async () => {
+            document.querySelector("#customerDetailsForm").style.display = "block";
+
+            let addressData = {
+                name: document.querySelector("#customerNameInput").value,
+                phone: document.querySelector("#customerMobileInput").value,
+                email: document.querySelector("#customerEmailInput").value,
+                address: {
+                    fullAddress: document.querySelector("#customerAddressInput").value,
+                    city: document.querySelector("#customerCityInput").value,
+                    district: document.querySelector("#customerDistrictInput").value,
+                    state: document.querySelector("#customerStateInput").value,
+                    pinCode: document.querySelector("#customerPincodeInput").value
+
+                }
+            }
+            let response = await fetch(`${BASE_URL}/address`, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify(addressData)
+            })
+            let data = await response.json()
+            console.log(data);
+
+        })
+
     </script>
 </body>
 
