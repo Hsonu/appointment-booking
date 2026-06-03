@@ -97,16 +97,18 @@
     }
 
     .inputcss {
-        width: 100%;
+        /* width: 100%; */
         padding: 1vh;
         border: 1px solid #00000014;
         border-radius: 3px;
+        transition: 0.3s;
     }
 
     #customerDetailsForm {
         display: flex;
         flex-direction: column;
         gap: 1vh;
+        transition: 0.3s;
     }
 
     @media only screen and (max-width:768px) {
@@ -172,11 +174,11 @@
                         <p>Deliver to:</p>
                     </div>
                     <div>
-                        <!-- <p id="customerNamePlaceOrder">Sonu Raj</p>
+                        <p id="customerNamePlaceOrder">Sonu Raj</p>
                         <p id="customeradd">Nagwa kali mai, Simri Subdistrict, Buxar District 802133</p>
-                        <p id="customerMobileNumber">8603632642</p> -->
+                        <p id="customerMobileNumber">8603632642</p>
                     </div>
-                    <div>
+                    <div style="padding: 10px;">
                         <form id="customerDetailsForm" style="display: none;">
                             <input class="inputcss" id="customerNameInput" type="text" placeholder="Enter Name">
                             <input class="inputcss" id="customerMobileInput" type="number"
@@ -191,6 +193,8 @@
                     </div>
                     <div class="DetailsBuyBtn">
                         <button type="button" id="BuyBtnChangeaddress" class="BuyBtn">Add Address</button>
+                        <button type="button" id="addresSaveBtn" class="BuyBtn" style="display: none;">Save
+                            Address</button>
                     </div>
                 </div>
                 <div class="cardDetaislDiv" id="showDataDiv">
@@ -351,7 +355,17 @@
         })
 
         document.querySelector("#BuyBtnChangeaddress").addEventListener("click", async () => {
-            document.querySelector("#customerDetailsForm").style.display = "block";
+            document.querySelector("#customerDetailsForm").style.display = "flex";
+            document.querySelector("#addresSaveBtn").style.display = "flex";
+            document.querySelector("#BuyBtnChangeaddress").style.display = "none";
+            console.log("Bnt Click");
+
+
+        })
+
+        document.querySelector("#addresSaveBtn").addEventListener("click", async () => {
+
+
 
             let addressData = {
                 name: document.querySelector("#customerNameInput").value,
@@ -366,6 +380,13 @@
 
                 }
             }
+
+            let outPut = document.querySelector("#customeradd").value = addressData.address
+            console.log(outPut);
+
+            document.querySelector("#")
+
+
             let response = await fetch(`${BASE_URL}/address`, {
                 method: "POST",
                 headers: {
