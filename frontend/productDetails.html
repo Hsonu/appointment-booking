@@ -177,6 +177,7 @@
                         <p id="customerNamePlaceOrder">Sonu Raj</p>
                         <p id="customeradd">Nagwa kali mai, Simri Subdistrict, Buxar District 802133</p>
                         <p id="customerMobileNumber">8603632642</p>
+                        <p id="customerEmail">sonurajsonurajs4515@gmail.com</p>
                     </div>
                     <div style="padding: 10px;">
                         <form id="customerDetailsForm" style="display: none;">
@@ -188,7 +189,7 @@
                             <input class="inputcss" id="customerCityInput" type="text" placeholder="City">
                             <input class="inputcss" id="customerDistrictInput" type="text" placeholder="District">
                             <input class="inputcss" id="customerStateInput" type="text" placeholder="State">
-                            <input class="inputcss" id="customerPincodeInput" type="text" placeholder="Pincode">
+                            <input class="inputcss" id="customerPincodeInput" type="number" placeholder="Pincode">
                         </form>
                     </div>
                     <div class="DetailsBuyBtn">
@@ -313,7 +314,7 @@
                         rate: data.Rate,
                         photo: data.photo,
                         description: data.description,
-                        // orderStatus :"Order Placed"
+                        orderStatus: "Order Placed"
 
                     })
                 });
@@ -364,8 +365,20 @@
         })
 
         document.querySelector("#addresSaveBtn").addEventListener("click", async () => {
+//painding
+            let customerNameInput = document.querySelector("customerNameInput").value
+            let customerMobileInput = document.querySelector("#customerMobileInput").value
+            let customerEmailInput = document.querySelector("#customerEmailInput").value
+            let customerAddressInput = document.querySelector("#customerAddressInput").value
+            let customerCityInput = document.querySelector("#customerCityInput").value
+            let customerDistrictInput = document.querySelector("#customerDistrictInput").value
+            let customerStateInput = document.querySelector("#customerStateInput").value
+            if (customerAddressInput === "" || customerCityInput === "" || customerDistrictInput === "" || customerStateInput === "") {
+                alert("Please Fill All Address Details")
+                return;
+            }
 
-
+            document.querySelector("#customerDetailsForm").style.display = "none";
 
             let addressData = {
                 name: document.querySelector("#customerNameInput").value,
@@ -382,9 +395,13 @@
             }
 
             let outPut = document.querySelector("#customeradd").value = addressData.address
+            document.querySelector("#customeradd").innerHTML = addressData.address.fullAddress + addressData.address.city + addressData.address.district + addressData.address.state + addressData.address.district + addressData.address.pinCode
+            document.querySelector("#customerNamePlaceOrder").innerHTML = addressData.name
+            document.querySelector("#customerMobileNumber").innerHTML = addressData.phone
+            document.querySelector("#customerEmail").innerHTML = addressData.email
             console.log(outPut);
 
-            document.querySelector("#")
+
 
 
             let response = await fetch(`${BASE_URL}/address`, {
