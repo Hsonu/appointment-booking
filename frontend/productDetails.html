@@ -174,22 +174,30 @@
                         <p>Deliver to:</p>
                     </div>
                     <div>
-                        <p id="customerNamePlaceOrder">Sonu Raj</p>
-                        <p id="customeradd">Nagwa kali mai, Simri Subdistrict, Buxar District 802133</p>
-                        <p id="customerMobileNumber">8603632642</p>
-                        <p id="customerEmail">sonurajsonurajs4515@gmail.com</p>
+                        <p id="customerNamePlaceOrder"></p>
+                        <p id="customeradd"></p>
+                        <p id="customerMobileNumber"></p>
+                        <p id="customerEmail"></p>
                     </div>
                     <div style="padding: 10px;">
                         <form id="customerDetailsForm" style="display: none;">
                             <input class="inputcss" id="customerNameInput" type="text" placeholder="Enter Name">
+                            <small style="color: red;" id="customerNameError"></small>
                             <input class="inputcss" id="customerMobileInput" type="number"
                                 placeholder="Enter Mobile Number">
+                            <small style="color: red;" id="customerMobileError"></small>
                             <input class="inputcss" id="customerEmailInput" type="email" placeholder="Enter Email">
+                            <small style="color: red;" id="customerEmailError"></small>
                             <input class="inputcss" id="customerAddressInput" type="text" placeholder="Full Address">
+                            <small style="color: red;" id="customerAddressError"></small>
                             <input class="inputcss" id="customerCityInput" type="text" placeholder="City">
+                            <small style="color: red;" id="customerCityError"></small>
                             <input class="inputcss" id="customerDistrictInput" type="text" placeholder="District">
+                            <small style="color: red;" id="customerDistrictError"></small>
                             <input class="inputcss" id="customerStateInput" type="text" placeholder="State">
+                            <small style="color: red;" id="customerStateError"></small>
                             <input class="inputcss" id="customerPincodeInput" type="number" placeholder="Pincode">
+                            <small style="color: red;" id="customerPincodeError"></small>
                         </form>
                     </div>
                     <div class="DetailsBuyBtn">
@@ -218,7 +226,7 @@
                         <p class="paymentMethodDiv">Payment Method</p>
                     </div>
                     <div>
-                        <p class="CashOnDelivery">Cash on Delivery</p>
+                        <p class="CashOnDelivery" id="CashOnDeliveryPayment">Cash on Delivery</p>
                     </div>
                     <div class="DetailsBuyBtn">
                         <button type="button" id="PlaceOrderBtn" class="BuyBtn">Place Order</button>
@@ -299,8 +307,35 @@
             document.querySelector(".DetailsImgShow").src = data.photo;
             document.querySelector(".ProductNamesummary").innerText = data.Productname
             document.querySelector(".productSummaryrate").innerText = `₹${data.Rate}`;
+            //payment Method code
+            let paymentMethod = ""
+            document.querySelector("#CashOnDeliveryPayment").addEventListener("click", () => {
+                paymentMethod = "Cash On Delivery";
+                console.log(paymentMethod);
+            })
             const BuyBtn = document.querySelector("#PlaceOrderBtn");
+            //order place code 
             BuyBtn.addEventListener("click", () => {
+                let hasError = false;
+                if (customerNamePlaceOrder.innerHTML.trim() === "") {
+                    alert("Please Add Cusomer Name")
+                    hasError = true;
+                }
+                if (customerMobileNumber.innerHTML.trim() === "") {
+                    alert("Please Add Mobile Number")
+                    hasError = true;
+                }
+                if (customeradd.innerHTML.trim() === "") {
+                    alert("Please Add Address")
+                    hasError = true;
+                }
+                if (paymentMethod === "") {
+                    alert("Please Select Payment Method")
+                    hasError = true;
+                }
+                if (hasError) {
+                    return
+                }
                 fetch(`${BASE_URL}/placeOrder`, {
                     method: "POST",
                     headers: {
@@ -310,6 +345,7 @@
                         customerName: customerNamePlaceOrder.innerText,
                         customerMobileNumber: customerMobileNumber.innerText,
                         customerAdd: customeradd.innerText,
+                        paymentMethod: paymentMethod,
                         productName: data.Productname,
                         rate: data.Rate,
                         photo: data.photo,
@@ -359,27 +395,70 @@
             document.querySelector("#customerDetailsForm").style.display = "flex";
             document.querySelector("#addresSaveBtn").style.display = "flex";
             document.querySelector("#BuyBtnChangeaddress").style.display = "none";
-            console.log("Bnt Click");
+
 
 
         })
 
         document.querySelector("#addresSaveBtn").addEventListener("click", async () => {
-//painding
-            let customerNameInput = document.querySelector("customerNameInput").value
+
+            let customerNameInput = document.querySelector("#customerNameInput").value
             let customerMobileInput = document.querySelector("#customerMobileInput").value
-            let customerEmailInput = document.querySelector("#customerEmailInput").value
+            let customerEmailInput = document.querySelector("#customerEmailInput").value //optional
             let customerAddressInput = document.querySelector("#customerAddressInput").value
             let customerCityInput = document.querySelector("#customerCityInput").value
             let customerDistrictInput = document.querySelector("#customerDistrictInput").value
             let customerStateInput = document.querySelector("#customerStateInput").value
-            if (customerAddressInput === "" || customerCityInput === "" || customerDistrictInput === "" || customerStateInput === "") {
-                alert("Please Fill All Address Details")
-                return;
+            let customerPincodeInput = document.querySelector("#customerPincodeInput").value
+
+
+            //error Clear
+            document.querySelector("#customerNameError").innerHTML = "";
+            document.querySelector("#customerMobileError").innerHTML = "";
+            document.querySelector("#customerAddressError").innerHTML = "";
+            document.querySelector("#customerCityError").innerHTML = "";
+            document.querySelector("#customerDistrictError").innerHTML = "";
+            document.querySelector("#customerStateError").innerHTML = "";
+            document.querySelector("#customerPincodeError").innerHTML = "";
+            let hasError = false;
+            if (customerNameInput === "") {
+                document.querySelector("#customerNameError").innerHTML = "Name is required";
+                hasError = true;
+            }
+            if (customerMobileInput === "") {
+                document.querySelector("#customerMobileError").innerHTML = "Number is required"
+                hasError = true;
+            }   
+            else if (customerMobileInput.length !== 10) {
+                document.querySelector("#customerMobileError").innerHTML = "Enter Valid 10 Digit Number"
+                hasError = true;
+            }
+            if (customerAddressInput === "") {
+                document.querySelector("#customerAddressError").innerHTML = "Address is required"
+                hasError = true;
+            }
+            if (customerCityInput === "") {
+                document.querySelector("#customerCityError").innerHTML = "City is reauired"
+                hasError = true;
+            }
+            if (customerDistrictInput === "") {
+                document.querySelector("#customerDistrictError").innerHTML = "Distric is required"
+                hasError = true;
+            }
+            if (customerStateInput === "") {
+                document.querySelector("#customerStateError").innerHTML = "State is required"
+                hasError = true;
+            }
+            if (customerPincodeInput === "") {
+                document.querySelector("#customerPincodeError").innerHTML = "Pin Code in required"
+                hasError = true;
+            }
+            if (hasError) {
+                return
             }
 
-            document.querySelector("#customerDetailsForm").style.display = "none";
 
+            document.querySelector("#customerDetailsForm").style.display = "none";
             let addressData = {
                 name: document.querySelector("#customerNameInput").value,
                 phone: document.querySelector("#customerMobileInput").value,
@@ -394,12 +473,12 @@
                 }
             }
 
-            let outPut = document.querySelector("#customeradd").value = addressData.address
-            document.querySelector("#customeradd").innerHTML = addressData.address.fullAddress + addressData.address.city + addressData.address.district + addressData.address.state + addressData.address.district + addressData.address.pinCode
+
+            document.querySelector("#customeradd").innerHTML = `${addressData.address.fullAddress}, ${addressData.address.city}, ${addressData.address.district}, ${addressData.address.state}, ${addressData.address.pinCode}`
             document.querySelector("#customerNamePlaceOrder").innerHTML = addressData.name
             document.querySelector("#customerMobileNumber").innerHTML = addressData.phone
             document.querySelector("#customerEmail").innerHTML = addressData.email
-            console.log(outPut);
+
 
 
 

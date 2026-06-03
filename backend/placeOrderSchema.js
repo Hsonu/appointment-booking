@@ -27,6 +27,9 @@ const placeOrderDataSchema = new mongoose.Schema({
     orderStatus: {
         type: String,
         default: "Order Placed"
+    },
+    paymentMethod: {
+        type: String
     }
 });
 
