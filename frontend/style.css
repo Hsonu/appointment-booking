@@ -310,6 +310,18 @@ input {
     width: 20px;
 }
 
+.v_7pKG {
+    cursor: pointer;
+    height: 20px;
+    /* max-height: 3vh; */
+    width: 20px;
+}
+
+.ChackOrder {
+    color: #fff;
+    cursor: pointer;
+    font-size: clamp(12px, 1.2vw, 40px);
+}
 
 @media only screen and (max-width: 768px) {
     /* #headerMainDiv {
@@ -422,6 +434,19 @@ input {
         display: flex;
         justify-content: center;
         margin-bottom: 0;
+    }
+
+    .v_7pKG {
+        cursor: pointer;
+        height: 20px;
+        /* max-height: 3vh; */
+        width: 15px;
+    }
+
+    .ChackOrder {
+        color: #fff;
+        cursor: pointer;
+        font-size: clamp(12px, 1.2vw, 40px);
     }
 
 

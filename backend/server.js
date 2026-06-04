@@ -8,6 +8,7 @@ const placeOrderData = require("./placeOrderSchema");
 const Card = require("./cardSchema");
 const login = require("./loginSchema");
 const address = require("./addressSchema")
+const user = require("./userLgoninSchema")
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
@@ -306,18 +307,7 @@ app.delete("/card/:id", async (req, res) => {
 
 })
 
-//login-otp
 
-// app.post("/send-otp", async (req, res) => {
-//     try {
-
-//     }
-//     catch (err) {
-
-//     }
-
-
-// })
 app.post("/send-otp", async (req, res) => {
     try {
         const { number } = req.body;
@@ -410,6 +400,44 @@ app.put("/address/:phone", async (req, res) => {
         console.log(err);
 
     }
+
+})
+
+
+// new user
+
+
+app.post("/newUser/:userNumber", async (req, res) => {
+
+    try {
+        let uesrNumberIn = req.params.userNumber;
+        let existingUser = await user.findOne({
+            useNumber : uesrNumberIn
+        });
+
+        if (existingUser) {
+            return res.status(200).json({
+                message: "Ueser Alredy Exists ",
+                user: existingUser
+            });
+        }
+        let userResponse = new user({
+            useNumber: uesrNumberIn
+
+        });
+        let save = await userResponse.save()
+        return res.status(200).json({
+            message: "New User Saved",
+            data: save
+        })
+
+    }
+    catch (err) {
+        res.status(500).json({
+            message: err.message,
+        })
+    }
+
 
 })
 
