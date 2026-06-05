@@ -109,6 +109,23 @@
         flex-direction: column;
         gap: 1vh;
         transition: 0.3s;
+
+    }
+
+    .QtyBtn {
+        display: flex;
+        /* justify-content: center; */
+        gap: 1vw;
+        margin-left: 2vw;
+        align-items: center;
+        /* border: 1px solid black; */
+        width: 5.5vw;
+    }
+
+    #minBtn,
+    #maxBtn {
+        display: flex;
+        padding: 3px;
     }
 
     @media only screen and (max-width:768px) {
@@ -227,13 +244,20 @@
                             <img class="DetailsImgShow"
                                 src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
                         </div>
+
                         <div class="DetailsProducatName">
                             <p class="ProductNamesummary">The Nomi Bridal Ring Set</p>
                             <p class="productSummaryrate">₹ 1,34,725</p>
                         </div>
                     </div>
+                    <div class="QtyBtn">
+                        <button id="minBtn" class="BuyBtn">-</button>
+                        <span id="qty">1</span>
+                        <button id="maxBtn" class="BuyBtn">+</button>
+                    </div>
                     <div class="DetailsBuyBtn">
-                        <button type="button" class="BuyBtn">Continue</button>
+                        <p id="totalAmount"></p>
+                        <!-- <button type="button" class="BuyBtn">Continue</button> -->
                     </div>
                 </div>
                 <div class="cardDetaislDiv" id="showDataDivv">
@@ -300,6 +324,11 @@
         const customerNamePlaceOrder = document.getElementById("customerNamePlaceOrder");
         const customerMobileNumber = document.getElementById("customerMobileNumber");
         const customeradd = document.getElementById("customeradd")
+        let qty = 1;
+        //qty Update
+
+
+
         async function getData() {
             let res = await fetch(`${BASE_URL}/addProduct`)
             let data = await res.json()
@@ -322,6 +351,24 @@
             document.querySelector(".DetailsImgShow").src = data.photo;
             document.querySelector(".ProductNamesummary").innerText = data.Productname
             document.querySelector(".productSummaryrate").innerText = `₹${data.Rate}`;
+            let AmountRate = `${data.Rate}`
+            document.querySelector("#totalAmount").innerHTML = "Total Amount " + "₹ " + `${qty * AmountRate}`;
+
+            document.querySelector("#minBtn").addEventListener("click", () => {
+                if (qty > 1) {
+                    qty--;
+                    document.querySelector("#totalAmount").innerHTML = "Total Amount " + "₹ " + `${qty * AmountRate}`;
+                    document.querySelector("#qty").innerHTML = qty;
+
+                }
+
+            })
+            document.querySelector("#maxBtn").addEventListener("click", () => {
+                qty++;
+                document.querySelector("#totalAmount").innerHTML = "Total Amount " + "₹ " + `${qty * AmountRate}`;
+                document.querySelector("#qty").innerHTML = qty;
+            })
+
             //payment Method code
             let paymentMethod = ""
             document.querySelector("#CashOnDeliveryPayment").addEventListener("click", () => {
@@ -332,6 +379,24 @@
             //order place code 
             BuyBtn.addEventListener("click", () => {
                 let hasError = false;
+                let customerNameInput = document.querySelector("#customerNameInput").value
+                let customerMobileInput = document.querySelector("#customerMobileInput").value
+                let customerEmailInput = document.querySelector("#customerEmailInput").value //optional
+                let customerAddressInput = document.querySelector("#customerAddressInput").value
+                let customerCityInput = document.querySelector("#customerCityInput").value
+                let customerDistrictInput = document.querySelector("#customerDistrictInput").value
+                let customerStateInput = document.querySelector("#customerStateInput").value
+                let customerPincodeInput = document.querySelector("#customerPincodeInput").value
+
+
+                //error Clear
+                document.querySelector("#customerNameError").innerHTML = "";
+                document.querySelector("#customerMobileError").innerHTML = "";
+                document.querySelector("#customerAddressError").innerHTML = "";
+                document.querySelector("#customerCityError").innerHTML = "";
+                document.querySelector("#customerDistrictError").innerHTML = "";
+                document.querySelector("#customerStateError").innerHTML = "";
+                document.querySelector("#customerPincodeError").innerHTML = "";
                 if (customerNamePlaceOrder.innerHTML.trim() === "") {
                     alert("Please Add Cusomer Name")
                     hasError = true;
@@ -351,14 +416,75 @@
                 if (hasError) {
                     return
                 }
+                if (customerNameInput === "") {
+                    document.querySelector("#customerNameError").innerHTML = "Name is required";
+                    hasError = true;
+                }
+                if (customerMobileInput === "") {
+                    document.querySelector("#customerMobileError").innerHTML = "Number is required"
+                    hasError = true;
+                }
+                else if (customerMobileInput.length !== 10) {
+                    document.querySelector("#customerMobileError").innerHTML = "Enter Valid 10 Digit Number"
+                    hasError = true;
+                }
+                if (customerAddressInput === "") {
+                    document.querySelector("#customerAddressError").innerHTML = "Address is required"
+                    hasError = true;
+                }
+                if (customerCityInput === "") {
+                    document.querySelector("#customerCityError").innerHTML = "City is reauired"
+                    hasError = true;
+                }
+                if (customerDistrictInput === "") {
+                    document.querySelector("#customerDistrictError").innerHTML = "Distric is required"
+                    hasError = true;
+                }
+                if (customerStateInput === "") {
+                    document.querySelector("#customerStateError").innerHTML = "State is required"
+                    hasError = true;
+                }
+                if (customerPincodeInput === "") {
+                    document.querySelector("#customerPincodeError").innerHTML = "Pin Code in required"
+                    hasError = true;
+                }
+                if (hasError) {
+                    return
+                }
+                document.querySelector("#customerDetailsForm").style.display = "none";
+                let addressData = {
+                    name: document.querySelector("#customerNameInput").value,
+                    phone: document.querySelector("#customerMobileInput").value,
+                    email: document.querySelector("#customerEmailInput").value,
+                    address: {
+                        fullAddress: document.querySelector("#customerAddressInput").value,
+                        city: document.querySelector("#customerCityInput").value,
+                        district: document.querySelector("#customerDistrictInput").value,
+                        state: document.querySelector("#customerStateInput").value,
+                        pinCode: document.querySelector("#customerPincodeInput").value
+
+                    }
+                }
+                document.querySelector("#customeradd").innerHTML = `${addressData.address.fullAddress}, ${addressData.address.city}, ${addressData.address.district}, ${addressData.address.state}, ${addressData.address.pinCode}`
+                document.querySelector("#customerNamePlaceOrder").innerHTML = addressData.name
+                document.querySelector("#customerMobileNumber").innerHTML = addressData.phone
+                document.querySelector("#customerEmail").innerHTML = addressData.email
+
                 fetch(`${BASE_URL}/placeOrder`, {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json"
                     },
                     body: JSON.stringify({
+                        qty: qty,
+                        totalAmount: qty * AmountRate,
+                        address: addressData.address,
+                        name: addressData.name,
+                        phone: addressData.phone,
+                        email: addressData.email,
+                        useNumber: localStorage.getItem("userNumber"),
                         customerName: customerNamePlaceOrder.innerText,
-                        customerMobileNumber: customerMobileNumber.innerText,
+                        customerMobileNumber: localStorage.getItem("userNumber"),
                         customerAdd: customeradd.innerText,
                         paymentMethod: paymentMethod,
                         productName: data.Productname,
@@ -371,7 +497,6 @@
                 });
                 console.log("Order PlacedSuccessFully");
                 alert("Order Place")
-                window.location.reload()
                 window.location.href = "./allProduct.html"
             })
         }
@@ -443,7 +568,7 @@
             if (customerMobileInput === "") {
                 document.querySelector("#customerMobileError").innerHTML = "Number is required"
                 hasError = true;
-            }   
+            }
             else if (customerMobileInput.length !== 10) {
                 document.querySelector("#customerMobileError").innerHTML = "Enter Valid 10 Digit Number"
                 hasError = true;

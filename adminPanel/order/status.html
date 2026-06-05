@@ -137,6 +137,7 @@
                     <p class="statusp">Status</p>
                     <p class="statusp">Address</p>
                     <p class="statusp">Mobile Number</p>
+                    <p class="statusp">Order Date</p>
                     <p class="statusp">Button</p>
                 </div>
             </div>
@@ -159,9 +160,9 @@
                 <div class="statusProduct">
                 <p class="statusp1">${item.customerName}</p>
                         <p class="statusp1">${item.productName}</p>
-                        <p class="statusp1">1</p>
+                        <p class="statusp1">${item.qty}</p>
                         <p class="statusp1">₹${item.rate}</p>
-                        <p class="statusp1">₹${item.rate}</p>
+                        <p class="statusp1">₹${item.totalAmount}</p>
             
     
         <select class="statusp1">
@@ -213,6 +214,10 @@
             </select>
                         <p class="statusp1">${item.customerAdd}</p>
                         <p class="statusp1">${item.customerMobileNumber}</p>
+                        <p class="statusp1">${new Date(item.orderDate).toLocaleString("en-IN", {
+                    timeZone: "Asia/Kolkata"
+                })}
+</p>
                         <button  class="statusp1" data-id="${item._id}" id="updatebtn">Update</button>
                 </div>
                 `
@@ -229,17 +234,17 @@
                                 "Content-Type": "application/json"
                             },
                             body: JSON.stringify({
-    
+
                                 status: status
-    
+
                             })
                         })
                         let data = await response.json()
                         console.log(data);
                         alert("Order Status Updated");
-    
+
                     })
-    
+
                 })
             })
         }

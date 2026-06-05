@@ -18,6 +18,12 @@ const placeOrderDataSchema = new mongoose.Schema({
     rate: {
         type: Number
     },
+    totalAmount: {
+        type: Number
+    },
+    qty: {
+        type: Number,
+    },
     photo: {
         type: String
     },
@@ -30,6 +36,43 @@ const placeOrderDataSchema = new mongoose.Schema({
     },
     paymentMethod: {
         type: String
+    },
+    name: {
+        type: String
+    },
+    phone: {
+        type: String
+    },
+    email: {
+        type: String,
+        default: ""
+    },
+    orderDate: {
+        type: Date,
+        default: Date.now
+    },
+    address: {
+        fullAddress: {
+            type: String,
+            default: ""
+        },
+        city: {
+            type: String,
+            default: ""
+        },
+        district: {
+            type: String,
+            default: ""
+        },
+        state: {
+            type: String,
+            default: ""
+        },
+        pinCode: {
+            type: String,
+            default: ""
+        }
+
     }
 });
 
