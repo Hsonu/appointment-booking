@@ -214,10 +214,24 @@ app.get("/singleProduct/:id", async (req, res) => {
 //Place Order
 app.post("/placeOrder", async (req, res) => {
     try {
+        let userNumber = req.body.useNumber;
+        console.log(userNumber);
+
+
+        let chackUser = await user.findOne({
+            useNumber: userNumber
+        });
+        
+        if (!chackUser) {
+            return res.status(401).json({
+                message: "Please login"
+            })
+        }
+
         const placeOrderDataBody = req.body;
         const viewPlaceOrderData = new placeOrderData(placeOrderDataBody);
         const PlaceOrderResponse = await viewPlaceOrderData.save();
-        console.log(placeOrderData);
+        console.log(req.body);
         res.status(200).json(PlaceOrderResponse);
 
     }
@@ -412,7 +426,7 @@ app.post("/newUser/:userNumber", async (req, res) => {
     try {
         let uesrNumberIn = req.params.userNumber;
         let existingUser = await user.findOne({
-            useNumber : uesrNumberIn
+            useNumber: uesrNumberIn
         });
 
         if (existingUser) {
