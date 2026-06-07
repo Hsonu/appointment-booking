@@ -285,23 +285,40 @@
             transition: 0.3s;
         }
 
-        #ProductImage {
-            height: 15vh;
-            width: auto;
-            cursor: pointer;
+        #PriceP {
+            /* font-size: 1.5vw; */
+            flex-wrap: wrap;
+            font-size: clamp(12px, 1.2vw, 40px);
+            padding: 2px;
+            /* font-weight: bold; */
         }
+
+        #ProductImage {
+            /* height: 14vh;
+            width: auto;
+            cursor: pointer; */
+            height: 36vh;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            object-fit: cover;
+            /* display: block;*/
+        }
+
+
 
         #titleP {
             /* font-size: 3vw; */
             font-size: clamp(10px, 1.2vw, 40px);
             flex-wrap: wrap;
             padding: 4px;
+            font-weight: 600;
         }
 
         #PriceP {
             /* font-size: 1.5vw; */
             flex-wrap: wrap;
-            font-size: clamp(9px, 1.2vw, 40px);
+            font-size: clamp(12px, 1.2vw, 40px);
             /* padding: 8px; */
         }
 
@@ -421,7 +438,7 @@
 
 
 <body>
-<header>
+    <header>
         <div>
             <div id="headerMainDiv">
                 <div>
@@ -468,6 +485,7 @@
                         <p class="product-name-p">The Nomi Bridal Ring Set</p>
                     </b>
                     <p class="product-name-price">Rs.1,00,106</p>
+                       <small id="smallgstText" class="product-name-price">✓ GST Included</small>
                     <p class="product-name-dis">Diamond PreSet Solitaire Ring In 18Kt Yellow Gold (4.35 gram) with
                         Diamonds
                         (0.2370 Ct) and Solitaire (0.15 Ct)</p>
@@ -662,6 +680,8 @@
     function showDate(data) {
         let mainDivCard = document.getElementById("mainDivCard");
         data.forEach((item) => {
+            let gst = (item.Rate * item.gst) / 100
+            let finalTotalAmount = Math.round(gst + item.Rate);
             mainDivCard.innerHTML += `
                  <div id="CardDiv">
                 <div id="imgdiv">
@@ -673,7 +693,10 @@
                     <p id="titleP">${item.Productname}</p>
                 </div>
                 <div class="PriceAndBuyBtn">
-                    <p id="PriceP">₹${item.Rate}</p>
+                <div class="AmountDiv">
+                    <p id="PriceP">₹${finalTotalAmount}</p>
+                    <small id="smallgstText">✓ GST Included</small>
+                    </div>
                     <a href="./buyProduct.html?id=${item._id}">
                         <p class="BuyBtn">BUY NOW</p>
                     </a>
@@ -684,7 +707,7 @@
         })
 
     }
-
+    // Single Peroduct
     async function getSingleProduct() {
 
         let parmas = new URLSearchParams(window.location.search);
@@ -692,10 +715,14 @@
         console.log(id);
         let res = await fetch(`${BASE_URL}/singleProduct/${id}`)
         let data = await res.json()
-        console.log(data);
+        // console.log(data);
+        let gst = (data.Rate * data.gst) / 100;
+        let finalTotalAmount = Math.round(gst + data.Rate)
+        console.log(finalTotalAmount);
+        
         document.querySelector(".product-name-p").innerText = data.Productname;
 
-        document.querySelector(".product-name-price").innerText = `₹${data.Rate}`;
+        document.querySelector(".product-name-price").innerText = "₹" + finalTotalAmount;
 
         document.querySelector(".product-name-dis").innerText = data.description;
 
@@ -710,7 +737,7 @@
         })
         document.querySelector(".addtocardbtn").addEventListener("click", async () => {
             try {
-                const addtocardbtn = await fetch(`${BASE_URL}/Card` , {
+                const addtocardbtn = await fetch(`${BASE_URL}/Card`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

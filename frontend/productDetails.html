@@ -128,6 +128,25 @@
         padding: 3px;
     }
 
+    #PriceSummaryDiv {
+        display: flex;
+        flex-direction: column;
+        font-size: clamp(12px, 2vw, 12px)
+    }
+
+    .PriceSummaryDivLast {
+        display: flex;
+        justify-content: space-between;
+        gap: 1vw;
+    }
+
+    #DotBorder {
+        border-top: dotted 2px;
+        padding: 3px;
+
+        font-size: clamp(12px, 1.2vw, 40px)
+    }
+
     @media only screen and (max-width:768px) {
 
         #customerNamePlaceOrder,
@@ -256,8 +275,21 @@
                         <button id="maxBtn" class="BuyBtn">+</button>
                     </div>
                     <div class="DetailsBuyBtn">
-                        <p id="totalAmount"></p>
-                        <!-- <button type="button" class="BuyBtn">Continue</button> -->
+                        <div id="PriceSummaryDiv">
+                            <div class="PriceSummaryDivLast">
+                                <p>Price</p>
+                                <p id="ProductPrice">ProductPrice :-2</p>
+                            </div>
+                            <div class="PriceSummaryDivLast">
+                                <p id="GSTSamble">GST</p>
+                                <p id="PeroductGST">GST:-3</p>
+                            </div>
+                            <div class="PriceSummaryDivLast" id="DotBorder">
+                                <p style="font-weight: bold;">Total Amount</p>
+                                <p id="totalAmount" style="font-weight: bold;">1</p>
+                                <!-- <button type="button" class="BuyBtn">Continue</button> -->
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="cardDetaislDiv" id="showDataDivv">
@@ -346,27 +378,61 @@
             let data = await res.json();
             console.log(data);
             console.log(data.description);
+            let gst = (data.Rate * data.gst) / 100;
+            const GstP = data.gst;
+            let finalPrice = Math.round(gst + data.Rate)
+            document.querySelector("#ProductPrice").innerHTML = data.Rate;
+            document.querySelector("#GSTSamble").innerHTML = `GST(${data.gst}%)`;
+            document.querySelector("#PeroductGST").innerHTML = ": ₹" + gst;
 
 
             document.querySelector(".DetailsImgShow").src = data.photo;
             document.querySelector(".ProductNamesummary").innerText = data.Productname
-            document.querySelector(".productSummaryrate").innerText = `₹${data.Rate}`;
+            document.querySelector(".productSummaryrate").innerText = "₹" + finalPrice;
             let AmountRate = `${data.Rate}`
-            document.querySelector("#totalAmount").innerHTML = "Total Amount " + "₹ " + `${qty * AmountRate}`;
+            let gstData = `${data.gst}`
+            let Rate = `${data.Rate}`
+            document.querySelector("#totalAmount").innerHTML = ":₹" + `${qty * finalPrice}`;
 
             document.querySelector("#minBtn").addEventListener("click", () => {
                 if (qty > 1) {
                     qty--;
-                    document.querySelector("#totalAmount").innerHTML = "Total Amount " + "₹ " + `${qty * AmountRate}`;
+                    console.log(qty);
+
+                    let SubTotalAmount = Rate * qty;
+                    let gstAmount = (SubTotalAmount * gstData) / 100;
+                    let TotlPaybalAmount = Math.round(SubTotalAmount + gstAmount);
+                    document.querySelector(".productSummaryrate").innerText = "₹" + TotlPaybalAmount;
+                    // console.log("gst = ", SubTotalAmount + "gstAmount", gstAmount + "totalPayBalAmoount", TotlPaybalAmount);
+
+                    // console.log(SubTotalAmount);
+                    document.querySelector("#totalAmount").innerHTML = "₹" + (qty * AmountRate);
                     document.querySelector("#qty").innerHTML = qty;
+                    document.querySelector("#ProductPrice").innerHTML = Rate;
+                    // document.querySelector("#PeroductGST").innerHTML = ": ₹" + gstAmount;
+                    document.querySelector("#PeroductGST").innerHTML = gstAmount;
+                    document.querySelector("#GSTSamble").innerHTML = `GST(${gstData}%)`;
+                    document.querySelector("#ProductPrice").innerHTML = SubTotalAmount;
+
 
                 }
 
             })
             document.querySelector("#maxBtn").addEventListener("click", () => {
                 qty++;
-                document.querySelector("#totalAmount").innerHTML = "Total Amount " + "₹ " + `${qty * AmountRate}`;
+                let SubTotalAmount = Rate * qty;
+                let gstAmount = (SubTotalAmount * gstData) / 100;
+                let TotlPaybalAmount = Math.round(SubTotalAmount + gstAmount);
+                // console.log("gst = ", SubTotalAmount + "gstAmount", gstAmount + "totalPayBalAmoount", TotlPaybalAmount);
+                document.querySelector("#totalAmount").innerHTML = `${TotlPaybalAmount}`;
                 document.querySelector("#qty").innerHTML = qty;
+                document.querySelector("#ProductPrice").innerHTML = SubTotalAmount;
+                document.querySelector("#GSTSamble").innerHTML = (gstData) + "%";
+                // document.querySelector("#PeroductGST").innerHTML = ": ₹" + gstAmount;
+                document.querySelector("#PeroductGST").innerHTML = gstAmount;
+                document.querySelector(".productSummaryrate").innerText = "₹" + TotlPaybalAmount;
+                document.querySelector("#GSTSamble").innerHTML = `GST(${gstData}%)`;
+                console.log(SubTotalAmount);
             })
 
             //payment Method code
@@ -476,6 +542,11 @@
                         "Content-type": "application/json"
                     },
                     body: JSON.stringify({
+                        //%Delete pandding
+                        withGstTotalAmount: Number(document.querySelector("#ProductPrice").innerHTML.replace("₹", "")),
+                        // withGstTotalAmount: document.querySelector("#ProductPrice").innerHTML,
+                        gst: Number(document.querySelector("#PeroductGST").innerHTML.replace("₹", "")),
+                        gstAmount: Number(document.querySelector("#PeroductGST").innerHTML.replace("₹", "")),
                         qty: qty,
                         totalAmount: qty * AmountRate,
                         address: addressData.address,

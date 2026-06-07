@@ -28,7 +28,11 @@ const addProductSchema = new mongoose.Schema({
     },
     photo: {
         type: String
+    },
+    gst: {
+        type: Number
     }
+
 })
 const addProducts = mongoose.model("addProduct", addProductSchema);
 

@@ -115,7 +115,8 @@ app.post("/addProduct", async (req, res) => {
             Units: req.body.Units,
             Rate: req.body.Rate,
             description: req.body.description,
-            photo: jpgReiult.secure_url
+            photo: jpgReiult.secure_url,
+            gst: req.body.gst
         };
 
         console.log(addProductdata);

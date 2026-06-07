@@ -310,6 +310,16 @@
         font-size: clamp(12px, 1.2vw, 40px);
     }
 
+    .AmountDiv {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    #smallgstText {
+        font-size: clamp(10px, 1vw, 40px);
+    }
+
     @media only screen and (max-width: 768px) {
         /* #headerMainDiv {
             width: 100%;
@@ -341,9 +351,15 @@
         }
 
         #ProductImage {
-            height: 14vh;
+            /* height: 14vh;
             width: auto;
+            cursor: pointer; */
+            height: 36vh;
+            width: 100%;
+            height: 100%;
             cursor: pointer;
+            object-fit: cover;
+            /* display: block;*/
         }
 
         #titleP {
@@ -351,13 +367,14 @@
             font-size: clamp(10px, 1.2vw, 40px);
             flex-wrap: wrap;
             padding: 4px;
+            font-weight: bold;
         }
 
         #PriceP {
             /* font-size: 1.5vw; */
             flex-wrap: wrap;
-            font-size: clamp(9px, 1.2vw, 40px);
-            /* padding: 8px; */
+            font-size: clamp(12px, 1.2vw, 40px);
+            padding: 2px;
         }
 
         video {
@@ -626,7 +643,10 @@
         getData()
         function showDate(data) {
             let mainDivCard = document.getElementById("mainDivCard");
+
             data.forEach((item) => {
+                let gstAmount = (item.Rate * item.gst) / 100;
+                let finalPrice = Math.round(item.Rate + gstAmount);
                 mainDivCard.innerHTML += `
                  <div id="CardDiv">
                 <div id="imgdiv">
@@ -638,10 +658,12 @@
                     <p id="titleP">${item.Productname}</p>
                 </div>
                 <div class="PriceAndBuyBtn">
-                    <p id="PriceP">₹${item.Rate}</p>
+                    <div class="AmountDiv">
+                    <p id="PriceP">₹${finalPrice}</p>
+                    <small id="smallgstText">✓ GST Included</small>
+                    </div>
                     
-                       <p class="BuyBtn" data-id="${item._id}">BUY NOW</p>
-                     
+                       <p class="BuyBtn" data-id="${item._id}">BUY NOW</p>  
                 </div>
             </div>
                 

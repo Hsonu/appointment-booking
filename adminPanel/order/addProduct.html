@@ -172,10 +172,18 @@
                 <p>Rate</p>
                 <input id="inputRate" type="number"> <!--inputRate-->
             </div>
+            <div class="box1">
+                <p>GST%</p>
+                <input id="inputGST" type="number"> <!--inputRate-->
+            </div>
+            <div class="box1">
+                <p>GST Amt</p>
+                <input id="totalGST" readonly type="text"> <!--Total OutPut-->
+            </div>
 
             <div class="box1">
                 <p>Total</p>
-                <input id="total" readonly type="text"> <!--Total OutPut-->
+                <input id="TotalAmount" readonly type="text"> <!--Total OutPut-->
             </div>
 
             <div class="box1">
@@ -235,6 +243,7 @@
         let inputRate = document.getElementById("inputRate"); //inputRate
         let inputDescription = document.getElementById("inputDescription"); //inputDescription
         let inputSubCategoryName = document.getElementById("inputSubCategoryName") //inputSubCategoryName
+        let inputGST = document.getElementById("inputGST") //GST Input
         let SaveBtn = document.getElementById("SaveBtn") //SaveBtn
         //OutPut
         let outputOrderStatus = document.getElementById("outputOrderStatus") //outputOrderStatus
@@ -245,10 +254,30 @@
         let outputPrductName = document.getElementById("outputPrductName") //outputPrductName
         let OutputAmount = document.getElementById("OutputAmount");
         let FillPhotoInput = document.getElementById("FillPhoto");
+        // ReadOnly 
+        // let totalGstReadOnly = document.getElementById("totalGstReadOnly");
+
+
+        function calculateTotal() {
+            let subTotal = Number(inputRate.value) * Number(inputUnits.value);
+            let SumTotalGST = (subTotal * Number(inputGST.value)) / 100;
+            console.log(subTotal);
+            console.log(SumTotalGST);
+            // document.querySelector("#totalGST").value = SumTotalGST;
+            // document.querySelector("#TotalAmount").value = subTotal + SumTotalGST;
+
+
+
+        }
+        inputRate.addEventListener("input", calculateTotal);
+        inputUnits.addEventListener("input", calculateTotal);
+        inputGST.addEventListener("input", calculateTotal);
+
+
 
         SaveBtn.addEventListener("click", async () => {
 
-            if (inputCategoryName.value === "" || inputProductName.value === "" || inputRate.value === "" || inputUnits.value === "") {
+            if (inputCategoryName.value === "" || inputProductName.value === "" || inputRate.value === "" || inputUnits.value === "" || inputGST === "") {
                 alert("Fill In The blank");
                 return;
             } else {
@@ -285,6 +314,8 @@
             formData.append("description", inputDescription.value);
             formData.append("photo", FillPhotoInput.files[0]);
             formData.append("SubCategory", inputSubCategoryName.value);
+            formData.append("gst", Number(inputGST.value));
+       
 
             let response = await fetch(`${BASE_URL}/addProduct`, {
                 method: "POST",
@@ -296,7 +327,7 @@
             });
             let result = await response.json();
             console.log(result);
-            alert("Data saved")
+            alert("Data saved");
             location.reload();
         })
 

@@ -51,6 +51,15 @@ const placeOrderDataSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    gst: {
+        type: Number
+    },
+    gstAmount: {
+        type: Number
+    },
+    withGstTotalAmount: {
+        type: Number
+    },
     address: {
         fullAddress: {
             type: String,
