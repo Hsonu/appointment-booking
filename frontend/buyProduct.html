@@ -438,6 +438,10 @@
 
 
 <body>
+    <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
+        class="whatsapp-float" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
     <header>
         <div>
             <div id="headerMainDiv">
@@ -485,7 +489,7 @@
                         <p class="product-name-p">The Nomi Bridal Ring Set</p>
                     </b>
                     <p class="product-name-price">Rs.1,00,106</p>
-                       <small id="smallgstText" class="product-name-price">✓ GST Included</small>
+                    <small id="smallgstText" class="product-name-price">✓ GST Included</small>
                     <p class="product-name-dis">Diamond PreSet Solitaire Ring In 18Kt Yellow Gold (4.35 gram) with
                         Diamonds
                         (0.2370 Ct) and Solitaire (0.15 Ct)</p>
@@ -719,7 +723,7 @@
         let gst = (data.Rate * data.gst) / 100;
         let finalTotalAmount = Math.round(gst + data.Rate)
         console.log(finalTotalAmount);
-        
+
         document.querySelector(".product-name-p").innerText = data.Productname;
 
         document.querySelector(".product-name-price").innerText = "₹" + finalTotalAmount;

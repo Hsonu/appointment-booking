@@ -134,7 +134,11 @@
 </style>
 
 <body>
-   <header>
+    <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
+        class="whatsapp-float" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+    <header>
         <div>
             <div id="headerMainDiv">
                 <div>
@@ -244,7 +248,7 @@
         allOrder()
         async function allorderView(resOrder) {
             let showDataDiv = document.querySelector(".TwoDivMarger");
-    
+
             resOrder.forEach((item) => {
                 showDataDiv.innerHTML += `
             
@@ -260,7 +264,7 @@
                         </div>
                         
                 `
-    
+
             })
             // console.log(item._id);
             showDataDiv.addEventListener("click", (event) => {
@@ -268,10 +272,10 @@
                 let id = card.dataset.id;
                 console.log(id);
                 window.location.href = `orderDetails.html?id=${id}`
-    
+
             })
         }
-    
+
     </script>
 </body>
 
