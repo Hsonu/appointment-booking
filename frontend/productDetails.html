@@ -140,6 +140,11 @@
         gap: 1vw;
     }
 
+    #gstDIv {
+        display: flex;
+        gap: 0.2vw;
+    }
+
     #DotBorder {
         border-top: dotted 2px;
         padding: 3px;
@@ -281,7 +286,11 @@
                                 <p id="ProductPrice">ProductPrice :-2</p>
                             </div>
                             <div class="PriceSummaryDivLast">
-                                <p id="GSTSamble">GST</p>
+                                <div id="gstDIv">
+                                    <p id="gstName">GST</p>
+                                    <p id="GSTSamble">GST</p>
+                                    <p id="GstP">%</p>
+                                </div>
                                 <p id="PeroductGST">GST:-3</p>
                             </div>
                             <div class="PriceSummaryDivLast" id="DotBorder">
@@ -382,8 +391,8 @@
             const GstP = data.gst;
             let finalPrice = Math.round(gst + data.Rate)
             document.querySelector("#ProductPrice").innerHTML = data.Rate;
-            document.querySelector("#GSTSamble").innerHTML = `GST(${data.gst}%)`;
-            document.querySelector("#PeroductGST").innerHTML = ": ₹" + gst;
+            document.querySelector("#GSTSamble").innerHTML = data.gst;
+            document.querySelector("#PeroductGST").innerHTML = gst;
 
 
             document.querySelector(".DetailsImgShow").src = data.photo;
@@ -392,7 +401,7 @@
             let AmountRate = `${data.Rate}`
             let gstData = `${data.gst}`
             let Rate = `${data.Rate}`
-            document.querySelector("#totalAmount").innerHTML = ":₹" + `${qty * finalPrice}`;
+            document.querySelector("#totalAmount").innerHTML = `${qty * finalPrice}`;
 
             document.querySelector("#minBtn").addEventListener("click", () => {
                 if (qty > 1) {
@@ -402,16 +411,16 @@
                     let SubTotalAmount = Rate * qty;
                     let gstAmount = (SubTotalAmount * gstData) / 100;
                     let TotlPaybalAmount = Math.round(SubTotalAmount + gstAmount);
-                    document.querySelector(".productSummaryrate").innerText = "₹" + TotlPaybalAmount;
+                    document.querySelector(".productSummaryrate").innerText = TotlPaybalAmount;
                     // console.log("gst = ", SubTotalAmount + "gstAmount", gstAmount + "totalPayBalAmoount", TotlPaybalAmount);
 
                     // console.log(SubTotalAmount);
-                    document.querySelector("#totalAmount").innerHTML = "₹" + (qty * AmountRate);
+                    document.querySelector("#totalAmount").innerHTML = (qty * AmountRate);
                     document.querySelector("#qty").innerHTML = qty;
                     document.querySelector("#ProductPrice").innerHTML = Rate;
                     // document.querySelector("#PeroductGST").innerHTML = ": ₹" + gstAmount;
                     document.querySelector("#PeroductGST").innerHTML = gstAmount;
-                    document.querySelector("#GSTSamble").innerHTML = `GST(${gstData}%)`;
+                    document.querySelector("#GSTSamble").innerHTML = gstData;
                     document.querySelector("#ProductPrice").innerHTML = SubTotalAmount;
 
 
@@ -430,8 +439,8 @@
                 document.querySelector("#GSTSamble").innerHTML = (gstData) + "%";
                 // document.querySelector("#PeroductGST").innerHTML = ": ₹" + gstAmount;
                 document.querySelector("#PeroductGST").innerHTML = gstAmount;
-                document.querySelector(".productSummaryrate").innerText = "₹" + TotlPaybalAmount;
-                document.querySelector("#GSTSamble").innerHTML = `GST(${gstData}%)`;
+                document.querySelector(".productSummaryrate").innerText = TotlPaybalAmount;
+                document.querySelector("#GSTSamble").innerHTML = gstData;
                 console.log(SubTotalAmount);
             })
 
@@ -542,13 +551,13 @@
                         "Content-type": "application/json"
                     },
                     body: JSON.stringify({
-                        //%Delete pandding
-                        withGstTotalAmount: Number(document.querySelector("#ProductPrice").innerHTML.replace("₹", "")),
+                        //%Delete panding
+                        withGstTotalAmount: Number(document.querySelector("#totalAmount").innerHTML.replace("₹", "")),
                         // withGstTotalAmount: document.querySelector("#ProductPrice").innerHTML,
-                        gst: Number(document.querySelector("#PeroductGST").innerHTML.replace("₹", "")),
+                        gst: Number(document.querySelector("#GSTSamble").innerHTML.replace("₹", "")),
                         gstAmount: Number(document.querySelector("#PeroductGST").innerHTML.replace("₹", "")),
                         qty: qty,
-                        totalAmount: qty * AmountRate,
+                        totalAmount: Number(document.querySelector("#ProductPrice").innerHTML),
                         address: addressData.address,
                         name: addressData.name,
                         phone: addressData.phone,

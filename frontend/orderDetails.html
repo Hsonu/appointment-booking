@@ -107,6 +107,38 @@
         cursor: pointer;
     }
 
+    .paymentMethodDiv {
+        font-size: clamp(10px, 1.8vh, 30px);
+    }
+
+    .DetailsImgShow {
+        height: 9vh;
+    }
+
+    #gstDIv {
+        display: flex;
+        gap: 0.2vw;
+    }
+
+    .PriceSummaryDivLast {
+        display: flex;
+        justify-content: space-between;
+        gap: 1vw;
+    }
+
+    #PriceSummaryDiv {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2vw;
+    }
+
+    #DotBorder {
+        border-top: dotted 2px;
+        padding: 3px;
+
+        font-size: clamp(12px, 1.2vw, 40px)
+    }
+
     @media only screen and (max-width:768px) {
 
         #customerNamePlaceOrder,
@@ -202,7 +234,28 @@
                         <p class="ProductNameDetails" id="DeliveryAddress">The Nomi Bridal Ring Set</p>
                         <p class="productSummaryrate" id="paymentMethod">₹ 1,34,725</p>
                         <p class="productSummarystatus" id="DeliveryCutomerName">₹ 1,34,725</p>
-                         <p class="productSummarystatus" id="DeliveryCutomerPhoneNumber">₹ 1,34,725</p>
+                        <p class="productSummarystatus" id="DeliveryCutomerPhoneNumber">₹ 1,34,725</p>
+                    </div>
+                    <div class="DetailsBuyBtn">
+                        <div id="PriceSummaryDiv">
+                            <div class="PriceSummaryDivLast">
+                                <p>Price</p>
+                                <p id="ProductPrice">ProductPrice :-2</p>
+                            </div>
+                            <div class="PriceSummaryDivLast">
+                                <div id="gstDIv">
+                                    <p id="gstName">GST</p>
+                                    <p id="GSTSamble">GST</p>
+                                    <p id="GstP">%</p>
+                                </div>
+                                <p id="PeroductGST">GST:-3</p>
+                            </div>
+                            <div class="PriceSummaryDivLast" id="DotBorder">
+                                <p style="font-weight: bold;">Total Amount</p>
+                                <p id="totalAmount" style="font-weight: bold;">1</p>
+                                <!-- <button type="button" class="BuyBtn">Continue</button> -->
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -266,13 +319,17 @@
 
             document.querySelector(".ProductNamesummary").innerHTML = data.productName;
             document.querySelector(".ProductNameDetails").innerHTML = data.description;
-            document.querySelector(".productSummaryrate").innerHTML = `₹${data.rate}`
+            document.querySelector(".productSummaryrate").innerHTML = `₹${data.withGstTotalAmount}`
             document.querySelector(".productSummarystatus").innerHTML = data.orderStatus;
             document.querySelector(".DetailsImgShow").src = data.photo;
             document.querySelector("#DeliveryAddress").innerHTML = "Address:- " + data.customerAdd;
-            document.querySelector("#paymentMethod").innerHTML = "Payment Type:- " +data.paymentMethod;
+            document.querySelector("#paymentMethod").innerHTML = "Payment Type:- " + data.paymentMethod;
             document.querySelector("#DeliveryCutomerName").innerHTML = "Name:- " + data.name;
-            document.querySelector("#DeliveryCutomerPhoneNumber").innerHTML = "Phone:- " +data.phone;
+            document.querySelector("#DeliveryCutomerPhoneNumber").innerHTML = "Phone:- " + data.phone;
+            document.querySelector("#GSTSamble").innerHTML = data.gst;
+            document.querySelector("#totalAmount").innerHTML = data.withGstTotalAmount;
+            document.querySelector("#ProductPrice").innerHTML = data.totalAmount;
+            document.querySelector("#PeroductGST").innerHTML = data.gstAmount;
         }
         orderstatuse()
     </script>
