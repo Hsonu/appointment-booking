@@ -201,7 +201,7 @@
                         </div>
                     </div>
                     <div class="btnmainDiv">
-                        <div class="btndiv">
+                        <div class="btndiv" id="DeletCard">
                             <svg width="16" height="16" viewBox="0 0 256 256">
                                 <path fill="none" stroke="#717478" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="16"
@@ -328,7 +328,29 @@
              </div>
             `
 
+            document.querySelector("#DeletCard").addEventListener("click", async () => {
+
+                try {
+                    let res = await fetch(`${BASE_URL}/card/${item._id}`, {
+                        method: "DELETE",
+
+                    });
+                    let data = await res.json()
+                    console.log(data);
+
+                    alert("Product deleted successFully")
+                    location.reload()
+
+
+                }
+                catch (err) {
+                    console.log(err)
+                }
+
+
+            })
         })
+
 
 
     }

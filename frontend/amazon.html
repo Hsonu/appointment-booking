@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #mainDiv {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgb(19, 25, 33);
+            color: white;
+            align-items: center;
+            height: 6.5vh;
+        }
+
+        #amazonLogoName {
+            font-size: 30px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+
+        img {
+            width: 24px;
+        }
+
+        #addressDiv {
+            font-size: 15px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        input {
+            width: 50vw;
+            height: 4vh;
+            border-radius: 10px 0 0 10px;
+            border: none;
+
+
+        }
+
+        button {
+            height: 4vh;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #ffce12;
+            border-radius: 0 10px 10px 0;
+
+        }
+
+        #inputDIv {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="mainDiv">
+        <div>
+            <p id="amazonLogoName">amazon.in</p>
+        </div>
+        <div id="addressDiv">
+            <p>Delivering to Mumbai 400104</p>
+            <p>Update location</p>
+        </div>
+        <div id="inputDIv">
+            <input type="text" placeholder="Search">
+            <button>Search</button>
+        </div>
+        <div>
+            <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg">
+            <p>ENG</p>
+        </div>
+        <div>
+            <P>Hello, sign in</P>
+            <b>
+                <p>Account & Lists</p>
+            </b>
+        </div>
+        <div>
+            <p>Return</p>
+            <p>&Order</p>
+        </div>
+    </div>
+</body>
+
+</html>

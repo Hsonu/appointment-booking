@@ -16,10 +16,13 @@
 
     #headerMainDiv {
         display: flex;
+        justify-content: center;
+        background-color: black;
+        /* padding: 2vw; */
+        padding: clamp(2px, 0.5vw, 48px);
         justify-content: space-around;
         align-items: center;
-        background-color: black;
-        padding: 2vw;
+        /* height: clamp(60px , 2vh , 48px); */
     }
 
     #MainLogo {
@@ -37,7 +40,7 @@
 
     #searchInput {
         width: 45vw;
-        padding: 5px;
+        padding: 8px;
     }
 
     .Plogin {
@@ -261,7 +264,7 @@
 
         #MainLogo {
             width: 10vw;
-            max-width: 10vw;
+            /* max-width: 10vw; */
             height: auto;
             cursor: pointer;
         }
@@ -324,12 +327,12 @@
 
         .BuyBtn {
             border: 1px solid pink;
-            padding: 8px;
+            padding: clamp(3px, 2vw, 40px);
             cursor: pointer;
             transition: 0.3s;
             /* font-size: 1.5vw; */
             /* font-size: clamp(12px, 1.2vw, 40px); */
-            font-size: clamp(6px, 1.2vw, 40px);
+            font-size: clamp(9px, 1.2vw, 40px);
 
         }
 
@@ -442,7 +445,7 @@
         class="whatsapp-float" target="_blank">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
-    <header>
+     <header>
         <div>
             <div id="headerMainDiv">
                 <div>

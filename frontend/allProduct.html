@@ -17,8 +17,10 @@
         display: flex;
         justify-content: center;
         background-color: black;
-        padding: 2vw;
+        /* padding: 2vw; */
+        padding: clamp(2px, 0.5vw, 48px);
         justify-content: space-around;
+        align-items: center;
 
     }
 
@@ -225,12 +227,12 @@
 
         .BuyBtn {
             border: 1px solid pink;
-            padding: 8px;
+            padding: clamp(3px, 2vw, 40px);
             cursor: pointer;
             transition: 0.3s;
             /* font-size: 1.5vw; */
             /* font-size: clamp(12px, 1.2vw, 40px); */
-            font-size: clamp(8px, 1.2vw, 40px);
+            font-size: clamp(9px, 1.2vw, 40px);
 
         }
 
