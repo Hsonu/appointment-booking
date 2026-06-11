@@ -46,7 +46,9 @@ const transporter = nodemailer.createTransport({
 const razorpay = new Razorpar({
     key_id: "rzp_test_SybAuuhWmsjV8S",
     key_secret: "vUx8R2otgLkpjaMV6pAJcU3R"
+
 })
+console.log(process.razorpay);
 app.post("/create-order", async (req, res) => {
     try {
         const options = {
@@ -64,6 +66,7 @@ app.post("/create-order", async (req, res) => {
         })
     }
 })
+
 
 app.get("/", (req, res) => {
     // res.send("server is live ")
