@@ -310,7 +310,8 @@
                         <p class="paymentMethodDiv">Payment Method</p>
                     </div>
                     <div>
-                        <p class="CashOnDelivery" id="CashOnDeliveryPayment">Cash on Delivery</p>
+                        <!-- <p class="CashOnDelivery" id="CashOnDeliveryPayment">Cash on Delivery</p> -->
+                        <p class="CashOnDelivery" id="CashOnDeliveryPayment">Prepaid</p>
                     </div>
                     <div class="DetailsBuyBtn">
                         <button type="button" id="PlaceOrderBtn" class="BuyBtn">Place Order</button>
@@ -365,6 +366,7 @@
         </div>
     </footer>
     <script src="./config.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         const customerNamePlaceOrder = document.getElementById("customerNamePlaceOrder");
         const customerMobileNumber = document.getElementById("customerMobileNumber");
@@ -451,12 +453,13 @@
             //payment Method code
             let paymentMethod = ""
             document.querySelector("#CashOnDeliveryPayment").addEventListener("click", () => {
-                paymentMethod = "Cash On Delivery";
+                paymentMethod = "Online Payment";
                 console.log(paymentMethod);
             })
             const BuyBtn = document.querySelector("#PlaceOrderBtn");
             //order place code 
-            BuyBtn.addEventListener("click", () => {
+            BuyBtn.addEventListener("click", async () => {
+
                 let hasError = false;
                 let customerNameInput = document.querySelector("#customerNameInput").value
                 let customerMobileInput = document.querySelector("#customerMobileInput").value
@@ -530,6 +533,91 @@
                 if (hasError) {
                     return
                 }
+                let paymentAmount = Number(document.querySelector("#totalAmount").innerHTML)
+                const orderRes = await fetch(`${BASE_URL}/create-order`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        amount: paymentAmount
+                    })
+                })
+                const order = await orderRes.json()
+                console.log(order);
+
+                const options = {
+                    key: "rzp_test_T009i1fdo0TocB",
+                    amount: order.amount,
+                    currency: order.currency,
+                    order_id: order.id,
+                    handler: async function (response) {
+                        console.log(response);
+                        const verifyRes = await fetch(`${BASE_URL}/verify-payment`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(response)
+                        });
+                        const verifyData = await verifyRes.json();
+                        console.log(verifyData);
+                        if (verifyData.success) {
+
+                            alert("Payment Verified");
+                            alert("Payment Success");
+                            let addressData = {
+                                name: document.querySelector("#customerNameInput").value,
+                                phone: document.querySelector("#customerMobileInput").value,
+                                email: document.querySelector("#customerEmailInput").value,
+                                address: {
+                                    fullAddress: document.querySelector("#customerAddressInput").value,
+                                    city: document.querySelector("#customerCityInput").value,
+                                    district: document.querySelector("#customerDistrictInput").value,
+                                    state: document.querySelector("#customerStateInput").value,
+                                    pinCode: document.querySelector("#customerPincodeInput").value
+
+                                }
+                            }
+                            await fetch(`${BASE_URL}/placeOrder`, {
+                                method: "POST",
+                                headers: {
+                                    "Content-type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    //%Delete panding
+                                    withGstTotalAmount: Number(document.querySelector("#totalAmount").innerHTML.replace("₹", "")),
+                                    // withGstTotalAmount: document.querySelector("#ProductPrice").innerHTML,
+                                    gst: Number(document.querySelector("#GSTSamble").innerHTML.replace("₹", "")),
+                                    gstAmount: Number(document.querySelector("#PeroductGST").innerHTML.replace("₹", "")),
+                                    qty: qty,
+                                    totalAmount: Number(document.querySelector("#ProductPrice").innerHTML),
+                                    address: addressData.address,
+                                    name: addressData.name,
+                                    phone: addressData.phone,
+                                    email: addressData.email,
+                                    useNumber: localStorage.getItem("userNumber"),
+                                    customerName: customerNamePlaceOrder.innerText,
+                                    customerMobileNumber: localStorage.getItem("userNumber"),
+                                    customerAdd: customeradd.innerText,
+                                    paymentMethod: paymentMethod,
+                                    productName: data.Productname,
+                                    rate: data.Rate,
+                                    photo: data.photo,
+                                    description: data.description,
+                                    orderStatus: "Order Placed"
+
+                                })
+                            });
+                            console.log("Order PlacedSuccessFully");
+                            alert("Order Place")
+                            window.location.href = "./allProduct.html"
+                        }
+                    }
+                }
+                const rzp = new Razorpay(options);
+                rzp.open();
+
                 document.querySelector("#customerDetailsForm").style.display = "none";
                 let addressData = {
                     name: document.querySelector("#customerNameInput").value,
@@ -549,40 +637,11 @@
                 document.querySelector("#customerMobileNumber").innerHTML = addressData.phone
                 document.querySelector("#customerEmail").innerHTML = addressData.email
 
-                fetch(`${BASE_URL}/placeOrder`, {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        //%Delete panding
-                        withGstTotalAmount: Number(document.querySelector("#totalAmount").innerHTML.replace("₹", "")),
-                        // withGstTotalAmount: document.querySelector("#ProductPrice").innerHTML,
-                        gst: Number(document.querySelector("#GSTSamble").innerHTML.replace("₹", "")),
-                        gstAmount: Number(document.querySelector("#PeroductGST").innerHTML.replace("₹", "")),
-                        qty: qty,
-                        totalAmount: Number(document.querySelector("#ProductPrice").innerHTML),
-                        address: addressData.address,
-                        name: addressData.name,
-                        phone: addressData.phone,
-                        email: addressData.email,
-                        useNumber: localStorage.getItem("userNumber"),
-                        customerName: customerNamePlaceOrder.innerText,
-                        customerMobileNumber: localStorage.getItem("userNumber"),
-                        customerAdd: customeradd.innerText,
-                        paymentMethod: paymentMethod,
-                        productName: data.Productname,
-                        rate: data.Rate,
-                        photo: data.photo,
-                        description: data.description,
-                        orderStatus: "Order Placed"
 
-                    })
-                });
-                console.log("Order PlacedSuccessFully");
-                alert("Order Place")
-                window.location.href = "./allProduct.html"
+
+
             })
+
         }
         getsingleProductSummar()
 
@@ -697,7 +756,6 @@
                 }
             }
 
-
             document.querySelector("#customeradd").innerHTML = `${addressData.address.fullAddress}, ${addressData.address.city}, ${addressData.address.district}, ${addressData.address.state}, ${addressData.address.pinCode}`
             document.querySelector("#customerNamePlaceOrder").innerHTML = addressData.name
             document.querySelector("#customerMobileNumber").innerHTML = addressData.phone
@@ -720,6 +778,7 @@
         })
 
     </script>
+
 </body>
 
 </html>

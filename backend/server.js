@@ -44,8 +44,8 @@ const transporter = nodemailer.createTransport({
 })
 //Payment
 const razorpay = new Razorpar({
-    key_id: "rzp_test_SybAuuhWmsjV8S",
-    key_secret: "vUx8R2otgLkpjaMV6pAJcU3R"
+    key_id: "rzp_test_T009i1fdo0TocB",
+    key_secret: "D8kdYPrci3teHsWfyuqp6Eii"
 
 })
 console.log(process.razorpay);
@@ -66,6 +66,33 @@ app.post("/create-order", async (req, res) => {
         })
     }
 })
+const crypto = require("crypto");
+
+app.post("/verify-payment", (req, res) => {
+    console.log("Verify Route Hit");
+    const {
+        razorpay_order_id,
+        razorpay_payment_id,
+        razorpay_signature
+    } = req.body;
+
+    const sign = crypto
+        .createHmac("sha256", "D8kdYPrci3teHsWfyuqp6Eii")
+        .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+        .digest("hex");
+
+    if (sign === razorpay_signature) {
+        return res.json({
+            success: true,
+            message: "Payment Verified"
+        });
+    }
+
+    res.status(400).json({
+        success: false,
+        message: "Invalid Payment"
+    });
+});
 
 
 app.get("/", (req, res) => {
