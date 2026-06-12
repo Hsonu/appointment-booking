@@ -115,12 +115,12 @@
             table-layout: fixed;
         }
 
-        
+
         select option[value="Order Confirmed"] {
             color: green;
         }
 
-        
+
         select option[value="In Transit"] {
             color: orange;
         }
@@ -129,9 +129,40 @@
             color: blue;
         }
 
-        
+
         select option[value="Cancelled"] {
             color: red;
+        }
+
+        #searchDiv {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        .form-control {
+            font-weight: bold;
+            height: 30px;
+            border: 1px solid #ccc;
+            padding: 5px;
+            /* border-radius: 5px; */
+        }
+
+        .btn-primary {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .dateDiv {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
     </style>
 </head>
@@ -157,6 +188,19 @@
         <!-- Content -->
         <section>
             <div class="maindivOrder" id="showOrderData">
+                <div id="searchDiv">
+                    <div class="dateDiv">
+                        <p>Form</p>
+                        <input class="form-control" id="formDate" type="date">
+                    </div>
+                    <div class="dateDiv">
+                        <p>To</p>
+                        <input class="form-control" id="toDate" type="date">
+                    </div>
+                    <div>
+                        <button class="btn-primary" id="searchBtn">Search</button>
+                    </div>
+                </div>
                 <div class="statusProduct">
                     <p class="statusp">Name</p>
                     <p class="statusp">Product Name</p>
@@ -178,6 +222,9 @@
     </div>
     <script src="./config.js"></script>
     <script>
+        document.querySelector("#searchBtn").addEventListener("click" , async ()=>{
+            alert("btn click")
+        })
         async function viewOrderDate() {
             const viewOrderDate = await fetch(`${BASE_URL}/viwePlaceOrder`)
             const resViewOrderdate = await viewOrderDate.json()
@@ -189,74 +236,74 @@
             let statusProduct = document.querySelector("#showOrderData");
             data.forEach((item) => {
                 statusProduct.innerHTML += `
-                <div class="statusProduct">
-                <p class="statusp1">${item.customerName}</p>
-                        <p class="statusp1">${item.productName}</p>
-                        <p class="statusp1">${item.qty}</p>
-                        <p class="statusp1">₹${item.rate}</p>
-                        <p class="statusp1">₹${item.totalAmount}</p>
-                        <p class="statusp1">${item.gst}%</p>
-                        <p class="statusp1">₹${item.gstAmount}</p>
-                        <p class="statusp1">₹${item.withGstTotalAmount}</p>
-                        
-            
-    
-        <select class="statusp1">
-    
-        <option value="Order Confirmed"
-        ${item.orderStatus === "Order Confirmed" ? "selected" : ""}>
-        Order Confirmed
-        </option>
-    
-        <option value="Order Packed"
-        ${item.orderStatus === "Order Packed" ? "selected" : ""}>
-        Order Packed
-        </option>
-    
-        <option value="Shipped"
-        ${item.orderStatus === "Shipped" ? "selected" : ""}>
-        Shipped
-        </option>
-    
-        <option value="In Transit"
-        ${item.orderStatus === "In Transit" ? "selected" : ""}>
-        In Transit
-        </option>
-    
-        <option value="Out For Delivery"
-        ${item.orderStatus === "Out For Delivery" ? "selected" : ""}>
-        Out For Delivery
-        </option>
-    
-        <option value="Delivered"
-        ${item.orderStatus === "Delivered" ? "selected" : ""}>
-        Delivered
-        </option>
-    
-        <option value="Cancelled"
-        ${item.orderStatus === "Cancelled" ? "selected" : ""}>
-        Cancelled
-        </option>
-    
-        <option value="Return Requested"
-        ${item.orderStatus === "Return Requested" ? "selected" : ""}>
-        Return Requested
-        </option>
-    
-        <option value="Return Completed"
-        ${item.orderStatus === "Return Completed" ? "selected" : ""}>
-        Return Completed
-        </option>
-            </select>
-                        <p class="statusp1">${item.customerAdd}</p>
-                        <p class="statusp1">${item.customerMobileNumber}</p>
-                        <p class="statusp1">${new Date(item.orderDate).toLocaleString("en-IN", {
+                    <div class="statusProduct">
+                    <p class="statusp1">${item.customerName}</p>
+                            <p class="statusp1">${item.productName}</p>
+                            <p class="statusp1">${item.qty}</p>
+                            <p class="statusp1">₹${item.rate}</p>
+                            <p class="statusp1">₹${item.totalAmount}</p>
+                            <p class="statusp1">${item.gst}%</p>
+                            <p class="statusp1">₹${item.gstAmount}</p>
+                            <p class="statusp1">₹${item.withGstTotalAmount}</p>
+                            
+                
+        
+            <select class="statusp1">
+        
+            <option value="Order Confirmed"
+            ${item.orderStatus === "Order Confirmed" ? "selected" : ""}>
+            Order Confirmed
+            </option>
+        
+            <option value="Order Packed"
+            ${item.orderStatus === "Order Packed" ? "selected" : ""}>
+            Order Packed
+            </option>
+        
+            <option value="Shipped"
+            ${item.orderStatus === "Shipped" ? "selected" : ""}>
+            Shipped
+            </option>
+        
+            <option value="In Transit"
+            ${item.orderStatus === "In Transit" ? "selected" : ""}>
+            In Transit
+            </option>
+        
+            <option value="Out For Delivery"
+            ${item.orderStatus === "Out For Delivery" ? "selected" : ""}>
+            Out For Delivery
+            </option>
+        
+            <option value="Delivered"
+            ${item.orderStatus === "Delivered" ? "selected" : ""}>
+            Delivered
+            </option>
+        
+            <option value="Cancelled"
+            ${item.orderStatus === "Cancelled" ? "selected" : ""}>
+            Cancelled
+            </option>
+        
+            <option value="Return Requested"
+            ${item.orderStatus === "Return Requested" ? "selected" : ""}>
+            Return Requested
+            </option>
+        
+            <option value="Return Completed"
+            ${item.orderStatus === "Return Completed" ? "selected" : ""}>
+            Return Completed
+            </option>
+                </select>
+                            <p class="statusp1">${item.customerAdd}</p>
+                            <p class="statusp1">${item.customerMobileNumber}</p>
+                            <p class="statusp1">${new Date(item.orderDate).toLocaleString("en-IN", {
                     timeZone: "Asia/Kolkata"
                 })}
-</p>
-                        <button  class="statusp1" data-id="${item._id}" id="updatebtn">Update</button>
-                </div>
-                `
+    </p>
+                            <button  class="statusp1" data-id="${item._id}" id="updatebtn">Update</button>
+                    </div>
+                    `
                 //update satuse
                 document.querySelectorAll("#updatebtn").forEach((btn) => {
                     btn.addEventListener("click", async () => {
@@ -284,6 +331,16 @@
                 })
             })
         }
+        document.querySelector("#searchBtn").addEventListener("click", async () => {
+            let btn = document.querySelector("#searchBtn")
+            console.log(btn);
+
+            let formDate = document.querySelector("#formDate").value;
+            let toDate = document.querySelector("#toDate").value;
+            console.log("formDate", formDate, "ToDate", toDate);
+            console.log(document.querySelector("#formDate").value)
+        })
+
     </script>
 </body>
 
