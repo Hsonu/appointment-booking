@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 
-<body>
+<body class="login-page">
     <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
         class="whatsapp-float" target="_blank">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
@@ -41,6 +41,11 @@
                         <p class="ChackOrder">Order</p>
                     </a>
                 </div>
+                <div id="headerWhatsApp">
+                    <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?" target="_blank" rel="noopener noreferrer">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+                    </a>
+                </div>
                 <div>
                     <a href="./login.html">
                         <img id="CartBtn" src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png"></a>
@@ -48,22 +53,34 @@
             </div>
         </div>
     </header>
-    <section>
+    <section class="login-section">
         <div id="mainf">
-            <!-- <button class="btn-close" id="colse-btn"></button> -->
-            <div id="LoginMainDiv">
+            <div id="LoginMainDiv" class="login-card">
                 <div id="secDiv">
-                    <p id="loginSystem">Login/Sign up</p>
-                    <p id="inpute-p"><input id="loginNUmber" type="number" placeholder="Number"></p>
-                    <p id="pLoginBtn">
+                    <div class="login-card-header">
+                        <p id="loginSystem">Login / Sign up</p>
+                        <p class="login-subtitle">Enter your mobile number to continue with a secure OTP.</p>
+                    </div>
+                    <div id="inputetextDIv" class="login-form">
+                        <div class="otp-message" id="otpMessage">
+                            OTP sent to your number
+                            <div class="otp-code" id="otpDisplay"></div>
+                        </div>
+                        <div class="login-input-row">
+                            <label for="loginNUmber">Mobile number</label>
+                            <input id="loginNUmber" type="tel" maxlength="10" placeholder="Enter 10-digit number">
+                        </div>
+                        <div class="login-input-row otp-row">
+                            <label for="OTP" style="display: none;">OTP code</label>
+                            <input id="OTP" type="number" style="display: none;" placeholder="Enter OTP">
+                        </div>
+                    </div>
+                    <p class="form-note">Note: We’ll send a one-time code to your registered mobile number.</p>
+                    <div id="pLoginBtn" class="button-row">
                         <button id="loginBtn">Send OTP</button>
-                    </p>
-
-                    <p id="inpute-p"><input id="OTP" type="number" style="display: none;" placeholder="OTP"></p>
-                    <p id="OTPP" style="display: none;">Deemo OTP</p>
-                    <p id="pLoginBtn">
                         <button id="VerifyOTP" style="display: none;">Verify OTP</button>
-                    </p>
+                    </div>
+                    <p class="login-hint">Your number is used only for secure sign-in and not shared.</p>
                 </div>
             </div>
         </div>
@@ -116,50 +133,91 @@
     <script src="./config.js"></script>
     <script>
         let generatedOTP = ""
-        document.querySelector("#loginBtn").addEventListener("click", async () => {
-            const number = document.querySelector("#loginNUmber").value;
+        let userNumber = ""
+        
+        document.querySelector("#loginBtn").addEventListener("click", async (e) => {
+            e.preventDefault();
+            const number = document.querySelector("#loginNUmber").value.trim();
 
-            if (number.length !== 10) {
-                alert("Please enter a valid 10-digit number.")
+            if (!number || number.length !== 10) {
+                alert("Please enter a valid 10-digit mobile number.")
                 return
             }
-            console.log(number);
-            const response = await fetch(`${BASE_URL}/send-otp`, {
-
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ number })
-            });
-            const data = await response.json()
-            // alert("Deemo OTP " +  data.otp)
-            generatedOTP = data.otp;
-            document.querySelector("#OTPP").innerHTML = "Deemo OTP " + data.otp;
-            document.querySelector("#OTPP").style.display = "block"
-            document.querySelector("#OTP").style.display = "block"
-            document.querySelector("#loginNUmber").style.display = "none"
-            document.querySelector("#loginBtn").style.display = "none"
-            document.querySelector("#VerifyOTP").style.display = "block"
-
-        });
-        document.querySelector("#VerifyOTP").addEventListener("click", async (e) => {
-            e.preventDefault()
-            let number = document.querySelector("#loginNUmber").value;
-            let inPuteOTP = document.querySelector("#OTP").value;
-            if ((Number(inPuteOTP)) === Number(generatedOTP)) {
-                alert("Login Successful ✅");
-                localStorage.setItem("isLoggedIn", "true")
-                localStorage.setItem("userNumber", number)
-                let data = await fetch(`${BASE_URL}/newUser/${number}`, {
-                    method: "POST"
-                })
-                let newUser = await data.json()
-                console.log(newUser);
-                window.location.href = "./index.html"
+            
+            try {
+                userNumber = number;
+                console.log("Sending OTP for:", number);
+                
+                const response = await fetch(`${BASE_URL}/send-otp`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ number })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log("OTP Response:", data);
+                
+                if (!data.otp) {
+                    throw new Error("Failed to get OTP from server");
+                }
+                
+                generatedOTP = data.otp;
+                
+                // Display OTP message in the form
+                document.querySelector("#otpDisplay").textContent = data.otp;
+                document.querySelector("#otpMessage").classList.add("show");
+                
+                // Show OTP input and hide phone input
+                document.querySelector("#loginNUmber").style.display = "none"
+                document.querySelector("#loginNUmber").previousElementSibling.style.display = "none"
+                document.querySelector("#OTP").style.display = "block"
+                document.querySelector("#OTP").previousElementSibling.style.display = "block"
+                document.querySelector("#loginBtn").style.display = "none"
+                document.querySelector("#VerifyOTP").style.display = "block"
+                
+                // Focus on OTP input
+                document.querySelector("#OTP").focus();
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Error sending OTP: " + error.message);
             }
-            else {
-                alert("Wrong OTP ❌");
+        });
+        
+        document.querySelector("#VerifyOTP").addEventListener("click", async (e) => {
+            e.preventDefault();
+            const inPuteOTP = document.querySelector("#OTP").value.trim();
+            
+            if (!inPuteOTP) {
+                alert("Please enter the OTP.");
+                return;
+            }
+            
+            try {
+                if (Number(inPuteOTP) === Number(generatedOTP)) {
+                    alert("Login Successful ✅");
+                    localStorage.setItem("isLoggedIn", "true")
+                    localStorage.setItem("userNumber", userNumber)
+                    
+                    const data = await fetch(`${BASE_URL}/newUser/${userNumber}`, {
+                        method: "POST"
+                    })
+                    const newUser = await data.json()
+                    console.log("User data:", newUser);
+                    window.location.href = "./index.html"
+                } else {
+                    alert("Wrong OTP. Please try again. ❌");
+                    document.querySelector("#OTP").value = "";
+                    document.querySelector("#OTP").focus();
+                }
+            } catch (error) {
+                console.error("Error during verification:", error);
+                alert("Error: " + error.message);
             }
         })
 

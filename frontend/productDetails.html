@@ -533,7 +533,8 @@
                 if (hasError) {
                     return
                 }
-                let paymentAmount = Number(document.querySelector("#totalAmount").innerHTML)
+                let paymentAmount = Number(document.querySelector("#totalAmount").innerHTML);
+                console.log("Payment Amount =", paymentAmount);
                 const orderRes = await fetch(`${BASE_URL}/create-order`, {
                     method: "POST",
                     headers: {
