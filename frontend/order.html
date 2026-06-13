@@ -934,8 +934,8 @@
             }
 
             resOrder.forEach((item, index) => {
-                const rate = Number(item.rate) || 0;
-                const formattedPrice = rate.toLocaleString("en-IN");
+                const rateVal = Number(item.withGstTotalAmount) || Number(item.rate) || 0;
+                const formattedPrice = rateVal.toLocaleString("en-IN");
 
                 const card = document.createElement("div");
                 card.className = "order-card";

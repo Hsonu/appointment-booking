@@ -1639,7 +1639,8 @@
                 const data = await res.json();
                 currentProductData = data;
 
-                const gst = (data.Rate * data.gst) / 100;
+                const gstPercent = (data.gst !== undefined && data.gst !== null && !isNaN(Number(data.gst))) ? Number(data.gst) : 3;
+                const gst = (data.Rate * gstPercent) / 100;
                 const finalPrice = Math.round(gst + data.Rate);
                 const formatted = finalPrice.toLocaleString("en-IN");
 
@@ -1728,7 +1729,8 @@
                 }
 
                 related.forEach((item, index) => {
-                    const gst = (item.Rate * item.gst) / 100;
+                    const gstPercent = (item.gst !== undefined && item.gst !== null && !isNaN(Number(item.gst))) ? Number(item.gst) : 3;
+                    const gst = (item.Rate * gstPercent) / 100;
                     const finalPrice = Math.round(item.Rate + gst);
                     const formatted = finalPrice.toLocaleString("en-IN");
 

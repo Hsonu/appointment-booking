@@ -1183,7 +1183,7 @@
 
                 // Math constants
                 let rateVal = Number(productData.Rate) || 0;
-                let gstPercent = Number(productData.gst) || 3;
+                let gstPercent = (productData.gst !== undefined && productData.gst !== null && !isNaN(Number(productData.gst))) ? Number(productData.gst) : 3;
                 let gstVal = (rateVal * gstPercent) / 100;
                 finalPrice = Math.round(rateVal + gstVal);
 
@@ -1227,7 +1227,7 @@
 
         function recalcInvoice() {
             let rateVal = Number(productData.Rate) || 0;
-            let gstPercent = Number(productData.gst) || 3;
+            let gstPercent = (productData.gst !== undefined && productData.gst !== null && !isNaN(Number(productData.gst))) ? Number(productData.gst) : 3;
 
             let subtotal = rateVal * qty;
             let gstVal = (subtotal * gstPercent) / 100;

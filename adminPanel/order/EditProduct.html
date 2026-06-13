@@ -6,6 +6,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Products – SJ Jewellery Admin</title>
   <link rel="stylesheet" href="./admin.css">
+  <style>
+    /* Premium Edit Modal custom UI/UX styles */
+    #editModal .modalBox {
+      max-width: 780px;
+      width: 95%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .editModalBody {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 20px;
+      margin-top: 10px;
+      align-items: start;
+    }
+
+    .editImageCol {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .editFormCol {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .col-span-2 {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 640px) {
+      .editModalBody {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .col-span-2 {
+        grid-column: span 1;
+      }
+    }
+
+    .dropZone.drag {
+      border-color: var(--primary) !important;
+      background: var(--primary-light) !important;
+    }
+  </style>
 </head>
 
 <body>
@@ -95,6 +147,8 @@
                   <th>Image</th>
                   <th>Product Name</th>
                   <th>Category</th>
+                  <th>Subcategory</th>
+                  <th>GST (%)</th>
                   <th>Units</th>
                   <th>Rate</th>
                   <th>Total</th>
@@ -104,7 +158,7 @@
               </thead>
               <tbody id="showDateTable">
                 <tr>
-                  <td colspan="8">
+                  <td colspan="10">
                     <div class="emptyState">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
@@ -137,29 +191,62 @@
       </div>
 
       <input type="hidden" id="editId">
-      <div class="formGrid">
-        <div class="formGroup">
-          <label class="formLabel">Product Name *</label>
-          <input class="formInput" id="editName" placeholder="Product name">
+
+      <div class="editModalBody">
+        <!-- Left Image Col -->
+        <div class="editImageCol">
+          <label class="formLabel">Product Image</label>
+          <label class="dropZone" id="editDropZone" for="editFillPhoto"
+            style="padding: 16px; min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+            <div id="editPreviewContainer"
+              style="width: 100%; height: 210px; border-radius: 8px; overflow: hidden; margin-bottom: 10px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; background: #f8fafc;">
+              <img id="editPreviewImg" src="" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="dropZoneText" style="font-size: 0.82rem;">
+              <span>Click to change image</span> or drag &amp; drop
+            </div>
+            <input type="file" id="editFillPhoto" accept="image/*">
+          </label>
         </div>
-        <div class="formGroup">
-          <label class="formLabel">Category *</label>
-          <input class="formInput" id="editCategory" placeholder="Category">
-        </div>
-        <div class="formGroup">
-          <label class="formLabel">Units *</label>
-          <input class="formInput" id="editUnits" type="number" placeholder="Units" min="0">
-        </div>
-        <div class="formGroup">
-          <label class="formLabel">Rate (₹) *</label>
-          <input class="formInput" id="editRate" type="number" placeholder="Rate" min="0">
+
+        <!-- Right Form Col -->
+        <div class="editFormCol">
+          <div class="formGrid" style="grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="formGroup col-span-2">
+              <label class="formLabel">Product Name *</label>
+              <input class="formInput" id="editName" placeholder="Product name">
+            </div>
+            <div class="formGroup">
+              <label class="formLabel">Category *</label>
+              <input class="formInput" id="editCategory" placeholder="Category">
+            </div>
+            <div class="formGroup">
+              <label class="formLabel">Subcategory</label>
+              <input class="formInput" id="editSubCategory" placeholder="Subcategory">
+            </div>
+            <div class="formGroup">
+              <label class="formLabel">GST (%) *</label>
+              <input class="formInput" id="editGst" type="number" placeholder="GST Percentage" min="0" value="3">
+            </div>
+            <div class="formGroup">
+              <label class="formLabel">Units *</label>
+              <input class="formInput" id="editUnits" type="number" placeholder="Units" min="0">
+            </div>
+            <div class="formGroup col-span-2">
+              <label class="formLabel">Rate (₹) *</label>
+              <input class="formInput" id="editRate" type="number" placeholder="Rate" min="0">
+            </div>
+            <div class="formGroup col-span-2">
+              <label class="formLabel">Description</label>
+              <textarea class="formTextarea" id="editDescription" placeholder="Product description…"
+                style="min-height: 80px;"></textarea>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="formGroup" style="margin-top:8px;">
-        <label class="formLabel">Description</label>
-        <textarea class="formTextarea" id="editDescription" placeholder="Product description…"></textarea>
-      </div>
-      <div class="btnGroup" style="margin-top:8px;">
+
+      <div class="btnGroup"
+        style="margin-top: 20px; justify-content: flex-end; border-top: 1px solid var(--border); padding-top: 16px;">
         <button class="btn btn-success" id="saveEditBtn">
           <svg viewBox="0 0 24 24" fill="#fff">
             <path
@@ -219,7 +306,7 @@
         const data = await res.json();
         renderProducts(data);
       } catch (err) {
-        document.getElementById("showDateTable").innerHTML = `<tr><td colspan="8"><div class="emptyState"><p>Failed to load products. Check server.</p></div></td></tr>`;
+        document.getElementById("showDateTable").innerHTML = `<tr><td colspan="10"><div class="emptyState"><p>Failed to load products. Check server.</p></div></td></tr>`;
       }
     }
 
@@ -227,15 +314,17 @@
       document.getElementById("productCountLabel").textContent = `${data.length} product${data.length !== 1 ? "s" : ""} in catalogue`;
       const tbody = document.getElementById("showDateTable");
       if (!data.length) {
-        tbody.innerHTML = `<tr><td colspan="8"><div class="emptyState"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg><p>No products found. Add your first product!</p></div></td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="10"><div class="emptyState"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg><p>No products found. Add your first product!</p></div></td></tr>`;
         return;
       }
       tbody.innerHTML = data.map(item => {
         const totalAmount = item.Units * item.Rate;
-        return `<tr data-id="${item._id}">
+        return `<tr data-id="${item._id}" data-desc="${item.description || ''}">
         <td><img class="productThumb" src="${item.photo}" alt="${item.Productname}" onerror="this.src='https://via.placeholder.com/40'"></td>
         <td class="colName" style="font-weight:600;color:#0f172a;">${item.Productname}</td>
         <td class="colCategory">${item.Category}</td>
+        <td class="colSubCategory">${item.SubCategory || '—'}</td>
+        <td class="colGst">${item.gst || 3}%</td>
         <td class="colUnits">${item.Units}</td>
         <td class="colRate">₹${item.Rate}</td>
         <td>₹${totalAmount}</td>
@@ -261,9 +350,16 @@
           document.getElementById("editId").value = id;
           document.getElementById("editName").value = row.querySelector(".colName").textContent;
           document.getElementById("editCategory").value = row.querySelector(".colCategory").textContent;
+          document.getElementById("editSubCategory").value = row.querySelector(".colSubCategory").textContent.replace("—", "");
+          document.getElementById("editGst").value = row.querySelector(".colGst").textContent.replace("%", "");
           document.getElementById("editUnits").value = row.querySelector(".colUnits").textContent;
           document.getElementById("editRate").value = row.querySelector(".colRate").textContent.replace("₹", "");
-          document.getElementById("editDescription").value = "";
+          document.getElementById("editDescription").value = row.dataset.desc || "";
+
+          // Image Preview setup
+          document.getElementById("editPreviewImg").src = row.querySelector(".productThumb").src;
+          document.getElementById("editFillPhoto").value = "";
+
           document.getElementById("modalAlert").classList.remove("show");
           document.getElementById("editModal").classList.add("show");
         });
@@ -279,38 +375,84 @@
       });
     }
 
+    // Modal Image selection/preview listeners (registered once globally)
+    const editFillPhoto = document.getElementById("editFillPhoto");
+    const editPreviewImg = document.getElementById("editPreviewImg");
+    const editDropZone = document.getElementById("editDropZone");
+
+    editFillPhoto.addEventListener("change", () => {
+      const file = editFillPhoto.files[0];
+      if (!file) return;
+      editPreviewImg.src = URL.createObjectURL(file);
+    });
+
+    editDropZone.addEventListener("dragover", e => { e.preventDefault(); editDropZone.classList.add("drag"); });
+    editDropZone.addEventListener("dragleave", () => editDropZone.classList.remove("drag"));
+    editDropZone.addEventListener("drop", e => {
+      e.preventDefault(); editDropZone.classList.remove("drag");
+      editFillPhoto.files = e.dataTransfer.files;
+      editFillPhoto.dispatchEvent(new Event("change"));
+    });
+
     // Save edit
     document.getElementById("saveEditBtn").addEventListener("click", async () => {
       document.getElementById("modalAlert").classList.remove("show");
       const id = document.getElementById("editId").value;
-      const newData = {
-        Productname: document.getElementById("editName").value.trim(),
-        Category: document.getElementById("editCategory").value.trim(),
-        Units: Number(document.getElementById("editUnits").value),
-        Rate: Number(document.getElementById("editRate").value),
-        description: document.getElementById("editDescription").value,
-      };
-      if (!newData.Productname || !newData.Category || !newData.Units || !newData.Rate) {
+      const productName = document.getElementById("editName").value.trim();
+      const category = document.getElementById("editCategory").value.trim();
+      const subCategory = document.getElementById("editSubCategory").value.trim();
+      const gst = Number(document.getElementById("editGst").value);
+      const units = Number(document.getElementById("editUnits").value);
+      const rate = Number(document.getElementById("editRate").value);
+      const description = document.getElementById("editDescription").value;
+
+      if (!productName || !category || isNaN(units) || isNaN(rate) || isNaN(gst)) {
         showModalAlert("Please fill in all required fields.");
         return;
       }
       const saveBtn = document.getElementById("saveEditBtn");
       saveBtn.textContent = "Saving…"; saveBtn.disabled = true;
       try {
+        const formData = new FormData();
+        formData.append("Productname", productName);
+        formData.append("Category", category);
+        formData.append("SubCategory", subCategory);
+        formData.append("gst", gst);
+        formData.append("Units", units);
+        formData.append("Rate", rate);
+        formData.append("description", description);
+
+        if (editFillPhoto.files[0]) {
+          formData.append("photo", editFillPhoto.files[0]);
+        }
+
         const res = await fetch(`${BASE_URL}/updateProduct/${id}`, {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newData)
+          body: formData
         });
-        if (!res.ok) throw new Error("Update failed");
+
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.message || "Update failed");
+
+        const updatedProduct = result.data;
 
         // Update row cells in place
         const row = document.querySelector(`tr[data-id="${id}"]`);
         if (row) {
-          row.querySelector(".colName").textContent = newData.Productname;
-          row.querySelector(".colCategory").textContent = newData.Category;
-          row.querySelector(".colUnits").textContent = newData.Units;
-          row.querySelector(".colRate").textContent = `₹${newData.Rate}`;
+          row.querySelector(".colName").textContent = updatedProduct.Productname;
+          row.querySelector(".colCategory").textContent = updatedProduct.Category;
+          row.querySelector(".colSubCategory").textContent = updatedProduct.SubCategory || "—";
+          row.querySelector(".colGst").textContent = `${updatedProduct.gst}%`;
+          row.querySelector(".colUnits").textContent = updatedProduct.Units;
+          row.querySelector(".colRate").textContent = `₹${updatedProduct.Rate}`;
+          row.querySelector(".productThumb").src = updatedProduct.photo;
+          row.dataset.desc = updatedProduct.description;
+
+          // Update total cell
+          const totalAmountCell = row.cells[7];
+          if (totalAmountCell) {
+            totalAmountCell.textContent = `₹${updatedProduct.Units * updatedProduct.Rate}`;
+          }
         }
         document.getElementById("editModal").classList.remove("show");
         showToast("Product updated successfully!");

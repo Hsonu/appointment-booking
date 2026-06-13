@@ -220,17 +220,35 @@ app.delete("/DelProduct/:id", async (req, res) => {
 app.put("/updateProduct/:id", async (req, res) => {
     try {
         const updateDataID = req.params.id;
-        const { Productname, Category, SubCategory, Units, Rate, description } = req.body;
-        const updateProductName = await addProducts.findByIdAndUpdate(updateDataID,
-            {
-                description,
-                Productname,
-                Category,
-                // SubCategory,
-                Units,
-                Rate
-            },
-            { new: true })
+        const { Productname, Category, SubCategory, description } = req.body;
+        
+        let photoUrl = undefined;
+        if (req.files && req.files.photo) {
+            const fille = req.files.photo;
+            const jpgResult = await cloudinary.uploader.upload(fille.tempFilePath);
+            photoUrl = jpgResult.secure_url;
+        }
+
+        const updateFields = {
+            description,
+            Productname,
+            Category,
+            SubCategory,
+            Units: req.body.Units !== undefined ? Number(req.body.Units) : undefined,
+            Rate: req.body.Rate !== undefined ? Number(req.body.Rate) : undefined,
+            gst: req.body.gst !== undefined ? Number(req.body.gst) : undefined
+        };
+
+        if (photoUrl) {
+            updateFields.photo = photoUrl;
+        }
+
+        const updateProductName = await addProducts.findByIdAndUpdate(
+            updateDataID,
+            updateFields,
+            { new: true }
+        );
+
         if (!updateProductName) {
             return res.status(404).json({
                 message: "Product Not Found"

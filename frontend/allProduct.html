@@ -1457,7 +1457,8 @@
             }
 
             data.forEach((item, index) => {
-                let gstAmount = (item.Rate * item.gst) / 100;
+                let gstPercent = (item.gst !== undefined && item.gst !== null && !isNaN(Number(item.gst))) ? Number(item.gst) : 3;
+                let gstAmount = (item.Rate * gstPercent) / 100;
                 let finalPrice = Math.round(item.Rate + gstAmount);
                 let formatted = finalPrice.toLocaleString("en-IN");
 

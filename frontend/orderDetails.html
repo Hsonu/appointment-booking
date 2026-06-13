@@ -6,40 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Details – SJ Jewellery</title>
     <meta name="description" content="View your order receipt, tracking details, and purchase summary at SJ Jewellery.">
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <style>
         /* ═══════════════════════════════════════════
            DESIGN TOKENS
         ═══════════════════════════════════════════ */
         :root {
-            --gold:        #c9a96e;
-            --gold-dark:   #a8854e;
-            --gold-light:  #e8d4a8;
-            --gold-bg:     #fdf7ee;
-            --cream:       #faf8f5;
-            --dark:        #0d0d0f;
-            --dark-2:      #1a1a1f;
-            --dark-3:      #2a2a30;
-            --text-h:      #0d0d0f;
-            --text-body:   #3d3d45;
-            --text-muted:  #7a7a85;
-            --border:      #e8e0d5;
-            --white:       #ffffff;
-            --header-h:    72px;
-            --radius:      14px;
-            --transition:  0.28s cubic-bezier(0.4, 0, 0.2, 1);
+            --gold: #c9a96e;
+            --gold-dark: #a8854e;
+            --gold-light: #e8d4a8;
+            --gold-bg: #fdf7ee;
+            --cream: #faf8f5;
+            --dark: #0d0d0f;
+            --dark-2: #1a1a1f;
+            --dark-3: #2a2a30;
+            --text-h: #0d0d0f;
+            --text-body: #3d3d45;
+            --text-muted: #7a7a85;
+            --border: #e8e0d5;
+            --white: #ffffff;
+            --header-h: 72px;
+            --radius: 14px;
+            --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* ═══════════════════════════════════════════
            RESET & BASE
         ═══════════════════════════════════════════ */
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', system-ui, sans-serif;
             background: var(--cream);
@@ -49,38 +61,68 @@
             display: flex;
             flex-direction: column;
         }
-        a { text-decoration: none; color: inherit; }
-        p { margin: 0; }
-        ul { list-style: none; }
-        img { display: block; max-width: 100%; }
-        button { font-family: inherit; cursor: pointer; border: none; }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+        }
 
         /* ═══════════════════════════════════════════
            WHATSAPP FLOAT
         ═══════════════════════════════════════════ */
         .whatsapp-float {
             position: fixed;
-            width: 56px; height: 56px;
-            bottom: 28px; right: 28px;
+            width: 56px;
+            height: 56px;
+            bottom: 28px;
+            right: 28px;
             background: #25D366;
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
             z-index: 9999;
             transition: transform var(--transition), box-shadow var(--transition);
         }
+
         .whatsapp-float:hover {
             transform: scale(1.12);
             box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
         }
-        .whatsapp-float img { width: 32px; height: 32px; }
+
+        .whatsapp-float img {
+            width: 32px;
+            height: 32px;
+        }
 
         /* ═══════════════════════════════════════════
            HEADER / NAVBAR
         ═══════════════════════════════════════════ */
         #siteHeader {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             height: var(--header-h);
             z-index: 1000;
             background: rgba(13, 13, 15, 0.95);
@@ -105,6 +147,7 @@
             line-height: 1;
             flex-shrink: 0;
         }
+
         #navLogo .brand-name {
             font-family: 'Playfair Display', serif;
             font-size: 1.4rem;
@@ -112,6 +155,7 @@
             color: var(--gold);
             letter-spacing: 0.04em;
         }
+
         #navLogo .brand-tagline {
             font-size: 0.62rem;
             letter-spacing: 0.18em;
@@ -125,9 +169,10 @@
             max-width: 440px;
             position: relative;
         }
+
         #searchInput {
             width: 100%;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.08);
             border: 1.5px solid rgba(201, 169, 110, 0.25);
             border-radius: 999px;
             padding: 9px 18px 9px 42px;
@@ -137,18 +182,25 @@
             transition: all var(--transition);
             font-family: inherit;
         }
-        #searchInput::placeholder { color: rgba(255,255,255,0.4); }
+
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
         #searchInput:focus {
             border-color: var(--gold);
-            background: rgba(255,255,255,0.12);
-            box-shadow: 0 0 0 3px rgba(201,169,110,0.15);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
         }
+
         #searchIcon {
             position: absolute;
-            left: 14px; top: 50%;
+            left: 14px;
+            top: 50%;
             transform: translateY(-50%);
-            width: 18px; height: 18px;
-            stroke: rgba(201,169,110,0.6);
+            width: 18px;
+            height: 18px;
+            stroke: rgba(201, 169, 110, 0.6);
             fill: none;
             pointer-events: none;
         }
@@ -170,35 +222,45 @@
             border: 1.5px solid transparent;
             transition: border-color var(--transition), background var(--transition);
             cursor: pointer;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.65rem;
             font-weight: 500;
             letter-spacing: 0.04em;
             text-transform: uppercase;
         }
+
         .navActionBtn:hover {
-            border-color: rgba(201,169,110,0.4);
-            background: rgba(201,169,110,0.06);
+            border-color: rgba(201, 169, 110, 0.4);
+            background: rgba(201, 169, 110, 0.06);
             color: var(--gold);
         }
+
         .navActionBtn svg {
-            width: 20px; height: 20px;
+            width: 20px;
+            height: 20px;
             fill: none;
             stroke: currentColor;
             stroke-width: 1.8;
         }
 
-        .cartWrap { position: relative; }
+        .cartWrap {
+            position: relative;
+        }
+
         .cartBadge {
             position: absolute;
-            top: 4px; right: 8px;
-            width: 17px; height: 17px;
+            top: 4px;
+            right: 8px;
+            width: 17px;
+            height: 17px;
             border-radius: 50%;
             background: var(--gold);
             color: var(--dark);
             font-size: 0.6rem;
             font-weight: 700;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* ═══════════════════════════════════════════
@@ -226,17 +288,20 @@
             border-bottom: 1.5px solid var(--border);
             padding-bottom: 24px;
         }
+
         .details-header-title h1 {
             font-family: 'Playfair Display', serif;
             font-size: clamp(1.8rem, 3.5vw, 2.4rem);
             font-weight: 700;
             color: var(--text-h);
         }
+
         .details-header-title p {
             font-size: 0.88rem;
             color: var(--text-muted);
             margin-top: 4px;
         }
+
         .btn-back {
             display: inline-flex;
             align-items: center;
@@ -252,12 +317,20 @@
             color: var(--text-body);
             transition: all var(--transition);
         }
+
         .btn-back:hover {
             border-color: var(--gold);
             color: var(--gold-dark);
             transform: translateX(-2px);
         }
-        .btn-back svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; }
+
+        .btn-back svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+        }
 
         /* Detail Cards */
         .detail-card {
@@ -266,8 +339,9 @@
             border-radius: var(--radius);
             padding: 30px;
             margin-bottom: 28px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
         }
+
         .detail-card h3 {
             font-family: 'Playfair Display', serif;
             font-size: 1.25rem;
@@ -297,6 +371,7 @@
             border: 1px solid rgba(201, 169, 110, 0.15);
             flex-shrink: 0;
         }
+
         .product-img {
             width: 100%;
             height: 100%;
@@ -309,17 +384,20 @@
             flex-direction: column;
             gap: 6px;
         }
+
         .ProductNamesummary {
             font-family: 'Playfair Display', serif;
             font-size: 1.25rem;
             font-weight: 700;
             color: var(--text-h);
         }
+
         .ProductNameDetails {
             font-size: 0.88rem;
             color: var(--text-muted);
             line-height: 1.5;
         }
+
         .productSummaryrate {
             font-family: 'Playfair Display', serif;
             font-size: 1.35rem;
@@ -339,28 +417,144 @@
             border-radius: 10px;
             margin-top: 18px;
         }
+
         .status-dot {
-            width: 8px; height: 8px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background: #25D366;
-            box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.2);
+            background: #10b981;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
             animation: pulse 1.8s infinite;
         }
+
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0px rgba(37, 211, 102, 0.3); }
-            70% { box-shadow: 0 0 0 6px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0px rgba(37, 211, 102, 0); }
+            0% {
+                box-shadow: 0 0 0 0px rgba(16, 185, 129, 0.3);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0px rgba(16, 185, 129, 0);
+            }
         }
+
         .status-text {
             font-size: 0.82rem;
             font-weight: 600;
             color: var(--text-h);
         }
+
         .productSummarystatus {
             font-weight: 700;
             color: var(--gold-dark);
             text-transform: uppercase;
             letter-spacing: 0.05em;
+        }
+
+        /* Flipkart-style Order Tracking Timeline */
+        .timeline-container {
+            padding: 24px 0 10px;
+            margin: 20px 0 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            /* Hide scrollbar for clean visual appearance */
+        }
+
+        .timeline-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tracking-timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            min-width: 480px;
+            padding: 0 10px;
+        }
+
+        .tracking-timeline::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .timeline-progress-bar {
+            position: absolute;
+            top: 16px;
+            left: 0;
+            height: 4px;
+            background: #10b981;
+            z-index: 1;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+
+        .timeline-step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .step-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3.5px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #64748b;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 5px #fff;
+        }
+
+        .timeline-step.completed .step-dot {
+            background: #10b981;
+            border-color: #10b981;
+            color: #fff;
+        }
+
+        .timeline-step.active .step-dot {
+            border-color: #10b981;
+            color: #10b981;
+            box-shadow: 0 0 0 5px #fff, 0 0 12px rgba(16, 185, 129, 0.35);
+        }
+
+        .step-label {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #64748b;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .timeline-step.active .step-label,
+        .timeline-step.completed .step-label {
+            color: #0f172a;
+        }
+
+        .step-date {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 2px;
+            font-weight: 500;
         }
 
         /* Columns inside info card */
@@ -378,11 +572,13 @@
             color: var(--gold-dark);
             margin-bottom: 12px;
         }
+
         .info-col p {
             font-size: 0.88rem;
             line-height: 1.6;
             margin-bottom: 6px;
         }
+
         .info-col p strong {
             color: var(--text-h);
         }
@@ -393,13 +589,15 @@
             border-collapse: collapse;
             margin-top: 12px;
         }
+
         .invoice-row {
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
             font-size: 0.88rem;
-            border-bottom: 1px solid rgba(0,0,0,0.04);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
         }
+
         .invoice-row.total {
             border-top: 2px solid var(--border);
             border-bottom: none;
@@ -417,26 +615,209 @@
             border: 1px solid var(--border);
             margin-bottom: 28px;
         }
-        .skeleton-title { height: 18px; width: 30%; background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%); background-size: 200%; animation: shimmer 1.4s infinite; border-radius: 4px; margin-bottom: 24px; }
-        .skeleton-img-box { width: 130px; height: 130px; border-radius: 12px; background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%); background-size: 200%; animation: shimmer 1.4s infinite; }
-        .skeleton-line { height: 12px; background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%); background-size: 200%; animation: shimmer 1.4s infinite; border-radius: 6px; margin-bottom: 10px; }
-        .skeleton-line.l1 { width: 55%; }
-        .skeleton-line.l2 { width: 80%; }
-        .skeleton-line.l3 { width: 35%; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        .skeleton-title {
+            height: 18px;
+            width: 30%;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 4px;
+            margin-bottom: 24px;
+        }
+
+        .skeleton-img-box {
+            width: 130px;
+            height: 130px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+        }
+
+        .skeleton-line {
+            height: 12px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .skeleton-line.l1 {
+            width: 55%;
+        }
+
+        .skeleton-line.l2 {
+            width: 80%;
+        }
+
+        .skeleton-line.l3 {
+            width: 35%;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
 
         /* Responsive design */
         @media (max-width: 768px) {
-            .info-grid { grid-template-columns: 1fr; gap: 24px; }
-            .order-product-row { flex-direction: column; align-items: flex-start; gap: 16px; }
-            .product-img-wrap { width: 100%; height: 200px; }
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .order-product-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .product-img-wrap {
+                width: 100%;
+                height: 200px;
+            }
         }
 
         @media (max-width: 640px) {
-            #navInner { padding: 0 16px; gap: 12px; }
-            #searchWrapper { display: none; }
-            .details-header { flex-direction: column; align-items: flex-start; }
-            .btn-back { width: 100%; justify-content: center; }
+            #navInner {
+                padding: 0 16px;
+                gap: 12px;
+            }
+
+            #searchWrapper {
+                display: none;
+            }
+
+            .details-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .btn-back {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Print styles for downloadable retail tax invoice */
+        .print-header {
+            display: none;
+        }
+
+        @media print {
+            .print-header {
+                display: block !important;
+            }
+
+            body {
+                background: #ffffff !important;
+                color: #0d0d0f !important;
+                font-size: 10pt;
+                padding: 0;
+                margin: 0;
+            }
+
+            #siteHeader,
+            .btn-back,
+            #downloadInvoiceBtn,
+            .whatsapp-float {
+                display: none !important;
+            }
+
+            main {
+                margin-top: 0 !important;
+                padding: 0 !important;
+            }
+
+            .container {
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+
+            .detail-card {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin-bottom: 24px;
+                background: transparent !important;
+                page-break-inside: avoid;
+            }
+
+            .detail-card h3 {
+                border-bottom: 2px solid #0d0d0f !important;
+                color: #0d0d0f !important;
+                font-size: 13pt;
+                font-weight: bold;
+                padding-bottom: 6px;
+                margin-bottom: 15px;
+            }
+
+            .timeline-container,
+            .status-banner {
+                display: none !important;
+            }
+
+            .product-img-wrap {
+                width: 90px !important;
+                height: 90px !important;
+                border: 1px solid #e8e0d5 !important;
+            }
+
+            .order-product-row {
+                gap: 20px !important;
+                padding-bottom: 10px !important;
+            }
+
+            .ProductNamesummary {
+                font-size: 12pt !important;
+                color: #0d0d0f !important;
+            }
+
+            .ProductNameDetails {
+                font-size: 8.5pt !important;
+                color: #55555d !important;
+            }
+
+            .productSummaryrate {
+                font-size: 12pt !important;
+                color: #a8854e !important;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 24px !important;
+            }
+
+            .info-col h4 {
+                color: #a8854e !important;
+                border-bottom: 1px solid #e8e0d5;
+                padding-bottom: 4px;
+                margin-bottom: 8px;
+                font-size: 9pt;
+            }
+
+            .invoice-table {
+                margin-top: 8px !important;
+            }
+
+            .invoice-row {
+                padding: 6px 0 !important;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+            }
+
+            .invoice-row.total {
+                border-top: 2px solid #0d0d0f !important;
+                color: #0d0d0f !important;
+                font-size: 12pt !important;
+                padding-top: 10px !important;
+            }
         }
     </style>
 </head>
@@ -460,22 +841,34 @@
             <!-- Search wrapper -->
             <div id="searchWrapper" role="search">
                 <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
-                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
                 </svg>
-                <input id="searchInput" type="text" placeholder="Search rings, necklaces..." autocomplete="off" aria-label="Search items">
+                <input id="searchInput" type="text" placeholder="Search rings, necklaces..." autocomplete="off"
+                    aria-label="Search items">
             </div>
 
             <nav class="navActions" aria-label="User actions">
                 <a href="./order.html" class="navActionBtn" id="navOrderBtn">
-                    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
                     Orders
                 </a>
                 <a href="./login.html" class="navActionBtn" id="navLoginBtn">
-                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
                     Account
                 </a>
                 <a href="./card.html" class="navActionBtn cartWrap" id="navCartBtn" aria-label="Shopping cart">
-                    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
                     Cart
                     <span class="cartBadge" id="cartCount" aria-label="items in cart">0</span>
                 </a>
@@ -486,25 +879,71 @@
     <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
     <main>
         <div class="container">
+            <!-- Print-Only Tax Invoice Header -->
+            <div class="print-header">
+                <div
+                    style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px double #0d0d0f; padding-bottom:15px; margin-bottom:25px;">
+                    <div>
+                        <h1
+                            style="font-family:'Playfair Display', serif; font-size:24pt; color:#0d0d0f; margin:0; font-weight:700;">
+                            SJ JEWELLERY</h1>
+                        <p
+                            style="font-size:9pt; text-transform:uppercase; letter-spacing:2px; margin:2px 0 0; color:#3d3d45; font-weight:600;">
+                            Luxury &amp; Elegance Certified</p>
+                    </div>
+                    <div style="text-align:right;">
+                        <h2 style="font-size:14pt; margin:0; color:#0d0d0f; font-weight:700;">RETAIL TAX INVOICE</h2>
+                        <p id="printInvoiceDate" style="font-size:9pt; margin:4px 0 0; color:#3d3d45; font-weight:500;">
+                            Date: —</p>
+                        <p id="printInvoiceNo" style="font-size:9pt; margin:2px 0 0; color:#3d3d45; font-weight:600;">
+                            Invoice No: —</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="details-header">
                 <div class="details-header-title">
                     <h1>Order Overview</h1>
                     <p id="invoiceNumber">Loading transaction data…</p>
                 </div>
-                <a href="./order.html" class="btn-back">
-                    <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    Back to Orders
-                </a>
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <button id="downloadInvoiceBtn" class="btn-back"
+                        style="border-color:var(--gold); color:var(--gold-dark); cursor:pointer;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                            style="width:14px; height:14px;">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                        </svg>
+                        Download Invoice
+                    </button>
+                    <a href="./order.html" class="btn-back">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="19" y1="12" x2="5" y2="12" />
+                            <polyline points="12 19 5 12 12 5" />
+                        </svg>
+                        Back to Orders
+                    </a>
+                </div>
             </div>
 
             <!-- Card 1: Product overview -->
             <div class="detail-card">
                 <h3>Purchased Jewel</h3>
-                
+
                 <div class="order-product-row" id="productBlock">
                     <!-- Skeleton -->
                     <div class="skeleton-img-box"></div>
-                    <div style="flex:1"><div class="skeleton-line l1"></div><div class="skeleton-line l2"></div><div class="skeleton-line l3"></div></div>
+                    <div style="flex:1">
+                        <div class="skeleton-line l1"></div>
+                        <div class="skeleton-line l2"></div>
+                        <div class="skeleton-line l3"></div>
+                    </div>
+                </div>
+
+                <!-- Flipkart-style Horizontal Order Tracking Timeline -->
+                <div class="timeline-container">
+                    <div class="tracking-timeline" id="timelineContainer">
+                        <!-- Populated dynamically by javascript -->
+                    </div>
                 </div>
 
                 <div class="status-banner">
@@ -518,21 +957,22 @@
             <!-- Card 2: Details grid -->
             <div class="detail-card">
                 <h3>Delivery & Payment Details</h3>
-                
+
                 <div class="info-grid">
                     <!-- Column 1: Address details -->
                     <div class="info-col">
                         <h4>Shipping Address</h4>
                         <p><strong id="DeliveryCutomerName">Loading Name…</strong></p>
                         <p id="DeliveryCutomerPhoneNumber">Loading Phone…</p>
-                        <p id="DeliveryAddress" style="margin-top: 10px; color: var(--text-body); font-weight: 500;">Loading Address…</p>
+                        <p id="DeliveryAddress" style="margin-top: 10px; color: var(--text-body); font-weight: 500;">
+                            Loading Address…</p>
                     </div>
 
                     <!-- Column 2: Payment Receipt -->
                     <div class="info-col">
                         <h4>Receipt Invoice</h4>
                         <p>Method: <strong id="paymentMethod">Online Payment</strong></p>
-                        
+
                         <div class="invoice-table">
                             <div class="invoice-row">
                                 <span>Subtotal</span>
@@ -619,7 +1059,24 @@
                     </div>`;
 
                 // Update Badges & Status
-                document.getElementById("orderStatusLabel").textContent = data.orderStatus || "Placed";
+                const orderStatus = data.orderStatus || "Placed";
+                document.getElementById("orderStatusLabel").textContent = orderStatus;
+
+                // Render progress timeline
+                renderTimeline(orderStatus, data.orderDate);
+
+                // Populate print invoice details
+                const invoiceDate = data.orderDate ? new Date(data.orderDate).toLocaleDateString("en-IN", {
+                    day: "numeric", month: "long", year: "numeric"
+                }) : new Date().toLocaleDateString("en-IN", {
+                    day: "numeric", month: "long", year: "numeric"
+                });
+                document.getElementById("printInvoiceDate").textContent = `Date: ${invoiceDate}`;
+
+                const printInvoiceNo = document.getElementById("printInvoiceNo");
+                if (printInvoiceNo) {
+                    printInvoiceNo.textContent = `Invoice No: SJ-${id.toUpperCase()}`;
+                }
 
                 // Delivery information
                 document.getElementById("DeliveryCutomerName").textContent = data.name || "Customer";
@@ -637,6 +1094,113 @@
                 console.error(err);
                 document.getElementById("invoiceNumber").textContent = "⚠️ Failed to fetch order summary details.";
             }
+        }
+
+        // Bind download/print invoice action listener
+        document.getElementById("downloadInvoiceBtn").addEventListener("click", () => {
+            window.print();
+        });
+
+        function getStatusStepIndex(status) {
+            status = (status || "").toLowerCase().trim();
+            if (status === "order confirmed" || status === "order placed" || status === "pending" || status === "placed") return 0;
+            if (status === "order packed") return 1;
+            if (status === "shipped" || status === "in transit" || status === "out for delivery") return 2;
+            if (status === "delivered") return 3;
+            return 0; // default to first step
+        }
+
+        function renderTimeline(status, orderDate) {
+            const container = document.getElementById("timelineContainer");
+            if (!container) return;
+
+            const isCancelled = (status || "").toLowerCase().includes("cancel");
+            const isReturn = (status || "").toLowerCase().includes("return");
+
+            const formattedDate = orderDate ? new Date(orderDate).toLocaleDateString("en-IN", {
+                day: "numeric", month: "short"
+            }) : "";
+
+            if (isCancelled) {
+                container.innerHTML = `
+                    <div class="tracking-timeline" style="min-width: 300px; justify-content: space-around;">
+                        <div class="timeline-progress-bar" style="width: 100%; background: #ef4444;"></div>
+                        <div class="timeline-step completed" style="flex: none;">
+                            <div class="step-dot" style="background:#10b981; border-color:#10b981; color:#fff;">✓</div>
+                            <div class="step-label">Ordered</div>
+                            <div class="step-date">${formattedDate}</div>
+                        </div>
+                        <div class="timeline-step completed" style="flex: none;">
+                            <div class="step-dot" style="background:#ef4444; border-color:#ef4444; color:#fff;">✕</div>
+                            <div class="step-label" style="color:#ef4444;">Cancelled</div>
+                            <div class="step-date">Cancelled</div>
+                        </div>
+                    </div>`;
+                return;
+            }
+
+            if (isReturn) {
+                const isCompleted = (status || "").toLowerCase().includes("complete");
+                container.innerHTML = `
+                    <div class="tracking-timeline" style="min-width: 400px; justify-content: space-around;">
+                        <div class="timeline-progress-bar" style="width: ${isCompleted ? '100%' : '50%'}; background: #f59e0b;"></div>
+                        <div class="timeline-step completed">
+                            <div class="step-dot" style="background:#10b981; border-color:#10b981; color:#fff;">✓</div>
+                            <div class="step-label">Delivered</div>
+                        </div>
+                        <div class="timeline-step completed">
+                            <div class="step-dot" style="background:#f59e0b; border-color:#f59e0b; color:#fff;">✓</div>
+                            <div class="step-label">Return Requested</div>
+                        </div>
+                        <div class="timeline-step ${isCompleted ? 'completed' : 'active'}">
+                            <div class="step-dot" style="${isCompleted ? 'background:#f59e0b; border-color:#f59e0b; color:#fff;' : 'border-color:#f59e0b; color:#f59e0b;'}">${isCompleted ? '✓' : '3'}</div>
+                            <div class="step-label">Return Completed</div>
+                        </div>
+                    </div>`;
+                return;
+            }
+
+            // Normal timeline
+            const steps = ["Ordered", "Packed", "Shipped", "Delivered"];
+            const stepIndex = getStatusStepIndex(status); // 0, 1, 2, or 3
+
+            // Progress percentage (0, 33%, 66%, 100%)
+            const progressPercent = (stepIndex / (steps.length - 1)) * 100;
+
+            let stepsHTML = "";
+            steps.forEach((label, idx) => {
+                let statusClass = "";
+                let dotContent = idx + 1;
+
+                if (idx < stepIndex) {
+                    statusClass = "completed";
+                    dotContent = "✓";
+                } else if (idx === stepIndex) {
+                    statusClass = "active";
+                    if (stepIndex === 3) {
+                        statusClass = "completed";
+                        dotContent = "✓";
+                    }
+                }
+
+                let dateStr = "";
+                if (idx === 0) dateStr = formattedDate;
+                if (idx === stepIndex && stepIndex > 0) {
+                    dateStr = "Today"; // Placeholder or approximate date
+                }
+
+                stepsHTML += `
+                    <div class="timeline-step ${statusClass}">
+                        <div class="step-dot">${dotContent}</div>
+                        <div class="step-label">${label}</div>
+                        <div class="step-date">${dateStr}</div>
+                    </div>`;
+            });
+
+            container.innerHTML = `
+                <div class="timeline-progress-bar" style="width: ${progressPercent}%;"></div>
+                ${stepsHTML}
+            `;
         }
 
         orderstatuse();
