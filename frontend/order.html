@@ -4,280 +4,987 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<style>
-    body {
-        /* background-color: rgb(2 2 2 / 3%); */
-        background-color: rgb(2 2 2 / 9%);
-    }
+    <title>My Orders – SJ Jewellery</title>
+    <meta name="description" content="Track your past and active orders from SJ Jewellery's luxury collection.">
 
-    .cardDetaislDiv {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        width: 90%;
-        background-color: #fff;
-        padding: 12px;
-        border-radius: 5px;
-    }
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
-    .MainDivDesing {
-
-        display: flex;
-        justify-content: center;
-        /* width: 90%; */
-
-    }
-
-    .DetailsImgShow {
-        height: 15vh;
-    }
-
-    .DetailsIMGmainDiv {
-        display: flex;
-        padding: 10px;
-        background-color: #fff;
-    }
-
-    .DetailsProducatName {
-        padding: 20px;
-    }
-
-    .TwoDivMarger {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        width: 80%;
-        cursor: pointer;
-    }
-
-    .DetailsBuyBtn {
-        display: flex;
-        justify-content: end;
-    }
-
-    .BuyBtn {
-        transition: 0.3s;
-        background-color: pink;
-
-    }
-
-    .BuyBtn:hover {
-        background-color: rgba(255, 62, 94, 0.74);
-    }
-
-    .paymentMethodDiv {
-        font-size: 1.9vw;
-        padding: 1vh;
-
-    }
-
-    .CashOnDelivery {
-        /* margin-left: 2vw;
-            margin-top: 3vh; */
-        padding: 2vh;
-        padding-left: 1vw;
-        cursor: pointer;
-        /* background-color: #00000014; */
-        border-radius: 3px;
-
-    }
-
-    #showDataDivv {
-        display: flex;
-        gap: 1vh;
-    }
-
-    #CartBtn {
-        min-width: 30px;
-        /* width: 3vw; */
-        max-width: 3vw;
-        height: auto;
-        cursor: pointer;
-    }
-
-
-    @media only screen and (max-width:768px) {
-
-        #customerNamePlaceOrder,
-        #customeradd,
-        #customerMobileNumber,
-        .ProductNamesummary {
-            font-size: clamp(10px, 1.5vh, 30px);
-
+    <style>
+        /* ═══════════════════════════════════════════
+           DESIGN TOKENS
+        ═══════════════════════════════════════════ */
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #a8854e;
+            --gold-light: #e8d4a8;
+            --gold-bg: #fdf7ee;
+            --cream: #faf8f5;
+            --dark: #0d0d0f;
+            --dark-2: #1a1a1f;
+            --dark-3: #2a2a30;
+            --text-h: #0d0d0f;
+            --text-body: #3d3d45;
+            --text-muted: #7a7a85;
+            --border: #e8e0d5;
+            --white: #ffffff;
+            --header-h: 72px;
+            --radius: 14px;
+            --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .paymentMethodDiv {
-            font-size: clamp(10px, 1.8vh, 30px);
+        /* ═══════════════════════════════════════════
+           RESET & BASE
+        ═══════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .DetailsImgShow {
-            height: 9vh;
+        html {
+            scroll-behavior: smooth;
         }
 
-        .CashOnDelivery {
-            padding: 1vh;
-            padding-left: 1vw;
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button {
+            font-family: inherit;
             cursor: pointer;
-            /* background-color: #00000014; */
-            border-radius: 3px;
-            font-size: clamp(10px, 1.5vh, 40px);
+            border: none;
         }
 
-    }
+        /* ═══════════════════════════════════════════
+           WHATSAPP FLOAT
+        ═══════════════════════════════════════════ */
+        .whatsapp-float {
+            position: fixed;
+            width: 56px;
+            height: 56px;
+            bottom: 28px;
+            right: 28px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+            z-index: 9999;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
 
-    footer {
-        margin-top: auto;
-    }
-</style>
+        .whatsapp-float:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
+        }
+
+        .whatsapp-float img {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* ═══════════════════════════════════════════
+           HEADER / NAVBAR
+        ═══════════════════════════════════════════ */
+        #siteHeader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-h);
+            z-index: 1000;
+            background: rgba(13, 13, 15, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+            transition: background var(--transition), backdrop-filter var(--transition), border-color var(--transition);
+        }
+
+        #navInner {
+            max-width: 1300px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 0 24px;
+        }
+
+        #navLogo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        #navLogo .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.04em;
+        }
+
+        #navLogo .brand-tagline {
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            color: rgba(201, 169, 110, 0.6);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        #searchWrapper {
+            flex: 1;
+            max-width: 440px;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(201, 169, 110, 0.25);
+            border-radius: 999px;
+            padding: 9px 18px 9px 42px;
+            font-size: 0.88rem;
+            color: #fff;
+            outline: none;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #searchInput:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+        }
+
+        #searchIcon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            stroke: rgba(201, 169, 110, 0.6);
+            fill: none;
+            pointer-events: none;
+        }
+
+        .navActions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .navActionBtn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1.5px solid transparent;
+            transition: border-color var(--transition), background var(--transition);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .navActionBtn:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+            background: rgba(201, 169, 110, 0.06);
+            color: var(--gold);
+        }
+
+        .navActionBtn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .cartWrap {
+            position: relative;
+        }
+
+        .cartBadge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ═══════════════════════════════════════════
+           MAIN ORDERS SECTION
+        ═══════════════════════════════════════════ */
+        main {
+            margin-top: calc(var(--header-h) + 40px);
+            flex: 1;
+            padding-bottom: 72px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .orders-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .orders-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            color: var(--text-h);
+            margin-bottom: 8px;
+        }
+
+        .orders-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .goldLine {
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 2px;
+            margin: 12px auto 0;
+        }
+
+        /* Orders Grid */
+        .orders-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            cursor: pointer;
+        }
+
+        /* Order Card */
+        .order-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+            animation: cardFadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .order-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            border-color: var(--gold);
+        }
+
+        .order-img-wrap {
+            width: 90px;
+            height: 90px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f8f4ef;
+            border: 1px solid rgba(201, 169, 110, 0.1);
+            flex-shrink: 0;
+        }
+
+        .order-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .order-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .order-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-h);
+        }
+
+        .order-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-h);
+            margin-top: 4px;
+        }
+
+        .order-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .status-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: var(--gold-bg);
+            color: var(--gold-dark);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+        }
+
+        .order-chevron {
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--cream);
+            transition: background var(--transition), transform var(--transition);
+        }
+
+        .order-card:hover .order-chevron {
+            background: var(--gold-bg);
+            transform: translateX(4px);
+        }
+
+        .order-chevron svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+        }
+
+        /* Skeletons */
+        .skeleton-item {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 20px;
+            display: flex;
+            gap: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .skeleton-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+        }
+
+        .skeleton-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .skeleton-line {
+            height: 12px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 6px;
+        }
+
+        .skeleton-line.name {
+            width: 45%;
+        }
+
+        .skeleton-line.meta {
+            width: 25%;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Empty & Error State */
+        .stateBox {
+            text-align: center;
+            padding: 80px 24px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stateBox svg {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            stroke: var(--gold);
+            opacity: 0.8;
+        }
+
+        .stateBox h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--text-h);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .stateBox p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            max-width: 340px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .state-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            background: var(--dark);
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            border-radius: 999px;
+            transition: all var(--transition);
+        }
+
+        .state-cta:hover {
+            background: var(--gold);
+            color: var(--dark);
+            box-shadow: 0 8px 24px rgba(201, 169, 110, 0.35);
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════ */
+        #siteFooter {
+            background: var(--dark-2);
+            color: rgba(255, 255, 255, 0.75);
+            padding: 64px 24px 32px;
+            margin-top: auto;
+        }
+
+        .footerInner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footerTop {
+            display: grid;
+            grid-template-columns: 1.8fr repeat(3, 1fr);
+            gap: 40px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+
+        .footerLogo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .footerDesc {
+            font-size: 0.84rem;
+            line-height: 1.7;
+            opacity: 0.7;
+            max-width: 280px;
+            margin-bottom: 20px;
+        }
+
+        .footerSocial {
+            display: flex;
+            gap: 10px;
+        }
+
+        .socialIcon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--transition), border-color var(--transition);
+            cursor: pointer;
+        }
+
+        .socialIcon:hover {
+            background: rgba(201, 169, 110, 0.15);
+            border-color: var(--gold);
+        }
+
+        .socialIcon svg {
+            width: 16px;
+            height: 16px;
+            fill: rgba(255, 255, 255, 0.6);
+        }
+
+        .footerCol h4 {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .footerCol ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footerCol ul li a {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            transition: opacity var(--transition), color var(--transition);
+        }
+
+        .footerCol ul li a:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        .footerBottom {
+            padding-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footerCopy {
+            font-size: 0.78rem;
+            opacity: 0.45;
+        }
+
+        .footerCopy span {
+            color: var(--gold);
+            opacity: 1;
+        }
+
+        .footerPayments {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .payBadge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            opacity: 0.6;
+            letter-spacing: 0.05em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 900px) {
+            .footerTop {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footerBrand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #navInner {
+                padding: 0 16px;
+                gap: 12px;
+            }
+
+            #searchWrapper {
+                display: none;
+            }
+
+            .footerTop {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .footerBottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
 
 <body>
+
+    <!-- WhatsApp Float -->
     <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
-        class="whatsapp-float" target="_blank">
+        class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
-    <header>
-        <div>
-            <div id="headerMainDiv">
-                <div>
-                    <a href="./index.html"> <img id="MainLogo"
-                            src="https://cdn-icons-png.freepik.com/512/5278/5278590.png"> </a>
-                </div>
-                <div>
-                    <input id="searchInput" placeholder="Search" type="text">
-                </div>
 
-                <div id="LoginBtnClickF">
-                    <!-- <p class="Plogin">Login/Sign up</p>
-                    <p class="Plogin">My Account</p> -->
-                    <span>
-                        <a href="./card.html"> <svg class="v_7pKG" viewBox="0 0 16 16">
-                                <path
-                                    d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86"
-                                    fill="#fff"></path>
-                            </svg></a>
-                    </span>
-                </div>
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header id="siteHeader" role="banner">
+        <div id="navInner">
+            <a id="navLogo" href="./index.html" aria-label="SJ Jewellery Home">
+                <span class="brand-name">SJ Jewellery</span>
+                <span class="brand-tagline">Crafted with love</span>
+            </a>
 
-                <div>
-                    <a href="./order.html">
-                        <p class="ChackOrder">Order</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="./login.html">
-                        <img id="CartBtn" src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png"></a>
-                </div>
+            <!-- Search wrapper -->
+            <div id="searchWrapper" role="search">
+                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input id="searchInput" type="text" placeholder="Search orders…" autocomplete="off"
+                    aria-label="Search items">
             </div>
+
+            <nav class="navActions" aria-label="User actions">
+                <a href="./order.html" class="navActionBtn" id="navOrderBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Orders
+                </a>
+                <a href="./login.html" class="navActionBtn" id="navLoginBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    Account
+                </a>
+                <a href="./card.html" class="navActionBtn cartWrap" id="navCartBtn" aria-label="Shopping cart">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    Cart
+                    <span class="cartBadge" id="cartCount" aria-label="items in cart">0</span>
+                </a>
+            </nav>
         </div>
     </header>
-    <section>
-        <div class="MainDivDesing" style="padding: 10px;">
-            <div class="TwoDivMarger">
-                <!-- <div class="cardDetaislDiv" id="showDataDiv">
-                    <div class="DetailsIMGmainDiv">
-                        <div>
-                            <img class="DetailsImgShow"
-                                src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
-                        </div>
-                        <div class="DetailsProducatName">
-                            <p class="ProductNamesummary">The Nomi Bridal Ring Set</p>
-                            <p class="productSummaryrate">₹ 1,34,725</p>
-                        </div>
-                    </div> -->
+
+    <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+    <main>
+        <div class="container">
+            <div class="orders-header">
+                <h1>My Orders</h1>
+                <p>Track delivery status and view transaction details.</p>
+                <span class="goldLine"></span>
             </div>
 
+            <!-- Orders grid -->
+            <div class="orders-grid" id="ordersContainer">
+                <div class="skeleton-item">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-details">
+                        <div class="skeleton-line name"></div>
+                        <div class="skeleton-line meta"></div>
+                    </div>
+                </div>
+                <div class="skeleton-item">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-details">
+                        <div class="skeleton-line name"></div>
+                        <div class="skeleton-line meta"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
-    </section>
-    <footer>
-        <div id="d-img">
-            <div id="main-li">
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">SHOP</li>
-                        </b>
-                        <a href="./allProduct.html">
-                            <li class="li-end">All Jewelry</li>
+    </main>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer id="siteFooter" role="contentinfo">
+        <div class="footerInner">
+            <div class="footerTop">
+                <div class="footerBrand">
+                    <div class="footerLogo">SJ Jewellery</div>
+                    <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary.
+                        Handcrafted with passion, delivered with pride.</p>
+                    <div class="footerSocial">
+                        <a href="#" class="socialIcon" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                            </svg>
                         </a>
-                        <li class="li-end">Rings</li>
-                        <li class="li-end">Necklaces</li>
-                        <li class="li-end">New Arrivals</li>
+                        <a href="#" class="socialIcon" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/918603632642" class="socialIcon" aria-label="WhatsApp" target="_blank">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footerCol">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="./allProduct.html">All Jewelry</a></li>
+                        <li><a href="./allProduct.html">Rings</a></li>
+                        <li><a href="./allProduct.html">Necklaces</a></li>
+                        <li><a href="./allProduct.html">Bangles</a></li>
+                        <li><a href="./allProduct.html">New Arrivals</a></li>
                     </ul>
                 </div>
-                <div>
+
+                <div class="footerCol">
+                    <h4>Company</h4>
                     <ul>
-                        <b>
-                            <li class="li-end">COMPANY</li>
-                        </b>
-                        <a href="./aboutPage.html">
-                            <li class="li-end">About Us</li>
-                        </a>
-                        <a href="./ContactPage.html">
-                            <li class="li-end">Contact</li>
-                        </a>
-                        <li class="li-end">FAQ</li>
-                        <li class="li-end">Shipping Info</li>
+                        <li><a href="./aboutPage.html">About Us</a></li>
+                        <li><a href="./ContactPage.html">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping Info</a></li>
                     </ul>
                 </div>
-                <div>
+
+                <div class="footerCol">
+                    <h4>Legal</h4>
                     <ul>
-                        <b>
-                            <li class="li-end">LEGAL</li>
-                        </b>
-                        <li class="li-end">Terms of Service</li>
-                        <li class="li-end">Privacy</li>
-                        <li class="li-end">Refund Policy</li>
-                        <li class="li-end">Shipping Policy</li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
                     </ul>
+                </div>
+            </div>
+
+            <div class="footerBottom">
+                <p class="footerCopy">&copy; 2026 <span>SJ Jewellery</span>. All rights reserved. Crafted with ♥</p>
+                <div class="footerPayments">
+                    <span class="payBadge">UPI</span>
+                    <span class="payBadge">Razorpay</span>
+                    <span class="payBadge">Net Banking</span>
+                    <span class="payBadge">COD</span>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Scripts -->
     <script src="./config.js"></script>
     <script>
+        // Dynamic Account navigation link updating & auth check redirect
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        if (!isLoggedIn) {
+            window.location.href = "./login.html";
+        }
+        const navLoginBtn = document.getElementById("navLoginBtn");
+        if (navLoginBtn && isLoggedIn) {
+            navLoginBtn.href = "./profile.html";
+        }
+
+        // Fetch cart badge count
+        async function fetchCartCount() {
+            try {
+                const res = await fetch(`${BASE_URL}/Card`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById("cartCount").textContent = data.length;
+                }
+            } catch (err) {
+                console.error("Cart count fetch failed", err);
+            }
+        }
+        fetchCartCount();
+
+        // Search through orders & redirect on Enter
+        document.getElementById("searchInput").addEventListener("input", (e) => {
+            const q = e.target.value.toLowerCase().trim();
+            document.querySelectorAll(".order-card").forEach(card => {
+                const name = card.querySelector(".order-name")?.textContent.toLowerCase() || "";
+                card.style.display = (!q || name.includes(q)) ? "" : "none";
+            });
+        });
+        document.getElementById("searchInput").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
+            }
+        });
+
+        // Load placed orders
         async function allOrder() {
-            let res = await fetch(`${BASE_URL}/viwePlaceOrder`);
-            let resOrder = await res.json();
-            // console.log(resOrder);
-            allorderView(resOrder);
-        }
-        allOrder()
-        async function allorderView(resOrder) {
-            let showDataDiv = document.querySelector(".TwoDivMarger");
+            try {
+                let res = await fetch(`${BASE_URL}/viwePlaceOrder`);
+                if (!res.ok) throw new Error("Could not load orders");
 
-            resOrder.forEach((item) => {
-                showDataDiv.innerHTML += `
-            
-                <div class="DetailsIMGmainDiv" data-id="${item._id}">
-                            <div>
-                                <img class="DetailsImgShow"
-                                    src="${item.photo}">
-                            </div>
-                             <div class="DetailsProducatName">
-                                <p class="ProductNamesummary">${item.productName}</p>
-                                <p class="productSummaryrate">₹ ${item.rate}</p>
-                            </div>
+                let resOrder = await res.json();
+                allorderView(resOrder);
+            } catch (err) {
+                console.error(err);
+                showErrorState();
+            }
+        }
+
+        function allorderView(resOrder) {
+            const container = document.getElementById("ordersContainer");
+            container.innerHTML = "";
+
+            if (!resOrder.length) {
+                container.innerHTML = `
+                    <div class="stateBox">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8m-4-4v8"/></svg>
+                        <h3>No Orders Found</h3>
+                        <p>You haven't placed any orders yet. Explore our exquisite collection and shop now!</p>
+                        <a href="./allProduct.html" class="state-cta">Browse Jewelry</a>
+                    </div>`;
+                return;
+            }
+
+            resOrder.forEach((item, index) => {
+                const rate = Number(item.rate) || 0;
+                const formattedPrice = rate.toLocaleString("en-IN");
+
+                const card = document.createElement("div");
+                card.className = "order-card";
+                card.setAttribute("data-id", item._id);
+                card.style.animationDelay = `${index * 0.08}s`;
+
+                card.innerHTML = `
+                    <div class="order-img-wrap">
+                        <img class="order-img" src="${item.photo || 'https://via.placeholder.com/150'}" alt="${item.productName}" loading="lazy">
+                    </div>
+                    <div class="order-info">
+                        <div class="order-name">${item.productName}</div>
+                        <div class="order-price">₹${formattedPrice}</div>
+                        <div class="order-meta">
+                            <span>Status:</span>
+                            <span class="status-badge">${item.orderStatus || 'Processing'}</span>
                         </div>
-                        
-                `
+                    </div>
+                    <div class="order-chevron">
+                        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                `;
 
-            })
-            // console.log(item._id);
-            showDataDiv.addEventListener("click", (event) => {
-                let card = event.target.closest(".DetailsIMGmainDiv");
-                let id = card.dataset.id;
-                console.log(id);
-                window.location.href = `orderDetails.html?id=${id}`
+                container.appendChild(card);
+            });
 
-            })
+            // Handle redirection using event delegation
+            container.addEventListener("click", (event) => {
+                const card = event.target.closest(".order-card");
+                if (card) {
+                    const id = card.dataset.id;
+                    window.location.href = `orderDetails.html?id=${id}`;
+                }
+            });
         }
 
+        function showErrorState() {
+            const container = document.getElementById("ordersContainer");
+            container.innerHTML = `
+                <div class="stateBox">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <h3>Failed to Load Orders</h3>
+                    <p>There was a connection issue fetching your orders. Please check your connection and try again.</p>
+                    <button class="state-cta" onclick="allOrder()">Retry Connection</button>
+                </div>`;
+        }
+
+        allOrder();
     </script>
 </body>
-
 
 </html>

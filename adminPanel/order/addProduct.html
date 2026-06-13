@@ -2,339 +2,382 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial;
-        }
-
-        /* Layout */
-        #main {
-            display: flex;
-        }
-
-        /* Sidebar */
-        #sidebar {
-            width: 220px;
-            height: 100vh;
-            background: #222d32;
-            color: white;
-        }
-
-        #sidebar h2 {
-            padding: 15px;
-            background: #1a2226;
-        }
-
-        #sidebar ul {
-            list-style: none;
-        }
-
-        #sidebar ul li {
-            padding: 12px 15px;
-            border-bottom: 1px solid #2c3b41;
-            cursor: pointer;
-        }
-
-        #sidebar ul li:hover {
-            background: #1e282c;
-        }
-
-        a {
-            text-decoration: none;
-            color: white;
-        }
-
-        /* Content Area */
-        #div1 {
-            padding: 20px;
-            width: 100%;
-        }
-
-        /* Form */
-        .box1 {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .box1 p {
-            width: 120px;
-        }
-
-        .box1 input {
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid black;
-            width: 20vh;
-        }
-
-        /* Button */
-        button {
-            margin-top: 10px;
-            padding: 8px 15px;
-            background: #00a65a;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #008d4c;
-        }
-
-        /* ===== SECTION ===== */
-
-        .maindivOrder {
-            margin-top: 20px;
-            box-shadow: 0px 0px 2px 0px #93f02d;
-            overflow-x: auto;
-        }
-
-        .statusProduct {
-            display: grid;
-            grid-template-columns: repeat(9, minmax(120px, 1fr));
-            text-align: center;
-        }
-
-        .statusProduct p {
-            border: 1px solid #ccc;
-            padding: 10px;
-        }
-
-        .header p {
-            background: #f9f9f9;
-            font-weight: bold;
-        }
-
-        .row p {
-            background: #fff;
-        }
-
-        #jpg1 {
-            height: 20px;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Product – SJ Jewellery Admin</title>
+  <link rel="stylesheet" href="./admin.css">
 </head>
 
 <body>
+  <div id="adminLayout">
 
-    <div id="main">
-
-        <!-- Sidebar -->
-        <div id="sidebar">
-            <h2>Admin Panel</h2>
-            <ul>
-                <a href="../Dashboard.html">
-                    <li>Dashboard</li>
-                </a>
-                <a href="./addProduct.html">
-                    <li>Product</li>
-                </a>
-                <a href="./status.html">
-                    <li>Status</li>
-                </a>
-            </ul>
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div id="sidebarHeader">
+        <div id="sidebarLogo">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
         </div>
+        <div>
+          <div id="sidebarTitle">SJ Jewellery</div>
+          <div id="sidebarSubtitle">Admin Console</div>
+        </div>
+      </div>
+      <nav id="sidebarNav">
+        <div class="navSection">
+          <div class="navSectionLabel">Main</div>
+          <a class="navItem" href="../Dashboard.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+            </svg>
+            Dashboard
+          </a>
+          <a class="navItem active" href="./Order.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            Products
+          </a>
+          <a class="navItem" href="./status.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2" />
+            </svg>
+            Orders
+          </a>
+        </div>
+      </nav>
+      <div id="sidebarFooter">
+        <div class="sidebarUser">
+          <div class="sidebarAvatar">A</div>
+          <div>
+            <div class="sidebarUserName">Admin</div>
+            <div class="sidebarUserRole">Super Admin</div>
+          </div>
+        </div>
+      </div>
+    </aside>
 
-        <!-- Content -->
-        <div id="div1">
+    <!-- Content -->
+    <div id="adminContent">
+      <header id="adminTopbar">
+        <div class="topbarLeft">
+          <span class="topbarPageTitle">Add Product</span>
+          <span class="topbarBreadcrumb">Products / Add New</span>
+        </div>
+        <div class="topbarRight">
+          <a href="./Order.html" class="btn btn-ghost btn-sm">← Back</a>
+        </div>
+      </header>
 
-            <!-- FORM -->
-            <div class="box1">
-                <p>Product Name</p>
-                <input id="inputProductName" type="text"> <!--input inputProductName-->
+      <main id="adminBody">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
+
+          <!-- Form Card -->
+          <div class="adminCard fadeIn">
+            <div class="adminCardHeader">
+              <div>
+                <div class="adminCardTitle">Product Details</div>
+                <div class="adminCardSubtitle">Fill in all fields to add a product</div>
+              </div>
             </div>
+            <div class="adminCardBody">
 
-            <div class="box1">
-                <p>Category</p>
-                <input id="inputCategoryName" type="text"><!--inputCategoryName-->
-            </div>
-            <div class="box1">
-                <p>SubCategory</p>
-                <input id="inputSubCategoryName" type="text"><!--inputSubCategoryName-->
-            </div>
+              <div class="alertBanner" id="formAlert">
+                <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <span id="alertText"></span>
+              </div>
 
-            <div class="box1">
-                <p>Units</p>
-                <input id="inputUnits" type="number"><!--inputUnits-->
-            </div>
-
-            <div class="box1">
-                <p>Rate</p>
-                <input id="inputRate" type="number"> <!--inputRate-->
-            </div>
-            <div class="box1">
-                <p>GST%</p>
-                <input id="inputGST" type="number"> <!--inputRate-->
-            </div>
-            <div class="box1">
-                <p>GST Amt</p>
-                <input id="totalGST" readonly type="text"> <!--Total OutPut-->
-            </div>
-
-            <div class="box1">
-                <p>Total</p>
-                <input id="TotalAmount" readonly type="text"> <!--Total OutPut-->
-            </div>
-
-            <div class="box1">
-                <p>Description</p>
-                <input id="inputDescription" type="text"> <!--inputDescription-->
-            </div>
-
-            <div class="box1">
-                <p>Image</p>
-                <input type="file" id="FillPhoto">
-            </div>
-
-            <button id="SaveBtn">Save</button> <!--SaveBtn-->
-
-            <!-- ===== SECTION (NOW BELOW BUTTON) ===== -->
-            <section>
-                <div class="maindivOrder">
-
-                    <!-- Header -->
-                    <div class="statusProduct header">
-                        <p>Edit</p>
-                        <p>Product Name</p>
-                        <p>Category</p>
-                        <p>Units</p>
-                        <p>Rate</p>
-                        <p>Amount</p>
-                        <p>Description</p>
-                        <p>Address</p>
-                        <p>Order Date</p>
-                    </div>
-
-                    <!-- Row -->
-                    <div class="statusProduct row">
-                        <p><img id="jpg1" src="https://img.icons8.com/?size=256&id=114170&format=png"></p>
-                        <p id="outputPrductName">iPhone 17 Pro Max (Silver, 2 TB)</p> <!--outputPrductName-->
-                        <p id="outPutCategoryName">Electronics</p><!--outPutCategoryName-->
-                        <p id="outPutUnits">1</p> <!--outPutUnits-->
-                        <p id="OutPutRate">₹2,29,900</p> <!--OutPutRate-->
-                        <p id="OutputAmount">₹2,29,900</p><!--OutputAmount-->
-                        <p id="outputOrderStatus">Order placed</p><!--outputOrderStatus-->
-                        <p id="Outputaddress">Address</p> <!--Outputaddress-->
-                        <p id="OutPutDate">25/03/2026</p><!--OutPutDate-->
-                    </div>
-
+              <div class="formGrid" style="grid-template-columns:1fr 1fr;">
+                <div class="formGroup">
+                  <label class="formLabel" for="inputProductName">Product Name *</label>
+                  <input class="formInput" id="inputProductName" type="text" placeholder="e.g. Gold Necklace">
                 </div>
-            </section>
+                <div class="formGroup">
+                  <label class="formLabel" for="inputCategoryName">Category *</label>
+                  <input class="formInput" id="inputCategoryName" type="text" placeholder="e.g. Necklace">
+                </div>
+                <div class="formGroup">
+                  <label class="formLabel" for="inputSubCategoryName">Sub-Category</label>
+                  <input class="formInput" id="inputSubCategoryName" type="text" placeholder="e.g. Gold, Diamond">
+                </div>
+                <div class="formGroup">
+                  <label class="formLabel" for="inputUnits">Units *</label>
+                  <input class="formInput" id="inputUnits" type="number" placeholder="0" min="0">
+                </div>
+                <div class="formGroup">
+                  <label class="formLabel" for="inputRate">Rate (₹) *</label>
+                  <input class="formInput" id="inputRate" type="number" placeholder="0.00" min="0">
+                </div>
+                <div class="formGroup">
+                  <label class="formLabel" for="inputGST">GST % *</label>
+                  <input class="formInput" id="inputGST" type="number" placeholder="0" min="0" max="100">
+                </div>
+                <div class="formGroup">
+                  <label class="formLabel" for="totalGST">GST Amount</label>
+                  <input class="formInput" id="totalGST" type="text" readonly placeholder="Auto-calculated">
+                </div>
+                <div class="formGroup">
+                  <label class="formLabel" for="TotalAmount">Total Amount</label>
+                  <input class="formInput" id="TotalAmount" type="text" readonly placeholder="Auto-calculated">
+                </div>
+              </div>
+
+              <div class="formGroup" style="margin-top:4px;">
+                <label class="formLabel" for="inputDescription">Description</label>
+                <textarea class="formTextarea" id="inputDescription" placeholder="Describe the product…"></textarea>
+              </div>
+
+              <!-- File Upload -->
+              <div class="formGroup" style="margin-top:4px;">
+                <label class="formLabel">Product Image *</label>
+                <label class="dropZone" id="dropZone" for="FillPhoto">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5">
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </svg>
+                  <div class="dropZoneText">
+                    <span>Click to upload</span> or drag &amp; drop<br>
+                    <small style="color:#94a3b8;">PNG, JPG, WEBP up to 10MB</small>
+                  </div>
+                  <input type="file" id="FillPhoto" accept="image/*">
+                </label>
+                <div id="filePreview" style="display:none;margin-top:10px;">
+                  <img id="previewImg"
+                    style="height:100px;border-radius:8px;object-fit:cover;border:1px solid #e2e8f0;">
+                  <span id="fileName" style="font-size:0.78rem;color:#64748b;margin-left:10px;"></span>
+                </div>
+              </div>
+
+              <div class="btnGroup">
+                <button class="btn btn-success" id="SaveBtn">
+                  <svg viewBox="0 0 24 24" fill="#fff">
+                    <path
+                      d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
+                  </svg>
+                  Save Product
+                </button>
+                <button class="btn btn-ghost" type="button" onclick="clearForm()">Clear</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preview Card -->
+          <div class="adminCard fadeIn">
+            <div class="adminCardHeader">
+              <div>
+                <div class="adminCardTitle">Live Preview</div>
+                <div class="adminCardSubtitle">How it looks in the store</div>
+              </div>
+            </div>
+            <div class="adminCardBody">
+              <div id="previewCard"
+                style="border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;background:#f8fafc;">
+                <div style="height:200px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;"
+                  id="previewImgBox">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5">
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                  </svg>
+                </div>
+                <div style="padding:16px;">
+                  <div id="pName" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Product Name</div>
+                  <div id="pCat" style="font-size:0.75rem;color:#64748b;margin:4px 0 12px;">Category</div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                      <div id="pPrice" style="font-size:1.1rem;font-weight:700;color:#6366f1;">₹ 0</div>
+                      <div id="pGstNote" style="font-size:0.68rem;color:#94a3b8;">GST included</div>
+                    </div>
+                    <span class="badge badge-success" id="pUnits">In Stock · 0</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Added products table -->
+              <div style="margin-top:20px;">
+                <div style="font-size:0.82rem;font-weight:700;color:#0f172a;margin-bottom:10px;">Recently Added</div>
+                <div class="tableWrapper">
+                  <table class="adminTable" id="recentTable">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Units</th>
+                        <th>Rate</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="recentBody">
+                      <tr>
+                        <td colspan="5">
+                          <div class="emptyState" style="padding:20px;">
+                            <p>No products yet</p>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
 
         </div>
+      </main>
     </div>
-    <script src="./config.js"></script>
-    <script>
+  </div>
 
-        //Input
-        let inputProductName = document.getElementById("inputProductName"); //inputProductName
-        let inputCategoryName = document.getElementById("inputCategoryName"); //inputCategoryName
-        let inputUnits = document.getElementById("inputUnits"); //inputUnits
-        let inputRate = document.getElementById("inputRate"); //inputRate
-        let inputDescription = document.getElementById("inputDescription"); //inputDescription
-        let inputSubCategoryName = document.getElementById("inputSubCategoryName") //inputSubCategoryName
-        let inputGST = document.getElementById("inputGST") //GST Input
-        let SaveBtn = document.getElementById("SaveBtn") //SaveBtn
-        //OutPut
-        let outputOrderStatus = document.getElementById("outputOrderStatus") //outputOrderStatus
-        let outPutCategoryName = document.getElementById("outPutCategoryName") //outPutCategoryName
-        let outPutUnits = document.getElementById("outPutUnits") //outPutUnits
-        let OutPutRate = document.getElementById("OutPutRate") // outPutRate
-        let Outputaddress = document.getElementById("Outputaddress") //Outputaddress
-        let outputPrductName = document.getElementById("outputPrductName") //outputPrductName
-        let OutputAmount = document.getElementById("OutputAmount");
-        let FillPhotoInput = document.getElementById("FillPhoto");
-        // ReadOnly 
-        // let totalGstReadOnly = document.getElementById("totalGstReadOnly");
+  <script src="./config.js"></script>
+  <script>
+    // Elements
+    const inputProductName = document.getElementById("inputProductName");
+    const inputCategoryName = document.getElementById("inputCategoryName");
+    const inputSubCategoryName = document.getElementById("inputSubCategoryName");
+    const inputUnits = document.getElementById("inputUnits");
+    const inputRate = document.getElementById("inputRate");
+    const inputGST = document.getElementById("inputGST");
+    const totalGST = document.getElementById("totalGST");
+    const TotalAmount = document.getElementById("TotalAmount");
+    const inputDescription = document.getElementById("inputDescription");
+    const FillPhoto = document.getElementById("FillPhoto");
+    const SaveBtn = document.getElementById("SaveBtn");
+    const formAlert = document.getElementById("formAlert");
+    const alertText = document.getElementById("alertText");
+    const dropZone = document.getElementById("dropZone");
 
+    // Preview elements
+    const pName = document.getElementById("pName");
+    const pCat = document.getElementById("pCat");
+    const pPrice = document.getElementById("pPrice");
+    const pGstNote = document.getElementById("pGstNote");
+    const pUnits = document.getElementById("pUnits");
 
-        function calculateTotal() {
-            let subTotal = Number(inputRate.value) * Number(inputUnits.value);
-            let SumTotalGST = (subTotal * Number(inputGST.value)) / 100;
-            console.log(subTotal);
-            console.log(SumTotalGST);
-            // document.querySelector("#totalGST").value = SumTotalGST;
-            // document.querySelector("#TotalAmount").value = subTotal + SumTotalGST;
+    function showAlert(msg, type = "error") {
+      alertText.textContent = msg;
+      formAlert.className = `alertBanner ${type} show`;
+    }
+    function hideAlert() { formAlert.classList.remove("show"); }
 
+    // Live calc + preview
+    function calculateTotal() {
+      const rate = Number(inputRate.value) || 0;
+      const units = Number(inputUnits.value) || 0;
+      const gst = Number(inputGST.value) || 0;
+      const sub = rate * units;
+      const gstAmt = (sub * gst) / 100;
+      const total = sub + gstAmt;
+      totalGST.value = gstAmt ? `₹${gstAmt.toFixed(2)}` : "";
+      TotalAmount.value = total ? `₹${total.toFixed(2)}` : "";
+      // Update preview
+      pPrice.textContent = `₹${Math.round(rate + (rate * gst) / 100)}`;
+      pGstNote.textContent = gst ? `GST ${gst}% included` : "No GST";
+      pUnits.textContent = `In Stock · ${units}`;
+    }
 
+    [inputRate, inputUnits, inputGST].forEach(el => el.addEventListener("input", calculateTotal));
 
-        }
-        inputRate.addEventListener("input", calculateTotal);
-        inputUnits.addEventListener("input", calculateTotal);
-        inputGST.addEventListener("input", calculateTotal);
+    inputProductName.addEventListener("input", () => pName.textContent = inputProductName.value || "Product Name");
+    inputCategoryName.addEventListener("input", () => pCat.textContent = inputCategoryName.value || "Category");
 
+    // Image preview
+    FillPhoto.addEventListener("change", () => {
+      const file = FillPhoto.files[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      document.getElementById("previewImg").src = url;
+      document.getElementById("fileName").textContent = file.name;
+      document.getElementById("filePreview").style.display = "flex";
+      // Update big preview
+      document.getElementById("previewImgBox").innerHTML = `<img src="${url}" style="width:100%;height:200px;object-fit:cover;">`;
+    });
 
+    // Drag & drop
+    dropZone.addEventListener("dragover", e => { e.preventDefault(); dropZone.classList.add("drag"); });
+    dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag"));
+    dropZone.addEventListener("drop", e => {
+      e.preventDefault(); dropZone.classList.remove("drag");
+      FillPhoto.files = e.dataTransfer.files;
+      FillPhoto.dispatchEvent(new Event("change"));
+    });
 
-        SaveBtn.addEventListener("click", async () => {
+    // Save
+    SaveBtn.addEventListener("click", async () => {
+      hideAlert();
+      const required = [inputProductName, inputCategoryName, inputUnits, inputRate, inputGST];
+      if (required.some(el => !el.value.trim())) {
+        showAlert("Please fill in all required fields (*).");
+        return;
+      }
+      if (!FillPhoto.files[0]) {
+        showAlert("Please select a product image.");
+        return;
+      }
+      SaveBtn.textContent = "Saving…";
+      SaveBtn.disabled = true;
+      try {
+        const formData = new FormData();
+        formData.append("Productname", inputProductName.value);
+        formData.append("Category", inputCategoryName.value);
+        formData.append("Rate", Number(inputRate.value));
+        formData.append("Units", Number(inputUnits.value));
+        formData.append("description", inputDescription.value);
+        formData.append("photo", FillPhoto.files[0]);
+        formData.append("SubCategory", inputSubCategoryName.value);
+        formData.append("gst", Number(inputGST.value));
 
-            if (inputCategoryName.value === "" || inputProductName.value === "" || inputRate.value === "" || inputUnits.value === "" || inputGST === "") {
-                alert("Fill In The blank");
-                return;
-            } else {
-                let rate = Number(inputRate.value);
-                let units = Number(inputUnits.value);
-                outputPrductName.innerHTML = inputProductName.value;
-                Outputaddress.innerHTML = inputCategoryName.value;
-                let Amount = rate * units
-                OutputAmount.innerHTML = "₹" + Amount;
-                outPutUnits.innerHTML = units;
-                OutPutRate.innerHTML = "₹" + rate;
-                outPutCategoryName.innerHTML = inputCategoryName.value;
-            }
-            if (!FillPhotoInput.files[0]) {
-                alert("Please select photo");
-                return;
-            }
-            //1stp
-            // const data = {
-            //     Productname: inputProductName.value,
-            //     Category: inputCategoryName.value,
-            //     Rate: Number(inputRate.value),
-            //     Units: Number(inputUnits.value),
-            //     description: inputDescription.value,
-            //     photo: FillPhot
-            // }
+        const res = await fetch(`${BASE_URL}/addProduct`, { method: "POST", body: formData });
+        if (!res.ok) throw new Error("Server error");
+        showAlert("Product saved successfully!", "success");
+        clearForm();
+        loadRecentProducts();
+      } catch (err) {
+        showAlert("Failed to save: " + err.message);
+      } finally {
+        SaveBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="#fff"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg> Save Product`;
+        SaveBtn.disabled = false;
+      }
+    });
 
-            const formData = new FormData();
+    function clearForm() {
+      [inputProductName, inputCategoryName, inputSubCategoryName, inputUnits, inputRate, inputGST, inputDescription].forEach(el => el.value = "");
+      totalGST.value = ""; TotalAmount.value = "";
+      document.getElementById("filePreview").style.display = "none";
+      pName.textContent = "Product Name"; pCat.textContent = "Category";
+      pPrice.textContent = "₹ 0"; pUnits.textContent = "In Stock · 0";
+      document.getElementById("previewImgBox").innerHTML = `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+    }
 
-            formData.append("Productname", inputProductName.value);
-            formData.append("Category", inputCategoryName.value);
-            formData.append("Rate", Number(inputRate.value));
-            formData.append("Units", Number(inputUnits.value));
-            formData.append("description", inputDescription.value);
-            formData.append("photo", FillPhotoInput.files[0]);
-            formData.append("SubCategory", inputSubCategoryName.value);
-            formData.append("gst", Number(inputGST.value));
-       
-
-            let response = await fetch(`${BASE_URL}/addProduct`, {
-                method: "POST",
-                body: formData
-                // headers: {
-                //     "Content-Type": "application/json"
-                // },
-                // body: JSON.stringify(data)
-            });
-            let result = await response.json();
-            console.log(result);
-            alert("Data saved");
-            location.reload();
-        })
-
-
-
-
-    </script>
+    async function loadRecentProducts() {
+      try {
+        const res = await fetch(`${BASE_URL}/addProduct`);
+        const data = await res.json();
+        const tbody = document.getElementById("recentBody");
+        const recent = data.slice(-5).reverse();
+        if (!recent.length) { tbody.innerHTML = `<tr><td colspan="5"><div class="emptyState" style="padding:20px;"><p>No products yet</p></div></td></tr>`; return; }
+        tbody.innerHTML = recent.map(p => {
+          const gst = (p.Rate * p.gst) / 100;
+          return `<tr>
+          <td>${p.Productname}</td>
+          <td>${p.Category}</td>
+          <td>${p.Units}</td>
+          <td>₹${p.Rate}</td>
+          <td>₹${Math.round(p.Rate + gst)}</td>
+        </tr>`;
+        }).join("");
+      } catch (e) { }
+    }
+    loadRecentProducts();
+  </script>
 </body>
 
 </html>

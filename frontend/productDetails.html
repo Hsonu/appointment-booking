@@ -4,782 +4,1455 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<style>
-    body {
-        /* background-color: rgb(2 2 2 / 3%); */
-        background-color: rgb(2 2 2 / 9%);
-    }
+    <title>Secure Checkout – SJ Jewellery</title>
+    <meta name="description"
+        content="Securely place your order for handcrafted luxury jewellery at SJ Jewellery using Razorpay.">
 
-    .cardDetaislDiv {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        width: 90%;
-        background-color: #fff;
-        padding: 12px;
-        border-radius: 5px;
-    }
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
-    .MainDivDesing {
-
-        display: flex;
-        justify-content: center;
-        /* width: 90%; */
-
-    }
-
-    .DetailsImgShow {
-        height: 15vh;
-    }
-
-    .DetailsIMGmainDiv {
-        display: flex;
-        padding: 10px;
-    }
-
-    .DetailsProducatName {
-        padding: 20px;
-    }
-
-    .TwoDivMarger {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        width: 80%;
-    }
-
-    .DetailsBuyBtn {
-        display: flex;
-        justify-content: end;
-    }
-
-    .BuyBtn {
-        transition: 0.3s;
-        background-color: pink;
-
-    }
-
-    .BuyBtn:hover {
-        background-color: rgba(255, 62, 94, 0.74);
-    }
-
-    .paymentMethodDiv {
-        font-size: 1.9vw;
-        padding: 1vh;
-
-    }
-
-    .CashOnDelivery {
-        /* margin-left: 2vw;
-            margin-top: 3vh; */
-        padding: 2vh;
-        padding-left: 1vw;
-        cursor: pointer;
-        /* background-color: #00000014; */
-        border-radius: 3px;
-
-    }
-
-    #showDataDivv {
-        display: flex;
-        gap: 1vh;
-    }
-
-    #CartBtn {
-        min-width: 30px;
-        /* width: 3vw; */
-        max-width: 3vw;
-        height: auto;
-        cursor: pointer;
-    }
-
-    .inputcss {
-        /* width: 100%; */
-        padding: 1vh;
-        border: 1px solid #00000014;
-        border-radius: 3px;
-        transition: 0.3s;
-    }
-
-    #customerDetailsForm {
-        display: flex;
-        flex-direction: column;
-        gap: 1vh;
-        transition: 0.3s;
-
-    }
-
-    .QtyBtn {
-        display: flex;
-        /* justify-content: center; */
-        gap: 1vw;
-        margin-left: 2vw;
-        align-items: center;
-        /* border: 1px solid black; */
-        width: 5.5vw;
-    }
-
-    #minBtn,
-    #maxBtn {
-        display: flex;
-        padding: 3px;
-    }
-
-    #PriceSummaryDiv {
-        display: flex;
-        flex-direction: column;
-        font-size: clamp(12px, 2vw, 12px)
-    }
-
-    .PriceSummaryDivLast {
-        display: flex;
-        justify-content: space-between;
-        gap: 1vw;
-    }
-
-    #gstDIv {
-        display: flex;
-        gap: 0.2vw;
-    }
-
-    #DotBorder {
-        border-top: dotted 2px;
-        padding: 3px;
-
-        font-size: clamp(12px, 1.2vw, 40px)
-    }
-
-    @media only screen and (max-width:768px) {
-
-        #customerNamePlaceOrder,
-        #customeradd,
-        #customerMobileNumber,
-        .ProductNamesummary {
-            font-size: clamp(10px, 1.5vh, 30px);
-
+    <style>
+        /* ═══════════════════════════════════════════
+           DESIGN TOKENS
+        ═══════════════════════════════════════════ */
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #a8854e;
+            --gold-light: #e8d4a8;
+            --gold-bg: #fdf7ee;
+            --cream: #faf8f5;
+            --dark: #0d0d0f;
+            --dark-2: #1a1a1f;
+            --dark-3: #2a2a30;
+            --text-h: #0d0d0f;
+            --text-body: #3d3d45;
+            --text-muted: #7a7a85;
+            --border: #e8e0d5;
+            --white: #ffffff;
+            --header-h: 72px;
+            --radius: 14px;
+            --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .paymentMethodDiv {
-            font-size: clamp(10px, 1.8vh, 30px);
+        /* ═══════════════════════════════════════════
+           RESET & BASE
+        ═══════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .DetailsImgShow {
-            height: 9vh;
+        html {
+            scroll-behavior: smooth;
         }
 
-        .CashOnDelivery {
-            padding: 1vh;
-            padding-left: 1vw;
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button {
+            font-family: inherit;
             cursor: pointer;
-            /* background-color: #00000014; */
-            border-radius: 3px;
-            font-size: clamp(10px, 1.5vh, 40px);
+            border: none;
         }
 
-    }
+        /* ═══════════════════════════════════════════
+           WHATSAPP FLOAT
+        ═══════════════════════════════════════════ */
+        .whatsapp-float {
+            position: fixed;
+            width: 56px;
+            height: 56px;
+            bottom: 28px;
+            right: 28px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+            z-index: 9999;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
 
-    footer {
-        margin-top: auto;
-    }
-</style>
+        .whatsapp-float:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
+        }
+
+        .whatsapp-float img {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* ═══════════════════════════════════════════
+           TOAST NOTIFICATION
+        ═══════════════════════════════════════════ */
+        #toast {
+            position: fixed;
+            bottom: 100px;
+            right: 28px;
+            background: var(--dark);
+            color: #fff;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+            z-index: 9998;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        #toast svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 2.5;
+            flex-shrink: 0;
+        }
+
+        /* ═══════════════════════════════════════════
+           HEADER / NAVBAR
+        ═══════════════════════════════════════════ */
+        #siteHeader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-h);
+            z-index: 1000;
+            background: rgba(13, 13, 15, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+            transition: background var(--transition), backdrop-filter var(--transition), border-color var(--transition);
+        }
+
+        #navInner {
+            max-width: 1300px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 0 24px;
+        }
+
+        #navLogo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        #navLogo .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.04em;
+        }
+
+        #navLogo .brand-tagline {
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            color: rgba(201, 169, 110, 0.6);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        #searchWrapper {
+            flex: 1;
+            max-width: 440px;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(201, 169, 110, 0.25);
+            border-radius: 999px;
+            padding: 9px 18px 9px 42px;
+            font-size: 0.88rem;
+            color: #fff;
+            outline: none;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #searchInput:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+        }
+
+        #searchIcon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            stroke: rgba(201, 169, 110, 0.6);
+            fill: none;
+            pointer-events: none;
+        }
+
+        .navActions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .navActionBtn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1.5px solid transparent;
+            transition: border-color var(--transition), background var(--transition);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .navActionBtn:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+            background: rgba(201, 169, 110, 0.06);
+            color: var(--gold);
+        }
+
+        .navActionBtn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .cartWrap {
+            position: relative;
+        }
+
+        .cartBadge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ═══════════════════════════════════════════
+           MAIN CHECKOUT LAYOUT
+        ═══════════════════════════════════════════ */
+        main {
+            margin-top: calc(var(--header-h) + 32px);
+            flex: 1;
+            padding-bottom: 72px;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .checkout-title-wrap {
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+        }
+
+        .checkout-title-wrap h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-h);
+        }
+
+        .checkout-title-wrap p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        /* checkout cards */
+        .checkout-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .checkout-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--text-h);
+            margin-bottom: 20px;
+            border-bottom: 1.5px solid var(--cream);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Delivery Display */
+        .delivery-display {
+            background: var(--cream);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px dashed var(--border);
+            margin-bottom: 16px;
+        }
+
+        .delivery-display h4 {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 10px;
+        }
+
+        .delivery-display p {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+
+        .delivery-display p strong {
+            color: var(--text-h);
+        }
+
+        /* Address inputs form */
+        #customerDetailsForm {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 18px;
+            background: #faf8f5;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+        }
+
+        .form-span-2 {
+            grid-column: 1 / -1;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-body);
+        }
+
+        .inputcss {
+            width: 100%;
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            color: var(--text-h);
+            outline: none;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        .inputcss:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+        }
+
+        small.error-msg {
+            color: #d93838;
+            font-size: 0.7rem;
+            font-weight: 500;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* Address trigger button styling */
+        .btn-address-trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1.5px solid var(--gold);
+            background: #fff;
+            color: var(--gold-dark);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all var(--transition);
+        }
+
+        .btn-address-trigger:hover {
+            background: var(--gold-bg);
+            box-shadow: 0 4px 12px rgba(201, 169, 110, 0.15);
+        }
+
+        /* Payment selection */
+        .payment-box {
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .payment-box.selected {
+            border-color: var(--gold);
+            background: var(--gold-bg);
+        }
+
+        .payment-box-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .payment-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+        }
+
+        .payment-box.selected .payment-circle {
+            border-color: var(--gold);
+        }
+
+        .payment-circle-inner {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: transparent;
+            transition: all var(--transition);
+        }
+
+        .payment-box.selected .payment-circle-inner {
+            background: var(--gold-dark);
+        }
+
+        .payment-title {
+            font-weight: 600;
+            color: var(--text-h);
+            font-size: 0.95rem;
+        }
+
+        .payment-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .payment-box svg.razorpay-logo {
+            height: 24px;
+            opacity: 0.8;
+        }
+
+        /* Right Column — Sticky receipt summary */
+        .sticky-summary {
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-item-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .summary-img-wrap {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f8f4ef;
+            border: 1px solid rgba(201, 169, 110, 0.1);
+            flex-shrink: 0;
+        }
+
+        .summary-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .summary-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .ProductNamesummary {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-h);
+        }
+
+        .productSummaryrate {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gold-dark);
+        }
+
+        /* Qty picker */
+        .qty-picker {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--cream);
+            border-radius: 8px;
+            padding: 4px 10px;
+            border: 1px solid var(--border);
+            align-self: flex-start;
+            margin-top: 4px;
+        }
+
+        .qty-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            background: #fff;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-body);
+            transition: all var(--transition);
+        }
+
+        .qty-btn:hover:not(:disabled) {
+            border-color: var(--gold);
+            color: var(--gold-dark);
+            background: var(--gold-bg);
+        }
+
+        .qty-val {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-h);
+            min-width: 16px;
+            text-align: center;
+        }
+
+        /* Receipt block */
+        .receipt-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.88rem;
+            color: var(--text-body);
+        }
+
+        .receipt-row.total {
+            border-top: 2px solid var(--border);
+            padding-top: 16px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-h);
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.88rem;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all var(--transition);
+            box-shadow: 0 4px 16px rgba(201, 169, 110, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-checkout:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 28px rgba(201, 169, 110, 0.4);
+        }
+
+        .btn-checkout svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+        }
+
+        /* Skeletons */
+        .skeleton-checkout {
+            height: 140px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+            border-radius: var(--radius);
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 900px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sticky-summary {
+                position: static;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #navInner {
+                padding: 0 16px;
+                gap: 12px;
+            }
+
+            #searchWrapper {
+                display: none;
+            }
+
+            #customerDetailsForm {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-title-wrap {
+                margin-bottom: 24px;
+            }
+        }
+    </style>
+</head>
 
 <body>
+
+    <!-- WhatsApp Float -->
     <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
-        class="whatsapp-float" target="_blank">
+        class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
-    <header>
-        <div>
-            <div id="headerMainDiv">
-                <div>
-                    <a href="./index.html"> <img id="MainLogo"
-                            src="https://cdn-icons-png.freepik.com/512/5278/5278590.png"> </a>
-                </div>
-                <div>
-                    <input id="searchInput" placeholder="Search" type="text">
-                </div>
 
-                <div id="LoginBtnClickF">
-                    <!-- <p class="Plogin">Login/Sign up</p>
-                    <p class="Plogin">My Account</p> -->
-                    <span>
-                        <a href="./card.html"> <svg class="v_7pKG" viewBox="0 0 16 16">
-                                <path
-                                    d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86"
-                                    fill="#fff"></path>
-                            </svg></a>
-                    </span>
-                </div>
+    <!-- Custom Toast -->
+    <div id="toast" role="alert">
+        <svg viewBox="0 0 24 24">
+            <path d="M20 6L9 17l-5-5" />
+        </svg>
+        <span id="toastMsg"></span>
+    </div>
 
-                <div>
-                    <a href="./order.html">
-                        <p class="ChackOrder">Order</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="./login.html">
-                        <img id="CartBtn" src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png"></a>
-                </div>
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header id="siteHeader" role="banner">
+        <div id="navInner">
+            <a id="navLogo" href="./index.html" aria-label="SJ Jewellery Home">
+                <span class="brand-name">SJ Jewellery</span>
+                <span class="brand-tagline">Crafted with love</span>
+            </a>
+
+            <!-- Search wrapper -->
+            <div id="searchWrapper" role="search">
+                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input id="searchInput" type="text" placeholder="Search rings, necklaces..." autocomplete="off"
+                    aria-label="Search items">
             </div>
+
+            <nav class="navActions" aria-label="User actions">
+                <a href="./order.html" class="navActionBtn" id="navOrderBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Orders
+                </a>
+                <a href="./login.html" class="navActionBtn" id="navLoginBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    Account
+                </a>
+                <a href="./card.html" class="navActionBtn cartWrap" id="navCartBtn" aria-label="Shopping cart">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    Cart
+                    <span class="cartBadge" id="cartCount" aria-label="items in cart">0</span>
+                </a>
+            </nav>
         </div>
     </header>
-    <section>
-        <div class="MainDivDesing" style="padding: 10px;">
-            <div class="TwoDivMarger">
-                <div class="cardDetaislDiv">
-                    <div>
-                        <p>Deliver to:</p>
-                    </div>
-                    <div>
-                        <p id="customerNamePlaceOrder"></p>
-                        <p id="customeradd"></p>
-                        <p id="customerMobileNumber"></p>
-                        <p id="customerEmail"></p>
-                    </div>
-                    <div style="padding: 10px;">
-                        <form id="customerDetailsForm" style="display: none;">
-                            <input class="inputcss" id="customerNameInput" type="text" placeholder="Enter Name">
-                            <small style="color: red;" id="customerNameError"></small>
-                            <input class="inputcss" id="customerMobileInput" type="number"
-                                placeholder="Enter Mobile Number">
-                            <small style="color: red;" id="customerMobileError"></small>
-                            <input class="inputcss" id="customerEmailInput" type="email" placeholder="Enter Email">
-                            <small style="color: red;" id="customerEmailError"></small>
-                            <input class="inputcss" id="customerAddressInput" type="text" placeholder="Full Address">
-                            <small style="color: red;" id="customerAddressError"></small>
-                            <input class="inputcss" id="customerCityInput" type="text" placeholder="City">
-                            <small style="color: red;" id="customerCityError"></small>
-                            <input class="inputcss" id="customerDistrictInput" type="text" placeholder="District">
-                            <small style="color: red;" id="customerDistrictError"></small>
-                            <input class="inputcss" id="customerStateInput" type="text" placeholder="State">
-                            <small style="color: red;" id="customerStateError"></small>
-                            <input class="inputcss" id="customerPincodeInput" type="number" placeholder="Pincode">
-                            <small style="color: red;" id="customerPincodeError"></small>
-                        </form>
-                    </div>
-                    <div class="DetailsBuyBtn">
-                        <button type="button" id="BuyBtnChangeaddress" class="BuyBtn">Add Address</button>
-                        <button type="button" id="addresSaveBtn" class="BuyBtn" style="display: none;">Save
-                            Address</button>
-                    </div>
-                </div>
-                <div class="cardDetaislDiv" id="showDataDiv">
-                    <div class="DetailsIMGmainDiv">
-                        <div>
-                            <img class="DetailsImgShow"
-                                src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
+
+    <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+    <main>
+        <div class="container">
+            <div class="checkout-title-wrap">
+                <h1>Secure Checkout</h1>
+                <p>Provide shipping details and complete your payment safely.</p>
+            </div>
+
+            <div class="checkout-grid">
+                <!-- Left Column: Details -->
+                <div class="checkout-details-left">
+
+                    <!-- Card 1: Delivery Address -->
+                    <div class="checkout-card">
+                        <h3>
+                            Delivery Address
+                            <button type="button" id="BuyBtnChangeaddress" class="btn-address-trigger">
+                                ✦ Add Address
+                            </button>
+                        </h3>
+
+                        <!-- Saved Address display block -->
+                        <div class="delivery-display" id="addressDisplayBox">
+                            <h4 id="customerNamePlaceOrder">Add Delivery Address</h4>
+                            <p id="customerMobileNumber">Please fill in your shipping details below to place your order.
+                            </p>
+                            <p id="customeradd" style="margin-top: 10px; font-weight: 500; color: var(--text-body);">
+                            </p>
+                            <p id="customerEmail" style="color: var(--text-muted); font-size: 0.8rem;"></p>
                         </div>
 
-                        <div class="DetailsProducatName">
-                            <p class="ProductNamesummary">The Nomi Bridal Ring Set</p>
-                            <p class="productSummaryrate">₹ 1,34,725</p>
-                        </div>
-                    </div>
-                    <div class="QtyBtn">
-                        <button id="minBtn" class="BuyBtn">-</button>
-                        <span id="qty">1</span>
-                        <button id="maxBtn" class="BuyBtn">+</button>
-                    </div>
-                    <div class="DetailsBuyBtn">
-                        <div id="PriceSummaryDiv">
-                            <div class="PriceSummaryDivLast">
-                                <p>Price</p>
-                                <p id="ProductPrice">ProductPrice :-2</p>
+                        <!-- Form inputs address (hidden initially) -->
+                        <form id="customerDetailsForm" style="display: none;" novalidate>
+                            <div class="form-group">
+                                <label for="customerNameInput">Full Name</label>
+                                <input class="inputcss" id="customerNameInput" type="text" placeholder="Sonu Raj">
+                                <small class="error-msg" id="customerNameError"></small>
                             </div>
-                            <div class="PriceSummaryDivLast">
-                                <div id="gstDIv">
-                                    <p id="gstName">GST</p>
-                                    <p id="GSTSamble">GST</p>
-                                    <p id="GstP">%</p>
+                            <div class="form-group">
+                                <label for="customerMobileInput">Mobile Number</label>
+                                <input class="inputcss" id="customerMobileInput" type="number"
+                                    placeholder="10-digit number">
+                                <small class="error-msg" id="customerMobileError"></small>
+                            </div>
+                            <div class="form-group form-span-2">
+                                <label for="customerEmailInput">Email Address (Optional)</label>
+                                <input class="inputcss" id="customerEmailInput" type="email"
+                                    placeholder="e.g. name@domain.com">
+                                <small class="error-msg" id="customerEmailError"></small>
+                            </div>
+                            <div class="form-group form-span-2">
+                                <label for="customerAddressInput">Full Shipping Address</label>
+                                <input class="inputcss" id="customerAddressInput" type="text"
+                                    placeholder="Flat, Street, Area info">
+                                <small class="error-msg" id="customerAddressError"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerCityInput">City / Town</label>
+                                <input class="inputcss" id="customerCityInput" type="text" placeholder="e.g. Mumbai">
+                                <small class="error-msg" id="customerCityError"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerDistrictInput">District</label>
+                                <input class="inputcss" id="customerDistrictInput" type="text"
+                                    placeholder="District name">
+                                <small class="error-msg" id="customerDistrictError"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerStateInput">State</label>
+                                <input class="inputcss" id="customerStateInput" type="text" placeholder="State name">
+                                <small class="error-msg" id="customerStateError"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerPincodeInput">Pincode</label>
+                                <input class="inputcss" id="customerPincodeInput" type="number"
+                                    placeholder="6-digit PIN">
+                                <small class="error-msg" id="customerPincodeError"></small>
+                            </div>
+
+                            <div class="form-span-2" style="display: flex; justify-content: flex-end; margin-top: 8px;">
+                                <button type="button" id="addresSaveBtn" class="btn-address-trigger"
+                                    style="background: var(--dark); color: #fff; border-color: var(--dark);">
+                                    Save Address Details
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Card 2: Payment Method selection -->
+                    <div class="checkout-card">
+                        <h3>Payment Method</h3>
+
+                        <div class="payment-box selected" id="PrepaidPayment">
+                            <div class="payment-box-left">
+                                <div class="payment-circle">
+                                    <div class="payment-circle-inner"></div>
                                 </div>
-                                <p id="PeroductGST">GST:-3</p>
+                                <div>
+                                    <div class="payment-title">Online Payment (Razorpay)</div>
+                                    <div class="payment-desc">Pay instantly using UPI, Credit/Debit cards, or Net
+                                        Banking.</div>
+                                </div>
                             </div>
-                            <div class="PriceSummaryDivLast" id="DotBorder">
-                                <p style="font-weight: bold;">Total Amount</p>
-                                <p id="totalAmount" style="font-weight: bold;">1</p>
-                                <!-- <button type="button" class="BuyBtn">Continue</button> -->
+                            <!-- Razorpay placeholder svg or text -->
+                            <span
+                                style="font-weight: 700; color: #1780EB; font-size: 0.75rem; font-style: italic;">razorpay</span>
+                        </div>
+
+                        <div class="payment-box" id="CashOnDeliveryPayment" style="margin-top: 12px;">
+                            <div class="payment-box-left">
+                                <div class="payment-circle">
+                                    <div class="payment-circle-inner"></div>
+                                </div>
+                                <div>
+                                    <div class="payment-title">Cash on Delivery (COD)</div>
+                                    <div class="payment-desc">Pay with cash upon delivery of your items.</div>
+                                </div>
                             </div>
+                            <span
+                                style="font-weight: 700; color: var(--gold); font-size: 0.75rem; font-style: italic;">COD</span>
                         </div>
                     </div>
+
                 </div>
-                <div class="cardDetaislDiv" id="showDataDivv">
-                    <div id="paymentMethodDivmain">
-                        <p class="paymentMethodDiv">Payment Method</p>
-                    </div>
-                    <div>
-                        <!-- <p class="CashOnDelivery" id="CashOnDeliveryPayment">Cash on Delivery</p> -->
-                        <p class="CashOnDelivery" id="CashOnDeliveryPayment">Prepaid</p>
-                    </div>
-                    <div class="DetailsBuyBtn">
-                        <button type="button" id="PlaceOrderBtn" class="BuyBtn">Place Order</button>
+
+                <!-- Right Column: Sticky Summary -->
+                <div class="checkout-summary-right">
+                    <div class="checkout-card sticky-summary">
+                        <h3>Order Summary</h3>
+
+                        <!-- Product block loading summary -->
+                        <div class="summary-item-card" id="summaryProductBlock">
+                            <div class="summary-img-wrap">
+                                <div class="skeleton-checkout" style="height: 100%;"></div>
+                            </div>
+                            <div style="flex:1">
+                                <div class="skeleton-checkout" style="height: 14px; margin-bottom: 8px; width: 60%;">
+                                </div>
+                                <div class="skeleton-checkout" style="height: 14px; width: 40%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Invoice rows -->
+                        <div class="receipt-breakdown">
+                            <div class="receipt-row">
+                                <span>Subtotal</span>
+                                <span>₹<span id="ProductPrice">0.00</span></span>
+                            </div>
+                            <div class="receipt-row">
+                                <span>GST (<span id="GSTSamble">0</span>%)</span>
+                                <span>₹<span id="PeroductGST">0.00</span></span>
+                            </div>
+                            <div class="receipt-row total">
+                                <span>Total Payable</span>
+                                <span>₹<span id="totalAmount">0.00</span></span>
+                            </div>
+                        </div>
+
+                        <!-- Place Order CTA -->
+                        <button type="button" class="btn-checkout" id="PlaceOrderBtn">
+                            Place Order & Pay
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
+
             </div>
         </div>
-    </section>
-    <footer>
-        <div id="d-img">
-            <div id="main-li">
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">SHOP</li>
-                        </b>
-                        <a href="./allProduct.html">
-                            <li class="li-end">All Jewelry</li>
-                        </a>
-                        <li class="li-end">Rings</li>
-                        <li class="li-end">Necklaces</li>
-                        <li class="li-end">New Arrivals</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">COMPANY</li>
-                        </b>
-                        <a href="./aboutPage.html">
-                            <li class="li-end">About Us</li>
-                        </a>
-                        <a href="./ContactPage.html">
-                            <li class="li-end">Contact</li>
-                        </a>
-                        <li class="li-end">FAQ</li>
-                        <li class="li-end">Shipping Info</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">LEGAL</li>
-                        </b>
-                        <li class="li-end">Terms of Service</li>
-                        <li class="li-end">Privacy</li>
-                        <li class="li-end">Refund Policy</li>
-                        <li class="li-end">Shipping Policy</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
+    </main>
+
+    <!-- Scripts -->
     <script src="./config.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
+        // Dynamic Account navigation link updating & auth check redirect
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        if (!isLoggedIn) {
+            window.location.href = "./login.html";
+        }
+        const navLoginBtn = document.getElementById("navLoginBtn");
+        if (navLoginBtn && isLoggedIn) {
+            navLoginBtn.href = "./profile.html";
+        }
+
+        /* ───────────────────────────────────────
+           TOAST NOTIFICATION
+        ─────────────────────────────────────── */
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            document.getElementById("toastMsg").textContent = msg;
+            t.classList.add("show");
+            setTimeout(() => t.classList.remove("show"), 3500);
+        }
+
+        /* ───────────────────────────────────────
+           CHECKOUT CALCULATOR & API FLOW
+        ─────────────────────────────────────── */
         const customerNamePlaceOrder = document.getElementById("customerNamePlaceOrder");
         const customerMobileNumber = document.getElementById("customerMobileNumber");
-        const customeradd = document.getElementById("customeradd")
+        const customeradd = document.getElementById("customeradd");
+        const customerEmail = document.getElementById("customerEmail");
+
         let qty = 1;
-        //qty Update
+        let productData = null;
+        let finalPrice = 0;
+        let paymentMethod = "Online Payment";
 
-
-
-        async function getData() {
-            let res = await fetch(`${BASE_URL}/addProduct`)
-            let data = await res.json()
-            console.log(data);
-            // showDate(data);
-
+        // Fetch cart badge count
+        async function fetchCartCount() {
+            try {
+                const res = await fetch(`${BASE_URL}/Card`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById("cartCount").textContent = data.length;
+                }
+            } catch (err) {
+                console.error("Cart count fetch failed", err);
+            }
         }
-        getData()
+        fetchCartCount();
 
+        // Redirect navbar search to allProduct list
+        document.getElementById("searchInput").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
+            }
+        });
+
+        // Trigger address form expand
+        document.getElementById("BuyBtnChangeaddress").addEventListener("click", () => {
+            document.getElementById("customerDetailsForm").style.display = "grid";
+            document.getElementById("BuyBtnChangeaddress").style.display = "none";
+        });
+
+        // Validate individual fields and return validity
+        function validateAddressForm() {
+            let hasError = false;
+
+            const name = document.getElementById("customerNameInput").value.trim();
+            const mobile = document.getElementById("customerMobileInput").value.trim();
+            const address = document.getElementById("customerAddressInput").value.trim();
+            const city = document.getElementById("customerCityInput").value.trim();
+            const district = document.getElementById("customerDistrictInput").value.trim();
+            const state = document.getElementById("customerStateInput").value.trim();
+            const pincode = document.getElementById("customerPincodeInput").value.trim();
+
+            // Clear errors
+            document.getElementById("customerNameError").textContent = "";
+            document.getElementById("customerMobileError").textContent = "";
+            document.getElementById("customerAddressError").textContent = "";
+            document.getElementById("customerCityError").textContent = "";
+            document.getElementById("customerDistrictError").textContent = "";
+            document.getElementById("customerStateError").textContent = "";
+            document.getElementById("customerPincodeError").textContent = "";
+
+            if (!name) {
+                document.getElementById("customerNameError").textContent = "Full name is required";
+                hasError = true;
+            }
+            if (!mobile) {
+                document.getElementById("customerMobileError").textContent = "Mobile number is required";
+                hasError = true;
+            } else if (mobile.length !== 10) {
+                document.getElementById("customerMobileError").textContent = "Enter a valid 10-digit number";
+                hasError = true;
+            }
+            if (!address) {
+                document.getElementById("customerAddressError").textContent = "Shipping address is required";
+                hasError = true;
+            }
+            if (!city) {
+                document.getElementById("customerCityError").textContent = "City is required";
+                hasError = true;
+            }
+            if (!district) {
+                document.getElementById("customerDistrictError").textContent = "District is required";
+                hasError = true;
+            }
+            if (!state) {
+                document.getElementById("customerStateError").textContent = "State is required";
+                hasError = true;
+            }
+            if (!pincode) {
+                document.getElementById("customerPincodeError").textContent = "Pincode is required";
+                hasError = true;
+            }
+
+            return !hasError;
+        }
+
+        // Save Address button handler
+        document.getElementById("addresSaveBtn").addEventListener("click", async () => {
+            if (!validateAddressForm()) {
+                showToast("⚠️ Please correct form errors before saving.");
+                return;
+            }
+
+            const name = document.getElementById("customerNameInput").value.trim();
+            const mobile = document.getElementById("customerMobileInput").value.trim();
+            const email = document.getElementById("customerEmailInput").value.trim();
+            const address = document.getElementById("customerAddressInput").value.trim();
+            const city = document.getElementById("customerCityInput").value.trim();
+            const district = document.getElementById("customerDistrictInput").value.trim();
+            const state = document.getElementById("customerStateInput").value.trim();
+            const pincode = document.getElementById("customerPincodeInput").value.trim();
+
+            // Hide form and update display UI
+            document.getElementById("customerDetailsForm").style.display = "none";
+            document.getElementById("BuyBtnChangeaddress").style.display = "inline-flex";
+            document.getElementById("BuyBtnChangeaddress").textContent = "Edit Address";
+
+            customerNamePlaceOrder.textContent = name;
+            customerMobileNumber.textContent = `Phone: +91 ${mobile}`;
+            customeradd.textContent = `${address}, ${city}, ${district}, ${state} - ${pincode}`;
+            customerEmail.textContent = email ? `Email: ${email}` : "";
+
+            const addressData = {
+                name,
+                phone: mobile,
+                email,
+                address: {
+                    fullAddress: address,
+                    city,
+                    district,
+                    state,
+                    pinCode: pincode
+                }
+            };
+
+            try {
+                showToast("Saving shipping details…");
+                let response = await fetch(`${BASE_URL}/address`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(addressData)
+                });
+                if (response.ok) {
+                    showToast("✅ Address details updated!");
+                }
+            } catch (err) {
+                console.error("Address save failed:", err);
+                showToast("❌ Could not sync address with backend.");
+            }
+        });
+
+        // Payment methods toggle listeners
+        document.getElementById("PrepaidPayment").addEventListener("click", () => {
+            paymentMethod = "Online Payment";
+            document.getElementById("PrepaidPayment").classList.add("selected");
+            document.getElementById("CashOnDeliveryPayment").classList.remove("selected");
+            document.getElementById("PlaceOrderBtn").innerHTML = `Place Order & Pay <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+            showToast("💳 Razorpay Secure checkout selected");
+        });
+
+        document.getElementById("CashOnDeliveryPayment").addEventListener("click", () => {
+            paymentMethod = "COD";
+            document.getElementById("CashOnDeliveryPayment").classList.add("selected");
+            document.getElementById("PrepaidPayment").classList.remove("selected");
+            document.getElementById("PlaceOrderBtn").innerHTML = `Place Order <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+            showToast("📦 Cash on Delivery (COD) selected");
+        });
+
+        // Initialize and load single checkout product
         async function getsingleProductSummar() {
             let parmas = new URLSearchParams(window.location.search);
-            let id = parmas.get("id")
-            console.log(id);
-            let res = await fetch(`${BASE_URL}/singleProduct/${id}`)
-            let data = await res.json();
-            console.log(data);
-            console.log(data.description);
-            let gst = (data.Rate * data.gst) / 100;
-            const GstP = data.gst;
-            let finalPrice = Math.round(gst + data.Rate)
-            document.querySelector("#ProductPrice").innerHTML = data.Rate;
-            document.querySelector("#GSTSamble").innerHTML = data.gst;
-            document.querySelector("#PeroductGST").innerHTML = gst;
+            let id = parmas.get("id");
+            if (!id) {
+                showToast("❌ Checkout ID missing. Returning to catalog.");
+                setTimeout(() => { window.location.href = "./allProduct.html"; }, 2000);
+                return;
+            }
 
+            try {
+                let res = await fetch(`${BASE_URL}/singleProduct/${id}`);
+                if (!res.ok) throw new Error("Product fetch failed");
 
-            document.querySelector(".DetailsImgShow").src = data.photo;
-            document.querySelector(".ProductNamesummary").innerText = data.Productname
-            document.querySelector(".productSummaryrate").innerText = "₹" + finalPrice;
-            let AmountRate = `${data.Rate}`
-            let gstData = `${data.gst}`
-            let Rate = `${data.Rate}`
-            document.querySelector("#totalAmount").innerHTML = `${qty * finalPrice}`;
+                productData = await res.json();
+                console.log("Product to buy:", productData);
 
-            document.querySelector("#minBtn").addEventListener("click", () => {
-                if (qty > 1) {
-                    qty--;
-                    console.log(qty);
+                // Math constants
+                let rateVal = Number(productData.Rate) || 0;
+                let gstPercent = Number(productData.gst) || 3;
+                let gstVal = (rateVal * gstPercent) / 100;
+                finalPrice = Math.round(rateVal + gstVal);
 
-                    let SubTotalAmount = Rate * qty;
-                    let gstAmount = (SubTotalAmount * gstData) / 100;
-                    let TotlPaybalAmount = Math.round(SubTotalAmount + gstAmount);
-                    document.querySelector(".productSummaryrate").innerText = TotlPaybalAmount;
-                    // console.log("gst = ", SubTotalAmount + "gstAmount", gstAmount + "totalPayBalAmoount", TotlPaybalAmount);
+                // Render dynamic details inside summary block
+                const summaryProductBlock = document.getElementById("summaryProductBlock");
+                summaryProductBlock.innerHTML = `
+                    <div class="summary-img-wrap">
+                        <img class="summary-img" src="${productData.photo || 'https://via.placeholder.com/150'}" alt="${productData.Productname}" loading="lazy">
+                    </div>
+                    <div class="summary-details">
+                        <div class="ProductNamesummary">${productData.Productname}</div>
+                        <div class="productSummaryrate">₹${finalPrice.toLocaleString("en-IN")}</div>
+                        <div class="qty-picker">
+                            <button type="button" class="qty-btn" id="minBtn" aria-label="Decrease quantity">−</button>
+                            <span class="qty-val" id="qty">1</span>
+                            <button type="button" class="qty-btn" id="maxBtn" aria-label="Increase quantity">+</button>
+                        </div>
+                    </div>`;
 
-                    // console.log(SubTotalAmount);
-                    document.querySelector("#totalAmount").innerHTML = (qty * AmountRate);
-                    document.querySelector("#qty").innerHTML = qty;
-                    document.querySelector("#ProductPrice").innerHTML = Rate;
-                    // document.querySelector("#PeroductGST").innerHTML = ": ₹" + gstAmount;
-                    document.querySelector("#PeroductGST").innerHTML = gstAmount;
-                    document.querySelector("#GSTSamble").innerHTML = gstData;
-                    document.querySelector("#ProductPrice").innerHTML = SubTotalAmount;
+                // Update invoice calculations initially
+                updateInvoice(rateVal, gstPercent, gstVal, finalPrice);
 
-
-                }
-
-            })
-            document.querySelector("#maxBtn").addEventListener("click", () => {
-                qty++;
-                let SubTotalAmount = Rate * qty;
-                let gstAmount = (SubTotalAmount * gstData) / 100;
-                let TotlPaybalAmount = Math.round(SubTotalAmount + gstAmount);
-                // console.log("gst = ", SubTotalAmount + "gstAmount", gstAmount + "totalPayBalAmoount", TotlPaybalAmount);
-                document.querySelector("#totalAmount").innerHTML = `${TotlPaybalAmount}`;
-                document.querySelector("#qty").innerHTML = qty;
-                document.querySelector("#ProductPrice").innerHTML = SubTotalAmount;
-                document.querySelector("#GSTSamble").innerHTML = (gstData) + "%";
-                // document.querySelector("#PeroductGST").innerHTML = ": ₹" + gstAmount;
-                document.querySelector("#PeroductGST").innerHTML = gstAmount;
-                document.querySelector(".productSummaryrate").innerText = TotlPaybalAmount;
-                document.querySelector("#GSTSamble").innerHTML = gstData;
-                console.log(SubTotalAmount);
-            })
-
-            //payment Method code
-            let paymentMethod = ""
-            document.querySelector("#CashOnDeliveryPayment").addEventListener("click", () => {
-                paymentMethod = "Online Payment";
-                console.log(paymentMethod);
-            })
-            const BuyBtn = document.querySelector("#PlaceOrderBtn");
-            //order place code 
-            BuyBtn.addEventListener("click", async () => {
-
-                let hasError = false;
-                let customerNameInput = document.querySelector("#customerNameInput").value
-                let customerMobileInput = document.querySelector("#customerMobileInput").value
-                let customerEmailInput = document.querySelector("#customerEmailInput").value //optional
-                let customerAddressInput = document.querySelector("#customerAddressInput").value
-                let customerCityInput = document.querySelector("#customerCityInput").value
-                let customerDistrictInput = document.querySelector("#customerDistrictInput").value
-                let customerStateInput = document.querySelector("#customerStateInput").value
-                let customerPincodeInput = document.querySelector("#customerPincodeInput").value
-
-
-                //error Clear
-                document.querySelector("#customerNameError").innerHTML = "";
-                document.querySelector("#customerMobileError").innerHTML = "";
-                document.querySelector("#customerAddressError").innerHTML = "";
-                document.querySelector("#customerCityError").innerHTML = "";
-                document.querySelector("#customerDistrictError").innerHTML = "";
-                document.querySelector("#customerStateError").innerHTML = "";
-                document.querySelector("#customerPincodeError").innerHTML = "";
-                if (customerNamePlaceOrder.innerHTML.trim() === "") {
-                    alert("Please Add Cusomer Name")
-                    hasError = true;
-                }
-                if (customerMobileNumber.innerHTML.trim() === "") {
-                    alert("Please Add Mobile Number")
-                    hasError = true;
-                }
-                if (customeradd.innerHTML.trim() === "") {
-                    alert("Please Add Address")
-                    hasError = true;
-                }
-                if (paymentMethod === "") {
-                    alert("Please Select Payment Method")
-                    hasError = true;
-                }
-                if (hasError) {
-                    return
-                }
-                if (customerNameInput === "") {
-                    document.querySelector("#customerNameError").innerHTML = "Name is required";
-                    hasError = true;
-                }
-                if (customerMobileInput === "") {
-                    document.querySelector("#customerMobileError").innerHTML = "Number is required"
-                    hasError = true;
-                }
-                else if (customerMobileInput.length !== 10) {
-                    document.querySelector("#customerMobileError").innerHTML = "Enter Valid 10 Digit Number"
-                    hasError = true;
-                }
-                if (customerAddressInput === "") {
-                    document.querySelector("#customerAddressError").innerHTML = "Address is required"
-                    hasError = true;
-                }
-                if (customerCityInput === "") {
-                    document.querySelector("#customerCityError").innerHTML = "City is reauired"
-                    hasError = true;
-                }
-                if (customerDistrictInput === "") {
-                    document.querySelector("#customerDistrictError").innerHTML = "Distric is required"
-                    hasError = true;
-                }
-                if (customerStateInput === "") {
-                    document.querySelector("#customerStateError").innerHTML = "State is required"
-                    hasError = true;
-                }
-                if (customerPincodeInput === "") {
-                    document.querySelector("#customerPincodeError").innerHTML = "Pin Code in required"
-                    hasError = true;
-                }
-                if (hasError) {
-                    return
-                }
-                let paymentAmount = Number(document.querySelector("#totalAmount").innerHTML);
-                console.log("Payment Amount =", paymentAmount);
-                const orderRes = await fetch(`${BASE_URL}/create-order`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        amount: paymentAmount
-                    })
-                })
-                const order = await orderRes.json()
-                console.log(order);
-
-                const options = {
-                    key: "rzp_test_T009i1fdo0TocB",
-                    amount: order.amount,
-                    currency: order.currency,
-                    order_id: order.id,
-                    handler: async function (response) {
-                        console.log(response);
-                        const verifyRes = await fetch(`${BASE_URL}/verify-payment`, {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify(response)
-                        });
-                        const verifyData = await verifyRes.json();
-                        console.log(verifyData);
-                        if (verifyData.success) {
-
-                            alert("Payment Verified");
-                            alert("Payment Success");
-                            let addressData = {
-                                name: document.querySelector("#customerNameInput").value,
-                                phone: document.querySelector("#customerMobileInput").value,
-                                email: document.querySelector("#customerEmailInput").value,
-                                address: {
-                                    fullAddress: document.querySelector("#customerAddressInput").value,
-                                    city: document.querySelector("#customerCityInput").value,
-                                    district: document.querySelector("#customerDistrictInput").value,
-                                    state: document.querySelector("#customerStateInput").value,
-                                    pinCode: document.querySelector("#customerPincodeInput").value
-
-                                }
-                            }
-                            await fetch(`${BASE_URL}/placeOrder`, {
-                                method: "POST",
-                                headers: {
-                                    "Content-type": "application/json"
-                                },
-                                body: JSON.stringify({
-                                    //%Delete panding
-                                    withGstTotalAmount: Number(document.querySelector("#totalAmount").innerHTML.replace("₹", "")),
-                                    // withGstTotalAmount: document.querySelector("#ProductPrice").innerHTML,
-                                    gst: Number(document.querySelector("#GSTSamble").innerHTML.replace("₹", "")),
-                                    gstAmount: Number(document.querySelector("#PeroductGST").innerHTML.replace("₹", "")),
-                                    qty: qty,
-                                    totalAmount: Number(document.querySelector("#ProductPrice").innerHTML),
-                                    address: addressData.address,
-                                    name: addressData.name,
-                                    phone: addressData.phone,
-                                    email: addressData.email,
-                                    useNumber: localStorage.getItem("userNumber"),
-                                    customerName: customerNamePlaceOrder.innerText,
-                                    customerMobileNumber: localStorage.getItem("userNumber"),
-                                    customerAdd: customeradd.innerText,
-                                    paymentMethod: paymentMethod,
-                                    productName: data.Productname,
-                                    rate: data.Rate,
-                                    photo: data.photo,
-                                    description: data.description,
-                                    orderStatus: "Order Placed"
-
-                                })
-                            });
-                            console.log("Order PlacedSuccessFully");
-                            alert("Order Place")
-                            window.location.href = "./allProduct.html"
-                        }
+                // Bind Min/Max buttons dynamically
+                document.getElementById("minBtn").addEventListener("click", () => {
+                    if (qty > 1) {
+                        qty--;
+                        recalcInvoice();
                     }
-                }
-                const rzp = new Razorpay(options);
-                rzp.open();
+                });
 
-                document.querySelector("#customerDetailsForm").style.display = "none";
-                let addressData = {
-                    name: document.querySelector("#customerNameInput").value,
-                    phone: document.querySelector("#customerMobileInput").value,
-                    email: document.querySelector("#customerEmailInput").value,
-                    address: {
-                        fullAddress: document.querySelector("#customerAddressInput").value,
-                        city: document.querySelector("#customerCityInput").value,
-                        district: document.querySelector("#customerDistrictInput").value,
-                        state: document.querySelector("#customerStateInput").value,
-                        pinCode: document.querySelector("#customerPincodeInput").value
+                document.getElementById("maxBtn").addEventListener("click", () => {
+                    qty++;
+                    recalcInvoice();
+                });
 
-                    }
-                }
-                document.querySelector("#customeradd").innerHTML = `${addressData.address.fullAddress}, ${addressData.address.city}, ${addressData.address.district}, ${addressData.address.state}, ${addressData.address.pinCode}`
-                document.querySelector("#customerNamePlaceOrder").innerHTML = addressData.name
-                document.querySelector("#customerMobileNumber").innerHTML = addressData.phone
-                document.querySelector("#customerEmail").innerHTML = addressData.email
-
-
-
-
-            })
-
+            } catch (err) {
+                console.error("Fetch single summary failed:", err);
+                showToast("⚠️ Could not retrieve product rates.");
+            }
         }
-        getsingleProductSummar()
 
-        // function showDate (data){
-        // let cardDetaislDiv = document.querySelector("#showDataDiv");
+        function recalcInvoice() {
+            let rateVal = Number(productData.Rate) || 0;
+            let gstPercent = Number(productData.gst) || 3;
 
-        // data.forEach((showItem) => {
-        //     cardDetaislDiv.innerHTML += `<div class="DetailsIMGmainDiv">
-        //                     <div>
-        //                         <img class="DetailsImgShow"
-        //                             src="${showItem.photo}">
-        //                     </div>
-        //                     <div class="DetailsProducatName">
-        //                         <p>${showItem.Productname}</p>
-        //                         <p>₹ ${showItem.Rate}</p>
-        //                     </div>
-        //                 </div>
-        //                 <div class="DetailsBuyBtn">
-        //                     <button type="button" class="BuyBtn">Continue</button>
-        //                 </div>
+            let subtotal = rateVal * qty;
+            let gstVal = (subtotal * gstPercent) / 100;
+            let total = Math.round(subtotal + gstVal);
 
-        //         `
-        // })
+            updateInvoice(subtotal, gstPercent, gstVal, total);
+        }
 
+        function updateInvoice(subtotal, gstPercent, gstVal, total) {
+            document.getElementById("qty").textContent = qty;
+            document.getElementById("ProductPrice").textContent = subtotal.toLocaleString("en-IN");
+            document.getElementById("GSTSamble").textContent = gstPercent;
+            document.getElementById("PeroductGST").textContent = gstVal.toLocaleString("en-IN");
+            document.getElementById("totalAmount").textContent = total.toLocaleString("en-IN");
 
-        // }
-        let CashOnDelivery = document.querySelector(".CashOnDelivery");
-        CashOnDelivery.addEventListener("click", () => {
-            console.log("Cash On Deliver Selected");
-            CashOnDelivery.style.backgroundColor = "#00000014";
-        })
+            // Sync with sub-rate tag
+            const rateTag = document.querySelector(".productSummaryrate");
+            if (rateTag) {
+                rateTag.textContent = `₹${total.toLocaleString("en-IN")}`;
+            }
+        }
 
-        document.querySelector("#BuyBtnChangeaddress").addEventListener("click", async () => {
-            document.querySelector("#customerDetailsForm").style.display = "flex";
-            document.querySelector("#addresSaveBtn").style.display = "flex";
-            document.querySelector("#BuyBtnChangeaddress").style.display = "none";
-
-
-
-        })
-
-        document.querySelector("#addresSaveBtn").addEventListener("click", async () => {
-
-            let customerNameInput = document.querySelector("#customerNameInput").value
-            let customerMobileInput = document.querySelector("#customerMobileInput").value
-            let customerEmailInput = document.querySelector("#customerEmailInput").value //optional
-            let customerAddressInput = document.querySelector("#customerAddressInput").value
-            let customerCityInput = document.querySelector("#customerCityInput").value
-            let customerDistrictInput = document.querySelector("#customerDistrictInput").value
-            let customerStateInput = document.querySelector("#customerStateInput").value
-            let customerPincodeInput = document.querySelector("#customerPincodeInput").value
-
-
-            //error Clear
-            document.querySelector("#customerNameError").innerHTML = "";
-            document.querySelector("#customerMobileError").innerHTML = "";
-            document.querySelector("#customerAddressError").innerHTML = "";
-            document.querySelector("#customerCityError").innerHTML = "";
-            document.querySelector("#customerDistrictError").innerHTML = "";
-            document.querySelector("#customerStateError").innerHTML = "";
-            document.querySelector("#customerPincodeError").innerHTML = "";
+        // Place Order main trigger
+        document.getElementById("PlaceOrderBtn").addEventListener("click", async () => {
             let hasError = false;
-            if (customerNameInput === "") {
-                document.querySelector("#customerNameError").innerHTML = "Name is required";
-                hasError = true;
-            }
-            if (customerMobileInput === "") {
-                document.querySelector("#customerMobileError").innerHTML = "Number is required"
-                hasError = true;
-            }
-            else if (customerMobileInput.length !== 10) {
-                document.querySelector("#customerMobileError").innerHTML = "Enter Valid 10 Digit Number"
-                hasError = true;
-            }
-            if (customerAddressInput === "") {
-                document.querySelector("#customerAddressError").innerHTML = "Address is required"
-                hasError = true;
-            }
-            if (customerCityInput === "") {
-                document.querySelector("#customerCityError").innerHTML = "City is reauired"
-                hasError = true;
-            }
-            if (customerDistrictInput === "") {
-                document.querySelector("#customerDistrictError").innerHTML = "Distric is required"
-                hasError = true;
-            }
-            if (customerStateInput === "") {
-                document.querySelector("#customerStateError").innerHTML = "State is required"
-                hasError = true;
-            }
-            if (customerPincodeInput === "") {
-                document.querySelector("#customerPincodeError").innerHTML = "Pin Code in required"
-                hasError = true;
-            }
-            if (hasError) {
-                return
-            }
 
+            // Gather inputs
+            const nameInput = document.getElementById("customerNameInput").value.trim();
+            const mobileInput = document.getElementById("customerMobileInput").value.trim();
+            const addressInput = document.getElementById("customerAddressInput").value.trim();
 
-            document.querySelector("#customerDetailsForm").style.display = "none";
-            let addressData = {
-                name: document.querySelector("#customerNameInput").value,
-                phone: document.querySelector("#customerMobileInput").value,
-                email: document.querySelector("#customerEmailInput").value,
-                address: {
-                    fullAddress: document.querySelector("#customerAddressInput").value,
-                    city: document.querySelector("#customerCityInput").value,
-                    district: document.querySelector("#customerDistrictInput").value,
-                    state: document.querySelector("#customerStateInput").value,
-                    pinCode: document.querySelector("#customerPincodeInput").value
+            const displayName = customerNamePlaceOrder.textContent.trim();
+            const displayAdd = customeradd.textContent.trim();
 
+            // If the user has fields in form inputs but has NOT saved it
+            if (displayName === "Add Delivery Address" || !displayAdd) {
+                if (nameInput && mobileInput && addressInput) {
+                    // Automatically click save address button to register details
+                    document.getElementById("addresSaveBtn").click();
+                } else {
+                    showToast("⚠️ Please provide and save your delivery address.");
+                    return;
                 }
             }
 
-            document.querySelector("#customeradd").innerHTML = `${addressData.address.fullAddress}, ${addressData.address.city}, ${addressData.address.district}, ${addressData.address.state}, ${addressData.address.pinCode}`
-            document.querySelector("#customerNamePlaceOrder").innerHTML = addressData.name
-            document.querySelector("#customerMobileNumber").innerHTML = addressData.phone
-            document.querySelector("#customerEmail").innerHTML = addressData.email
+            if (!paymentMethod) {
+                showToast("⚠️ Please select a payment method.");
+                return;
+            }
 
+            try {
+                const checkoutBtn = document.getElementById("PlaceOrderBtn");
+                checkoutBtn.disabled = true;
+                checkoutBtn.textContent = "Processing Checkout…";
 
+                const rawTotal = document.getElementById("totalAmount").textContent.replace(/,/g, "");
+                const paymentAmount = Number(rawTotal);
 
+                const savedName = customerNamePlaceOrder.textContent.trim();
+                const savedPhone = customerMobileNumber.textContent.replace("Phone: +91 ", "").trim();
+                const savedEmail = customerEmail.textContent.replace("Email: ", "").trim();
+                const addressString = customeradd.textContent.trim();
 
+                const fullAddressParts = addressString.split(", ");
+                const addressData = {
+                    fullAddress: fullAddressParts.slice(0, fullAddressParts.length - 1).join(", "),
+                    city: document.getElementById("customerCityInput").value.trim(),
+                    district: document.getElementById("customerDistrictInput").value.trim(),
+                    state: document.getElementById("customerStateInput").value.trim(),
+                    pinCode: document.getElementById("customerPincodeInput").value.trim()
+                };
 
-            let response = await fetch(`${BASE_URL}/address`, {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                },
-                body: JSON.stringify(addressData)
-            })
-            let data = await response.json()
-            console.log(data);
+                if (paymentMethod === "COD") {
+                    // Direct Place Order without Razorpay
+                    const orderPayload = {
+                        withGstTotalAmount: paymentAmount,
+                        gst: Number(document.getElementById("GSTSamble").textContent),
+                        gstAmount: Number(document.getElementById("PeroductGST").textContent.replace(/,/g, "")),
+                        qty: qty,
+                        totalAmount: Number(document.getElementById("ProductPrice").textContent.replace(/,/g, "")),
+                        address: addressData,
+                        name: savedName,
+                        phone: savedPhone,
+                        email: savedEmail,
+                        useNumber: localStorage.getItem("userNumber") || savedPhone,
+                        customerName: savedName,
+                        customerMobileNumber: localStorage.getItem("userNumber") || savedPhone,
+                        customerAdd: addressString,
+                        paymentMethod: "COD",
+                        paymentType: "COD",
+                        productName: productData.Productname,
+                        rate: productData.Rate,
+                        photo: productData.photo,
+                        description: productData.description || "",
+                        orderStatus: "Order Placed"
+                    };
 
-        })
+                    showToast("Creating order records…");
+                    const placeRes = await fetch(`${BASE_URL}/placeOrder`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(orderPayload)
+                    });
 
+                    if (placeRes.ok) {
+                        showToast("🎉 Order placed successfully!");
+                        setTimeout(() => {
+                            window.location.href = "./allProduct.html";
+                        }, 2000);
+                    } else {
+                        throw new Error("Place order backend submission failed");
+                    }
+                } else {
+                    // Online Payment Flow (Razorpay)
+                    console.log("Total Amount to charge:", paymentAmount);
+
+                    showToast("Initiating secure gateway connection…");
+                    const orderRes = await fetch(`${BASE_URL}/create-order`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ amount: paymentAmount })
+                    });
+
+                    if (!orderRes.ok) {
+                        throw new Error("Could not initialize Razorpay order in backend");
+                    }
+
+                    const order = await orderRes.json();
+                    console.log("Razorpay Order Data:", order);
+
+                    const options = {
+                        key: "rzp_test_T009i1fdo0TocB",
+                        amount: order.amount,
+                        currency: order.currency,
+                        order_id: order.id,
+                        handler: async function (response) {
+                            try {
+                                showToast("Verifying payment transaction…");
+                                const verifyRes = await fetch(`${BASE_URL}/verify-payment`, {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify(response)
+                                });
+
+                                const verifyData = await verifyRes.json();
+                                if (verifyData.success) {
+                                    showToast("✅ Payment Verified & Received!");
+
+                                    const orderPayload = {
+                                        withGstTotalAmount: paymentAmount,
+                                        gst: Number(document.getElementById("GSTSamble").textContent),
+                                        gstAmount: Number(document.getElementById("PeroductGST").textContent.replace(/,/g, "")),
+                                        qty: qty,
+                                        totalAmount: Number(document.getElementById("ProductPrice").textContent.replace(/,/g, "")),
+                                        address: addressData,
+                                        name: savedName,
+                                        phone: savedPhone,
+                                        email: savedEmail,
+                                        useNumber: localStorage.getItem("userNumber") || savedPhone,
+                                        customerName: savedName,
+                                        customerMobileNumber: localStorage.getItem("userNumber") || savedPhone,
+                                        customerAdd: addressString,
+                                        paymentMethod: "Online Payment",
+                                        paymentType: "Prepaid",
+                                        productName: productData.Productname,
+                                        rate: productData.Rate,
+                                        photo: productData.photo,
+                                        description: productData.description || "",
+                                        orderStatus: "Order Placed"
+                                    };
+
+                                    showToast("Creating order records…");
+                                    const placeRes = await fetch(`${BASE_URL}/placeOrder`, {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify(orderPayload)
+                                    });
+
+                                    if (placeRes.ok) {
+                                        showToast("🎉 Order placed successfully!");
+                                        setTimeout(() => {
+                                            window.location.href = "./allProduct.html";
+                                        }, 2000);
+                                    } else {
+                                        throw new Error("Place order backend submission failed");
+                                    }
+                                } else {
+                                    showToast("❌ Payment signature verification failed.");
+                                    checkoutBtn.disabled = false;
+                                    checkoutBtn.innerHTML = `Place Order & Pay <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+                                }
+                            } catch (err) {
+                                console.error(err);
+                                showToast("❌ Checkout verification failed.");
+                                checkoutBtn.disabled = false;
+                                checkoutBtn.innerHTML = `Place Order & Pay <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+                            }
+                        },
+                        modal: {
+                            ondismiss: function () {
+                                showToast("⚠️ Payment gateway closed by user.");
+                                checkoutBtn.disabled = false;
+                                checkoutBtn.innerHTML = `Place Order & Pay <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+                            }
+                        }
+                    };
+
+                    const rzp = new Razorpay(options);
+                    rzp.open();
+                }
+            } catch (err) {
+                console.error("Order process failed:", err);
+                showToast("❌ Order processing error. Please try again.");
+                document.getElementById("PlaceOrderBtn").disabled = false;
+                if (paymentMethod === "COD") {
+                    document.getElementById("PlaceOrderBtn").innerHTML = `Place Order <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+                } else {
+                    document.getElementById("PlaceOrderBtn").innerHTML = `Place Order & Pay <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+                }
+            }
+        });
+
+        // Initialize product checkout summary loading
+        getsingleProductSummar();
     </script>
-
 </body>
 
 </html>

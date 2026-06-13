@@ -4,92 +4,711 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Amazon.in – Shop Online</title>
+    <meta name="description" content="Shop online at Amazon India. Great prices, fast delivery, and millions of products.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        #mainDiv {
+        :root {
+            --amazon-dark: #0f1111;
+            --amazon-nav: #131921;
+            --amazon-nav-hover: #1f2937;
+            --amazon-accent: #febd69;
+            --amazon-accent-dark: #f59e0b;
+            --amazon-blue: #37b4e8;
+            --amazon-green: #007600;
+            --amazon-cat-bar: #232f3e;
+            --amazon-cat-hover: #37475a;
+            --text-primary: #ffffff;
+            --text-secondary: #ccc;
+            --text-muted: #aaa;
+            --search-bg: #ffffff;
+            --search-btn: #febd69;
+            --search-btn-hover: #f0a928;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: #eaeded;
+            color: var(--text-primary);
+        }
+
+        /* ── TOP ANNOUNCEMENT STRIP ── */
+        #announcementStrip {
+            background: linear-gradient(90deg, #c7511f 0%, #e47911 50%, #c7511f 100%);
+            text-align: center;
+            padding: 6px 16px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            color: #fff;
+            animation: stripPulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes stripPulse {
+            from { opacity: 0.92; }
+            to { opacity: 1; }
+        }
+
+        /* ── MAIN NAVBAR ── */
+        #mainNav {
+            background: var(--amazon-nav);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.45);
+        }
+
+        #navInner {
             display: flex;
-            justify-content: space-around;
-            background-color: rgb(19, 25, 33);
-            color: white;
             align-items: center;
-            height: 6.5vh;
+            gap: 8px;
+            padding: 10px 18px;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
-        #amazonLogoName {
-            font-size: 30px;
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: bold;
+        /* ── LOGO ── */
+        #logoGroup {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            border: 2px solid transparent;
+            transition: border-color var(--transition);
+            text-decoration: none;
+            flex-shrink: 0;
         }
 
-        img {
-            width: 24px;
+        #logoGroup:hover {
+            border-color: var(--amazon-accent);
         }
 
-        #addressDiv {
-            font-size: 15px;
-            font-family: Arial, Helvetica, sans-serif;
+        #amazonLogoText {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            line-height: 1;
         }
 
-        input {
-            width: 50vw;
-            height: 4vh;
-            border-radius: 10px 0 0 10px;
+        #amazonLogoText span {
+            color: var(--amazon-accent);
+        }
+
+        #amazonSubText {
+            font-size: 0.65rem;
+            color: var(--amazon-accent);
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            margin-top: 1px;
+        }
+
+        /* ── ADDRESS ── */
+        #addressGroup {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            border: 2px solid transparent;
+            transition: border-color var(--transition), background var(--transition);
+            flex-shrink: 0;
+            min-width: 130px;
+        }
+
+        #addressGroup:hover {
+            border-color: var(--amazon-accent);
+            background: rgba(255,255,255,0.04);
+        }
+
+        #addressTop {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        #addressTop svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+            fill: var(--amazon-accent);
+        }
+
+        #addressBottom {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* ── SEARCH BAR ── */
+        #searchWrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: 0 0 0 2px transparent;
+            transition: box-shadow var(--transition);
+            min-width: 200px;
+        }
+
+        #searchWrapper:focus-within {
+            box-shadow: 0 0 0 3px var(--amazon-accent);
+        }
+
+        #categorySelect {
+            background: #f3f3f3;
             border: none;
-
-
+            outline: none;
+            height: 42px;
+            padding: 0 10px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #333;
+            cursor: pointer;
+            border-right: 1px solid #cdcac4;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            padding-right: 26px;
+            min-width: 110px;
+            max-width: 130px;
         }
 
-        button {
-            height: 4vh;
-            padding: 10px;
+        #searchInput {
+            flex: 1;
+            height: 42px;
+            border: none;
+            outline: none;
+            padding: 0 14px;
+            font-size: 0.92rem;
+            color: #111;
+            background: var(--search-bg);
+        }
+
+        #searchInput::placeholder {
+            color: #999;
+        }
+
+        #searchBtn {
+            background: var(--search-btn);
+            border: none;
+            height: 42px;
+            width: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background var(--transition);
+            flex-shrink: 0;
+        }
+
+        #searchBtn:hover {
+            background: var(--search-btn-hover);
+        }
+
+        #searchBtn svg {
+            width: 20px;
+            height: 20px;
+            fill: #111;
+        }
+
+        /* ── NAV ACTIONS ── */
+        .navAction {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            border: 2px solid transparent;
+            transition: border-color var(--transition), background var(--transition);
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+
+        .navAction:hover {
+            border-color: var(--amazon-accent);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .navAction-top {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .navAction-bottom {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* ── LANGUAGE TOGGLE ── */
+        #langGroup {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border-color var(--transition);
+            flex-shrink: 0;
+        }
+
+        #langGroup:hover {
+            border-color: var(--amazon-accent);
+        }
+
+        #flagImg {
+            width: 22px;
+            height: 14px;
+            border-radius: 2px;
+            object-fit: cover;
+        }
+
+        #langText {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        #langArrow {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+        }
+
+        /* ── CART ── */
+        #cartGroup {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border-color var(--transition), background var(--transition);
+            flex-shrink: 0;
+            text-decoration: none;
+            position: relative;
+        }
+
+        #cartGroup:hover {
+            border-color: var(--amazon-accent);
+            background: rgba(255,255,255,0.04);
+        }
+
+        #cartIcon {
+            position: relative;
+        }
+
+        #cartIcon svg {
+            width: 34px;
+            height: 34px;
+            fill: var(--text-primary);
+        }
+
+        #cartBadge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--amazon-accent);
+            color: #111;
+            font-size: 0.65rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: badgePop 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+        }
+
+        @keyframes badgePop {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        #cartText {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* ── CATEGORY BAR ── */
+        #categoryBar {
+            background: var(--amazon-cat-bar);
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        #categoryBar::-webkit-scrollbar {
+            display: none;
+        }
+
+        #categoryInner {
+            display: flex;
+            align-items: center;
+            padding: 0 18px;
+            max-width: 1600px;
+            margin: 0 auto;
+            gap: 2px;
+            white-space: nowrap;
+        }
+
+        .catItem {
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            font-weight: 400;
+            padding: 9px 12px;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            border: 2px solid transparent;
+            transition: border-color var(--transition), background var(--transition), color var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .catItem:hover {
+            border-color: var(--text-primary);
+        }
+
+        .catItem.featured {
+            font-weight: 600;
+            color: var(--amazon-accent);
+        }
+
+        .catItem.featured:hover {
+            border-color: var(--amazon-accent);
+        }
+
+        /* ── HERO DEMO SECTION ── */
+        #heroSection {
+            background: linear-gradient(135deg, #1a2a3a 0%, #0f1f2f 50%, #1a1225 100%);
+            padding: 60px 24px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #heroSection::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(254,189,105,0.08) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(55,180,232,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        #heroSection h1 {
+            font-size: clamp(1.8rem, 4vw, 3.5rem);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            position: relative;
+        }
+
+        #heroSection h1 span {
+            background: linear-gradient(90deg, var(--amazon-accent), var(--amazon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #heroSection p {
+            font-size: 1.05rem;
+            color: #aaa;
+            max-width: 520px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        #heroCta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--amazon-accent), var(--amazon-accent-dark));
+            color: #111;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 999px;
             cursor: pointer;
             border: none;
-            background-color: #ffce12;
-            border-radius: 0 10px 10px 0;
-
+            transition: transform var(--transition), box-shadow var(--transition);
+            position: relative;
+            text-decoration: none;
         }
 
-        #inputDIv {
-            display: flex;
-            align-items: center;
+        #heroCta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(254,189,105,0.4);
+        }
+
+        /* ── MOBILE HAMBURGER ── */
+        #mobileMenuBtn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            border: 2px solid transparent;
+            transition: border-color var(--transition);
+            flex-shrink: 0;
+        }
+
+        #mobileMenuBtn span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: transform var(--transition), opacity var(--transition);
+        }
+
+        #mobileMenuBtn:hover {
+            border-color: var(--amazon-accent);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 960px) {
+            #addressGroup { display: none; }
+            #langGroup { display: none; }
+
+            #navInner {
+                flex-wrap: wrap;
+                padding: 8px 14px;
+                gap: 8px;
+            }
+
+            #searchWrapper {
+                order: 3;
+                flex-basis: 100%;
+            }
+
+            #mobileMenuBtn {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 600px) {
+            #cartText { display: none; }
+            #announcementStrip { font-size: 0.72rem; padding: 5px 12px; }
+            #categoryInner { padding: 0 10px; gap: 0; }
+            .catItem { padding: 8px 9px; font-size: 0.75rem; }
         }
     </style>
 </head>
 
 <body>
 
-    <div id="mainDiv">
-        <div>
-            <p id="amazonLogoName">amazon.in</p>
+    <!-- Announcement Strip -->
+    <div id="announcementStrip">
+        🎉 Prime Day Sale is LIVE! Up to 80% off on top brands — Limited time offer!
+    </div>
+
+    <!-- Main Navbar -->
+    <nav id="mainNav" role="navigation" aria-label="Main navigation">
+        <div id="navInner">
+
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Logo -->
+            <a id="logoGroup" href="#" aria-label="Amazon India home">
+                <div id="amazonLogoText">amazon<span>.</span>in</div>
+                <div id="amazonSubText">Prime ✦ Fast Delivery</div>
+            </a>
+
+            <!-- Deliver To -->
+            <div id="addressGroup" role="button" tabindex="0" aria-label="Delivery location">
+                <div id="addressTop">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    Deliver to Mumbai
+                </div>
+                <div id="addressBottom">400104 · Update →</div>
+            </div>
+
+            <!-- Search Bar -->
+            <div id="searchWrapper" role="search">
+                <select id="categorySelect" aria-label="Search category">
+                    <option value="all">All</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="fashion">Fashion</option>
+                    <option value="home">Home &amp; Kitchen</option>
+                    <option value="books">Books</option>
+                    <option value="sports">Sports</option>
+                    <option value="beauty">Beauty</option>
+                    <option value="mobiles">Mobiles</option>
+                    <option value="grocery">Grocery</option>
+                    <option value="toys">Toys</option>
+                </select>
+                <input id="searchInput" type="text" placeholder="Search Amazon.in" autocomplete="off" aria-label="Search products">
+                <button id="searchBtn" type="button" aria-label="Search">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="#111" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Language -->
+            <div id="langGroup" role="button" tabindex="0" aria-label="Language: English">
+                <img id="flagImg" src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India flag">
+                <span id="langText">EN</span>
+                <span id="langArrow">▾</span>
+            </div>
+
+            <!-- Account -->
+            <a class="navAction" href="#" id="accountBtn" aria-label="Account and Lists">
+                <span class="navAction-top">Hello, sign in</span>
+                <span class="navAction-bottom">Account &amp; Lists ▾</span>
+            </a>
+
+            <!-- Returns -->
+            <a class="navAction" href="#" id="returnsBtn" aria-label="Returns and Orders">
+                <span class="navAction-top">Returns</span>
+                <span class="navAction-bottom">&amp; Orders</span>
+            </a>
+
+            <!-- Cart -->
+            <a id="cartGroup" href="#" aria-label="Shopping cart with 3 items">
+                <div id="cartIcon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+                        <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M16 10a4 4 0 01-8 0" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                    </svg>
+                    <span id="cartBadge" aria-hidden="true">3</span>
+                </div>
+                <span id="cartText">Cart</span>
+            </a>
+
         </div>
-        <div id="addressDiv">
-            <p>Delivering to Mumbai 400104</p>
-            <p>Update location</p>
-        </div>
-        <div id="inputDIv">
-            <input type="text" placeholder="Search">
-            <button>Search</button>
-        </div>
-        <div>
-            <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg">
-            <p>ENG</p>
-        </div>
-        <div>
-            <P>Hello, sign in</P>
-            <b>
-                <p>Account & Lists</p>
-            </b>
-        </div>
-        <div>
-            <p>Return</p>
-            <p>&Order</p>
+    </nav>
+
+    <!-- Category Bar -->
+    <div id="categoryBar" role="navigation" aria-label="Category navigation">
+        <div id="categoryInner">
+            <a class="catItem featured" href="#" id="menuAll">☰ All</a>
+            <a class="catItem" href="#" id="catFresh">Amazon Fresh</a>
+            <a class="catItem" href="#" id="catMobiles">Mobiles</a>
+            <a class="catItem" href="#" id="catElectronics">Electronics</a>
+            <a class="catItem" href="#" id="catFashion">Fashion</a>
+            <a class="catItem" href="#" id="catHome">Home &amp; Kitchen</a>
+            <a class="catItem" href="#" id="catBooks">Books</a>
+            <a class="catItem" href="#" id="catToys">Toys</a>
+            <a class="catItem" href="#" id="catSports">Sports &amp; Outdoors</a>
+            <a class="catItem" href="#" id="catBeauty">Beauty</a>
+            <a class="catItem" href="#" id="catHealth">Health</a>
+            <a class="catItem featured" href="#" id="catDeals">Today's Deals 🔥</a>
         </div>
     </div>
+
+    <!-- Hero Demo Section (to show context) -->
+    <section id="heroSection">
+        <h1>Shop <span>Millions of Products</span><br>Delivered to Your Door</h1>
+        <p>Fast delivery, easy returns, and unbeatable prices — all in one place. Join 500M+ happy customers.</p>
+        <a id="heroCta" href="#">
+            Start Shopping
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>
+    </section>
+
+    <script>
+        // Search interaction
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+
+        searchBtn.addEventListener('click', () => {
+            const q = searchInput.value.trim();
+            if (q) {
+                console.log('Search:', q);
+                searchInput.style.outline = '2px solid #febd69';
+                setTimeout(() => searchInput.style.outline = '', 500);
+            }
+        });
+
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') searchBtn.click();
+        });
+
+        // Mobile menu toggle
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        let menuOpen = false;
+
+        mobileBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileBtn.setAttribute('aria-expanded', menuOpen);
+            const spans = mobileBtn.querySelectorAll('span');
+            if (menuOpen) {
+                spans[0].style.transform = 'translateY(7px) rotate(45deg)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+            } else {
+                spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+            }
+        });
+
+        // Category active state
+        document.querySelectorAll('.catItem').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.catItem').forEach(i => i.style.fontWeight = '');
+                item.style.fontWeight = '700';
+                item.style.borderColor = 'white';
+                setTimeout(() => item.style.borderColor = '', 1800);
+            });
+        });
+
+        // Cart badge interaction
+        const cartGroup = document.getElementById('cartGroup');
+        const cartBadge = document.getElementById('cartBadge');
+        let cartCount = 3;
+
+        cartGroup.addEventListener('click', (e) => {
+            e.preventDefault();
+            cartBadge.style.animation = 'none';
+            void cartBadge.offsetWidth; // reflow
+            cartBadge.style.animation = 'badgePop 0.4s cubic-bezier(0.175,0.885,0.32,1.275)';
+        });
+    </script>
+
 </body>
 
 </html>

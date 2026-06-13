@@ -4,410 +4,942 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Your Appointment Online</title>
-    <link rel="stylesheet" href="./style.css">
-
+    <title>Book Appointment – SJ Jewellery</title>
+    <meta name="description"
+        content="Book a private jewellery appointment with SJ Jewellery. Get personalised guidance on rings, necklaces, and custom jewellery.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <style>
-        * {
-            padding: 0;
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #a8854e;
+            --gold-light: #e8d4a8;
+            --gold-bg: #fdf7ee;
+            --cream: #faf8f5;
+            --dark: #0d0d0f;
+            --dark-2: #1a1a1f;
+            --text-h: #0d0d0f;
+            --text-body: #3d3d45;
+            --text-muted: #7a7a85;
+            --border: #e8e0d5;
+            --white: #ffffff;
+            --header-h: 72px;
+            --radius: 14px;
+            --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
             margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        #headerMainDiv {
-            display: flex;
-            justify-content: center;
-            background-color: black;
-            /* padding: 2vw; */
-            padding: clamp(2px, 0.5vw, 48px);
-            justify-content: space-around;
-            align-items: center;
+        html {
+            scroll-behavior: smooth;
         }
 
-        #CartBtn {
-            width: 3vw;
-            cursor: pointer;
-        }
-
-        #CartBtn {
-            min-width: 30px;
-            /* width: 3vw; */
-            max-width: 3vw;
-            height: auto;
-            cursor: pointer;
-        }
-
-        #searchInput {
-            width: 45vw;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-        }
-
-        .Plogin {
-            color: #fff;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .Plogin:hover {
-            color: pink;
-        }
-
-        #formMainDIv {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 60vh;
-            /* border: 1px solid black; */
-        }
-
-        #TwoFromDiv {
-            border: 1px solid black;
-            width: 40vw;
-            height: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 10px;
-            border-radius: 10px;
-            /* background-color: rgba(255, 255, 255, 0.505); */
-            background-color: rgba(255, 255, 255, 0.363);
-            padding: 10px;
-            transition: 0.3s;
-        }
-
-        #TwoFromDiv:hover {
-            box-shadow: 0px 0px 11px 1px
-        }
-
-        .inputText {
-            width: 15vw;
-            padding: 6px;
-            border-radius: 5px;
-            border: 1px solid black;
-            background-color: rgba(0, 0, 0, 0.153);
-
-        }
-
-        .Name-P {
-            font-size: 1.6vw;
-            color: white;
-        }
-
-        #section1 {
-            background-image: url(https://as1.ftcdn.net/v2/jpg/02/71/58/16/1000_F_271581697_8wjthz94dO3v9BKcf8f53qsKrEv8ChMB.jpg);
-            background-size: cover;
-
-        }
-
-        ::placeholder {
-            color: rgba(255, 255, 255, 0.658);
-        }
-
-        input {
-            color: white;
-        }
-
-        #btn {
-            padding: 5px;
-            width: 7vw;
-            border-radius: 3px;
-            border: none;
-            box-shadow: 0px 0px 1px 1px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        #btn:hover {
-            box-shadow: 0px 0px 4px 1px;
-            background-color: rgba(255, 192, 203, 0.826);
-            color: white;
-        }
-
-        #d-img {
-
-            display: flex;
-            padding: 20px;
-            background-color: #00000056;
-            /* margin-top: 10px; */
-        }
-
-        #main-li {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            gap: 4vw;
-            /* font-size: 1.5vw; */
-            font-size: clamp(1vw, 1vw, 1vw);
-            /* gap: 16.6vw; */
-            justify-content: space-evenly;
-        }
-
-        .li-end {
-            display: flex;
-            flex-direction: column;
-        }
-
-        li:hover {
-            color: pink;
-            border-bottom: 2px solid pink;
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            overflow-x: hidden;
         }
 
         a {
             text-decoration: none;
-            color: black;
+            color: inherit;
         }
 
-        @media only screen and (max-width: 768px) {
-            /* #headerMainDiv {
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            width: 56px;
+            height: 56px;
+            bottom: 28px;
+            right: 28px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+            z-index: 9999;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
+        }
+
+        .whatsapp-float img {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Header */
+        #siteHeader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-h);
+            z-index: 1000;
+            background: rgba(13, 13, 15, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+        }
+
+        #navInner {
+            max-width: 1300px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 0 24px;
+        }
+
+        #navLogo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        #navLogo .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.04em;
+        }
+
+        #navLogo .brand-tagline {
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            color: rgba(201, 169, 110, 0.6);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        #searchWrapper {
+            flex: 1;
+            max-width: 440px;
+            position: relative;
+        }
+
+        #searchInput {
             width: 100%;
-        } */
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(201, 169, 110, 0.25);
+            border-radius: 999px;
+            padding: 9px 18px 9px 42px;
+            font-size: 0.88rem;
+            color: #fff;
+            outline: none;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
 
-            #MainLogo {
-                width: 10vw;
-                max-width: 10vw;
-                height: auto;
-                cursor: pointer;
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #searchInput:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+        }
+
+        #searchIcon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            stroke: rgba(201, 169, 110, 0.6);
+            fill: none;
+            pointer-events: none;
+        }
+
+        .navActions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .navActionBtn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1.5px solid transparent;
+            transition: border-color var(--transition), background var(--transition);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .navActionBtn:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+            background: rgba(201, 169, 110, 0.06);
+            color: var(--gold);
+        }
+
+        .navActionBtn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .cartWrap {
+            position: relative;
+        }
+
+        .cartBadge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Page Banner */
+        #pageBanner {
+            margin-top: var(--header-h);
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-2) 100%);
+            padding: 72px 24px 64px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #pageBanner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 60% 40%, rgba(201, 169, 110, 0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        #bannerEyebrow {
+            font-size: 0.68rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 14px;
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        #bannerTitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            animation: fadeUp 0.7s 0.05s ease both;
+        }
+
+        #bannerSub {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.7;
+            animation: fadeUp 0.8s 0.1s ease both;
+        }
+
+        .goldLine {
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 2px;
+            margin: 16px auto 0;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
             }
 
-            #mainDivCard {
-                display: flex;
-                justify-content: center;
-
-            }
-
-            #CardDiv {
-                display: flex;
-                flex-direction: column;
-                border: 1px solid pink;
-                width: 18vh;
-                margin-left: 15px;
-                padding: 12px;
-                border-radius: 4px;
-                margin-bottom: 10px;
-            }
-
-            #ProductImage {
-                height: 15vh;
-                width: auto;
-                cursor: pointer;
-            }
-
-            #titleP {
-                font-size: 4vw;
-                flex-wrap: wrap;
-                padding: 8px;
-            }
-
-            #PriceP {
-                font-size: 4vw;
-                flex-wrap: wrap;
-                padding: 8px;
-            }
-
-            #TwoFromDiv {
-                border: 1px solid black;
-                width: 95%;
-                height: auto;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-                gap: 10px;
-                border-radius: 10px;
-                /* background-color: rgba(255, 255, 255, 0.505); */
-                background-color: rgba(255, 255, 255, 0.363);
-                padding: 10px;
-                transition: 0.3s;
-            }
-
-            .inputText {
-                width: 100%;
-                padding: 6px;
-                border-radius: 5px;
-                border: 1px solid black;
-                background-color: rgba(0, 0, 0, 0.153);
-            }
-
-            #btn {
-                padding: 5px;
-                width: 20vw;
-                border-radius: 3px;
-                border: none;
-                box-shadow: 0px 0px 1px 1px;
-                cursor: pointer;
-            }
-
-            .Name-P {
-                font-size: 4vw;
-                color: white;
-
-            }
-
-            .li-end {
-                display: flex;
-                flex-direction: column;
-                font-size: 3vw;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        ::placeholder {
-            color: black;
+        /* Contact Section */
+        #contactSection {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 72px 24px;
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Info Panel */
+        #contactInfo {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        #contactInfo h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-h);
+        }
+
+        #contactInfo p {
+            font-size: 0.9rem;
+            line-height: 1.75;
+            color: var(--text-muted);
+        }
+
+        .contactItem {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .contactIcon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 14px rgba(201, 169, 110, 0.3);
+        }
+
+        .contactIcon svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 2;
+        }
+
+        .contactItemText strong {
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-h);
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .contactItemText span {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* Form Card */
+        #contactForm {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.07);
+            border: 1px solid var(--border);
+        }
+
+        #formTitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-h);
+            margin-bottom: 6px;
+        }
+
+        #formSubtitle {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+
+        .formGroup {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .formGroup label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .formGroup input {
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            color: var(--text-h);
+            background: var(--cream);
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .formGroup input:focus {
+            border-color: var(--gold);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.12);
+        }
+
+        .formGroup input::placeholder {
+            color: var(--text-muted);
+        }
+
+        #submitBtn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: transform var(--transition), box-shadow var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        #submitBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(201, 169, 110, 0.45);
+        }
+
+        #submitBtn svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+        }
+
+        .formNote {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 14px;
+        }
+
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 100px;
+            right: 28px;
+            background: var(--dark);
+            color: #fff;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+            z-index: 9998;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        #toast svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 2.5;
+            flex-shrink: 0;
+        }
+
+        /* Footer */
+        #siteFooter {
+            background: var(--dark-2);
+            color: rgba(255, 255, 255, 0.75);
+            padding: 64px 24px 32px;
+        }
+
+        .footerInner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footerTop {
+            display: grid;
+            grid-template-columns: 1.8fr repeat(3, 1fr);
+            gap: 40px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footerLogo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .footerDesc {
+            font-size: 0.84rem;
+            line-height: 1.7;
+            opacity: 0.7;
+            max-width: 280px;
+            margin-bottom: 20px;
+        }
+
+        .footerSocial {
+            display: flex;
+            gap: 10px;
+        }
+
+        .socialIcon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--transition), border-color var(--transition);
+            cursor: pointer;
+        }
+
+        .socialIcon:hover {
+            background: rgba(201, 169, 110, 0.15);
+            border-color: var(--gold);
+        }
+
+        .socialIcon svg {
+            width: 16px;
+            height: 16px;
+            fill: rgba(255, 255, 255, 0.6);
+        }
+
+        .footerCol h4 {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .footerCol ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footerCol ul li a {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            transition: opacity var(--transition), color var(--transition);
+        }
+
+        .footerCol ul li a:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        .footerBottom {
+            padding-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footerCopy {
+            font-size: 0.78rem;
+            opacity: 0.45;
+        }
+
+        .footerCopy span {
+            color: var(--gold);
+            opacity: 1;
+        }
+
+        .footerPayments {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .payBadge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            opacity: 0.6;
+            letter-spacing: 0.05em;
+        }
+
+        @media(max-width:860px) {
+            #contactSection {
+                grid-template-columns: 1fr;
+            }
+
+            .footerTop {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media(max-width:640px) {
+            #navInner {
+                padding: 0 16px;
+                gap: 12px;
+            }
+
+            #searchWrapper {
+                display: none;
+            }
+
+            .footerTop {
+                grid-template-columns: 1fr;
+            }
+
+            #contactForm {
+                padding: 24px;
+            }
         }
     </style>
 </head>
 
 <body>
+
     <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
-        class="whatsapp-float" target="_blank">
+        class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
-    <header>
-        <div>
-            <div id="headerMainDiv">
-                <div>
-                    <a href="./index.html"> <img id="MainLogo"
-                            src="https://cdn-icons-png.freepik.com/512/5278/5278590.png"> </a>
-                </div>
-                <div>
-                    <input id="searchInput" placeholder="Search" type="text">
-                </div>
 
-                <div id="LoginBtnClickF">
-                    <!-- <p class="Plogin">Login/Sign up</p>
-                    <p class="Plogin">My Account</p> -->
-                    <span>
-                        <a href="./card.html"> <svg class="v_7pKG" viewBox="0 0 16 16">
-                                <path
-                                    d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86"
-                                    fill="#fff"></path>
-                            </svg></a>
-                    </span>
-                </div>
+    <div id="toast" role="alert"><svg viewBox="0 0 24 24">
+            <path d="M20 6L9 17l-5-5" />
+        </svg><span id="toastMsg"></span></div>
 
-                <div>
-                    <a href="./order.html">
-                        <p class="ChackOrder">Order</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="./login.html">
-                        <img id="CartBtn" src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png"></a>
-                </div>
+    <!-- Header -->
+    <header id="siteHeader">
+        <div id="navInner">
+            <a id="navLogo" href="./index.html"><span class="brand-name">SJ Jewellery</span><span
+                    class="brand-tagline">Crafted with love</span></a>
+            <div id="searchWrapper">
+                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input id="searchInput" type="text" placeholder="Search jewellery…" autocomplete="off">
             </div>
+            <nav class="navActions">
+                <a href="./order.html" class="navActionBtn"><svg viewBox="0 0 24 24">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>Orders</a>
+                <a href="./login.html" class="navActionBtn"><svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>Account</a>
+                <a href="./card.html" class="navActionBtn cartWrap"><svg viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>Cart<span class="cartBadge">0</span></a>
+            </nav>
         </div>
     </header>
-    <section id="section1">
-        <form>
-            <div id="formMainDIv">
-                <div id="TwoFromDiv">
-                    <div>
-                        <p class="Name-P">Name</p>
-                        <input class="inputText" id="fullName" type="text" placeholder="Name">
+
+    <!-- Banner -->
+    <section id="pageBanner">
+        <p id="bannerEyebrow">✦ Get In Touch</p>
+        <h1 id="bannerTitle">Book Your Private<br><em>Jewellery Appointment</em></h1>
+        <p id="bannerSub">Experience personalised guidance from our jewellery experts. We're here to help you find the
+            perfect piece.</p>
+        <span class="goldLine"></span>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contactSection">
+
+        <!-- Left Info -->
+        <div id="contactInfo">
+            <div>
+                <h2>Visit Us or Reach Out</h2>
+                <p>We'd love to meet you in person. Book a private appointment at our showroom or reach us via phone or
+                    WhatsApp.</p>
+            </div>
+            <div class="contactItem">
+                <div class="contactIcon"><svg viewBox="0 0 24 24">
+                        <path
+                            d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+                    </svg></div>
+                <div class="contactItemText"><strong>Phone / WhatsApp</strong><span>+91 86036 32642</span></div>
+            </div>
+            <div class="contactItem">
+                <div class="contactIcon"><svg viewBox="0 0 24 24">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg></div>
+                <div class="contactItemText"><strong>Email</strong><span>sonurajsonuraj4515@gmail.com</span></div>
+            </div>
+            <div class="contactItem">
+                <div class="contactIcon"><svg viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg></div>
+                <div class="contactItemText"><strong>Showroom</strong><span>SJ Jewellery, Seepz, India</span></div>
+            </div>
+            <div class="contactItem">
+                <div class="contactIcon"><svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg></div>
+                <div class="contactItemText"><strong>Hours</strong><span>Mon–Sat · 10 AM – 8 PM</span></div>
+            </div>
+        </div>
+
+        <!-- Right Form -->
+        <div id="contactForm">
+            <div id="formTitle">Book an Appointment</div>
+            <div id="formSubtitle">Fill in your details and we'll confirm your slot.</div>
+            <form id="appointmentForm">
+                <div class="formGroup">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="Your full name" required>
+                </div>
+                <div class="formGroup">
+                    <label for="mobileNumber">Phone Number</label>
+                    <input type="number" id="mobileNumber" placeholder="10-digit mobile number" required>
+                </div>
+                <div class="formGroup">
+                    <label for="emailId">Email Address</label>
+                    <input type="email" id="emailId" placeholder="your@email.com" required>
+                </div>
+                <button id="submitBtn" type="submit">
+                    Book Appointment
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <p class="formNote">We respect your privacy. Your information is never shared.</p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="siteFooter">
+        <div class="footerInner">
+            <div class="footerTop">
+                <div class="footerBrand">
+                    <div class="footerLogo">SJ Jewellery</div>
+                    <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary.
+                        Handcrafted with passion, delivered with pride.</p>
+                    <div class="footerSocial">
+                        <a href="#" class="socialIcon" aria-label="Instagram"><svg viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                            </svg></a>
+                        <a href="#" class="socialIcon" aria-label="Facebook"><svg viewBox="0 0 24 24">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                            </svg></a>
+                        <a href="https://wa.me/918603632642" class="socialIcon" aria-label="WhatsApp"
+                            target="_blank"><svg viewBox="0 0 24 24">
+                                <path
+                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                            </svg></a>
                     </div>
-                    <div>
-                        <p class="Name-P">Phone No.</p>
-                        <input class="inputText" type="number" id="mobileNumber" placeholder="Phone Number">
-                    </div>
-                    <div>
-                        <p class="Name-P">Email</p>
-                        <input class="inputText" type="email" id="emailId" placeholder="Email">
-                    </div>
-                    <button id="btn">Submit</button>
+                </div>
+                <div class="footerCol">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="./allProduct.html">All Jewelry</a></li>
+                        <li><a href="./allProduct.html">Rings</a></li>
+                        <li><a href="./allProduct.html">Necklaces</a></li>
+                        <li><a href="./allProduct.html">New Arrivals</a></li>
+                    </ul>
+                </div>
+                <div class="footerCol">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="./aboutPage.html">About Us</a></li>
+                        <li><a href="./ContactPage.html">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                    </ul>
+                </div>
+                <div class="footerCol">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                    </ul>
                 </div>
             </div>
-        </form>
-    </section>
-    <footer>
-        <div id="d-img">
-            <div id="main-li">
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">SHOP</li>
-                        </b>
-                        <a href="./allProduct.html">
-                            <li class="li-end">All Jewelry</li>
-                        </a>
-                        <li class="li-end">Rings</li>
-                        <li class="li-end">Necklaces</li>
-                        <li class="li-end">New Arrivals</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">COMPANY</li>
-                        </b>
-                        <a href="./aboutPage.html">
-                            <li class="li-end">About Us</li>
-                        </a>
-                        <a href="./ContactPage.html">
-                            <li class="li-end">Contact</li>
-                        </a>
-                        <li class="li-end">FAQ</li>
-                        <li class="li-end">Shipping Info</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">LEGAL</li>
-                        </b>
-                        <li class="li-end">Terms of Service</li>
-                        <li class="li-end">Privacy</li>
-                        <li class="li-end">Refund Policy</li>
-                        <li class="li-end">Shipping Policy</li>
-                    </ul>
-                </div>
+            <div class="footerBottom">
+                <p class="footerCopy">&copy; 2026 <span>SJ Jewellery</span>. All rights reserved.</p>
+                <div class="footerPayments"><span class="payBadge">UPI</span><span class="payBadge">Razorpay</span><span
+                        class="payBadge">Net Banking</span><span class="payBadge">COD</span></div>
             </div>
         </div>
     </footer>
+
     <script src="./config.js"></script>
     <script>
-        let fullName = document.getElementById("fullName");
-        let mobileNumber = document.getElementById("mobileNumber");
-        let emailId = document.getElementById("emailId");
-        let submitBtn = document.getElementById("btn");
+        // Dynamic Account navigation link updating & click interception
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        const navLoginBtn = document.getElementById("navLoginBtn");
+        if (navLoginBtn && isLoggedIn) {
+            navLoginBtn.href = "./profile.html";
+        }
 
+        if (!isLoggedIn) {
+            const navOrderBtn = document.getElementById("navOrderBtn");
+            const navCartBtn = document.getElementById("navCartBtn");
+            if (navOrderBtn) {
+                navOrderBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    window.location.href = "./login.html";
+                });
+            }
+            if (navCartBtn) {
+                navCartBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    window.location.href = "./login.html";
+                });
+            }
+        }
 
-        submitBtn.addEventListener("click", async (e) => {
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            document.getElementById("toastMsg").textContent = msg;
+            t.classList.add("show");
+            setTimeout(() => t.classList.remove("show"), 3500);
+        }
+
+        document.getElementById("appointmentForm").addEventListener("submit", async (e) => {
             e.preventDefault();
-            if (fullName.value == "" || mobileNumber.value == "" || emailId.value == "") {
-                alert("Fill In the blank")
+            const fullName = document.getElementById("fullName").value.trim();
+            const mobileNumber = document.getElementById("mobileNumber").value.trim();
+            const emailId = document.getElementById("emailId").value.trim();
+
+            if (!fullName || !mobileNumber || !emailId) {
+                showToast("⚠️ Please fill in all fields.");
                 return;
             }
+            const btn = document.getElementById("submitBtn");
+            btn.disabled = true;
+            btn.textContent = "Booking…";
             try {
-                const data = {
-                    FullName: fullName.value,
-                    mobileNumber: mobileNumber.value,
-                    email: emailId.value
-                }
-                //${BASE_URL}/newClient
-                //https://appointment-booking-z0zg.onrender.com/newClient
-                let response = await fetch(`${BASE_URL}/newClient`, {
+                const response = await fetch(`${BASE_URL}/newClient`, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(data)
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ FullName: fullName, mobileNumber, email: emailId })
                 });
-                let bookingDone = await response.json();
-                alert("✅Appointment Booked Successfully ✅" + fullName.value);
-                console.log("Booking Done");
-                setTimeout(() => {
-                    location.reload();
-                }, 100);
+                await response.json();
+                showToast(`✅ Appointment booked for ${fullName}!`);
+                document.getElementById("appointmentForm").reset();
+            } catch (err) {
+                console.error(err);
+                showToast("❌ Something went wrong. Please try again.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Book Appointment <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
             }
-            catch (err) {
-                console.log(err);
-                alert("❌ Error aaya");
-                // alert(err);
+        });
+        async function fetchCartCount() {
+            try {
+                const res = await fetch(`${BASE_URL}/Card`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const badge = document.querySelector(".cartBadge");
+                    if (badge) badge.textContent = data.length;
+                }
+            } catch (err) {
+                console.error(err);
             }
-        })
+        }
+        fetchCartCount();
+
+        // Redirect navbar search to allProduct list
+        document.getElementById("searchInput").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
+            }
+        });
     </script>
 </body>
 

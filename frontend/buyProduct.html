@@ -4,777 +4,1789 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment Booking</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    <title>Product Details – SJ Jewellery</title>
+    <meta name="description"
+        content="View product details, pricing and buy handcrafted jewellery from SJ Jewellery. Gold, diamond & platinum pieces crafted with love.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
 
-    #headerMainDiv {
-        display: flex;
-        justify-content: center;
-        background-color: black;
-        /* padding: 2vw; */
-        padding: clamp(2px, 0.5vw, 48px);
-        justify-content: space-around;
-        align-items: center;
-        /* height: clamp(60px , 2vh , 48px); */
-    }
-
-    #MainLogo {
-        width: 3vw;
-        cursor: pointer;
-    }
-
-    #CartBtn {
-        min-width: 30px;
-        /* width: 3vw; */
-        max-width: 3vw;
-        height: auto;
-        cursor: pointer;
-    }
-
-    #searchInput {
-        width: 45vw;
-        padding: 8px;
-    }
-
-    .Plogin {
-        color: #fff;
-        cursor: pointer;
-    }
-
-    #imgPhoto {
-        width: 100%;
-        height: 30vw;
-        object-fit: cover;
-        display: block;
-        margin-left: 2vw;
-        /* background-color: #fff; */
-        /* border: 1px solid black; */
-        border-radius: 10px;
-        padding: 3vh;
-    }
-
-    #cardMainDiv {
-        display: flex;
-        background-color: #F0F0F0;
-        /* padding: 10px; */
-        height: auto;
-        justify-content: space-evenly;
-    }
-
-    .product-name-p,
-    .product-name-price,
-    .product-name-dis {
-        font-size: 2.5vw;
-        padding-left: 10vw;
-
-    }
-
-    .product-name-price {
-        margin-top: 5vh;
-    }
-
-    .product-name-dis {
-        font-size: 3vh;
-        margin-top: 3vh;
-        color: #666;
-    }
-
-    #CardTittelDiv {
-        margin-top: 6vh;
-    }
-
-    .buybtn {
-        border: 1px solid black;
-    }
-
-    #btndiv {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: auto;
-        padding: 3vh;
-        gap: 30px;
-
-
-    }
-
-    .buybtn,
-    .addtocardbtn {
-        /* border: 1px solid black; */
-        border: none;
-        padding: 12px;
-        width: 20vw;
-        cursor: pointer;
-        /* background-color: #f5644e; */
-        background-color: rgba(255, 62, 94, 0.74);
-        color: #fff;
-        font-size: 1.2vw;
-        border-radius: 10px;
-        box-shadow: 0px 0px 3px 0px black;
-        /* font-style: unset; */
-        transition: 0.3s;
-    }
-
-    .addtocardbtn:hover {
-        background-color: #ff462a;
-        box-shadow: 0px 0px 7px 0px black;
-    }
-
-    .buybtn:hover {
-        background-color: #ff462a;
-        /* background-color: pink; */
-        box-shadow: 0px 0px 7px 0px black;
-    }
-
-    #mainDivCard {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        flex-wrap: wrap;
-        padding: 10px;
-    }
-
-    #CardDiv {
-        display: flex;
-        flex-direction: column;
-        border: 1px solid pink;
-        width: 40vh;
-        margin-left: 15px;
-        padding: 12px;
-        border-radius: 4px;
-        transition: 0.3s;
-    }
-
-    #imgdiv {
-        display: flex;
-        justify-content: center;
-    }
-
-    #ProductImage {
-        height: 36vh;
-        width: 100%;
-        cursor: pointer;
-        object-fit: cover;
-        /* display: block; */
-    }
-
-    #titleP {
-        /* font-size: 19px; */
-        font-size: clamp(10px, 1.2vw, 40px);
-        flex-wrap: wrap;
-        padding: 8px;
-    }
-
-    .PriceAndBuyBtn {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    #PriceP {
-        /* font-size: 22px; */
-        font-size: clamp(10px, 1.4vw, 40px);
-        flex-wrap: wrap;
-        padding: 8px;
-    }
-
-    .BuyBtn {
-        border: 1px solid pink;
-        padding: 8px;
-        cursor: pointer;
-        transition: 0.3s;
-        font-size: clamp(10px, 1vw, 40px);
-    }
-
-
-    .BuyBtn:hover {
-        background-color: pink;
-        color: #fff;
-        border-radius: 10px;
-        box-shadow: 0px 0px 8px 0px pink;
-        transition: 0.3s;
-
-    }
-
-
-
-    #d-img {
-
-        display: flex;
-        padding: 20px;
-        background-color: #e6e6e680;
-        margin-top: 10px;
-    }
-
-    #f-img {
-        height: 5vw;
-        width: auto;
-        flex-wrap: wrap;
-    }
-
-    #p1 {
-        display: flex;
-        flex-wrap: wrap;
-        width: 30%;
-        font-size: large;
-    }
-
-    #main-li {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        gap: 4vw;
-        /* font-size: 1.5vw; */
-        font-size: clamp(1vw, 1vw, 1vw);
-        /* gap: 16.6vw; */
-        justify-content: space-evenly;
-    }
-
-    .li-end {
-        display: flex;
-        flex-direction: column;
-    }
-
-    li:hover {
-        color: pink;
-        border-bottom: 2px solid pink;
-        cursor: pointer;
-    }
-
-    a {
-        text-decoration: none;
-        color: black;
-    }
-
-    ::placeholder {
-        color: black;
-    }
-
-    @media only screen and (max-width: 768px) {
-        /* #headerMainDiv {
-            width: 100%;
-        } */
-
-        #MainLogo {
-            width: 10vw;
-            /* max-width: 10vw; */
-            height: auto;
-            cursor: pointer;
+    <style>
+        /* ═══════════════════════════════════════════
+           DESIGN TOKENS
+        ═══════════════════════════════════════════ */
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #a8854e;
+            --gold-light: #e8d4a8;
+            --gold-bg: #fdf7ee;
+            --cream: #faf8f5;
+            --dark: #0d0d0f;
+            --dark-2: #1a1a1f;
+            --dark-3: #2a2a30;
+            --text-h: #0d0d0f;
+            --text-body: #3d3d45;
+            --text-muted: #7a7a85;
+            --border: #e8e0d5;
+            --white: #ffffff;
+            --header-h: 72px;
+            --radius: 14px;
+            --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        #mainDivCard {
-            display: flex;
-            justify-content: center;
-            padding: 10px;
-
+        /* ═══════════════════════════════════════════
+           RESET & BASE
+        ═══════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        #CardDiv {
-            display: flex;
-            flex-direction: column;
-            border: 1px solid pink;
-            width: 18vh;
-            margin-left: 15px;
-            padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            transition: 0.3s;
+        html {
+            scroll-behavior: smooth;
         }
 
-        #PriceP {
-            /* font-size: 1.5vw; */
-            flex-wrap: wrap;
-            font-size: clamp(12px, 1.2vw, 40px);
-            padding: 2px;
-            /* font-weight: bold; */
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            overflow-x: hidden;
         }
 
-        #ProductImage {
-            /* height: 14vh;
-            width: auto;
-            cursor: pointer; */
-            height: 36vh;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-            object-fit: cover;
-            /* display: block;*/
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
-
-
-        #titleP {
-            /* font-size: 3vw; */
-            font-size: clamp(10px, 1.2vw, 40px);
-            flex-wrap: wrap;
-            padding: 4px;
-            font-weight: 600;
+        p {
+            margin: 0;
         }
 
-        #PriceP {
-            /* font-size: 1.5vw; */
-            flex-wrap: wrap;
-            font-size: clamp(12px, 1.2vw, 40px);
-            /* padding: 8px; */
+        ul {
+            list-style: none;
         }
 
-        .BuyBtn {
-            border: 1px solid pink;
-            padding: clamp(3px, 2vw, 40px);
-            cursor: pointer;
-            transition: 0.3s;
-            /* font-size: 1.5vw; */
-            /* font-size: clamp(12px, 1.2vw, 40px); */
-            font-size: clamp(9px, 1.2vw, 40px);
-
-        }
-
-        video {
+        img {
             display: block;
-            width: 100%;
-            height: 20vh;
-            object-fit: cover;
+            max-width: 100%;
         }
 
-        .li-end {
-            display: flex;
-            flex-direction: column;
-            font-size: 3vw;
-        }
-
-        #imgPhoto {
-            /* width: 100%; */
-            height: 75vw;
-            object-fit: cover;
-            display: block;
-            /* margin-left: 2vw; */
-            /* background-color: #fff; */
-            /* border: 1px solid black; */
-            border-radius: 10px;
-            /* padding: 3vh; */
-            margin-left: 0;
-        }
-
-        #cardMainDiv {
-            /* display: flex; */
-            background-color: #F0F0F0;
-            flex-direction: column;
-
-
-            .product-name-dis {
-                font-size: 4vw;
-            }
-
-            /* padding: 10px; */
-
-        }
-
-        .product-name-p,
-        .product-name-price,
-        .product-name-dis {
-            font-size: 5vw;
-            padding-left: 2vw;
-        }
-
-        .product-name-dis {
-            font-size: 4.5vw;
-        }
-
-        #btndiv {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            justify-content: space-around;
-            /* gap: 15vh;
-            margin-top: 0vh;
-            padding: 18px */
-        }
-
-        .product-name-price {
-            margin-top: 2vh;
-        }
-
-        .product-name-dis {
-            font-size: 3vh;
-            margin-top: 2vh;
-            color: #666;
-        }
-
-        .buybtn,
-        .addtocardbtn {
-            /* border: 1px solid black; */
+        button {
+            font-family: inherit;
+            cursor: pointer;
             border: none;
-            padding: 10px;
-            width: 40vw;
-            cursor: pointer;
-            /* background-color: #f5644e; */
-            background-color: rgba(255, 62, 94, 0.74);
-            color: #fff;
-            font-size: 3.2vw;
-            border-radius: 10px;
-            box-shadow: 0px 0px 3px 0px black;
-            /* font-style: unset; */
-            transition: 0.3s;
         }
 
+        /* ═══════════════════════════════════════════
+           WHATSAPP FLOAT
+        ═══════════════════════════════════════════ */
+        .whatsapp-float {
+            position: fixed;
+            width: 56px;
+            height: 56px;
+            bottom: 28px;
+            right: 28px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+            z-index: 9999;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
 
-        .Plogin {
-            color: #fff;
-            cursor: pointer;
-            font-size: 3vw;
+        .whatsapp-float:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
+        }
+
+        .whatsapp-float img {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* ═══════════════════════════════════════════
+           HEADER / NAVBAR
+        ═══════════════════════════════════════════ */
+        #siteHeader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-h);
+            z-index: 1000;
+            background: rgba(13, 13, 15, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+        }
+
+        #navInner {
+            max-width: 1300px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 0 24px;
+        }
+
+        #navLogo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        #navLogo .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.04em;
+        }
+
+        #navLogo .brand-tagline {
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            color: rgba(201, 169, 110, 0.6);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        #searchWrapper {
+            flex: 1;
+            max-width: 440px;
+            position: relative;
         }
 
         #searchInput {
-            width: 45vw;
-            padding: 6px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(201, 169, 110, 0.25);
+            border-radius: 999px;
+            padding: 9px 18px 9px 42px;
+            font-size: 0.88rem;
+            color: #fff;
+            outline: none;
+            transition: all var(--transition);
+            font-family: inherit;
         }
 
-    }
-</style>
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
 
+        #searchInput:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+        }
+
+        #searchIcon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            stroke: rgba(201, 169, 110, 0.6);
+            fill: none;
+            pointer-events: none;
+        }
+
+        .navActions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .navActionBtn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1.5px solid transparent;
+            transition: border-color var(--transition), background var(--transition);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .navActionBtn:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+            background: rgba(201, 169, 110, 0.06);
+            color: var(--gold);
+        }
+
+        .navActionBtn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .cartWrap {
+            position: relative;
+        }
+
+        .cartBadge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ═══════════════════════════════════════════
+           BREADCRUMB
+        ═══════════════════════════════════════════ */
+        #breadcrumb {
+            margin-top: var(--header-h);
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 24px;
+        }
+
+        #breadcrumbInner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        #breadcrumbInner a {
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+
+        #breadcrumbInner a:hover {
+            color: var(--gold);
+        }
+
+        #breadcrumbInner span {
+            color: var(--text-muted);
+        }
+
+        #breadcrumbCurrent {
+            color: var(--text-h);
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════════
+           PRODUCT DETAIL SECTION
+        ═══════════════════════════════════════════ */
+        #productDetailSection {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 24px 72px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* ── Image Column ── */
+        #productImageCol {
+            position: sticky;
+            top: calc(var(--header-h) + 20px);
+        }
+
+        #mainImageWrap {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #f5f0ea;
+            aspect-ratio: 1 / 1;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        #imgPhoto {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #mainImageWrap:hover #imgPhoto {
+            transform: scale(1.04);
+        }
+
+        /* Badge on image */
+        #productImgBadge {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 999px;
+        }
+
+        /* Thumbnail row */
+        #thumbRow {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .thumb {
+            width: 72px;
+            height: 72px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border-color var(--transition);
+            flex-shrink: 0;
+        }
+
+        .thumb.active {
+            border-color: var(--gold);
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ── Info Column ── */
+        #productInfoCol {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        #productCategory {
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 10px;
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        #productTitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 700;
+            color: var(--text-h);
+            line-height: 1.2;
+            margin-bottom: 20px;
+            animation: fadeUp 0.7s 0.05s ease both;
+        }
+
+        /* Rating */
+        #ratingRow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            animation: fadeUp 0.7s 0.08s ease both;
+        }
+
+        .stars {
+            display: flex;
+            gap: 3px;
+        }
+
+        .stars svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--gold);
+        }
+
+        #ratingText {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        /* Divider */
+        .infoDivider {
+            height: 1px;
+            background: var(--border);
+            margin: 20px 0;
+        }
+
+        /* Price block */
+        #priceBlock {
+            animation: fadeUp 0.8s 0.1s ease both;
+        }
+
+        #productPrice {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-h);
+            letter-spacing: -0.01em;
+        }
+
+        #gstNote {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        #gstNote::before {
+            content: '✓';
+            color: #3da96e;
+            font-weight: 700;
+        }
+
+        /* Description */
+        #productDesc {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text-body);
+            margin-top: 20px;
+            animation: fadeUp 0.8s 0.12s ease both;
+        }
+
+        /* Highlights */
+        #highlightList {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            animation: fadeUp 0.8s 0.15s ease both;
+        }
+
+        .highlight {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.84rem;
+            color: var(--text-body);
+        }
+
+        .highlight svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 2.2;
+            flex-shrink: 0;
+        }
+
+        /* Quantity selector */
+        #qtyBlock {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 28px;
+            animation: fadeUp 0.8s 0.18s ease both;
+        }
+
+        #qtyLabel {
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        #qtyControls {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .qtyBtn {
+            background: none;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--text-h);
+            cursor: pointer;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        .qtyBtn:hover {
+            background: var(--gold-bg);
+            color: var(--gold-dark);
+        }
+
+        #qtyValue {
+            width: 40px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-h);
+            border: none;
+            background: none;
+            outline: none;
+        }
+
+        /* Action buttons */
+        #actionBtns {
+            display: flex;
+            gap: 14px;
+            margin-top: 24px;
+            animation: fadeUp 0.9s 0.2s ease both;
+        }
+
+        .btn-primary {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 15px 24px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(201, 169, 110, 0.45);
+        }
+
+        .btn-primary svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--dark);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 15px 24px;
+            border-radius: 999px;
+            border: 2px solid var(--dark);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .btn-secondary:hover {
+            background: var(--dark);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(13, 13, 15, 0.2);
+        }
+
+        .btn-secondary svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+        }
+
+        /* Trust mini row */
+        #trustMini {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            animation: fadeUp 0.9s 0.22s ease both;
+        }
+
+        .trustMiniItem {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .trustMiniItem svg {
+            width: 15px;
+            height: 15px;
+            fill: var(--gold);
+            flex-shrink: 0;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ═══════════════════════════════════════════
+           RELATED PRODUCTS
+        ═══════════════════════════════════════════ */
+        #relatedSection {
+            background: var(--gold-bg);
+            border-top: 1px solid var(--border);
+            padding: 64px 0 72px;
+        }
+
+        .sectionHeader {
+            text-align: center;
+            padding: 0 24px 48px;
+        }
+
+        .sectionEyebrow {
+            font-size: 0.68rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .sectionHeader h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 700;
+            color: var(--text-h);
+            line-height: 1.2;
+        }
+
+        .goldLine {
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 2px;
+            margin: 12px auto 0;
+        }
+
+        #mainDivCard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Skeleton */
+        .productSkeleton {
+            background: #fff;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .skeletonImg {
+            height: 240px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+        }
+
+        .skeletonBody {
+            padding: 16px;
+        }
+
+        .skeletonLine {
+            height: 12px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .skeletonLine.short {
+            width: 60%;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0
+            }
+
+            100% {
+                background-position: -200% 0
+            }
+        }
+
+        /* Product Card */
+        .product-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+            transition: transform var(--transition), box-shadow var(--transition);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            animation: cardFadeIn 0.5s ease forwards;
+        }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-card:hover .card-img-overlay {
+            opacity: 1;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+
+        .card-img-wrap {
+            position: relative;
+            overflow: hidden;
+            height: 240px;
+            background: #f8f4ef;
+        }
+
+        .card-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(13, 13, 15, 0.25);
+            opacity: 0;
+            transition: opacity var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-quick-view {
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--dark);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 10px 22px;
+            border-radius: 999px;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        .card-body {
+            padding: 16px 16px 18px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .card-category {
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-h);
+            line-height: 1.35;
+            margin-bottom: 10px;
+        }
+
+        .card-footer-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+
+        .card-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-h);
+        }
+
+        .card-gst {
+            font-size: 0.62rem;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+
+        .BuyBtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--dark);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            padding: 9px 14px;
+            border-radius: 999px;
+            border: 1.5px solid var(--dark);
+            transition: all var(--transition);
+        }
+
+        .BuyBtn:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--dark);
+            box-shadow: 0 4px 16px rgba(201, 169, 110, 0.4);
+            transform: scale(1.04);
+        }
+
+        .BuyBtn svg {
+            width: 12px;
+            height: 12px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* ═══════════════════════════════════════════
+           FEATURES STRIP
+        ═══════════════════════════════════════════ */
+        #featuresStrip {
+            background: var(--white);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 48px 24px;
+        }
+
+        .featuresGrid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            text-align: center;
+        }
+
+        .featureIcon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            box-shadow: 0 4px 16px rgba(201, 169, 110, 0.3);
+        }
+
+        .featureIcon svg {
+            width: 26px;
+            height: 26px;
+            fill: #fff;
+        }
+
+        .featureTitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-h);
+            margin-bottom: 6px;
+        }
+
+        .featureDesc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════ */
+        #siteFooter {
+            background: var(--dark-2);
+            color: rgba(255, 255, 255, 0.75);
+            padding: 64px 24px 32px;
+        }
+
+        .footerInner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footerTop {
+            display: grid;
+            grid-template-columns: 1.8fr repeat(3, 1fr);
+            gap: 40px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footerLogo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .footerDesc {
+            font-size: 0.84rem;
+            line-height: 1.7;
+            opacity: 0.7;
+            max-width: 280px;
+            margin-bottom: 20px;
+        }
+
+        .footerSocial {
+            display: flex;
+            gap: 10px;
+        }
+
+        .socialIcon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--transition), border-color var(--transition);
+            cursor: pointer;
+        }
+
+        .socialIcon:hover {
+            background: rgba(201, 169, 110, 0.15);
+            border-color: var(--gold);
+        }
+
+        .socialIcon svg {
+            width: 16px;
+            height: 16px;
+            fill: rgba(255, 255, 255, 0.6);
+        }
+
+        .footerCol h4 {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .footerCol ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footerCol ul li a {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            transition: opacity var(--transition), color var(--transition);
+        }
+
+        .footerCol ul li a:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        .footerBottom {
+            padding-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footerCopy {
+            font-size: 0.78rem;
+            opacity: 0.45;
+        }
+
+        .footerCopy span {
+            color: var(--gold);
+            opacity: 1;
+        }
+
+        .footerPayments {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .payBadge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            opacity: 0.6;
+            letter-spacing: 0.05em;
+        }
+
+        /* ═══════════════════════════════════════════
+           TOAST NOTIFICATION
+        ═══════════════════════════════════════════ */
+        #toast {
+            position: fixed;
+            bottom: 100px;
+            right: 28px;
+            background: var(--dark);
+            color: #fff;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+            z-index: 9998;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        #toast svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 2.5;
+            flex-shrink: 0;
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE
+        ═══════════════════════════════════════════ */
+        @media (max-width: 900px) {
+            #productDetailSection {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                padding: 32px 24px 56px;
+            }
+
+            #productImageCol {
+                position: static;
+            }
+
+            .footerTop {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footerBrand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #navInner {
+                padding: 0 16px;
+                gap: 12px;
+            }
+
+            #searchWrapper {
+                display: none;
+            }
+
+            #actionBtns {
+                flex-direction: column;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                flex: none;
+            }
+
+            #mainDivCard {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+                padding: 0 14px;
+            }
+
+            .card-img-wrap {
+                height: 180px;
+            }
+
+            .footerTop {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .footerBottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .featuresGrid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 380px) {
+            #mainDivCard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
 
 <body>
+
+    <!-- WhatsApp Float -->
     <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
-        class="whatsapp-float" target="_blank">
+        class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
-     <header>
-        <div>
-            <div id="headerMainDiv">
-                <div>
-                    <a href="./index.html"> <img id="MainLogo"
-                            src="https://cdn-icons-png.freepik.com/512/5278/5278590.png"> </a>
-                </div>
-                <div>
-                    <input id="searchInput" placeholder="Search" type="text">
-                </div>
 
-                <div id="LoginBtnClickF">
-                    <!-- <p class="Plogin">Login/Sign up</p>
-                    <p class="Plogin">My Account</p> -->
-                    <span>
-                        <a href="./card.html"> <svg class="v_7pKG" viewBox="0 0 16 16">
-                                <path
-                                    d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86"
-                                    fill="#fff"></path>
-                            </svg></a>
-                    </span>
-                </div>
+    <!-- Toast -->
+    <div id="toast" role="alert" aria-live="polite">
+        <svg viewBox="0 0 24 24">
+            <path d="M20 6L9 17l-5-5" />
+        </svg>
+        <span id="toastMsg">Added to cart!</span>
+    </div>
 
-                <div>
-                    <a href="./order.html">
-                        <p class="ChackOrder">Order</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="./login.html">
-                        <img id="CartBtn" src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png"></a>
-                </div>
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header id="siteHeader" role="banner">
+        <div id="navInner">
+            <a id="navLogo" href="./index.html" aria-label="SJ Jewellery Home">
+                <span class="brand-name">SJ Jewellery</span>
+                <span class="brand-tagline">Crafted with love</span>
+            </a>
+            <div id="searchWrapper" role="search">
+                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input id="searchInput" type="text" placeholder="Search rings, necklaces, bangles…" autocomplete="off"
+                    aria-label="Search products">
             </div>
+            <nav class="navActions" aria-label="User actions">
+                <a href="./order.html" class="navActionBtn" id="navOrderBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Orders
+                </a>
+                <a href="./login.html" class="navActionBtn" id="navLoginBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    Account
+                </a>
+                <a href="./card.html" class="navActionBtn cartWrap" id="navCartBtn" aria-label="Shopping cart">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    Cart
+                    <span class="cartBadge" id="cartCount" aria-label="items in cart">0</span>
+                </a>
+            </nav>
         </div>
     </header>
-    <section>
-        <div>
-            <div id="cardMainDiv">
-                <div>
-                    <img id="imgPhoto"
-                        src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
+
+    <!-- ═══════════════ BREADCRUMB ═══════════════ -->
+    <nav id="breadcrumb" aria-label="Breadcrumb">
+        <div id="breadcrumbInner">
+            <a href="./index.html">Home</a>
+            <span>›</span>
+            <a href="./allProduct.html">All Products</a>
+            <span>›</span>
+            <span id="breadcrumbCurrent">Product Details</span>
+        </div>
+    </nav>
+
+    <!-- ═══════════════ PRODUCT DETAIL ═══════════════ -->
+    <section id="productDetailSection" aria-label="Product detail">
+
+        <!-- Image Column -->
+        <div id="productImageCol">
+            <div id="mainImageWrap">
+                <img id="imgPhoto" src="" alt="Product image" loading="eager">
+                <span id="productImgBadge">✦ New Arrival</span>
+            </div>
+            <div id="thumbRow" aria-label="Product thumbnails">
+                <!-- thumbnails injected by JS -->
+            </div>
+        </div>
+
+        <!-- Info Column -->
+        <div id="productInfoCol">
+            <div id="productCategory">Jewellery</div>
+            <h1 id="productTitle">Loading…</h1>
+
+            <!-- Rating -->
+            <div id="ratingRow">
+                <div class="stars" aria-label="4.8 out of 5 stars">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
                 </div>
-                <div id="CardTittelDiv">
-                    <b>
-                        <p class="product-name-p">The Nomi Bridal Ring Set</p>
-                    </b>
-                    <p class="product-name-price">Rs.1,00,106</p>
-                    <small id="smallgstText" class="product-name-price">✓ GST Included</small>
-                    <p class="product-name-dis">Diamond PreSet Solitaire Ring In 18Kt Yellow Gold (4.35 gram) with
-                        Diamonds
-                        (0.2370 Ct) and Solitaire (0.15 Ct)</p>
-                    <div id="btndiv">
-                        <!-- <div> <a href="./ContactPage.html"><Button class="buybtn">Book Appointment</Button></a></div> -->
-                        <div><Button class="buybtn" data-id="${item._id}">BUY NOW</Button></div>
-                        <div><Button class="addtocardbtn" data-id="$item._id">ADD TO CART</Button></div>
-                    </div>
+                <span id="ratingText">4.9 · 128 reviews</span>
+            </div>
+
+            <div class="infoDivider"></div>
+
+            <!-- Price -->
+            <div id="priceBlock">
+                <div id="productPrice">₹–</div>
+                <div id="gstNote">GST Included</div>
+            </div>
+
+            <!-- Description -->
+            <p id="productDesc">Loading product details…</p>
+
+            <!-- Highlights -->
+            <ul id="highlightList" aria-label="Product highlights">
+                <li class="highlight">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    BIS Hallmark Certified
+                </li>
+                <li class="highlight">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    Free Insured Delivery Pan India
+                </li>
+                <li class="highlight">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    Easy 30-Day Returns
+                </li>
+                <li class="highlight">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    Handcrafted by Master Artisans
+                </li>
+            </ul>
+
+            <div class="infoDivider"></div>
+
+            <!-- Quantity -->
+            <div id="qtyBlock">
+                <span id="qtyLabel">Qty</span>
+                <div id="qtyControls">
+                    <button class="qtyBtn" id="qtyMinus" aria-label="Decrease quantity">−</button>
+                    <span id="qtyValue">1</span>
+                    <button class="qtyBtn" id="qtyPlus" aria-label="Increase quantity">+</button>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div id="actionBtns">
+                <button class="btn-primary buybtn" id="buyNowBtn" aria-label="Buy Now">
+                    Buy Now
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <button class="btn-secondary addtocardbtn" id="addToCartBtn" aria-label="Add to Cart">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    Add to Cart
+                </button>
+            </div>
+
+            <!-- Trust mini -->
+            <div id="trustMini">
+                <div class="trustMiniItem">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    Certified Genuine
+                </div>
+                <div class="trustMiniItem">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    Secure Checkout
+                </div>
+                <div class="trustMiniItem">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    30-Day Returns
+                </div>
+                <div class="trustMiniItem">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    Free Delivery
                 </div>
             </div>
         </div>
     </section>
 
-    <section>
-        <div id="mainDivCard">
-            <!-- <div id="CardDiv"> -->
-            <!-- <div id="imgdiv">
-                    <a href="./buyProduct.html"> <img id="ProductImage"
-                            src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
-                    </a>
-                </div>
-                <div id="titleName">
-                    <p id="titleP">The Nomi Bridal Ring Set</p>
-                </div>
-                <div class="PriceAndBuyBtn">
-                    <p id="PriceP">₹ 1,34,725</p>
-                     <p class="BuyBtn">BUY NOW</p> -->
-            <!-- </div> -->
+    <!-- ═══════════════ RELATED PRODUCTS ═══════════════ -->
+    <section id="relatedSection" aria-labelledby="relatedHeading">
+        <div class="sectionHeader">
+            <p class="sectionEyebrow">You May Also Like</p>
+            <h2 id="relatedHeading">More from Our Collection</h2>
+            <span class="goldLine" aria-hidden="true"></span>
         </div>
-        <!--New Start-->
-        <!-- <div id="CardDiv">
-                <div id="imgdiv">
-                    <a href="./buyProduct.html"> <img id="ProductImage"
-                            src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
-                    </a>
+        <div id="mainDivCard" role="list" aria-label="Related products">
+            <div class="productSkeleton">
+                <div class="skeletonImg"></div>
+                <div class="skeletonBody">
+                    <div class="skeletonLine"></div>
+                    <div class="skeletonLine short"></div>
                 </div>
-                <div id="titleName">
-                    <p id="titleP">The Nomi Bridal Ring Set</p>
+            </div>
+            <div class="productSkeleton">
+                <div class="skeletonImg"></div>
+                <div class="skeletonBody">
+                    <div class="skeletonLine"></div>
+                    <div class="skeletonLine short"></div>
                 </div>
-                <div class="PriceAndBuyBtn">
-                    <p id="PriceP">₹ 1,34,725</p>
-                    <!-- <p class="BuyBtn">BUY NOW</p> -->
-        <!-- </div>
-            </div> -->
-        <!--New Start-->
-        <!-- <div id="CardDiv">
-                <div id="imgdiv">
-                    <a href="./buyProduct.html"> <img id="ProductImage"
-                            src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
-                    </a>
+            </div>
+            <div class="productSkeleton">
+                <div class="skeletonImg"></div>
+                <div class="skeletonBody">
+                    <div class="skeletonLine"></div>
+                    <div class="skeletonLine short"></div>
                 </div>
-                <div id="titleName">
-                    <p id="titleP">The Nomi Bridal Ring Set</p>
+            </div>
+            <div class="productSkeleton">
+                <div class="skeletonImg"></div>
+                <div class="skeletonBody">
+                    <div class="skeletonLine"></div>
+                    <div class="skeletonLine short"></div>
                 </div>
-                <div class="PriceAndBuyBtn">
-                    <p id="PriceP">₹ 1,34,725</p>
-                    <!-- <p class="BuyBtn">BUY NOW</p> -->
-        <!-- </div>
-            </div> -->
-        <!--New Start-->
-        <!-- <div id="CardDiv">
-                <div id="imgdiv">
-                    <a href="./buyProduct.html"><img id="ProductImage"
-                            src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
-                    </a>
-                </div>
-                <div id="titleName">
-                    <p id="titleP">The Nomi Bridal Ring Set</p>
-                </div>
-                <div class="PriceAndBuyBtn">
-                    <p id="PriceP">₹ 1,34,725</p>
-                    <!-- <p class="BuyBtn">BUY NOW</p> -->
-        <!-- </div>
-            </div> -->
-        <!-- <div id="CardDiv">
-                <div id="imgdiv">
-                    <a href="./buyProduct.html"> <img id="ProductImage"
-                            src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
-                    </a>
-                </div>
-                <div id="titleName">
-                    <p id="titleP">The Nomi Bridal Ring Set</p>
-                </div>
-                <div class="PriceAndBuyBtn">
-                    <p id="PriceP">₹ 1,34,725</p>
-                    <!-- <p class="BuyBtn">BUY NOW</p> -->
-        <!-- </div>
-            </div> -->
-        <!--New Start-->
-        <!-- <div id="CardDiv">
-                <div id="imgdiv">
-                    <a href="./buyProduct.html"><img id="ProductImage"
-                            src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
-                    </a>
-                </div>
-                <div id="titleName">
-                    <p id="titleP">The Nomi Bridal Ring Set</p>
-                </div>
-                <div class="PriceAndBuyBtn">
-                    <p id="PriceP">₹ 1,34,725</p>
-                    <!-- <p class="BuyBtn">BUY NOW</p> -->
-        <!-- </div>
-            </div> -->
-        <!--New Start-->
-        <!-- <div id="CardDiv">
-                <div id="imgdiv">
-                    <a href="./buyProduct.html"> <img id="ProductImage"
-                            src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
-                    </a>
-                </div>
-                <div id="titleName">
-                    <p id="titleP">The Nomi Bridal Ring Set</p>
-                </div>
-                <div class="PriceAndBuyBtn">
-                    <p id="PriceP">₹ 1,34,725</p>
-                    <!-- <p class="BuyBtn">BUY NOW</p> -->
-        <!-- </div>
-            </div> -->
-        <!--New Start-->
-        <!-- <div id="CardDiv">
-                <div id="imgdiv">
-                    <a href="./buyProduct.html"> <img id="ProductImage"
-                            src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
-                    </a>
-                </div>
-                <div id="titleName">
-                    <p id="titleP">The Nomi Bridal Ring Set</p>
-                </div>
-                <div class="PriceAndBuyBtn">
-                    <p id="PriceP">₹ 1,34,725</p>
-                    <!-- <p class="BuyBtn">BUY NOW</p> -->
-        <!-- </div>
-            </div> -->
+            </div>
         </div>
     </section>
-    <footer>
-        <div id="d-img">
-            <div id="main-li">
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">SHOP</li>
-                        </b>
-                        <a href="./allProduct.html">
-                            <li class="li-end">All Jewelry</li>
+
+    <!-- ═══════════════ FEATURES ═══════════════ -->
+    <section id="featuresStrip" aria-label="Why choose SJ Jewellery">
+        <div class="featuresGrid">
+            <div class="featureItem">
+                <div class="featureIcon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                </div>
+                <div class="featureTitle">Premium Craftsmanship</div>
+                <div class="featureDesc">Every piece is crafted by expert artisans with decades of heritage.</div>
+            </div>
+            <div class="featureItem">
+                <div class="featureIcon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                </div>
+                <div class="featureTitle">BIS Hallmark Certified</div>
+                <div class="featureDesc">All gold and diamond jewellery comes with official BIS certification.</div>
+            </div>
+            <div class="featureItem">
+                <div class="featureIcon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M1 3h22l-2 13H3L1 3zM1 3l2.5 11M16 16a2 2 0 100 4 2 2 0 000-4zM9 16a2 2 0 100 4 2 2 0 000-4z" />
+                    </svg>
+                </div>
+                <div class="featureTitle">Free Delivery</div>
+                <div class="featureDesc">Free insured delivery pan India. Safe, secure, and on time.</div>
+            </div>
+            <div class="featureItem">
+                <div class="featureIcon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg>
+                </div>
+                <div class="featureTitle">Easy Returns</div>
+                <div class="featureDesc">Not happy? Return within 30 days for a hassle-free refund.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer id="siteFooter" role="contentinfo">
+        <div class="footerInner">
+            <div class="footerTop">
+                <div class="footerBrand">
+                    <div class="footerLogo">SJ Jewellery</div>
+                    <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary.
+                        Handcrafted with passion, delivered with pride.</p>
+                    <div class="footerSocial">
+                        <a href="#" class="socialIcon" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                            </svg>
                         </a>
-                        <li class="li-end">Rings</li>
-                        <li class="li-end">Necklaces</li>
-                        <li class="li-end">New Arrivals</li>
+                        <a href="#" class="socialIcon" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/918603632642" class="socialIcon" aria-label="WhatsApp" target="_blank">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footerCol">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="./allProduct.html">All Jewelry</a></li>
+                        <li><a href="./allProduct.html">Rings</a></li>
+                        <li><a href="./allProduct.html">Necklaces</a></li>
+                        <li><a href="./allProduct.html">Bangles</a></li>
+                        <li><a href="./allProduct.html">New Arrivals</a></li>
                     </ul>
                 </div>
-                <div>
+                <div class="footerCol">
+                    <h4>Company</h4>
                     <ul>
-                        <b>
-                            <li class="li-end">COMPANY</li>
-                        </b>
-                        <a href="./aboutPage.html">
-                            <li class="li-end">About Us</li>
-                        </a>
-                        <a href="./ContactPage.html">
-                            <li class="li-end">Contact</li>
-                        </a>
-                        <li class="li-end">FAQ</li>
-                        <li class="li-end">Shipping Info</li>
+                        <li><a href="./aboutPage.html">About Us</a></li>
+                        <li><a href="./ContactPage.html">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Blog</a></li>
                     </ul>
                 </div>
-                <div>
+                <div class="footerCol">
+                    <h4>Legal</h4>
                     <ul>
-                        <b>
-                            <li class="li-end">LEGAL</li>
-                        </b>
-                        <li class="li-end">Terms of Service</li>
-                        <li class="li-end">Privacy</li>
-                        <li class="li-end">Refund Policy</li>
-                        <li class="li-end">Shipping Policy</li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
                     </ul>
+                </div>
+            </div>
+            <div class="footerBottom">
+                <p class="footerCopy">&copy; 2026 <span>SJ Jewellery</span>. All rights reserved. Crafted with ♥</p>
+                <div class="footerPayments">
+                    <span class="payBadge">UPI</span>
+                    <span class="payBadge">Razorpay</span>
+                    <span class="payBadge">Net Banking</span>
+                    <span class="payBadge">COD</span>
                 </div>
             </div>
         </div>
     </footer>
-</body>
-<script src="./config.js"></script>
-<script>
 
-    async function getData() {
-        let res = await fetch(`${BASE_URL}/addProduct`)
-        let data = await res.json();
-        console.log(data);
-        showDate(data)
-    }
-    getData()
-    function showDate(data) {
-        let mainDivCard = document.getElementById("mainDivCard");
-        data.forEach((item) => {
-            let gst = (item.Rate * item.gst) / 100
-            let finalTotalAmount = Math.round(gst + item.Rate);
-            mainDivCard.innerHTML += `
-                 <div id="CardDiv">
-                <div id="imgdiv">
-                    <img id="ProductImage"
-                            src="${item.photo}">
-                    
-                </div>
-                <div id="titleName">
-                    <p id="titleP">${item.Productname}</p>
-                </div>
-                <div class="PriceAndBuyBtn">
-                <div class="AmountDiv">
-                    <p id="PriceP">₹${finalTotalAmount}</p>
-                    <small id="smallgstText">✓ GST Included</small>
-                    </div>
-                    <a href="./buyProduct.html?id=${item._id}">
-                        <p class="BuyBtn">BUY NOW</p>
-                    </a>
-                </div>
-            </div>
-                
-                `
-        })
+    <script src="./config.js"></script>
+    <script>
+        // Dynamic Account navigation link updating & auth check redirect
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        if (!isLoggedIn) {
+            window.location.href = "./login.html";
+        }
+        const navLoginBtn = document.getElementById("navLoginBtn");
+        if (navLoginBtn && isLoggedIn) {
+            navLoginBtn.href = "./profile.html";
+        }
 
-    }
-    // Single Peroduct
-    async function getSingleProduct() {
+        /* ───────────────────────────────────────
+           QUANTITY CONTROLS
+        ─────────────────────────────────────── */
+        let qty = 1;
+        document.getElementById("qtyMinus").addEventListener("click", () => {
+            if (qty > 1) { qty--; document.getElementById("qtyValue").textContent = qty; }
+        });
+        document.getElementById("qtyPlus").addEventListener("click", () => {
+            qty++;
+            document.getElementById("qtyValue").textContent = qty;
+        });
 
-        let parmas = new URLSearchParams(window.location.search);
-        let id = parmas.get("id");
-        console.log(id);
-        let res = await fetch(`${BASE_URL}/singleProduct/${id}`)
-        let data = await res.json()
-        // console.log(data);
-        let gst = (data.Rate * data.gst) / 100;
-        let finalTotalAmount = Math.round(gst + data.Rate)
-        console.log(finalTotalAmount);
+        /* ───────────────────────────────────────
+           TOAST
+        ─────────────────────────────────────── */
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            document.getElementById("toastMsg").textContent = msg;
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 3000);
+        }
 
-        document.querySelector(".product-name-p").innerText = data.Productname;
+        /* ───────────────────────────────────────
+           SINGLE PRODUCT
+        ─────────────────────────────────────── */
+        let currentProductData = null;
 
-        document.querySelector(".product-name-price").innerText = "₹" + finalTotalAmount;
-
-        document.querySelector(".product-name-dis").innerText = data.description;
-
-        document.getElementById("imgPhoto").src = data.photo;
-        let BuyBtn = document.querySelector(".buybtn");
-
-        BuyBtn.addEventListener("click", () => {
-
-            console.log(id);
-            window.location.href = `productDetails.html?id=${id}`
-
-        })
-        document.querySelector(".addtocardbtn").addEventListener("click", async () => {
+        async function getSingleProduct() {
             try {
-                const addtocardbtn = await fetch(`${BASE_URL}/Card`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        productName: data.Productname,
-                        rate: data.Rate,
-                        photo: data.photo,
-                        mobileNumber: "8603632642"
-                    })
+                const params = new URLSearchParams(window.location.search);
+                const id = params.get("id");
+                if (!id) return;
+
+                const res = await fetch(`${BASE_URL}/singleProduct/${id}`);
+                const data = await res.json();
+                currentProductData = data;
+
+                const gst = (data.Rate * data.gst) / 100;
+                const finalPrice = Math.round(gst + data.Rate);
+                const formatted = finalPrice.toLocaleString("en-IN");
+
+                // Update page
+                document.title = `${data.Productname} – SJ Jewellery`;
+                document.getElementById("productTitle").textContent = data.Productname;
+                document.getElementById("productPrice").textContent = `₹${formatted}`;
+                document.getElementById("productDesc").textContent = data.description || "A beautifully handcrafted piece from our exclusive collection, designed to last a lifetime.";
+                document.getElementById("imgPhoto").src = data.photo;
+                document.getElementById("imgPhoto").alt = data.Productname;
+                document.getElementById("breadcrumbCurrent").textContent = data.Productname;
+                if (data.Category) document.getElementById("productCategory").textContent = data.Category;
+
+                // Thumbnails (show same image 3× as placeholder)
+                const thumbRow = document.getElementById("thumbRow");
+                thumbRow.innerHTML = "";
+                for (let i = 0; i < 3; i++) {
+                    const t = document.createElement("div");
+                    t.className = "thumb" + (i === 0 ? " active" : "");
+                    t.innerHTML = `<img src="${data.photo}" alt="View ${i + 1}">`;
+                    t.addEventListener("click", () => {
+                        document.querySelectorAll(".thumb").forEach(el => el.classList.remove("active"));
+                        t.classList.add("active");
+                    });
+                    thumbRow.appendChild(t);
+                }
+
+                // Buy Now
+                document.getElementById("buyNowBtn").addEventListener("click", () => {
+                    window.location.href = `productDetails.html?id=${id}`;
                 });
-                const CardData = await addtocardbtn.json()
-                console.log(CardData);
-                console.log(data);
 
-                alert("Added To Card")
-                window.location.reload()
+                // Add to Cart
+                document.getElementById("addToCartBtn").addEventListener("click", async () => {
+                    try {
+                        const btn = document.getElementById("addToCartBtn");
+                        btn.disabled = true;
+                        btn.textContent = "Adding…";
+
+                        await fetch(`${BASE_URL}/Card`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                productName: data.Productname,
+                                rate: data.Rate,
+                                photo: data.photo,
+                                mobileNumber: "8603632642"
+                            })
+                        });
+
+                        showToast("Added to cart successfully!");
+                        btn.disabled = false;
+                        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px;height:16px"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg> Add to Cart`;
+                    } catch (err) {
+                        console.error(err);
+                        showToast("Something went wrong. Try again.");
+                    }
+                });
+
+            } catch (err) {
+                console.error(err);
+                document.getElementById("productTitle").textContent = "Product not found";
+                document.getElementById("productDesc").textContent = "We couldn't load this product. Please go back and try again.";
             }
-            catch (err) {
-                console.log(err);
+        }
 
+        /* ───────────────────────────────────────
+           RELATED PRODUCTS
+        ─────────────────────────────────────── */
+        async function getRelatedProducts() {
+            try {
+                const res = await fetch(`${BASE_URL}/addProduct`);
+                const data = await res.json();
+                const params = new URLSearchParams(window.location.search);
+                const currentId = params.get("id");
+
+                const grid = document.getElementById("mainDivCard");
+                grid.innerHTML = "";
+
+                // Exclude current product, show up to 4
+                const related = data.filter(p => p._id !== currentId).slice(0, 4);
+
+                if (!related.length) {
+                    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-muted);font-size:0.9rem;">No related products found.</div>`;
+                    return;
+                }
+
+                related.forEach((item, index) => {
+                    const gst = (item.Rate * item.gst) / 100;
+                    const finalPrice = Math.round(item.Rate + gst);
+                    const formatted = finalPrice.toLocaleString("en-IN");
+
+                    const card = document.createElement("div");
+                    card.className = "product-card";
+                    card.setAttribute("role", "listitem");
+                    card.style.animationDelay = `${index * 0.08}s`;
+                    card.style.opacity = "0";
+
+                    card.innerHTML = `
+                        <div class="card-img-wrap">
+                            <img class="product-img" src="${item.photo}" alt="${item.Productname}" loading="lazy">
+                            <div class="card-img-overlay"><span class="card-quick-view">Quick View</span></div>
+                            <span class="card-badge">✦ New</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-category">${item.Category || "Jewellery"}</div>
+                            <div class="card-title">${item.Productname}</div>
+                            <div class="card-footer-row">
+                                <div>
+                                    <div class="card-price">₹${formatted}</div>
+                                    <div class="card-gst">✓ GST Included</div>
+                                </div>
+                                <button class="BuyBtn" data-id="${item._id}" aria-label="Buy ${item.Productname}">
+                                    Buy Now
+                                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                // Events
+                grid.querySelectorAll(".BuyBtn").forEach(btn => {
+                    btn.addEventListener("click", (e) => {
+                        const id = e.currentTarget.dataset.id;
+                        window.location.href = `buyProduct.html?id=${id}`;
+                    });
+                });
+
+            } catch (err) {
+                console.error(err);
+                document.getElementById("mainDivCard").innerHTML = "";
             }
+        }
 
-        })
+        // Redirect navbar search to allProduct list
+        document.getElementById("searchInput").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
+            }
+        });
 
-    }
-    getSingleProduct()
+        getSingleProduct();
+        getRelatedProducts();
+    </script>
 
-
-</script>
-
+</body>
 
 </html>

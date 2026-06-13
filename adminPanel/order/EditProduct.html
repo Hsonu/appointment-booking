@@ -2,319 +2,357 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial;
-        }
-
-        /* Layout */
-        #main {
-            display: flex;
-        }
-
-        /* Sidebar */
-        #sidebar {
-            width: 220px;
-            height: 100vh;
-            background: #222d32;
-            color: white;
-        }
-
-        #sidebar h2 {
-            padding: 15px;
-            background: #1a2226;
-        }
-
-        #sidebar ul {
-            list-style: none;
-        }
-
-        #sidebar ul li {
-            padding: 12px 15px;
-            border-bottom: 1px solid #2c3b41;
-            cursor: pointer;
-        }
-
-        #sidebar ul li:hover {
-            background: #1e282c;
-        }
-
-        /* Links */
-        #sidebar a {
-            text-decoration: none;
-            color: white;
-        }
-
-        /* Content */
-        section {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .statusProduct {
-            display: flex;
-            justify-content: center;
-            /* gap: 6vw; */
-        }
-
-        .statusp,
-        .statusp1 {
-            border: 1px solid #ccc;
-            padding: 0.50vw;
-            background: #f9f9f9;
-            font-weight: bold;
-            width: 9vw;
-            display: flex;
-            justify-content: center;
-            font-size: 1vw;
-        }
-
-        .statusp1 {
-            display: flex;
-            font-size: 0.8vw;
-            font-weight: normal;
-            padding: 00.08vw;
-            justify-content: center;
-            align-items: center;
-            gap: 1.1vw;
-        }
-
-        .maindivOrder {
-            box-shadow: 0px 0px 2px 0px #93f02d;
-            width: auto;
-        }
-
-        #jpg1 {
-            height: 1.3vw;
-            width: auto;
-            background-color: black;
-            cursor: pointer;
-            border-radius: 2px;
-        }
-
-        .editForm {
-            display: flex;
-            position: absolute;
-            border: 1px solid black;
-            justify-content: center;
-            background: white;
-            flex-direction: column;
-            padding: 40px;
-            gap: 14px;
-            width: 50%;
-            height: auto;
-            align-items: center;
-            border-radius: 4px;
-            box-shadow: 0px 0px 3px 0px black;
-
-        }
-
-        input {
-            height: 5vh;
-            border-radius: 5px;
-            border: 1px solid black;
-            padding: 10px;
-            text-transform: uppercase;
-        }
-
-        button {
-            width: 13VW;
-            height: 5vh;
-            border-radius: 9px;
-            border: 1px solid black;
-            cursor: pointer;
-            box-shadow: 0px 0px 3px 0px;
-            background-color: #adbe884f;
-        }
-
-        button:hover {
-            background-color: #198754;
-            color: #f9f9f9;
-            box-shadow: 0px 0px 3px 0px black;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Products – SJ Jewellery Admin</title>
+  <link rel="stylesheet" href="./admin.css">
 </head>
 
 <body>
-    <div id="main">
-        <!-- Sidebar -->
-        <div id="sidebar">
-            <h2>Admin Panel</h2>
-            <ul>
-                <a href="../Dashboard.html">
-                    <li>Dashboard</li>
-                </a>
-                <a href="./Order.html">
-                    <li>Product</li>
-                </a>
-                <a href="status.html">
-                    <li>Status</li>
-                </a>
-            </ul>
+  <div id="adminLayout">
+
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div id="sidebarHeader">
+        <div id="sidebarLogo">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+        </div>
+        <div>
+          <div id="sidebarTitle">SJ Jewellery</div>
+          <div id="sidebarSubtitle">Admin Console</div>
+        </div>
+      </div>
+      <nav id="sidebarNav">
+        <div class="navSection">
+          <div class="navSectionLabel">Main</div>
+          <a class="navItem" href="../Dashboard.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+            </svg>
+            Dashboard
+          </a>
+          <a class="navItem active" href="./Order.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            Products
+          </a>
+          <a class="navItem" href="./status.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2" />
+            </svg>
+            Orders
+          </a>
+        </div>
+      </nav>
+      <div id="sidebarFooter">
+        <div class="sidebarUser">
+          <div class="sidebarAvatar">A</div>
+          <div>
+            <div class="sidebarUserName">Admin</div>
+            <div class="sidebarUserRole">Super Admin</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <div id="adminContent">
+      <header id="adminTopbar">
+        <div class="topbarLeft">
+          <span class="topbarPageTitle">Edit Products</span>
+          <span class="topbarBreadcrumb">Products / Manage</span>
+        </div>
+        <div class="topbarRight">
+          <a href="./addProduct.html" class="btn btn-primary btn-sm">+ Add New</a>
+        </div>
+      </header>
+
+      <main id="adminBody">
+        <!-- Toast -->
+        <div id="toast"
+          style="display:none;position:fixed;bottom:24px;right:24px;background:#10b981;color:#fff;padding:12px 20px;border-radius:10px;font-size:0.85rem;font-weight:600;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.2);">
+          ✓ Product updated successfully
         </div>
 
-        <!-- Content -->
-        <section>
-            <div class="maindivOrder">
-                <div class="statusProduct">
-                    <p class="statusp">Edit</p>
-                    <p class="statusp">Product Name</p>
-                    <p class="statusp">Category</p>
-                    <p class="statusp">Units</p>
-                    <p class="statusp">Rate</p>
-                    <p class="statusp">Amount</p>
-                    <!-- <p class="statusp">Description</p> -->
-                    <!-- <p class="statusp">Address</p> -->
-                    <p class="statusp">Order Date</p>
-                </div>
-                <div id="showDateTable">
-                    <!-- <p class="statusp1"> <img id="jpg1" src="https://img.icons8.com/?size=256w&id=114170&format=png">
-                    </p>
-                    <p class="statusp1">iPhone 17 Pro Max (Silver, 2 TB)</p>
-                    <p class="statusp1">Electronics</p>
-                    <p class="statusp1">1</p>
-                    <p class="statusp1">₹2,29,900</p>
-                    <p class="statusp1">₹2,29,900</p>
-                    <p class="statusp1">Order placed</p>
-                    <p class="statusp1">Address</p>
-                    <p class="statusp1">25/03/2026</p> -->
-                </div>
+        <div class="adminCard fadeIn">
+          <div class="adminCardHeader">
+            <div>
+              <div class="adminCardTitle">Product Catalogue</div>
+              <div class="adminCardSubtitle" id="productCountLabel">Loading products…</div>
             </div>
-        </section>
+          </div>
+          <div class="tableWrapper">
+            <table class="adminTable">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Product Name</th>
+                  <th>Category</th>
+                  <th>Units</th>
+                  <th>Rate</th>
+                  <th>Total</th>
+                  <th>Added</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="showDateTable">
+                <tr>
+                  <td colspan="8">
+                    <div class="emptyState">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                      </svg>
+                      <p>Loading products…</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
     </div>
-    <script src="./config.js"></script>
-    <script>
-        // let updateBtn = document.getElementById("updateBtn");
-        async function getData() {
-            let res = await fetch(`${BASE_URL}/addProduct`)
-            let data = await res.json()
-            console.log(data);
-            showDate(data)
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modalOverlay" id="editModal">
+    <div class="modalBox">
+      <div class="modalTitle">Edit Product</div>
+      <button class="modalClose" id="closeModal">✕</button>
+
+      <div class="alertBanner" id="modalAlert">
+        <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        <span id="modalAlertText"></span>
+      </div>
+
+      <input type="hidden" id="editId">
+      <div class="formGrid">
+        <div class="formGroup">
+          <label class="formLabel">Product Name *</label>
+          <input class="formInput" id="editName" placeholder="Product name">
+        </div>
+        <div class="formGroup">
+          <label class="formLabel">Category *</label>
+          <input class="formInput" id="editCategory" placeholder="Category">
+        </div>
+        <div class="formGroup">
+          <label class="formLabel">Units *</label>
+          <input class="formInput" id="editUnits" type="number" placeholder="Units" min="0">
+        </div>
+        <div class="formGroup">
+          <label class="formLabel">Rate (₹) *</label>
+          <input class="formInput" id="editRate" type="number" placeholder="Rate" min="0">
+        </div>
+      </div>
+      <div class="formGroup" style="margin-top:8px;">
+        <label class="formLabel">Description</label>
+        <textarea class="formTextarea" id="editDescription" placeholder="Product description…"></textarea>
+      </div>
+      <div class="btnGroup" style="margin-top:8px;">
+        <button class="btn btn-success" id="saveEditBtn">
+          <svg viewBox="0 0 24 24" fill="#fff">
+            <path
+              d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
+          </svg>
+          Save Changes
+        </button>
+        <button class="btn btn-ghost" id="cancelEditBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div class="modalOverlay" id="deleteModal">
+    <div class="modalBox" style="max-width:380px;text-align:center;">
+      <div
+        style="width:56px;height:56px;background:#fee2e2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+          <polyline points="3 6 5 6 21 6" />
+          <path d="M19 6l-1 14H6L5 6" />
+          <path d="M10 11v6M14 11v6" />
+          <path d="M9 6V4h6v2" />
+        </svg>
+      </div>
+      <div class="modalTitle" style="text-align:center;padding:0;margin-bottom:8px;">Delete Product?</div>
+      <p style="font-size:0.84rem;color:#64748b;margin-bottom:20px;">This action cannot be undone. The product will be
+        permanently removed.</p>
+      <div style="display:flex;gap:10px;justify-content:center;">
+        <button class="btn btn-danger" id="confirmDeleteBtn">Yes, Delete</button>
+        <button class="btn btn-ghost" id="cancelDeleteBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./config.js"></script>
+  <script>
+    let deleteTargetId = null;
+    let deleteTargetRow = null;
+
+    function showToast(msg = "Done!", color = "#10b981") {
+      const t = document.getElementById("toast");
+      t.textContent = "✓ " + msg;
+      t.style.background = color;
+      t.style.display = "block";
+      setTimeout(() => t.style.display = "none", 2500);
+    }
+
+    function showModalAlert(msg, type = "error") {
+      const a = document.getElementById("modalAlert");
+      document.getElementById("modalAlertText").textContent = msg;
+      a.className = `alertBanner ${type} show`;
+    }
+
+    async function getData() {
+      try {
+        const res = await fetch(`${BASE_URL}/addProduct`);
+        const data = await res.json();
+        renderProducts(data);
+      } catch (err) {
+        document.getElementById("showDateTable").innerHTML = `<tr><td colspan="8"><div class="emptyState"><p>Failed to load products. Check server.</p></div></td></tr>`;
+      }
+    }
+
+    function renderProducts(data) {
+      document.getElementById("productCountLabel").textContent = `${data.length} product${data.length !== 1 ? "s" : ""} in catalogue`;
+      const tbody = document.getElementById("showDateTable");
+      if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="8"><div class="emptyState"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg><p>No products found. Add your first product!</p></div></td></tr>`;
+        return;
+      }
+      tbody.innerHTML = data.map(item => {
+        const totalAmount = item.Units * item.Rate;
+        return `<tr data-id="${item._id}">
+        <td><img class="productThumb" src="${item.photo}" alt="${item.Productname}" onerror="this.src='https://via.placeholder.com/40'"></td>
+        <td class="colName" style="font-weight:600;color:#0f172a;">${item.Productname}</td>
+        <td class="colCategory">${item.Category}</td>
+        <td class="colUnits">${item.Units}</td>
+        <td class="colRate">₹${item.Rate}</td>
+        <td>₹${totalAmount}</td>
+        <td style="font-size:0.75rem;color:#64748b;">${new Date().toLocaleDateString("en-IN")}</td>
+        <td>
+          <div style="display:flex;gap:6px;">
+            <button class="iconBtn editBtn" data-id="${item._id}" title="Edit product">
+              <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="iconBtn del deleteBtn" data-id="${item._id}" title="Delete product">
+              <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+            </button>
+          </div>
+        </td>
+      </tr>`;
+      }).join("");
+
+      // Edit buttons
+      document.querySelectorAll(".editBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const row = btn.closest("tr");
+          const id = btn.dataset.id;
+          document.getElementById("editId").value = id;
+          document.getElementById("editName").value = row.querySelector(".colName").textContent;
+          document.getElementById("editCategory").value = row.querySelector(".colCategory").textContent;
+          document.getElementById("editUnits").value = row.querySelector(".colUnits").textContent;
+          document.getElementById("editRate").value = row.querySelector(".colRate").textContent.replace("₹", "");
+          document.getElementById("editDescription").value = "";
+          document.getElementById("modalAlert").classList.remove("show");
+          document.getElementById("editModal").classList.add("show");
+        });
+      });
+
+      // Delete buttons
+      document.querySelectorAll(".deleteBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          deleteTargetId = btn.dataset.id;
+          deleteTargetRow = btn.closest("tr");
+          document.getElementById("deleteModal").classList.add("show");
+        });
+      });
+    }
+
+    // Save edit
+    document.getElementById("saveEditBtn").addEventListener("click", async () => {
+      document.getElementById("modalAlert").classList.remove("show");
+      const id = document.getElementById("editId").value;
+      const newData = {
+        Productname: document.getElementById("editName").value.trim(),
+        Category: document.getElementById("editCategory").value.trim(),
+        Units: Number(document.getElementById("editUnits").value),
+        Rate: Number(document.getElementById("editRate").value),
+        description: document.getElementById("editDescription").value,
+      };
+      if (!newData.Productname || !newData.Category || !newData.Units || !newData.Rate) {
+        showModalAlert("Please fill in all required fields.");
+        return;
+      }
+      const saveBtn = document.getElementById("saveEditBtn");
+      saveBtn.textContent = "Saving…"; saveBtn.disabled = true;
+      try {
+        const res = await fetch(`${BASE_URL}/updateProduct/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newData)
+        });
+        if (!res.ok) throw new Error("Update failed");
+
+        // Update row cells in place
+        const row = document.querySelector(`tr[data-id="${id}"]`);
+        if (row) {
+          row.querySelector(".colName").textContent = newData.Productname;
+          row.querySelector(".colCategory").textContent = newData.Category;
+          row.querySelector(".colUnits").textContent = newData.Units;
+          row.querySelector(".colRate").textContent = `₹${newData.Rate}`;
         }
-        getData()
-        function showDate(data) {
-            let showDateTable = document.getElementById("showDateTable")
+        document.getElementById("editModal").classList.remove("show");
+        showToast("Product updated successfully!");
+      } catch (err) {
+        showModalAlert("Failed to update: " + err.message);
+      } finally {
+        saveBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="#fff"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg> Save Changes`;
+        saveBtn.disabled = false;
+      }
+    });
 
-            // showDateTable.innerHTML = ""
-            data.forEach((item) => {
-                let totalAmount = item.Units * item.Rate;
+    // Confirm delete
+    document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
+      const btn = document.getElementById("confirmDeleteBtn");
+      btn.textContent = "Deleting…"; btn.disabled = true;
+      try {
+        const res = await fetch(`${BASE_URL}/DelProduct/${deleteTargetId}`, { method: "DELETE" });
+        if (!res.ok) throw new Error("Delete failed");
+        deleteTargetRow?.remove();
+        document.getElementById("deleteModal").classList.remove("show");
+        showToast("Product deleted!");
+      } catch (err) {
+        showToast("Delete failed: " + err.message, "#ef4444");
+      } finally {
+        btn.textContent = "Yes, Delete"; btn.disabled = false;
+      }
+    });
 
-                showDateTable.innerHTML += `
-                <div class="statusProduct">
-                          <div id="DelEdit">
-                                 <p class="statusp1 "> <img id="jpg1" class="updateBtn" data-id="${item._id}" src="https://img.icons8.com/?size=256w&id=114170&format=png">
-                                    <img id="jpg1" data-id="${item._id}" class="deleteBtn" src="https://static.vecteezy.com/system/resources/previews/000/437/144/non_2x/delete-vector-icon.jpg">
-                              </p>
-                         </div>  
-                        <p class="statusp1 name">${item.Productname}</p>
-                        <p class="statusp1 category">${item.Category}</p>
-                        <p class="statusp1 units">${item.Units}</p>
-                        <p class="statusp1 rate">₹${item.Rate}</p>
-                        <p class="statusp1">₹${totalAmount}</p>
-                       <!--  <p class="statusp1 description">${item.description}</p> -->
-                       <!-- <p class="statusp1">${item.customerAdd}</p> -->
-                        <p class="statusp1">${new Date().toLocaleDateString()}</p>
-                  <!-- 🔥 Edit Form -->
-            <div class="editForm"  style="display:none">
-                <input class="editName" placeholder="Name">
-                <input class="editCategory" placeholder="Category">
-                <input class="editUnits" type="number" placeholder="Units">
-                <input class="editRate" type="number" placeholder="Rate">
-                <input class="adddescription" type="text" placeholder="description">
-                <button class="saveUpdate">Save</button>
-            </div>
-                    </div>`;
-            }
-            )
-        };
-        document.addEventListener("click", async (e) => {
+    // Close modals
+    ["closeModal", "cancelEditBtn"].forEach(id => {
+      document.getElementById(id).addEventListener("click", () => document.getElementById("editModal").classList.remove("show"));
+    });
+    ["cancelDeleteBtn"].forEach(id => {
+      document.getElementById(id).addEventListener("click", () => document.getElementById("deleteModal").classList.remove("show"));
+    });
+    // Click outside to close
+    ["editModal", "deleteModal"].forEach(id => {
+      document.getElementById(id).addEventListener("click", e => { if (e.target.id === id) e.target.classList.remove("show"); });
+    });
 
-            if (e.target.classList.contains("updateBtn")) {
-                let card = e.target.closest(".statusProduct");
-                let form = card.querySelector(".editForm");
-                // let id = card.querySelector(".updateBtn").dataset.id;
-                form.style.display = "flex";
-
-                form.querySelector(".editName").value = card.querySelector(".name").innerText;
-                form.querySelector(".editCategory").value = card.querySelector(".category").innerText;
-                form.querySelector(".editUnits").value = card.querySelector(".units").innerText;
-                form.querySelector(".editRate").value = card.querySelector(".rate").innerText;
-                form.querySelector(".adddescription").value = card.querySelector(".description").innerText
-                // card.querySelector("editForm").style.display = "none"
-                console.log(e.target.dataset.id);
-            }
-            //save and update btn
-
-            if (e.target.classList.contains("saveUpdate")) {
-                let card = e.target.closest(".statusProduct")
-                let id = card.querySelector(".updateBtn").dataset.id;
-
-                let newData = {
-                    Productname: card.querySelector(".editName").value,
-                    Category: card.querySelector(".editCategory").value,
-                    Units: Number(card.querySelector(".editUnits").value),
-                    Rate: Number(card.querySelector(".editRate").value),
-                    description: card.querySelector(".adddescription").value,
-                }
-
-                console.log(newData);
-
-
-                try {
-                    let updateRes = await fetch(`${BASE_URL}/updateProduct/${id}`, {
-                        // let id = e.target.dataset.id;
-
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(newData)
-                    });
-
-                    if (!updateRes.ok) throw new Error("Data Failed")
-                    let data = await updateRes.json();
-                    console.log(data);
-
-                    // UI updateRes
-                    card.querySelector(".name").innerText = newData.Productname;
-                    card.querySelector(".category").innerText = newData.Category;
-                    card.querySelector(".units").innerText = newData.Units;
-                    card.querySelector(".rate").innerText = newData.Rate;
-                    card.querySelector(".description").innerText = newData.description;
-
-                    card.querySelector(".editForm").style.display = "none"
-
-                } catch (err) {
-                    console.log(err);
-
-                }
-            }
-            if (e.target.classList.contains("deleteBtn")) {
-                let id = e.target.dataset.id;
-                if (!confirm("Delete This Product?")) return;
-                try {
-                    let delRes = await fetch(`${BASE_URL}/DelProduct/${id}`, {
-                        method: "DELETE"
-                    })
-                    console.log("Delete Btn", id);
-                    if (!delRes.ok) throw new Error("Delete Failed");
-                    let card = e.target.closest(".statusProduct")
-                    let data = await delRes.json()
-                    if (card) card.remove()
-                    console.log("data Delete SuccessFully", data);
-                }
-                catch (err) {
-                    console.log(err);
-                }
-            }
-        })
-    </script>
+    getData();
+  </script>
 </body>
+
 </html>

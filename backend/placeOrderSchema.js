@@ -37,6 +37,10 @@ const placeOrderDataSchema = new mongoose.Schema({
     paymentMethod: {
         type: String
     },
+    paymentType: {
+        type: String,
+        default: ""
+    },
     name: {
         type: String
     },

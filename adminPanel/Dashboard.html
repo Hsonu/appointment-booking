@@ -4,160 +4,378 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-
+    <title>Dashboard – SJ Jewellery Admin</title>
+    <meta name="description" content="Admin dashboard overview for SJ Jewellery.">
+    <link rel="stylesheet" href="./order/admin.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial;
-        }
-
-        /* Layout */
-        #main {
+        /* Chart placeholder bars */
+        .chartBar {
             display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            height: 120px;
+            padding-top: 8px;
         }
 
-        /* Sidebar */
-        #sidebar {
-            width: 220px;
-            height: 100vh;
-            background: #222d32;
-            color: white;
-        }
-
-        #sidebar h2 {
-            padding: 15px;
-            background: #1a2226;
-        }
-
-        #sidebar ul {
-            list-style: none;
-        }
-
-        #sidebar ul li {
-            padding: 12px 15px;
-            border-bottom: 1px solid #2c3b41;
-            cursor: pointer;
-        }
-
-        #sidebar ul li:hover {
-            background: #1e282c;
-        }
-
-        /* Top Navbar */
-        #topbar {
-            height: 50px;
-            background: #3c8dbc;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-        }
-
-        /* Content */
-        #content {
+        .bar {
             flex: 1;
+            border-radius: 6px 6px 0 0;
+            background: linear-gradient(180deg, #6366f1, #818cf8);
+            transition: opacity 0.2s;
+            cursor: pointer;
+            min-width: 24px;
         }
 
-        .cards {
+        .bar:hover {
+            opacity: 0.75;
+        }
+
+        .chartLabels {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chartLabels span {
+            flex: 1;
+            text-align: center;
+            font-size: 0.68rem;
+            color: #64748b;
+            min-width: 24px;
+        }
+
+        .recentTable tr td:first-child {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .quickLinks {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 6px;
         }
 
-        .card {
-            padding: 20px;
-            color: white;
-            border-radius: 5px;
-        }
-
-        .blue {
-            background: #00c0ef;
-        }
-
-        .green {
-            background: #00a65a;
-        }
-
-        .orange {
-            background: #f39c12;
-        }
-
-        .red {
-            background: #dd4b39;
-        }
-
-        .card h1 {
-            font-size: 22px;
-        }
-
-        .card p {
-            margin-top: 10px;
-        }
-
-        .atag {
+        .quickLink {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 20px 16px;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
             text-decoration: none;
-            color: #fff;
+            color: #334155;
+        }
+
+        .quickLink:hover {
+            background: #fff;
+            border-color: #6366f1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.12);
+        }
+
+        .quickLink svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .quickLink span {
+            font-size: 0.8rem;
+            font-weight: 600;
         }
     </style>
-
 </head>
 
 <body>
-
-    <div id="main">
+    <div id="adminLayout">
 
         <!-- Sidebar -->
-        <div id="sidebar">
-            <h2>Admin Panel</h2>
-            <ul>
-                <a class="atag" href="./Dashboard.html">
-                    <li>Dashboard</li>
-                </a>
-                <a class="atag" href="./order/Order.html">
-                    <li>Product</li>
-                </a>
-                <a class="atag" href="./order/status.html">
-                    <li>Status</li>
-                </a>
-            </ul>
-        </div>
-        <!-- Right Side -->
-        <div id="content">
-
-            <!-- Top Navbar -->
-            <div id="topbar">
-                <div>Dashboard</div>
-                <div>Admin</div>
-            </div>
-
-            <!-- Cards -->
-            <div class="cards">
-                <div class="card blue">
-                    <h1>1,410</h1>
-                    <p>Messages</p>
+        <aside id="sidebar">
+            <div id="sidebarHeader">
+                <div id="sidebarLogo">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
                 </div>
-
-                <div class="card green">
-                    <h1>410</h1>
-                    <p>Bookmarks</p>
-                </div>
-
-                <div class="card orange">
-                    <h1>13,648</h1>
-                    <p>Uploads</p>
-                </div>
-
-                <div class="card red">
-                    <h1>93,139</h1>
-                    <p>Likes</p>
+                <div>
+                    <div id="sidebarTitle">SJ Jewellery</div>
+                    <div id="sidebarSubtitle">Admin Console</div>
                 </div>
             </div>
+
+            <nav id="sidebarNav">
+                <div class="navSection">
+                    <div class="navSectionLabel">Main</div>
+                    <a class="navItem active" href="./Dashboard.html" id="nav-dashboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7" />
+                            <rect x="14" y="3" width="7" height="7" />
+                            <rect x="14" y="14" width="7" height="7" />
+                            <rect x="3" y="14" width="7" height="7" />
+                        </svg>
+                        Dashboard
+                    </a>
+                    <a class="navItem" href="./order/Order.html" id="nav-products">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
+                        Products
+                    </a>
+                    <a class="navItem" href="./order/status.html" id="nav-orders">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                        Orders
+                        <span class="navBadge">12</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div id="sidebarFooter">
+                <div class="sidebarUser">
+                    <div class="sidebarAvatar">A</div>
+                    <div>
+                        <div class="sidebarUserName">Admin</div>
+                        <div class="sidebarUserRole">Super Admin</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Content -->
+        <div id="adminContent">
+            <header id="adminTopbar">
+                <div class="topbarLeft">
+                    <span class="topbarPageTitle">Dashboard</span>
+                    <span class="topbarBreadcrumb">Home / Overview</span>
+                </div>
+                <div class="topbarRight">
+                    <div class="topbarIcon" title="Notifications">
+                        <svg viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" />
+                        </svg>
+                    </div>
+                    <div class="topbarUserChip">
+                        <div class="topbarAvatarSmall">A</div>
+                        <span class="topbarUsername">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <main id="adminBody">
+                <!-- Stats Row -->
+                <div class="statsGrid" style="margin-bottom:24px;">
+                    <div class="statCard fadeIn">
+                        <div class="statIcon indigo">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                            </svg>
+                        </div>
+                        <div class="statInfo">
+                            <div class="statValue" id="totalProducts">—</div>
+                            <div class="statLabel">Total Products</div>
+                            <div class="statChange">↑ Updated live</div>
+                        </div>
+                    </div>
+                    <div class="statCard fadeIn">
+                        <div class="statIcon green">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2" />
+                            </svg>
+                        </div>
+                        <div class="statInfo">
+                            <div class="statValue" id="totalOrders">—</div>
+                            <div class="statLabel">Total Orders</div>
+                            <div class="statChange">↑ Today</div>
+                        </div>
+                    </div>
+                    <div class="statCard fadeIn">
+                        <div class="statIcon amber">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                        </div>
+                        <div class="statInfo">
+                            <div class="statValue">₹ —</div>
+                            <div class="statLabel">Revenue</div>
+                            <div class="statChange">↑ This month</div>
+                        </div>
+                    </div>
+                    <div class="statCard fadeIn">
+                        <div class="statIcon red">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                        </div>
+                        <div class="statInfo">
+                            <div class="statValue" id="pendingOrders">—</div>
+                            <div class="statLabel">Pending Orders</div>
+                            <div class="statChange down">Needs attention</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px;">
+                    <!-- Sales Chart -->
+                    <div class="adminCard fadeIn">
+                        <div class="adminCardHeader">
+                            <div>
+                                <div class="adminCardTitle">Sales Overview</div>
+                                <div class="adminCardSubtitle">Last 7 days</div>
+                            </div>
+                        </div>
+                        <div class="adminCardBody">
+                            <div class="chartBar">
+                                <div class="bar" style="height:60%"></div>
+                                <div class="bar" style="height:75%"></div>
+                                <div class="bar" style="height:45%"></div>
+                                <div class="bar" style="height:90%"></div>
+                                <div class="bar" style="height:65%"></div>
+                                <div class="bar" style="height:80%"></div>
+                                <div class="bar" style="height:55%"></div>
+                            </div>
+                            <div class="chartLabels">
+                                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="adminCard fadeIn">
+                        <div class="adminCardHeader">
+                            <div>
+                                <div class="adminCardTitle">Quick Actions</div>
+                                <div class="adminCardSubtitle">Common tasks</div>
+                            </div>
+                        </div>
+                        <div class="adminCardBody">
+                            <div class="quickLinks">
+                                <a class="quickLink" href="./order/addProduct.html">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="12" y1="8" x2="12" y2="16" />
+                                        <line x1="8" y1="12" x2="16" y2="12" />
+                                    </svg>
+                                    <span>Add Product</span>
+                                </a>
+                                <a class="quickLink" href="./order/EditProduct.html">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                    </svg>
+                                    <span>Edit Product</span>
+                                </a>
+                                <a class="quickLink" href="./order/status.html">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                    </svg>
+                                    <span>View Orders</span>
+                                </a>
+                                <a class="quickLink" href="./order/Order.html">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+                                        <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                    </svg>
+                                    <span>Products</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders Preview -->
+                <div class="adminCard fadeIn">
+                    <div class="adminCardHeader">
+                        <div>
+                            <div class="adminCardTitle">Recent Orders</div>
+                            <div class="adminCardSubtitle">Latest customer purchases</div>
+                        </div>
+                        <a href="./order/status.html" class="btn btn-ghost btn-sm">View All</a>
+                    </div>
+                    <div class="tableWrapper">
+                        <table class="adminTable">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Product</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersBody">
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="emptyState">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="1.5">
+                                                <path
+                                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+                                                <rect x="9" y="3" width="6" height="4" rx="2" />
+                                            </svg>
+                                            <p>Loading orders…</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
+
+    <script src="./order/config.js"></script>
+    <script>
+        async function loadDashboardData() {
+            try {
+                const [productsRes, ordersRes] = await Promise.all([
+                    fetch(`${BASE_URL}/addProduct`),
+                    fetch(`${BASE_URL}/viwePlaceOrder`)
+                ]);
+                const products = await productsRes.json();
+                const orders = await ordersRes.json();
+
+                document.getElementById("totalProducts").textContent = products.length;
+                document.getElementById("totalOrders").textContent = orders.length;
+
+                const pending = orders.filter(o => o.orderStatus === "Order Confirmed" || o.orderStatus === "Order Packed").length;
+                document.getElementById("pendingOrders").textContent = pending;
+
+                const tbody = document.getElementById("recentOrdersBody");
+                const recent = orders.slice(-5).reverse();
+                if (recent.length === 0) return;
+                tbody.innerHTML = recent.map(o => `
+        <tr>
+          <td>${o.customerName || "—"}</td>
+          <td>${o.productName || "—"}</td>
+          <td>₹${o.withGstTotalAmount || o.totalAmount || 0}</td>
+          <td><span class="badge ${statusBadge(o.orderStatus)}">${o.orderStatus || "—"}</span></td>
+          <td>${new Date(o.orderDate).toLocaleDateString("en-IN")}</td>
+        </tr>
+      `).join("");
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function statusBadge(s) {
+            if (!s) return "badge-gray";
+            if (s === "Delivered") return "badge-success";
+            if (s === "Cancelled") return "badge-danger";
+            if (["In Transit", "Shipped", "Out For Delivery"].includes(s)) return "badge-info";
+            return "badge-warning";
+        }
+
+        loadDashboardData();
+    </script>
 </body>
+
 </html>

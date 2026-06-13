@@ -16,6 +16,7 @@ app.use(express.json());
 const path = require("path");
 app.use(express.static(path.join(__dirname, "../frontend")));
 app.use(express.static(path.join(__dirname, "../adminPanel")))
+app.use("/admin", express.static(path.join(__dirname, "../adminPanel/order")))
 const nodemailer = require("nodemailer");
 const fileUpload = require("express-fileupload");
 // fileUpload({

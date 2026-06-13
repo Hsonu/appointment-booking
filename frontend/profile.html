@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile – SJ Jewellery</title>
+    <meta name="description" content="View your SJ Jewellery account profile, shipping address, and tracking history.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ═══════════════════════════════════════════
+           DESIGN TOKENS
+        ═══════════════════════════════════════════ */
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #a8854e;
+            --gold-light: #e8d4a8;
+            --gold-bg: #fdf7ee;
+            --cream: #faf8f5;
+            --dark: #0d0d0f;
+            --dark-2: #1a1a1f;
+            --dark-3: #2a2a30;
+            --text-h: #0d0d0f;
+            --text-body: #3d3d45;
+            --text-muted: #7a7a85;
+            --border: #e8e0d5;
+            --white: #ffffff;
+            --header-h: 72px;
+            --radius: 14px;
+            --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ═══════════════════════════════════════════
+           RESET & BASE
+        ═══════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* ═══════════════════════════════════════════
+           WHATSAPP FLOAT
+        ═══════════════════════════════════════════ */
+        .whatsapp-float {
+            position: fixed;
+            width: 56px;
+            height: 56px;
+            bottom: 28px;
+            right: 28px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+            z-index: 9999;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
+        }
+
+        .whatsapp-float img {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* ═══════════════════════════════════════════
+           TOAST NOTIFICATION
+        ═══════════════════════════════════════════ */
+        #toast {
+            position: fixed;
+            bottom: 100px;
+            right: 28px;
+            background: var(--dark);
+            color: #fff;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+            z-index: 9998;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        #toast svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 2.5;
+            flex-shrink: 0;
+        }
+
+        /* ═══════════════════════════════════════════
+           HEADER / NAVBAR
+        ═══════════════════════════════════════════ */
+        #siteHeader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-h);
+            z-index: 1000;
+            background: rgba(13, 13, 15, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+            transition: background var(--transition), backdrop-filter var(--transition), border-color var(--transition);
+        }
+
+        #navInner {
+            max-width: 1300px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 0 24px;
+        }
+
+        #navLogo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        #navLogo .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.04em;
+        }
+
+        #navLogo .brand-tagline {
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            color: rgba(201, 169, 110, 0.6);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        #searchWrapper {
+            flex: 1;
+            max-width: 440px;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(201, 169, 110, 0.25);
+            border-radius: 999px;
+            padding: 9px 18px 9px 42px;
+            font-size: 0.88rem;
+            color: #fff;
+            outline: none;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #searchInput:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+        }
+
+        #searchIcon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            stroke: rgba(201, 169, 110, 0.6);
+            fill: none;
+            pointer-events: none;
+        }
+
+        .navActions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .navActionBtn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1.5px solid transparent;
+            transition: border-color var(--transition), background var(--transition);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .navActionBtn:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+            background: rgba(201, 169, 110, 0.06);
+            color: var(--gold);
+        }
+
+        .navActionBtn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .cartWrap {
+            position: relative;
+        }
+
+        .cartBadge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ═══════════════════════════════════════════
+           MAIN PROFILE CONTENT
+        ═══════════════════════════════════════════ */
+        main {
+            margin-top: calc(var(--header-h) + 40px);
+            flex: 1;
+            padding-bottom: 72px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .profile-title-wrap {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-title-wrap h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vh, 2.6rem);
+            font-weight: 700;
+            color: var(--text-h);
+        }
+
+        .profile-title-wrap p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        .goldLine {
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 2px;
+            margin: 12px auto 0;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        /* Dashboard Cards */
+        .profile-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+            margin-bottom: 24px;
+        }
+
+        .profile-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--text-h);
+            margin-bottom: 20px;
+            border-bottom: 1.5px solid var(--cream);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Profile avatar info */
+        .avatar-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .avatar-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(201, 169, 110, 0.3);
+        }
+
+        .avatar-meta h4 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-h);
+        }
+
+        .avatar-meta p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Details list */
+        .details-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .details-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .details-item span.label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+        }
+
+        .details-item span.val {
+            font-size: 0.9rem;
+            color: var(--text-body);
+            word-break: break-word;
+        }
+
+        /* Form styling */
+        #profileEditForm {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .form-group label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-body);
+        }
+
+        .inputcss {
+            background: #faf8f5;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 9px 12px;
+            font-size: 0.88rem;
+            color: var(--text-h);
+            outline: none;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        .inputcss:focus {
+            border-color: var(--gold);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.12);
+        }
+
+        small.error-msg {
+            color: #d93838;
+            font-size: 0.68rem;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        /* Button group profile */
+        .btn-profile-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn-profile-gold {
+            flex: 1;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.78rem;
+            padding: 11px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all var(--transition);
+        }
+
+        .btn-profile-gold:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(201, 169, 110, 0.25);
+        }
+
+        .btn-profile-outline {
+            flex: 1;
+            border: 1.5px solid var(--border);
+            background: #fff;
+            color: var(--text-body);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.78rem;
+            padding: 11px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all var(--transition);
+        }
+
+        .btn-profile-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold-dark);
+        }
+
+        .btn-logout {
+            width: 100%;
+            background: rgba(217, 56, 56, 0.05);
+            border: 1.5px solid rgba(217, 56, 56, 0.2);
+            color: #d93838;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.78rem;
+            padding: 11px;
+            border-radius: 8px;
+            transition: all var(--transition);
+            margin-top: 14px;
+        }
+
+        .btn-logout:hover {
+            background: #d93838;
+            color: #fff;
+            border-color: #d93838;
+            box-shadow: 0 4px 12px rgba(217, 56, 56, 0.15);
+        }
+
+        /* Placed Order Item card list */
+        .orders-list-profile {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .order-row-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .order-row-item:hover {
+            border-color: var(--gold);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            transform: translateY(-1px);
+        }
+
+        .order-row-img-wrap {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #f8f4ef;
+            border: 1px solid rgba(201, 169, 110, 0.1);
+            flex-shrink: 0;
+        }
+
+        .order-row-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .order-row-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .order-row-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-h);
+        }
+
+        .order-row-price {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-body);
+        }
+
+        .order-row-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #25d366;
+        }
+
+        .status-txt {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        /* Skeletons */
+        .skeleton-item {
+            display: flex;
+            gap: 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+        }
+
+        .skeleton-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+        }
+
+        .skeleton-lines {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .skeleton-line {
+            height: 10px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 5px;
+        }
+
+        .skeleton-line.l1 {
+            width: 60%;
+        }
+
+        .skeleton-line.l2 {
+            width: 30%;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Empty orders state */
+        .empty-orders {
+            text-align: center;
+            padding: 40px 16px;
+        }
+
+        .empty-orders svg {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 12px;
+            stroke: var(--gold);
+            opacity: 0.8;
+        }
+
+        .empty-orders h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--text-h);
+            margin-bottom: 4px;
+        }
+
+        .empty-orders p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        /* Sign in overlay */
+        .signin-overlay {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 24px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .signin-overlay svg {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 20px;
+            stroke: var(--gold);
+        }
+
+        .signin-overlay h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--text-h);
+            margin-bottom: 8px;
+        }
+
+        .signin-overlay p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER
+         ═══════════════════════════════════════════ */
+        #siteFooter {
+            background: var(--dark-2);
+            color: rgba(255, 255, 255, 0.75);
+            padding: 64px 24px 32px;
+            margin-top: 56px;
+        }
+
+        .footerInner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footerTop {
+            display: grid;
+            grid-template-columns: 1.8fr repeat(3, 1fr);
+            gap: 40px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footerLogo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .footerDesc {
+            font-size: 0.84rem;
+            line-height: 1.7;
+            opacity: 0.7;
+            max-width: 280px;
+            margin-bottom: 20px;
+        }
+
+        .footerSocial {
+            display: flex;
+            gap: 10px;
+        }
+
+        .socialIcon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--transition), border-color var(--transition);
+            cursor: pointer;
+        }
+
+        .socialIcon:hover {
+            background: rgba(201, 169, 110, 0.15);
+            border-color: var(--gold);
+        }
+
+        .socialIcon svg {
+            width: 16px;
+            height: 16px;
+            fill: rgba(255, 255, 255, 0.6);
+        }
+
+        .footerCol h4 {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .footerCol ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footerCol ul li a {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            transition: opacity var(--transition), color var(--transition);
+        }
+
+        .footerCol ul li a:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        .footerBottom {
+            padding-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footerCopy {
+            font-size: 0.78rem;
+            opacity: 0.45;
+        }
+
+        .footerCopy span {
+            color: var(--gold);
+            opacity: 1;
+        }
+
+        .footerPayments {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .payBadge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            opacity: 0.6;
+            letter-spacing: 0.05em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 900px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footerTop {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footerBrand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #navInner {
+                padding: 0 16px;
+                gap: 12px;
+            }
+
+            #searchWrapper {
+                display: none;
+            }
+
+            .footerTop {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .footerBottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
+        class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+
+    <!-- Custom Toast -->
+    <div id="toast" role="alert">
+        <svg viewBox="0 0 24 24">
+            <path d="M20 6L9 17l-5-5" />
+        </svg>
+        <span id="toastMsg"></span>
+    </div>
+
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header id="siteHeader" role="banner">
+        <div id="navInner">
+            <a id="navLogo" href="./index.html" aria-label="SJ Jewellery Home">
+                <span class="brand-name">SJ Jewellery</span>
+                <span class="brand-tagline">Crafted with love</span>
+            </a>
+
+            <!-- Search wrapper -->
+            <div id="searchWrapper" role="search">
+                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input id="searchInput" type="text" placeholder="Search rings, necklaces..." autocomplete="off"
+                    aria-label="Search items">
+            </div>
+
+            <nav class="navActions" aria-label="User actions">
+                <a href="./order.html" class="navActionBtn" id="navOrderBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Orders
+                </a>
+                <a href="./login.html" class="navActionBtn" id="navLoginBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    Account
+                </a>
+                <a href="./card.html" class="navActionBtn cartWrap" id="navCartBtn" aria-label="Shopping cart">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    Cart
+                    <span class="cartBadge" id="cartCount" aria-label="items in cart">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+    <main>
+        <div class="container">
+            <div class="profile-title-wrap">
+                <h1>My Account Profile</h1>
+                <p>Manage your address details and review recent transactions.</p>
+                <span class="goldLine"></span>
+            </div>
+
+            <!-- Login check overlay -->
+            <div class="signin-overlay" id="signInRequired" style="display: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="7" r="4" />
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                </svg>
+                <h3>Account Login Required</h3>
+                <p>Please log in with your phone number to access your profile settings and order tracking history.</p>
+                <a href="./login.html" class="btn-profile-gold"
+                    style="display: inline-block; width: auto; padding: 12px 36px;">Sign In Now</a>
+            </div>
+
+            <!-- Profile dashboard grid -->
+            <div class="profile-grid" id="profileGrid" style="display: none;">
+
+                <!-- Left: Profile Details -->
+                <div class="profile-left-col">
+                    <div class="profile-card">
+                        <h3>Member Profile</h3>
+
+                        <div class="avatar-section">
+                            <div class="avatar-circle" id="userAvatar">U</div>
+                            <div class="avatar-meta">
+                                <h4 id="profileNameDisplay">Premium Member</h4>
+                                <p id="profilePhoneDisplay">Mobile Account</p>
+                            </div>
+                        </div>
+
+                        <!-- Readonly details -->
+                        <div class="details-list" id="profileReadView">
+                            <div class="details-item">
+                                <span class="label">Contact Email</span>
+                                <span class="val" id="profileEmailDisplay">Not set</span>
+                            </div>
+                            <div class="details-item">
+                                <span class="label">Primary Delivery Address</span>
+                                <span class="val" id="profileAddressDisplay">No delivery address registered yet.</span>
+                            </div>
+
+                            <button type="button" class="btn-profile-outline" id="btnEditProfile"
+                                style="margin-top: 14px;">
+                                Edit Profile details
+                            </button>
+                        </div>
+
+                        <!-- Edit form fields -->
+                        <form id="profileEditForm" style="display: none;" novalidate>
+                            <div class="form-group">
+                                <label for="profileNameInput">Full Name</label>
+                                <input class="inputcss" id="profileNameInput" type="text"
+                                    placeholder="e.g. Rahul Verma">
+                                <small class="error-msg" id="profileNameError"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileEmailInput">Email Address</label>
+                                <input class="inputcss" id="profileEmailInput" type="email"
+                                    placeholder="e.g. rahul@domain.com">
+                                <small class="error-msg" id="profileEmailError"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileAddressInput">Street Address</label>
+                                <input class="inputcss" id="profileAddressInput" type="text"
+                                    placeholder="Flat, building name, lane">
+                                <small class="error-msg" id="profileAddressError"></small>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="profileCityInput">City</label>
+                                    <input class="inputcss" id="profileCityInput" type="text" placeholder="City">
+                                    <small class="error-msg" id="profileCityError"></small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profileDistrictInput">District</label>
+                                    <input class="inputcss" id="profileDistrictInput" type="text"
+                                        placeholder="District">
+                                    <small class="error-msg" id="profileDistrictError"></small>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="profileStateInput">State</label>
+                                    <input class="inputcss" id="profileStateInput" type="text" placeholder="State">
+                                    <small class="error-msg" id="profileStateError"></small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profilePincodeInput">Pincode</label>
+                                    <input class="inputcss" id="profilePincodeInput" type="number"
+                                        placeholder="PIN code">
+                                    <small class="error-msg" id="profilePincodeError"></small>
+                                </div>
+                            </div>
+
+                            <div class="btn-profile-row">
+                                <button type="button" class="btn-profile-outline" id="btnCancelEdit">Cancel</button>
+                                <button type="button" class="btn-profile-gold" id="btnSaveProfile">Save Changes</button>
+                            </div>
+                        </form>
+
+                        <button class="btn-logout" id="btnLogout">Sign Out of Account</button>
+                    </div>
+                </div>
+
+                <!-- Right: Recent Placed Orders -->
+                <div class="profile-right-col">
+                    <div class="profile-card">
+                        <h3>Recent Order Placements</h3>
+
+                        <div class="orders-list-profile" id="ordersContainer">
+                            <div class="skeleton-item">
+                                <div class="skeleton-img"></div>
+                                <div class="skeleton-lines">
+                                    <div class="skeleton-line l1"></div>
+                                    <div class="skeleton-line l2"></div>
+                                </div>
+                            </div>
+                            <div class="skeleton-item">
+                                <div class="skeleton-img"></div>
+                                <div class="skeleton-lines">
+                                    <div class="skeleton-line l1"></div>
+                                    <div class="skeleton-line l2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer id="siteFooter" role="contentinfo">
+        <div class="footerInner">
+            <div class="footerTop">
+                <div class="footerBrand">
+                    <div class="footerLogo">SJ Jewellery</div>
+                    <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary.
+                        Handcrafted with passion, delivered with pride.</p>
+                    <div class="footerSocial">
+                        <a href="#" class="socialIcon" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                            </svg>
+                        </a>
+                        <a href="#" class="socialIcon" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/918603632642" class="socialIcon" aria-label="WhatsApp" target="_blank">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footerCol">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="./allProduct.html">All Jewelry</a></li>
+                        <li><a href="./allProduct.html">Rings</a></li>
+                        <li><a href="./allProduct.html">Necklaces</a></li>
+                        <li><a href="./allProduct.html">Bangles</a></li>
+                        <li><a href="./allProduct.html">New Arrivals</a></li>
+                    </ul>
+                </div>
+
+                <div class="footerCol">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="./aboutPage.html">About Us</a></li>
+                        <li><a href="./ContactPage.html">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                    </ul>
+                </div>
+
+                <div class="footerCol">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footerBottom">
+                <p class="footerCopy">&copy; 2026 <span>SJ Jewellery</span>. All rights reserved. Crafted with ♥</p>
+                <div class="footerPayments">
+                    <span class="payBadge">UPI</span>
+                    <span class="payBadge">Razorpay</span>
+                    <span class="payBadge">Net Banking</span>
+                    <span class="payBadge">COD</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./config.js"></script>
+    <script>
+        /* ───────────────────────────────────────
+           TOAST NOTIFICATION
+        ─────────────────────────────────────── */
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            document.getElementById("toastMsg").textContent = msg;
+            t.classList.add("show");
+            setTimeout(() => t.classList.remove("show"), 3500);
+        }
+
+        /* ───────────────────────────────────────
+           AUTH CHECKS & LOADING STATE
+        ─────────────────────────────────────── */
+        const userNumber = localStorage.getItem("userNumber");
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        let userAddressRecord = null; // Will store address data if fetched
+
+        // Dynamic Account navigation link updating & click interception
+        const navLoginBtn = document.getElementById("navLoginBtn");
+        if (navLoginBtn && isLoggedIn) {
+            navLoginBtn.href = "./profile.html";
+        }
+
+        if (!isLoggedIn) {
+            const navOrderBtn = document.getElementById("navOrderBtn");
+            const navCartBtn = document.getElementById("navCartBtn");
+            if (navOrderBtn) {
+                navOrderBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    window.location.href = "./login.html";
+                });
+            }
+            if (navCartBtn) {
+                navCartBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    window.location.href = "./login.html";
+                });
+            }
+        }
+
+        // Fetch cart badge count
+        async function fetchCartCount() {
+            try {
+                const res = await fetch(`${BASE_URL}/Card`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById("cartCount").textContent = data.length;
+                }
+            } catch (err) {
+                console.error("Cart count fetch failed", err);
+            }
+        }
+        fetchCartCount();
+
+        // Redirect search query from header input
+        document.getElementById("searchInput").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
+            }
+        });
+
+        // Initialize dashboard loading
+        function initPage() {
+            if (!isLoggedIn || !userNumber) {
+                document.getElementById("signInRequired").style.display = "block";
+                return;
+            }
+
+            document.getElementById("profileGrid").style.display = "grid";
+            document.getElementById("profilePhoneDisplay").textContent = `+91 ${userNumber.substring(0, 5)}-${userNumber.substring(5)}`;
+
+            loadProfileDetails();
+            loadOrderHistory();
+        }
+
+        /* ───────────────────────────────────────
+           PROFILE/ADDRESS DETAILS API
+        ─────────────────────────────────────── */
+        async function loadProfileDetails() {
+            try {
+                const res = await fetch(`${BASE_URL}/address`);
+                if (!res.ok) throw new Error("Failed to load address database");
+
+                const addresses = await res.json();
+
+                // Find matching address by phone number
+                userAddressRecord = addresses.find(addr => addr.phone === userNumber);
+
+                if (userAddressRecord) {
+                    // Render details from Address Collection
+                    renderProfileInfo(userAddressRecord.name, userAddressRecord.email, userAddressRecord.address);
+                } else {
+                    // Fallback: Check Order History for address / name data
+                    const ordersRes = await fetch(`${BASE_URL}/viwePlaceOrder`);
+                    if (ordersRes.ok) {
+                        const orders = await ordersRes.json();
+                        const userOrders = orders.filter(ord => 
+                            String(ord.customerMobileNumber) === String(userNumber) || 
+                            String(ord.useNumber) === String(userNumber) || 
+                            String(ord.phone) === String(userNumber)
+                        );
+
+                        if (userOrders.length > 0) {
+                            const latestOrder = userOrders[userOrders.length - 1];
+                            const orderAddressObj = latestOrder.address || {
+                                fullAddress: latestOrder.customerAdd || "",
+                                city: "",
+                                district: "",
+                                state: "",
+                                pinCode: ""
+                            };
+                            
+                            if (!orderAddressObj.fullAddress && latestOrder.customerAdd) {
+                                orderAddressObj.fullAddress = latestOrder.customerAdd;
+                            }
+
+                            const orderName = latestOrder.name || latestOrder.customerName || "Premium Member";
+                            const orderEmail = latestOrder.email || "Not registered";
+
+                            renderProfileInfo(orderName, orderEmail, orderAddressObj);
+                            return;
+                        }
+                    }
+
+                    // If neither address nor order found -> New User State
+                    renderProfileInfo("Premium Member", "Not registered", null);
+                }
+            } catch (err) {
+                console.error("Profile fetch failed:", err);
+                showToast("⚠️ Connection issue checking profile records.");
+            }
+        }
+
+        function renderProfileInfo(name, email, addressObj) {
+            document.getElementById("profileNameDisplay").textContent = name;
+            document.getElementById("userAvatar").textContent = name.charAt(0).toUpperCase();
+            document.getElementById("profileEmailDisplay").textContent = email || "Not registered";
+
+            if (addressObj && (addressObj.fullAddress || addressObj.city || addressObj.state)) {
+                document.getElementById("profileAddressDisplay").textContent = 
+                    `${addressObj.fullAddress || ''}${addressObj.city ? ', ' + addressObj.city : ''}${addressObj.district ? ', ' + addressObj.district : ''}${addressObj.state ? ', ' + addressObj.state : ''}${addressObj.pinCode ? ' - ' + addressObj.pinCode : ''}`;
+
+                // Set form defaults
+                document.getElementById("profileNameInput").value = name || "";
+                document.getElementById("profileEmailInput").value = email || "";
+                document.getElementById("profileAddressInput").value = addressObj.fullAddress || "";
+                document.getElementById("profileCityInput").value = addressObj.city || "";
+                document.getElementById("profileDistrictInput").value = addressObj.district || "";
+                document.getElementById("profileStateInput").value = addressObj.state || "";
+                document.getElementById("profilePincodeInput").value = addressObj.pinCode || "";
+            } else {
+                document.getElementById("profileAddressDisplay").textContent = "No delivery address registered yet. Click 'Edit Profile details' to add.";
+                
+                // Clear inputs except phone/email defaults if they exist
+                document.getElementById("profileNameInput").value = name === "Premium Member" ? "" : name;
+                document.getElementById("profileEmailInput").value = email === "Not registered" ? "" : email;
+                document.getElementById("profileAddressInput").value = "";
+                document.getElementById("profileCityInput").value = "";
+                document.getElementById("profileDistrictInput").value = "";
+                document.getElementById("profileStateInput").value = "";
+                document.getElementById("profilePincodeInput").value = "";
+            }
+        }
+
+        // Edit triggers
+        document.getElementById("btnEditProfile").addEventListener("click", () => {
+            document.getElementById("profileReadView").style.display = "none";
+            document.getElementById("profileEditForm").style.display = "flex";
+        });
+
+        document.getElementById("btnCancelEdit").addEventListener("click", () => {
+            document.getElementById("profileEditForm").style.display = "none";
+            document.getElementById("profileReadView").style.display = "flex";
+        });
+
+        // Save profile address changes
+        document.getElementById("btnSaveProfile").addEventListener("click", async () => {
+            const name = document.getElementById("profileNameInput").value.trim();
+            const email = document.getElementById("profileEmailInput").value.trim();
+            const addressVal = document.getElementById("profileAddressInput").value.trim();
+            const city = document.getElementById("profileCityInput").value.trim();
+            const district = document.getElementById("profileDistrictInput").value.trim();
+            const state = document.getElementById("profileStateInput").value.trim();
+            const pincode = document.getElementById("profilePincodeInput").value.trim();
+
+            let hasError = false;
+
+            // Clear errors
+            document.getElementById("profileNameError").textContent = "";
+            document.getElementById("profileEmailError").textContent = "";
+            document.getElementById("profileAddressError").textContent = "";
+            document.getElementById("profileCityError").textContent = "";
+            document.getElementById("profileDistrictError").textContent = "";
+            document.getElementById("profileStateError").textContent = "";
+            document.getElementById("profilePincodeError").textContent = "";
+
+            if (!name) {
+                document.getElementById("profileNameError").textContent = "Full name is required";
+                hasError = true;
+            }
+            if (!addressVal) {
+                document.getElementById("profileAddressError").textContent = "Address is required";
+                hasError = true;
+            }
+            if (!city) {
+                document.getElementById("profileCityError").textContent = "City is required";
+                hasError = true;
+            }
+            if (!district) {
+                document.getElementById("profileDistrictError").textContent = "District is required";
+                hasError = true;
+            }
+            if (!state) {
+                document.getElementById("profileStateError").textContent = "State is required";
+                hasError = true;
+            }
+            if (!pincode) {
+                document.getElementById("profilePincodeError").textContent = "Pincode is required";
+                hasError = true;
+            }
+
+            if (hasError) {
+                showToast("⚠️ Please fill in all required fields.");
+                return;
+            }
+
+            const profilePayload = {
+                name,
+                phone: userNumber,
+                email,
+                address: {
+                    fullAddress: addressVal,
+                    city,
+                    district,
+                    state,
+                    pinCode: pincode
+                }
+            };
+
+            try {
+                showToast("Saving changes…");
+                let response;
+
+                if (userAddressRecord) {
+                    // Update existing profile address by phone number via PUT
+                    response = await fetch(`${BASE_URL}/address/${userNumber}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(profilePayload)
+                    });
+                } else {
+                    // Save new address via POST
+                    response = await fetch(`${BASE_URL}/address`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(profilePayload)
+                    });
+                }
+
+                if (response.ok) {
+                    showToast("✅ Profile details updated successfully!");
+                    document.getElementById("profileEditForm").style.display = "none";
+                    document.getElementById("profileReadView").style.display = "flex";
+                    await loadProfileDetails(); // Reload dynamic display UI
+                } else {
+                    throw new Error("Server rejected save payload");
+                }
+            } catch (err) {
+                console.error("Profile save error:", err);
+                showToast("❌ Could not save changes. Try again later.");
+            }
+        });
+
+        /* ───────────────────────────────────────
+           ORDER HISTORY LOADING
+        ─────────────────────────────────────── */
+        async function loadOrderHistory() {
+            try {
+                const res = await fetch(`${BASE_URL}/viwePlaceOrder`);
+                if (!res.ok) throw new Error("Orders API load failed");
+
+                const orders = await res.json();
+
+                // Filter orders belonging to this phone number
+                const userOrders = orders.filter(ord => ord.customerMobileNumber === userNumber || ord.useNumber === userNumber);
+
+                renderOrders(userOrders);
+            } catch (err) {
+                console.error("Order history fetch failed:", err);
+                document.getElementById("ordersContainer").innerHTML = `
+                    <div style="text-align:center; padding: 24px; color: var(--text-muted);">
+                        ⚠️ Connection issue loading recent transactions.
+                    </div>`;
+            }
+        }
+
+        function renderOrders(userOrders) {
+            const container = document.getElementById("ordersContainer");
+            container.innerHTML = "";
+
+            if (userOrders.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-orders">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                        <h4>No Placed Orders</h4>
+                        <p>When you purchase jewelry from our collections, they will show up here.</p>
+                        <a href="./allProduct.html" class="btn-profile-gold" style="display:inline-block; width: auto; padding: 8px 24px;">Browse Catalog</a>
+                    </div>`;
+                return;
+            }
+
+            // Show latest orders first
+            userOrders.reverse().forEach((ord, index) => {
+                const rateVal = Number(ord.withGstTotalAmount) || Number(ord.rate) || 0;
+                const priceFormatted = rateVal.toLocaleString("en-IN");
+
+                const row = document.createElement("div");
+                row.className = "order-row-item";
+                row.style.animationDelay = `${index * 0.08}s`;
+                row.setAttribute("data-id", ord._id);
+
+                row.innerHTML = `
+                    <div class="order-row-img-wrap">
+                        <img src="${ord.photo || 'https://via.placeholder.com/100'}" alt="${ord.productName}" loading="lazy">
+                    </div>
+                    <div class="order-row-details">
+                        <div class="order-row-name">${ord.productName}</div>
+                        <div class="order-row-price">₹${priceFormatted}</div>
+                        <div class="order-row-status">
+                            <span class="status-dot"></span>
+                            <span class="status-txt">${ord.orderStatus || 'Processing'}</span>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(row);
+            });
+
+            // Bind order delegation links
+            container.addEventListener("click", (e) => {
+                const card = e.target.closest(".order-row-item");
+                if (card) {
+                    const orderId = card.dataset.id;
+                    window.location.href = `./orderDetails.html?id=${orderId}`;
+                }
+            });
+        }
+
+        /* ───────────────────────────────────────
+           LOGOUT HANDLER
+        ─────────────────────────────────────── */
+        document.getElementById("btnLogout").addEventListener("click", () => {
+            showToast("👋 Signing out. Redirecting…");
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("userNumber");
+
+            setTimeout(() => {
+                window.location.href = "./index.html";
+            }, 1200);
+        });
+
+        // Initialize loading
+        initPage();
+    </script>
+</body>
+
+</html>

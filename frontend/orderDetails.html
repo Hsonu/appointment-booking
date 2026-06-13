@@ -4,338 +4,642 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<style>
-    body {
-        /* background-color: rgb(2 2 2 / 3%); */
-        background-color: rgb(2 2 2 / 9%);
-    }
+    <title>Order Details – SJ Jewellery</title>
+    <meta name="description" content="View your order receipt, tracking details, and purchase summary at SJ Jewellery.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    .cardDetaislDiv {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        width: 90%;
-        background-color: #fff;
-        padding: 12px;
-        border-radius: 5px;
-    }
-
-    .MainDivDesing {
-
-        display: flex;
-        justify-content: center;
-        /* width: 90%; */
-
-    }
-
-    .DetailsImgShow {
-        height: 15vh;
-    }
-
-    .DetailsIMGmainDiv {
-        display: flex;
-        padding: 10px;
-        background-color: #fff;
-    }
-
-    .DetailsProducatName {
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 1vh;
-    }
-
-    .TwoDivMarger {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        width: 80%;
-    }
-
-    .DetailsBuyBtn {
-        display: flex;
-        justify-content: end;
-    }
-
-    .BuyBtn {
-        transition: 0.3s;
-        background-color: pink;
-
-    }
-
-    .BuyBtn:hover {
-        background-color: rgba(255, 62, 94, 0.74);
-    }
-
-    .paymentMethodDiv {
-        font-size: 1.9vw;
-        padding: 1vh;
-
-    }
-
-    .CashOnDelivery {
-        /* margin-left: 2vw;
-            margin-top: 3vh; */
-        padding: 2vh;
-        padding-left: 1vw;
-        cursor: pointer;
-        /* background-color: #00000014; */
-        border-radius: 3px;
-
-    }
-
-    #showDataDivv {
-        display: flex;
-        gap: 1vh;
-    }
-
-
-    .ProductNamesummary {
-        font-size: clamp(10px, 3vh, 30px);
-        font-weight: 400;
-
-    }
-
-    #CartBtn {
-        min-width: 30px;
-        /* width: 3vw; */
-        max-width: 3vw;
-        height: auto;
-        cursor: pointer;
-    }
-
-    .paymentMethodDiv {
-        font-size: clamp(10px, 1.8vh, 30px);
-    }
-
-    .DetailsImgShow {
-        height: 9vh;
-    }
-
-    #gstDIv {
-        display: flex;
-        gap: 0.2vw;
-    }
-
-    .PriceSummaryDivLast {
-        display: flex;
-        justify-content: space-between;
-        gap: 1vw;
-    }
-
-    #PriceSummaryDiv {
-        display: flex;
-        flex-direction: column;
-        gap: 0.2vw;
-    }
-
-    #DotBorder {
-        border-top: dotted 2px;
-        padding: 3px;
-
-        font-size: clamp(12px, 1.2vw, 40px)
-    }
-
-    @media only screen and (max-width:768px) {
-
-        #customerNamePlaceOrder,
-        #customeradd,
-        #customerMobileNumber,
-        .ProductNamesummary {
-            font-size: clamp(10px, 1.5vh, 30px);
-
+    <style>
+        /* ═══════════════════════════════════════════
+           DESIGN TOKENS
+        ═══════════════════════════════════════════ */
+        :root {
+            --gold:        #c9a96e;
+            --gold-dark:   #a8854e;
+            --gold-light:  #e8d4a8;
+            --gold-bg:     #fdf7ee;
+            --cream:       #faf8f5;
+            --dark:        #0d0d0f;
+            --dark-2:      #1a1a1f;
+            --dark-3:      #2a2a30;
+            --text-h:      #0d0d0f;
+            --text-body:   #3d3d45;
+            --text-muted:  #7a7a85;
+            --border:      #e8e0d5;
+            --white:       #ffffff;
+            --header-h:    72px;
+            --radius:      14px;
+            --transition:  0.28s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .paymentMethodDiv {
-            font-size: clamp(10px, 1.8vh, 30px);
+        /* ═══════════════════════════════════════════
+           RESET & BASE
+        ═══════════════════════════════════════════ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        a { text-decoration: none; color: inherit; }
+        p { margin: 0; }
+        ul { list-style: none; }
+        img { display: block; max-width: 100%; }
+        button { font-family: inherit; cursor: pointer; border: none; }
+
+        /* ═══════════════════════════════════════════
+           WHATSAPP FLOAT
+        ═══════════════════════════════════════════ */
+        .whatsapp-float {
+            position: fixed;
+            width: 56px; height: 56px;
+            bottom: 28px; right: 28px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+            z-index: 9999;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
+        }
+        .whatsapp-float img { width: 32px; height: 32px; }
+
+        /* ═══════════════════════════════════════════
+           HEADER / NAVBAR
+        ═══════════════════════════════════════════ */
+        #siteHeader {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            z-index: 1000;
+            background: rgba(13, 13, 15, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+            transition: background var(--transition), backdrop-filter var(--transition), border-color var(--transition);
         }
 
-        .DetailsImgShow {
-            height: 9vh;
+        #navInner {
+            max-width: 1300px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 0 24px;
         }
 
-        .CashOnDelivery {
-            padding: 1vh;
-            padding-left: 1vw;
+        #navLogo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        #navLogo .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.04em;
+        }
+        #navLogo .brand-tagline {
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            color: rgba(201, 169, 110, 0.6);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        #searchWrapper {
+            flex: 1;
+            max-width: 440px;
+            position: relative;
+        }
+        #searchInput {
+            width: 100%;
+            background: rgba(255,255,255,0.08);
+            border: 1.5px solid rgba(201, 169, 110, 0.25);
+            border-radius: 999px;
+            padding: 9px 18px 9px 42px;
+            font-size: 0.88rem;
+            color: #fff;
+            outline: none;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+        #searchInput::placeholder { color: rgba(255,255,255,0.4); }
+        #searchInput:focus {
+            border-color: var(--gold);
+            background: rgba(255,255,255,0.12);
+            box-shadow: 0 0 0 3px rgba(201,169,110,0.15);
+        }
+        #searchIcon {
+            position: absolute;
+            left: 14px; top: 50%;
+            transform: translateY(-50%);
+            width: 18px; height: 18px;
+            stroke: rgba(201,169,110,0.6);
+            fill: none;
+            pointer-events: none;
+        }
+
+        .navActions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .navActionBtn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1.5px solid transparent;
+            transition: border-color var(--transition), background var(--transition);
             cursor: pointer;
-            /* background-color: #00000014; */
-            border-radius: 3px;
-            font-size: clamp(10px, 1.5vh, 40px);
+            color: rgba(255,255,255,0.8);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .navActionBtn:hover {
+            border-color: rgba(201,169,110,0.4);
+            background: rgba(201,169,110,0.06);
+            color: var(--gold);
+        }
+        .navActionBtn svg {
+            width: 20px; height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
         }
 
-    }
+        .cartWrap { position: relative; }
+        .cartBadge {
+            position: absolute;
+            top: 4px; right: 8px;
+            width: 17px; height: 17px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+        }
 
-    footer {
-        margin-top: auto;
-    }
-</style>
+        /* ═══════════════════════════════════════════
+           MAIN SECTION
+        ═══════════════════════════════════════════ */
+        main {
+            margin-top: calc(var(--header-h) + 40px);
+            flex: 1;
+            padding-bottom: 72px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .details-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 32px;
+            border-bottom: 1.5px solid var(--border);
+            padding-bottom: 24px;
+        }
+        .details-header-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+            font-weight: 700;
+            color: var(--text-h);
+        }
+        .details-header-title p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            background: #fff;
+            color: var(--text-body);
+            transition: all var(--transition);
+        }
+        .btn-back:hover {
+            border-color: var(--gold);
+            color: var(--gold-dark);
+            transform: translateX(-2px);
+        }
+        .btn-back svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; }
+
+        /* Detail Cards */
+        .detail-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+        }
+        .detail-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--text-h);
+            margin-bottom: 20px;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Order item row styling */
+        .order-product-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding-bottom: 12px;
+        }
+
+        .product-img-wrap {
+            width: 130px;
+            height: 130px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8f4ef;
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            flex-shrink: 0;
+        }
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-desc-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .ProductNamesummary {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-h);
+        }
+        .ProductNameDetails {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .productSummaryrate {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--gold-dark);
+            margin-top: 4px;
+        }
+
+        /* Status Banner */
+        .status-banner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gold-bg);
+            border: 1px solid rgba(201, 169, 110, 0.25);
+            padding: 14px 20px;
+            border-radius: 10px;
+            margin-top: 18px;
+        }
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #25D366;
+            box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.2);
+            animation: pulse 1.8s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0px rgba(37, 211, 102, 0.3); }
+            70% { box-shadow: 0 0 0 6px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0px rgba(37, 211, 102, 0); }
+        }
+        .status-text {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-h);
+        }
+        .productSummarystatus {
+            font-weight: 700;
+            color: var(--gold-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Columns inside info card */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .info-col h4 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 12px;
+        }
+        .info-col p {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+        .info-col p strong {
+            color: var(--text-h);
+        }
+
+        /* Invoice table breakdown */
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+        .invoice-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 0.88rem;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+        }
+        .invoice-row.total {
+            border-top: 2px solid var(--border);
+            border-bottom: none;
+            padding-top: 14px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-h);
+        }
+
+        /* Loading Skeletons */
+        .skeleton-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 30px;
+            border: 1px solid var(--border);
+            margin-bottom: 28px;
+        }
+        .skeleton-title { height: 18px; width: 30%; background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%); background-size: 200%; animation: shimmer 1.4s infinite; border-radius: 4px; margin-bottom: 24px; }
+        .skeleton-img-box { width: 130px; height: 130px; border-radius: 12px; background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%); background-size: 200%; animation: shimmer 1.4s infinite; }
+        .skeleton-line { height: 12px; background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%); background-size: 200%; animation: shimmer 1.4s infinite; border-radius: 6px; margin-bottom: 10px; }
+        .skeleton-line.l1 { width: 55%; }
+        .skeleton-line.l2 { width: 80%; }
+        .skeleton-line.l3 { width: 35%; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .info-grid { grid-template-columns: 1fr; gap: 24px; }
+            .order-product-row { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .product-img-wrap { width: 100%; height: 200px; }
+        }
+
+        @media (max-width: 640px) {
+            #navInner { padding: 0 16px; gap: 12px; }
+            #searchWrapper { display: none; }
+            .details-header { flex-direction: column; align-items: flex-start; }
+            .btn-back { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
 
 <body>
+
+    <!-- WhatsApp Float -->
     <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
-        class="whatsapp-float" target="_blank">
+        class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
-    <header>
-        <div>
-            <div id="headerMainDiv">
-                <div>
-                    <a href="./index.html"> <img id="MainLogo"
-                            src="https://cdn-icons-png.freepik.com/512/5278/5278590.png"> </a>
-                </div>
-                <div>
-                    <input id="searchInput" placeholder="Search" type="text">
-                </div>
 
-                <div id="LoginBtnClickF">
-                    <!-- <p class="Plogin">Login/Sign up</p>
-                    <p class="Plogin">My Account</p> -->
-                    <span>
-                        <a href="./card.html"> <svg class="v_7pKG" viewBox="0 0 16 16">
-                                <path
-                                    d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86"
-                                    fill="#fff"></path>
-                            </svg></a>
-                    </span>
-                </div>
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header id="siteHeader" role="banner">
+        <div id="navInner">
+            <a id="navLogo" href="./index.html" aria-label="SJ Jewellery Home">
+                <span class="brand-name">SJ Jewellery</span>
+                <span class="brand-tagline">Crafted with love</span>
+            </a>
 
-                <div>
-                    <a href="./order.html">
-                        <p class="ChackOrder">Order</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="./login.html">
-                        <img id="CartBtn" src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png"></a>
-                </div>
+            <!-- Search wrapper -->
+            <div id="searchWrapper" role="search">
+                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input id="searchInput" type="text" placeholder="Search rings, necklaces..." autocomplete="off" aria-label="Search items">
             </div>
+
+            <nav class="navActions" aria-label="User actions">
+                <a href="./order.html" class="navActionBtn" id="navOrderBtn">
+                    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                    Orders
+                </a>
+                <a href="./login.html" class="navActionBtn" id="navLoginBtn">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Account
+                </a>
+                <a href="./card.html" class="navActionBtn cartWrap" id="navCartBtn" aria-label="Shopping cart">
+                    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                    Cart
+                    <span class="cartBadge" id="cartCount" aria-label="items in cart">0</span>
+                </a>
+            </nav>
         </div>
     </header>
-    <section>
-        <div class="MainDivDesing" style="padding: 10px;">
-            <div class="TwoDivMarger">
-                <div class="cardDetaislDiv" id="showDataDiv">
-                    <div class="DetailsIMGmainDiv">
-                        <div>
-                            <img class="DetailsImgShow"
-                                src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
-                        </div>
-                        <div class="DetailsProducatName">
-                            <p class="ProductNamesummary">The Nomi Bridal Ring Set</p>
-                            <p class="ProductNameDetails">The Nomi Bridal Ring Set</p>
-                            <p class="productSummaryrate">₹ 1,34,725</p>
-                            <p class="productSummarystatus">₹ 1,34,725</p>
 
-                        </div>
-
-                    </div>
-                    <!-- Address -->
-                    <div class="DetailsProducatName">
-                        <!-- <p>Delivery Address</p> -->
-                        <p class="ProductNamesummary">Delivery details</p>
-                        <p class="ProductNameDetails" id="DeliveryAddress">The Nomi Bridal Ring Set</p>
-                        <p class="productSummaryrate" id="paymentMethod">₹ 1,34,725</p>
-                        <p class="productSummarystatus" id="DeliveryCutomerName">₹ 1,34,725</p>
-                        <p class="productSummarystatus" id="DeliveryCutomerPhoneNumber">₹ 1,34,725</p>
-                    </div>
-                    <div class="DetailsBuyBtn">
-                        <div id="PriceSummaryDiv">
-                            <div class="PriceSummaryDivLast">
-                                <p>Price</p>
-                                <p id="ProductPrice">ProductPrice :-2</p>
-                            </div>
-                            <div class="PriceSummaryDivLast">
-                                <div id="gstDIv">
-                                    <p id="gstName">GST</p>
-                                    <p id="GSTSamble">GST</p>
-                                    <p id="GstP">%</p>
-                                </div>
-                                <p id="PeroductGST">GST:-3</p>
-                            </div>
-                            <div class="PriceSummaryDivLast" id="DotBorder">
-                                <p style="font-weight: bold;">Total Amount</p>
-                                <p id="totalAmount" style="font-weight: bold;">1</p>
-                                <!-- <button type="button" class="BuyBtn">Continue</button> -->
-                            </div>
-                        </div>
-                    </div>
+    <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+    <main>
+        <div class="container">
+            <div class="details-header">
+                <div class="details-header-title">
+                    <h1>Order Overview</h1>
+                    <p id="invoiceNumber">Loading transaction data…</p>
                 </div>
-
+                <a href="./order.html" class="btn-back">
+                    <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Back to Orders
+                </a>
             </div>
-        </div>
-    </section>
-    <footer>
-        <div id="d-img">
-            <div id="main-li">
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">SHOP</li>
-                        </b>
-                        <a href="./allProduct.html">
-                            <li class="li-end">All Jewelry</li>
-                        </a>
-                        <li class="li-end">Rings</li>
-                        <li class="li-end">Necklaces</li>
-                        <li class="li-end">New Arrivals</li>
-                    </ul>
+
+            <!-- Card 1: Product overview -->
+            <div class="detail-card">
+                <h3>Purchased Jewel</h3>
+                
+                <div class="order-product-row" id="productBlock">
+                    <!-- Skeleton -->
+                    <div class="skeleton-img-box"></div>
+                    <div style="flex:1"><div class="skeleton-line l1"></div><div class="skeleton-line l2"></div><div class="skeleton-line l3"></div></div>
                 </div>
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">COMPANY</li>
-                        </b>
-                        <a href="./aboutPage.html">
-                            <li class="li-end">About Us</li>
-                        </a>
-                        <a href="./ContactPage.html">
-                            <li class="li-end">Contact</li>
-                        </a>
-                        <li class="li-end">FAQ</li>
-                        <li class="li-end">Shipping Info</li>
-                    </ul>
+
+                <div class="status-banner">
+                    <div class="status-dot"></div>
+                    <div class="status-text">
+                        Delivery Status: <span class="productSummarystatus" id="orderStatusLabel">Pending</span>
+                    </div>
                 </div>
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">LEGAL</li>
-                        </b>
-                        <li class="li-end">Terms of Service</li>
-                        <li class="li-end">Privacy</li>
-                        <li class="li-end">Refund Policy</li>
-                        <li class="li-end">Shipping Policy</li>
-                    </ul>
+            </div>
+
+            <!-- Card 2: Details grid -->
+            <div class="detail-card">
+                <h3>Delivery & Payment Details</h3>
+                
+                <div class="info-grid">
+                    <!-- Column 1: Address details -->
+                    <div class="info-col">
+                        <h4>Shipping Address</h4>
+                        <p><strong id="DeliveryCutomerName">Loading Name…</strong></p>
+                        <p id="DeliveryCutomerPhoneNumber">Loading Phone…</p>
+                        <p id="DeliveryAddress" style="margin-top: 10px; color: var(--text-body); font-weight: 500;">Loading Address…</p>
+                    </div>
+
+                    <!-- Column 2: Payment Receipt -->
+                    <div class="info-col">
+                        <h4>Receipt Invoice</h4>
+                        <p>Method: <strong id="paymentMethod">Online Payment</strong></p>
+                        
+                        <div class="invoice-table">
+                            <div class="invoice-row">
+                                <span>Subtotal</span>
+                                <span>₹<span id="ProductPrice">0.00</span></span>
+                            </div>
+                            <div class="invoice-row">
+                                <span id="gstName">GST (<span id="GSTSamble">0</span>%)</span>
+                                <span>₹<span id="PeroductGST">0.00</span></span>
+                            </div>
+                            <div class="invoice-row total">
+                                <span>Total Amount Paid</span>
+                                <span>₹<span id="totalAmount">0.00</span></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </footer>
+    </main>
+
+    <!-- Scripts -->
     <script src="./config.js"></script>
     <script>
+        // Dynamic Account navigation link updating & auth check redirect
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        if (!isLoggedIn) {
+            window.location.href = "./login.html";
+        }
+        const navLoginBtn = document.getElementById("navLoginBtn");
+        if (navLoginBtn && isLoggedIn) {
+            navLoginBtn.href = "./profile.html";
+        }
+
+        // Fetch cart badge count
+        async function fetchCartCount() {
+            try {
+                const res = await fetch(`${BASE_URL}/Card`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById("cartCount").textContent = data.length;
+                }
+            } catch (err) {
+                console.error("Cart count fetch failed", err);
+            }
+        }
+        fetchCartCount();
+
+        // Redirect navbar search to allProduct list
+        document.getElementById("searchInput").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
+            }
+        });
+
+        // Load Single Placed Order details
         async function orderstatuse() {
             let parmas = new URLSearchParams(window.location.search)
             let id = parmas.get("id");
-            console.log(id);
-            let res = await fetch(`${BASE_URL}/statusSingleData/${id}`);
-            let data = await res.json()
-            console.log(data);
+            if (!id) {
+                document.getElementById("invoiceNumber").textContent = "❌ Order ID missing";
+                return;
+            }
 
-            document.querySelector(".ProductNamesummary").innerHTML = data.productName;
-            document.querySelector(".ProductNameDetails").innerHTML = data.description;
-            document.querySelector(".productSummaryrate").innerHTML = `₹${data.withGstTotalAmount}`
-            document.querySelector(".productSummarystatus").innerHTML = data.orderStatus;
-            document.querySelector(".DetailsImgShow").src = data.photo;
-            document.querySelector("#DeliveryAddress").innerHTML = "Address:- " + data.customerAdd;
-            document.querySelector("#paymentMethod").innerHTML = "Payment Type:- " + data.paymentMethod;
-            document.querySelector("#DeliveryCutomerName").innerHTML = "Name:- " + data.name;
-            document.querySelector("#DeliveryCutomerPhoneNumber").innerHTML = "Phone:- " + data.phone;
-            document.querySelector("#GSTSamble").innerHTML = data.gst;
-            document.querySelector("#totalAmount").innerHTML = data.withGstTotalAmount;
-            document.querySelector("#ProductPrice").innerHTML = data.totalAmount;
-            document.querySelector("#PeroductGST").innerHTML = data.gstAmount;
+            try {
+                let res = await fetch(`${BASE_URL}/statusSingleData/${id}`);
+                if (!res.ok) throw new Error("API lookup failed");
+
+                let data = await res.json();
+                console.log("Order Detail Data:", data);
+
+                document.getElementById("invoiceNumber").textContent = `ID: #${id}`;
+
+                // Update Purchased Product Layout
+                const finalWithGstPrice = (data.withGstTotalAmount || 0).toLocaleString("en-IN");
+                const productBlock = document.getElementById("productBlock");
+                productBlock.innerHTML = `
+                    <div class="product-img-wrap">
+                        <img class="product-img" src="${data.photo || 'https://via.placeholder.com/150'}" alt="${data.productName}" loading="lazy">
+                    </div>
+                    <div class="product-desc-box">
+                        <div class="ProductNamesummary">${data.productName}</div>
+                        <p class="ProductNameDetails">${data.description || 'Exclusive Handcrafted collection item.'}</p>
+                        <div class="productSummaryrate">₹${finalWithGstPrice}</div>
+                    </div>`;
+
+                // Update Badges & Status
+                document.getElementById("orderStatusLabel").textContent = data.orderStatus || "Placed";
+
+                // Delivery information
+                document.getElementById("DeliveryCutomerName").textContent = data.name || "Customer";
+                document.getElementById("DeliveryCutomerPhoneNumber").textContent = `Phone: +91 ${data.phone || 'N/A'}`;
+                document.getElementById("DeliveryAddress").textContent = data.customerAdd || "No Address Supplied";
+                document.getElementById("paymentMethod").textContent = data.paymentMethod || "Online Payment";
+
+                // Receipt calculations
+                document.getElementById("ProductPrice").textContent = (data.totalAmount || 0).toLocaleString("en-IN");
+                document.getElementById("GSTSamble").textContent = data.gst || "3";
+                document.getElementById("PeroductGST").textContent = (data.gstAmount || 0).toLocaleString("en-IN");
+                document.getElementById("totalAmount").textContent = (data.withGstTotalAmount || 0).toLocaleString("en-IN");
+
+            } catch (err) {
+                console.error(err);
+                document.getElementById("invoiceNumber").textContent = "⚠️ Failed to fetch order summary details.";
+            }
         }
-        orderstatuse()
+
+        orderstatuse();
     </script>
 </body>
 

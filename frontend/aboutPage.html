@@ -4,263 +4,882 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
-    <link rel="stylesheet" href="./style.css">
+    <title>About Us – SJ Jewellery</title>
+    <meta name="description"
+        content="Learn about SJ Jewellery – our story, heritage, and commitment to handcrafted luxury jewellery for every occasion.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #a8854e;
+            --gold-light: #e8d4a8;
+            --gold-bg: #fdf7ee;
+            --cream: #faf8f5;
+            --dark: #0d0d0f;
+            --dark-2: #1a1a1f;
+            --text-h: #0d0d0f;
+            --text-body: #3d3d45;
+            --text-muted: #7a7a85;
+            --border: #e8e0d5;
+            --white: #ffffff;
+            --header-h: 72px;
+            --radius: 14px;
+            --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            width: 56px;
+            height: 56px;
+            bottom: 28px;
+            right: 28px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+            z-index: 9999;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.12);
+        }
+
+        .whatsapp-float img {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Header */
+        #siteHeader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-h);
+            z-index: 1000;
+            background: rgba(13, 13, 15, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+        }
+
+        #navInner {
+            max-width: 1300px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 0 24px;
+        }
+
+        #navLogo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        #navLogo .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.04em;
+        }
+
+        #navLogo .brand-tagline {
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            color: rgba(201, 169, 110, 0.6);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        #searchWrapper {
+            flex: 1;
+            max-width: 440px;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(201, 169, 110, 0.25);
+            border-radius: 999px;
+            padding: 9px 18px 9px 42px;
+            font-size: 0.88rem;
+            color: #fff;
+            outline: none;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #searchInput:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+        }
+
+        #searchIcon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            stroke: rgba(201, 169, 110, 0.6);
+            fill: none;
+            pointer-events: none;
+        }
+
+        .navActions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .navActionBtn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1.5px solid transparent;
+            transition: all var(--transition);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .navActionBtn:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+            background: rgba(201, 169, 110, 0.06);
+            color: var(--gold);
+        }
+
+        .navActionBtn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .cartWrap {
+            position: relative;
+        }
+
+        .cartBadge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Banner */
+        #heroBanner {
+            margin-top: var(--header-h);
+            height: 420px;
+            position: relative;
+            overflow: hidden;
+            background: var(--dark);
+        }
+
+        #heroBanner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.5;
+        }
+
+        #heroBannerContent {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+        }
+
+        #heroBannerContent p {
+            font-size: 0.68rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        #heroBannerContent h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.15;
+        }
+
+        .goldLine {
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 2px;
+            margin: 16px auto 0;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        #aboutSection {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 72px 24px;
+            text-align: center;
+        }
+
+        #aboutSection h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            color: var(--text-h);
+            margin-bottom: 20px;
+        }
+
+        #aboutSection p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        /* Stats */
+        #statsSection {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-2) 100%);
+            padding: 64px 24px;
+        }
+
+        .statsGrid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 32px;
+            text-align: center;
+        }
+
+        .statNum {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .statLabel {
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 8px;
+        }
+
+        /* Key Figures */
+        #keyFigures {
+            padding: 72px 24px;
+            background: var(--white);
+            border-top: 1px solid var(--border);
+        }
+
+        .sectionEyebrow {
+            font-size: 0.68rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .sectionTitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 3vw, 2rem);
+            font-weight: 700;
+            color: var(--text-h);
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        #figuresGrid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+        }
+
+        .figureCard {
+            text-align: center;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--cream);
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .figureCard:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .figureCard img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        /* Values */
+        #valuesSection {
+            padding: 72px 24px;
+            background: var(--gold-bg);
+        }
+
+        .valuesGrid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 28px;
+        }
+
+        .valueCard {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 28px 24px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .valueCard:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.07);
+        }
+
+        .valueIcon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 4px 14px rgba(201, 169, 110, 0.3);
+        }
+
+        .valueIcon svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 2;
+        }
+
+        .valueCard h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-h);
+            margin-bottom: 8px;
+        }
+
+        .valueCard p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        #siteFooter {
+            background: var(--dark-2);
+            color: rgba(255, 255, 255, 0.75);
+            padding: 64px 24px 32px;
+        }
+
+        .footerInner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footerTop {
+            display: grid;
+            grid-template-columns: 1.8fr repeat(3, 1fr);
+            gap: 40px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footerLogo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .footerDesc {
+            font-size: 0.84rem;
+            line-height: 1.7;
+            opacity: 0.7;
+            max-width: 280px;
+            margin-bottom: 20px;
+        }
+
+        .footerSocial {
+            display: flex;
+            gap: 10px;
+        }
+
+        .socialIcon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--transition), border-color var(--transition);
+            cursor: pointer;
+        }
+
+        .socialIcon:hover {
+            background: rgba(201, 169, 110, 0.15);
+            border-color: var(--gold);
+        }
+
+        .socialIcon svg {
+            width: 16px;
+            height: 16px;
+            fill: rgba(255, 255, 255, 0.6);
+        }
+
+        .footerCol h4 {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .footerCol ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footerCol ul li a {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            transition: opacity var(--transition), color var(--transition);
+        }
+
+        .footerCol ul li a:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        .footerBottom {
+            padding-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footerCopy {
+            font-size: 0.78rem;
+            opacity: 0.45;
+        }
+
+        .footerCopy span {
+            color: var(--gold);
+            opacity: 1;
+        }
+
+        .footerPayments {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .payBadge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            opacity: 0.6;
+            letter-spacing: 0.05em;
+        }
+
+        @media(max-width:768px) {
+            .footerTop {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            #heroBanner {
+                height: 280px;
+            }
+
+            #statsSection {
+                padding: 40px 16px;
+            }
+        }
+
+        @media(max-width:640px) {
+            #navInner {
+                padding: 0 16px;
+                gap: 12px;
+            }
+
+            #searchWrapper {
+                display: none;
+            }
+
+            .footerTop {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    #headerMainDiv {
-        display: flex;
-        justify-content: center;
-        background-color: black;
-        /* padding: 2vw; */
-        padding: clamp(2px, 0.5vw, 48px);
-        justify-content: space-around;
-        align-items: center;
-    }
-
-    #MainLogo {
-        width: 3vw;
-        cursor: pointer;
-    }
-
-    #CartBtn {
-        min-width: 30px;
-        /* width: 3vw; */
-        max-width: 3vw;
-        height: auto;
-        cursor: pointer;
-    }
-
-
-
-    #searchInput {
-        width: 40vw;
-        padding: 8px;
-    }
-
-    .Plogin {
-        color: white;
-        cursor: pointer;
-        font-size: 14px;
-    }
-
-    #aboutUSHeading {
-        font-size: 2.5vw;
-        border-bottom: 1px solid black;
-        color: #9A0162 !important;
-    }
-
-    #aboutusDIv {
-        display: flex;
-        justify-content: center;
-        padding: 1vw;
-    }
-
-    #AboutPageP {
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        /* font-size: 2vw; */
-        font-size: clamp(1vw, 1vw, 1vw);
-    }
-
-    #KeyDIv {
-        display: flex;
-        justify-content: center;
-        color: #9A0162 !important;
-        padding: 12px;
-        font-size: clamp(1vw, 1vw, 2vw);
-    }
-
-    #AboutPageP1 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 2vw;
-    }
-
-    #imagePhoto {
-        display: flex;
-        /* justify-content: center; */
-        justify-content: space-evenly;
-    }
-
-    .imagesIcon {
-        width: 10vw;
-        height: auto;
-
-    }
-
-    #d-img {
-
-        display: flex;
-        padding: 20px;
-        background-color: #e6e6e680;
-        margin-top: 10px;
-    }
-
-    #main-li {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        gap: 4vw;
-        /* font-size: 1.5vw; */
-        font-size: clamp(1vw, 1vw, 1vw);
-        /* gap: 16.6vw; */
-        justify-content: space-evenly;
-    }
-
-    .li-end {
-        display: flex;
-        flex-direction: column;
-    }
-
-    li:hover {
-        color: pink;
-        border-bottom: 2px solid pink;
-    }
-
-    a {
-        text-decoration: none;
-        color: black;
-    }
-
-    ::placeholder {
-        color: black;
-    }
-</style>
-
 
 <body>
-    <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
-        class="whatsapp-float" target="_blank">
+
+    <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products."
+        class="whatsapp-float" target="_blank" rel="noopener noreferrer">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
-    <header>
-        <div>
-            <div id="headerMainDiv">
-                <div>
-                    <a href="./index.html"> <img id="MainLogo"
-                            src="https://cdn-icons-png.freepik.com/512/5278/5278590.png"> </a>
-                </div>
-                <div>
-                    <input id="searchInput" placeholder="Search" type="text">
-                </div>
 
-                <div id="LoginBtnClickF">
-                    <!-- <p class="Plogin">Login/Sign up</p>
-                    <p class="Plogin">My Account</p> -->
-                    <span>
-                        <a href="./card.html"> <svg class="v_7pKG" viewBox="0 0 16 16">
-                                <path
-                                    d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86"
-                                    fill="#fff"></path>
-                            </svg></a>
-                    </span>
-                </div>
-
-                <div>
-                    <a href="./order.html">
-                        <p class="ChackOrder">Order</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="./login.html">
-                        <img id="CartBtn" src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png"></a>
-                </div>
+    <!-- Header -->
+    <header id="siteHeader">
+        <div id="navInner">
+            <a id="navLogo" href="./index.html"><span class="brand-name">SJ Jewellery</span><span
+                    class="brand-tagline">Crafted with love</span></a>
+            <div id="searchWrapper">
+                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input id="searchInput" type="text" placeholder="Search jewellery…" autocomplete="off">
             </div>
+            <nav class="navActions">
+                <a href="./order.html" class="navActionBtn"><svg viewBox="0 0 24 24">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>Orders</a>
+                <a href="./login.html" class="navActionBtn"><svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>Account</a>
+                <a href="./card.html" class="navActionBtn cartWrap"><svg viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>Cart<span class="cartBadge">0</span></a>
+            </nav>
         </div>
     </header>
-    <section>
-        <div>
-            <div>
 
-                <img style="width: 100%;"
-                    src="https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/AT_Offer/01/Desktop.jpg">
+    <!-- Hero Banner -->
+    <div id="heroBanner">
+        <img src="https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/AT_Offer/01/Desktop.jpg"
+            alt="SJ Jewellery Showroom">
+        <div id="heroBannerContent">
+            <p>✦ Our Story</p>
+            <h1>About SJ Jewellery</h1>
+            <span class="goldLine"></span>
+        </div>
+    </div>
+
+    <!-- About Text -->
+    <section id="aboutSection">
+        <h2>Crafting Elegance Since Day One</h2>
+        <p>SJ Jewellery is a leading jewellery brand built on a passion for craftsmanship and a commitment to quality.
+            From our humble beginnings to a strong national presence, we have established ourselves as a trusted name in
+            the jewellery market — bringing together heritage techniques and contemporary design.</p>
+    </section>
+
+    <!-- Stats -->
+    <section id="statsSection">
+        <div class="statsGrid">
+            <div class="statItem">
+                <div class="statNum">15+</div>
+                <div class="statLabel">Years of Heritage</div>
+            </div>
+            <div class="statItem">
+                <div class="statNum">50K+</div>
+                <div class="statLabel">Happy Customers</div>
+            </div>
+            <div class="statItem">
+                <div class="statNum">2000+</div>
+                <div class="statLabel">Unique Designs</div>
+            </div>
+            <div class="statItem">
+                <div class="statNum">100%</div>
+                <div class="statLabel">BIS Certified</div>
             </div>
         </div>
     </section>
-    <section>
-        <div id="aboutusDIv">
-            <h1 id="aboutUSHeading">About US</h1>
-        </div>
-        <div id="AboutPageP1">
-            <p id="AboutPageP">Sunflower Company is a leading jewellery brand and the flagship company of Sunflower
-                Group, a diversified
-                business conglomerate. The company has established a strong presence in the global jewellery market with
-                its wide network of showrooms and operations across multiple countries.</p>
-        </div>
-    </section>
-    <section>
-        <div>
-            <div id="KeyDIv">
-                <h1>KEY FIGURES</h1>
-            </div>
-        </div>
-        <div id="imagePhoto">
-            <img class="imagesIcon"
-                src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/turnover.jpg">
-            <img class="imagesIcon"
-                src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/shareholders.jpg">
-            <img class="imagesIcon"
-                src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/employes.jpg">
-            <img class="imagesIcon"
-                src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/years.jpg">
-            <img class="imagesIcon"
-                src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/countries.jpg">
-            <img class="imagesIcon"
-                src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/business-unit.jpg">
+
+    <!-- Key Figures -->
+    <section id="keyFigures">
+        <p class="sectionEyebrow">✦ Key Figures</p>
+        <h2 class="sectionTitle">Our Milestones</h2>
+        <div id="figuresGrid">
+            <div class="figureCard"><img
+                    src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/turnover.jpg"
+                    alt="Turnover"></div>
+            <div class="figureCard"><img
+                    src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/shareholders.jpg"
+                    alt="Shareholders"></div>
+            <div class="figureCard"><img
+                    src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/employes.jpg"
+                    alt="Employees"></div>
+            <div class="figureCard"><img
+                    src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/years.jpg"
+                    alt="Years"></div>
+            <div class="figureCard"><img
+                    src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/countries.jpg"
+                    alt="Countries"></div>
+            <div class="figureCard"><img
+                    src="https://static.malabargoldanddiamonds.com/media/wysiwyg/offer_page/about-us-website/business-unit.jpg"
+                    alt="Business Units"></div>
         </div>
     </section>
-    <footer>
-        <div id="d-img">
-            <div id="main-li">
-                <div>
+
+    <!-- Values -->
+    <section id="valuesSection">
+        <p class="sectionEyebrow">✦ Why Choose Us</p>
+        <h2 class="sectionTitle" style="margin-bottom:40px;">Our Core Values</h2>
+        <div class="valuesGrid">
+            <div class="valueCard">
+                <div class="valueIcon"><svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg></div>
+                <h3>Excellence</h3>
+                <p>Every piece meets the highest standards of craftsmanship and beauty.</p>
+            </div>
+            <div class="valueCard">
+                <div class="valueIcon"><svg viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg></div>
+                <h3>Trust</h3>
+                <p>BIS certified, hallmark guaranteed. Your trust is our foundation.</p>
+            </div>
+            <div class="valueCard">
+                <div class="valueIcon"><svg viewBox="0 0 24 24">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+                    </svg></div>
+                <h3>Passion</h3>
+                <p>We pour love and artistry into every creation, large and small.</p>
+            </div>
+            <div class="valueCard">
+                <div class="valueIcon"><svg viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+                    </svg></div>
+                <h3>Service</h3>
+                <p>Personalised service that makes every customer feel truly special.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="siteFooter">
+        <div class="footerInner">
+            <div class="footerTop">
+                <div class="footerBrand">
+                    <div class="footerLogo">SJ Jewellery</div>
+                    <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary.
+                        Handcrafted with passion, delivered with pride.</p>
+                    <div class="footerSocial">
+                        <a href="#" class="socialIcon"><svg viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                            </svg></a>
+                        <a href="#" class="socialIcon"><svg viewBox="0 0 24 24">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                            </svg></a>
+                        <a href="https://wa.me/918603632642" class="socialIcon" target="_blank"><svg
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                            </svg></a>
+                    </div>
+                </div>
+                <div class="footerCol">
+                    <h4>Shop</h4>
                     <ul>
-                        <b>
-                            <li class="li-end">SHOP</li>
-                        </b>
-                        <a href="./allProduct.html">
-                            <li class="li-end">All Jewelry</li>
-                        </a>
-                        <li class="li-end">Rings</li>
-                        <li class="li-end">Necklaces</li>
-                        <li class="li-end">New Arrivals</li>
+                        <li><a href="./allProduct.html">All Jewelry</a></li>
+                        <li><a href="./allProduct.html">Rings</a></li>
+                        <li><a href="./allProduct.html">Necklaces</a></li>
+                        <li><a href="./allProduct.html">New Arrivals</a></li>
                     </ul>
                 </div>
-                <div>
+                <div class="footerCol">
+                    <h4>Company</h4>
                     <ul>
-                        <b>
-                            <li class="li-end">COMPANY</li>
-                        </b>
-                        <a href="./aboutPage.html">
-                            <li class="li-end">About Us</li>
-                        </a>
-                        <a href="./ContactPage.html">
-                            <li class="li-end">Contact</li>
-                        </a>
-                        <li class="li-end">FAQ</li>
-                        <li class="li-end">Shipping Info</li>
+                        <li><a href="./aboutPage.html">About Us</a></li>
+                        <li><a href="./ContactPage.html">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping Info</a></li>
                     </ul>
                 </div>
-                <div>
+                <div class="footerCol">
+                    <h4>Legal</h4>
                     <ul>
-                        <b>
-                            <li class="li-end">LEGAL</li>
-                        </b>
-                        <li class="li-end">Terms of Service</li>
-                        <li class="li-end">Privacy</li>
-                        <li class="li-end">Refund Policy</li>
-                        <li class="li-end">Shipping Policy</li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
                     </ul>
                 </div>
             </div>
+            <div class="footerBottom">
+                <p class="footerCopy">&copy; 2026 <span>SJ Jewellery</span>. All rights reserved.</p>
+                <div class="footerPayments"><span class="payBadge">UPI</span><span class="payBadge">Razorpay</span><span
+                        class="payBadge">Net Banking</span><span class="payBadge">COD</span></div>
+            </div>
         </div>
-    </footer>
+    <script src="./config.js"></script>
+    <script>
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        const navLoginBtn = document.getElementById("navLoginBtn") || document.querySelector("a[href='./login.html']");
+        if (navLoginBtn && isLoggedIn) {
+            navLoginBtn.href = "./profile.html";
+        }
+
+        if (!isLoggedIn) {
+            const navOrderBtn = document.getElementById("navOrderBtn");
+            const navCartBtn = document.getElementById("navCartBtn");
+            if (navOrderBtn) {
+                navOrderBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    window.location.href = "./login.html";
+                });
+            }
+            if (navCartBtn) {
+                navCartBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    window.location.href = "./login.html";
+                });
+            }
+        }
+        async function fetchCartCount() {
+            try {
+                const res = await fetch(`${BASE_URL}/Card`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const badge = document.querySelector(".cartBadge");
+                    if (badge) badge.textContent = data.length;
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        fetchCartCount();
+        
+        // Redirect navbar search to allProduct list
+        document.getElementById("searchInput").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
+            }
+        });
+    </script>
 </body>
 
 </html>

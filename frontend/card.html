@@ -4,354 +4,1149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<style>
-    body {
-        /* background-color: rgb(2 2 2 / 3%); */
-        background-color: rgb(2 2 2 / 9%);
-    }
+    <title>Shopping Cart – SJ Jewellery</title>
+    <meta name="description"
+        content="View and manage items in your shopping cart at SJ Jewellery. Handcrafted luxury gold and diamond collections.">
 
-    .cardDetaislDiv {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        width: 90%;
-        background-color: #fff;
-        padding: 12px;
-        border-radius: 5px;
-    }
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
-    .MainDivDesing {
-
-        display: flex;
-        justify-content: center;
-        /* width: 90%; */
-
-    }
-
-    .DetailsImgShow {
-        height: 15vh;
-    }
-
-    .DetailsIMGmainDiv {
-        display: flex;
-        padding: 10px;
-        background-color: #fff;
-    }
-
-    .DetailsProducatName {
-        padding: 20px;
-    }
-
-    .TwoDivMarger {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        width: 80%;
-        /* cursor: pointer; */
-    }
-
-    .DetailsBuyBtn {
-        display: flex;
-        justify-content: end;
-    }
-
-    .BuyBtn {
-        transition: 0.3s;
-        background-color: pink;
-
-    }
-
-    .BuyBtn:hover {
-        background-color: rgba(255, 62, 94, 0.74);
-    }
-
-    .paymentMethodDiv {
-        font-size: 1.9vw;
-        padding: 1vh;
-
-    }
-
-    .CashOnDelivery {
-        /* margin-left: 2vw;
-            margin-top: 3vh; */
-        padding: 2vh;
-        padding-left: 1vw;
-        cursor: pointer;
-        /* background-color: #00000014; */
-        border-radius: 3px;
-
-    }
-
-    #showDataDivv {
-        display: flex;
-        gap: 1vh;
-    }
-
-    .btndiv {
-        display: flex;
-        align-items: center;
-    }
-
-    .btnmainDiv {
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .css-146c3p1 {
-        cursor: pointer;
-    }
-
-    #CartBtn {
-        min-width: 30px;
-        /* width: 3vw; */
-        max-width: 3vw;
-        height: auto;
-        cursor: pointer;
-    }
-
-    @media only screen and (max-width:768px) {
-
-        #customerNamePlaceOrder,
-        #customeradd,
-        #customerMobileNumber,
-        .ProductNamesummary {
-            font-size: clamp(10px, 1.5vh, 30px);
-
+    <style>
+        /* ═══════════════════════════════════════════
+           DESIGN TOKENS
+        ═══════════════════════════════════════════ */
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #a8854e;
+            --gold-light: #e8d4a8;
+            --gold-bg: #fdf7ee;
+            --cream: #faf8f5;
+            --dark: #0d0d0f;
+            --dark-2: #1a1a1f;
+            --dark-3: #2a2a30;
+            --text-h: #0d0d0f;
+            --text-body: #3d3d45;
+            --text-muted: #7a7a85;
+            --border: #e8e0d5;
+            --white: #ffffff;
+            --header-h: 72px;
+            --radius: 14px;
+            --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .paymentMethodDiv {
-            font-size: clamp(10px, 1.8vh, 30px);
+        /* ═══════════════════════════════════════════
+           RESET & BASE
+        ═══════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .DetailsImgShow {
-            height: 9vh;
+        html {
+            scroll-behavior: smooth;
         }
 
-        .CashOnDelivery {
-            padding: 1vh;
-            padding-left: 1vw;
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button {
+            font-family: inherit;
             cursor: pointer;
-            /* background-color: #00000014; */
-            border-radius: 3px;
-            font-size: clamp(10px, 1.5vh, 40px);
+            border: none;
         }
 
-    }
+        /* ═══════════════════════════════════════════
+           WHATSAPP FLOAT
+        ═══════════════════════════════════════════ */
+        .whatsapp-float {
+            position: fixed;
+            width: 56px;
+            height: 56px;
+            bottom: 28px;
+            right: 28px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+            z-index: 9999;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
 
-    footer {
-        margin-top: auto;
-    }
-</style>
+        .whatsapp-float:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
+        }
+
+        .whatsapp-float img {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* ═══════════════════════════════════════════
+           TOAST NOTIFICATION
+        ═══════════════════════════════════════════ */
+        #toast {
+            position: fixed;
+            bottom: 100px;
+            right: 28px;
+            background: var(--dark);
+            color: #fff;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+            z-index: 9998;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        #toast svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 2.5;
+            flex-shrink: 0;
+        }
+
+        /* ═══════════════════════════════════════════
+           HEADER / NAVBAR
+        ═══════════════════════════════════════════ */
+        #siteHeader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-h);
+            z-index: 1000;
+            background: rgba(13, 13, 15, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+            transition: background var(--transition), backdrop-filter var(--transition), border-color var(--transition);
+        }
+
+        #navInner {
+            max-width: 1300px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 0 24px;
+        }
+
+        #navLogo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        #navLogo .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.04em;
+        }
+
+        #navLogo .brand-tagline {
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            color: rgba(201, 169, 110, 0.6);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        #searchWrapper {
+            flex: 1;
+            max-width: 440px;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(201, 169, 110, 0.25);
+            border-radius: 999px;
+            padding: 9px 18px 9px 42px;
+            font-size: 0.88rem;
+            color: #fff;
+            outline: none;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #searchInput:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+        }
+
+        #searchIcon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            stroke: rgba(201, 169, 110, 0.6);
+            fill: none;
+            pointer-events: none;
+        }
+
+        .navActions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .navActionBtn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1.5px solid transparent;
+            transition: border-color var(--transition), background var(--transition);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .navActionBtn:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+            background: rgba(201, 169, 110, 0.06);
+            color: var(--gold);
+        }
+
+        .navActionBtn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .cartWrap {
+            position: relative;
+        }
+
+        .cartBadge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ═══════════════════════════════════════════
+           MAIN CART SECTION
+        ═══════════════════════════════════════════ */
+        main {
+            margin-top: calc(var(--header-h) + 40px);
+            flex: 1;
+            padding-bottom: 72px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .cart-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cart-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            color: var(--text-h);
+            margin-bottom: 8px;
+        }
+
+        .cart-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .goldLine {
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 2px;
+            margin: 12px auto 0;
+        }
+
+        /* Cart grid layout */
+        .cart-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Cart card item */
+        .cart-item {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: transform var(--transition), box-shadow var(--transition);
+            animation: cardFadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cart-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .item-img-wrap {
+            width: 110px;
+            height: 110px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f8f4ef;
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            flex-shrink: 0;
+        }
+
+        .item-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .item-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-h);
+        }
+
+        .item-category {
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .item-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-h);
+            margin-top: 6px;
+        }
+
+        .item-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        /* Buttons styling */
+        .btn-buy {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border-radius: 999px;
+            transition: all var(--transition);
+        }
+
+        .btn-buy:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(201, 169, 110, 0.35);
+        }
+
+        .btn-buy svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+        }
+
+        .btn-remove {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all var(--transition);
+        }
+
+        .btn-remove:hover {
+            color: #d93838;
+            background: rgba(217, 56, 56, 0.05);
+        }
+
+        .btn-remove svg {
+            width: 15px;
+            height: 15px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Skeletons */
+        .skeleton-item {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 20px;
+            display: flex;
+            gap: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .skeleton-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+        }
+
+        .skeleton-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .skeleton-line {
+            height: 14px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 6px;
+        }
+
+        .skeleton-line.name {
+            width: 50%;
+        }
+
+        .skeleton-line.cat {
+            width: 20%;
+        }
+
+        .skeleton-line.price {
+            width: 30%;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Empty & Error State */
+        .stateBox {
+            text-align: center;
+            padding: 80px 24px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stateBox svg {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            stroke: var(--gold);
+            opacity: 0.8;
+        }
+
+        .stateBox h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--text-h);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .stateBox p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .state-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            background: var(--dark);
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            border-radius: 999px;
+            transition: all var(--transition);
+        }
+
+        .state-cta:hover {
+            background: var(--gold);
+            color: var(--dark);
+            box-shadow: 0 8px 24px rgba(201, 169, 110, 0.35);
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════ */
+        #siteFooter {
+            background: var(--dark-2);
+            color: rgba(255, 255, 255, 0.75);
+            padding: 64px 24px 32px;
+            margin-top: auto;
+        }
+
+        .footerInner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footerTop {
+            display: grid;
+            grid-template-columns: 1.8fr repeat(3, 1fr);
+            gap: 40px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+
+        .footerLogo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .footerDesc {
+            font-size: 0.84rem;
+            line-height: 1.7;
+            opacity: 0.7;
+            max-width: 280px;
+            margin-bottom: 20px;
+        }
+
+        .footerSocial {
+            display: flex;
+            gap: 10px;
+        }
+
+        .socialIcon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--transition), border-color var(--transition);
+            cursor: pointer;
+        }
+
+        .socialIcon:hover {
+            background: rgba(201, 169, 110, 0.15);
+            border-color: var(--gold);
+        }
+
+        .socialIcon svg {
+            width: 16px;
+            height: 16px;
+            fill: rgba(255, 255, 255, 0.6);
+        }
+
+        .footerCol h4 {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .footerCol ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footerCol ul li a {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            transition: opacity var(--transition), color var(--transition);
+        }
+
+        .footerCol ul li a:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        .footerBottom {
+            padding-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footerCopy {
+            font-size: 0.78rem;
+            opacity: 0.45;
+        }
+
+        .footerCopy span {
+            color: var(--gold);
+            opacity: 1;
+        }
+
+        .footerPayments {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .payBadge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            opacity: 0.6;
+            letter-spacing: 0.05em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 900px) {
+            .footerTop {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footerBrand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .item-img-wrap {
+                width: 100%;
+                height: 180px;
+            }
+
+            .item-actions {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                border-top: 1px solid var(--border);
+                padding-top: 14px;
+                margin-top: 8px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #navInner {
+                padding: 0 16px;
+                gap: 12px;
+            }
+
+            #searchWrapper {
+                display: none;
+            }
+
+            .footerTop {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .footerBottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
 
 <body>
+
+    <!-- WhatsApp Float -->
     <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
-        class="whatsapp-float" target="_blank">
+        class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
-    <header>
-        <div>
-            <div id="headerMainDiv">
-                <div>
-                    <a href="./index.html"> <img id="MainLogo"
-                            src="https://cdn-icons-png.freepik.com/512/5278/5278590.png"> </a>
-                </div>
-                <div>
-                    <input id="searchInput" placeholder="Search" type="text">
-                </div>
 
-                <div id="LoginBtnClickF">
-                    <!-- <p class="Plogin">Login/Sign up</p>
-                    <p class="Plogin">My Account</p> -->
-                    <span>
-                        <a href="./card.html"> <svg class="v_7pKG" viewBox="0 0 16 16">
-                                <path
-                                    d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86"
-                                    fill="#fff"></path>
-                            </svg></a>
-                    </span>
-                </div>
+    <!-- Custom Toast -->
+    <div id="toast" role="alert">
+        <svg viewBox="0 0 24 24">
+            <path d="M20 6L9 17l-5-5" />
+        </svg>
+        <span id="toastMsg"></span>
+    </div>
 
-                <div>
-                    <a href="./order.html">
-                        <p class="ChackOrder">Order</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="./login.html">
-                        <img id="CartBtn" src="https://img.icons8.com/?size=512w&id=AZOFoSZnC0QG&format=png"></a>
-                </div>
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header id="siteHeader" role="banner">
+        <div id="navInner">
+            <a id="navLogo" href="./index.html" aria-label="SJ Jewellery Home">
+                <span class="brand-name">SJ Jewellery</span>
+                <span class="brand-tagline">Crafted with love</span>
+            </a>
+
+            <!-- Search inside cart -->
+            <div id="searchWrapper" role="search">
+                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input id="searchInput" type="text" placeholder="Search item in cart…" autocomplete="off"
+                    aria-label="Search items">
             </div>
+
+            <nav class="navActions" aria-label="User actions">
+                <a href="./order.html" class="navActionBtn" id="navOrderBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Orders
+                </a>
+                <a href="./login.html" class="navActionBtn" id="navLoginBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    Account
+                </a>
+                <a href="./card.html" class="navActionBtn cartWrap" id="navCartBtn" aria-label="Shopping cart">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    Cart
+                    <span class="cartBadge" id="cartCount" aria-label="items in cart">0</span>
+                </a>
+            </nav>
         </div>
     </header>
-    <section>
-        <div class="MainDivDesing" style="padding: 10px;">
-            <div class="TwoDivMarger">
-                <div class="cardDetaislDiv" id="showDataDiv">
-                    <div class="DetailsIMGmainDiv">
-                        <div>
-                            <img class="DetailsImgShow"
-                                src="https://kinclimg2.bluestone.com/f_webp,c_scale,w_1024,b_rgb:f0f0f0/giproduct/BINS0799R11_YAA18DIG6SOG60015_ABCD00-PICS-00001-1024-66182.png">
-                        </div>
-                        <div class="DetailsProducatName">
-                            <p class="ProductNamesummary">The Nomi Bridal Ring Set</p>
-                            <p class="productSummaryrate">₹ 1,34,725</p>
-                        </div>
+
+    <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+    <main>
+        <div class="container">
+            <div class="cart-header">
+                <h1>Your Shopping Cart</h1>
+                <p>Review your selection of handcrafted luxury jewels.</p>
+                <span class="goldLine"></span>
+            </div>
+
+            <!-- Cart list -->
+            <div class="cart-grid" id="cartContainer">
+                <div class="skeleton-item">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-details">
+                        <div class="skeleton-line name"></div>
+                        <div class="skeleton-line cat"></div>
+                        <div class="skeleton-line price"></div>
                     </div>
-                    <div class="btnmainDiv">
-                        <div class="btndiv" id="DeletCard">
-                            <svg width="16" height="16" viewBox="0 0 256 256">
-                                <path fill="none" stroke="#717478" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="16"
-                                    d="M216 56H40M104 104v64M152 104v64M200 56v152a8 8 0 0 1-8 8H64a8 8 0 0 1-8-8V56M168 56V40a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v16">
-                                </path>
+                </div>
+                <div class="skeleton-item">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-details">
+                        <div class="skeleton-line name"></div>
+                        <div class="skeleton-line cat"></div>
+                        <div class="skeleton-line price"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer id="siteFooter" role="contentinfo">
+        <div class="footerInner">
+            <div class="footerTop">
+                <div class="footerBrand">
+                    <div class="footerLogo">SJ Jewellery</div>
+                    <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary.
+                        Handcrafted with passion, delivered with pride.</p>
+                    <div class="footerSocial">
+                        <a href="#" class="socialIcon" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                             </svg>
-                            <div dir="auto" class="css-146c3p1"
-                                style="color: rgb(113, 116, 120); flex-shrink: 1; text-align: center; background-color: rgba(0, 0, 0, 0); font-size: 17px; line-height: 24px; font-family: inter_semi_bold; letter-spacing: -0.01px;">
-                                Remove</div>
-                        </div>
-                        <div class="btndiv">
-                            <svg width="16" height="16" viewBox="0 0 256 256">
-                                <path fill="none" d="M0 0h256v256H0z"></path>
-                                <path fill="none" stroke="#717478" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="12" d="m96 240 16-80-64-24L160 16l-16 80 64 24L96 240z"></path>
+                        </a>
+                        <a href="#" class="socialIcon" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
                             </svg>
-                            <div dir="auto" class="css-146c3p1"
-                                style="color: rgb(113, 116, 120); flex-shrink: 1; text-align: center; background-color: rgba(0, 0, 0, 0); font-size: 17px; line-height: 20px; font-family: inter_semi_bold; letter-spacing: -0.01px;">
-                                Buy this now</div>
-                        </div>
+                        </a>
+                        <a href="https://wa.me/918603632642" class="socialIcon" aria-label="WhatsApp" target="_blank">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                            </svg>
+                        </a>
                     </div>
                 </div>
 
+                <div class="footerCol">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="./allProduct.html">All Jewelry</a></li>
+                        <li><a href="./allProduct.html">Rings</a></li>
+                        <li><a href="./allProduct.html">Necklaces</a></li>
+                        <li><a href="./allProduct.html">Bangles</a></li>
+                        <li><a href="./allProduct.html">New Arrivals</a></li>
+                    </ul>
+                </div>
+
+                <div class="footerCol">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="./aboutPage.html">About Us</a></li>
+                        <li><a href="./ContactPage.html">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                    </ul>
+                </div>
+
+                <div class="footerCol">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </section>
-    <footer>
-        <div id="d-img">
-            <div id="main-li">
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">SHOP</li>
-                        </b>
-                        <a href="./allProduct.html">
-                            <li class="li-end">All Jewelry</li>
-                        </a>
-                        <li class="li-end">Rings</li>
-                        <li class="li-end">Necklaces</li>
-                        <li class="li-end">New Arrivals</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">COMPANY</li>
-                        </b>
-                        <a href="./aboutPage.html">
-                            <li class="li-end">About Us</li>
-                        </a>
-                        <a href="./ContactPage.html">
-                            <li class="li-end">Contact</li>
-                        </a>
-                        <li class="li-end">FAQ</li>
-                        <li class="li-end">Shipping Info</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul>
-                        <b>
-                            <li class="li-end">LEGAL</li>
-                        </b>
-                        <li class="li-end">Terms of Service</li>
-                        <li class="li-end">Privacy</li>
-                        <li class="li-end">Refund Policy</li>
-                        <li class="li-end">Shipping Policy</li>
-                    </ul>
+
+            <div class="footerBottom">
+                <p class="footerCopy">&copy; 2026 <span>SJ Jewellery</span>. All rights reserved. Crafted with ♥</p>
+                <div class="footerPayments">
+                    <span class="payBadge">UPI</span>
+                    <span class="payBadge">Razorpay</span>
+                    <span class="payBadge">Net Banking</span>
+                    <span class="payBadge">COD</span>
                 </div>
             </div>
         </div>
     </footer>
-</body>
-<script src="./config.js"></script>
-<script>
-    async function allOrder() {
-        let res = await fetch(`${BASE_URL}/Card`);
-        let resOrder = await res.json();
-        // console.log(resOrder);
-        allorderView(resOrder);
-        console.log(resOrder);
 
-    }
-    allOrder()
-    async function allorderView(resOrder) {
-        let showDataDiv = document.querySelector(".TwoDivMarger");
+    <!-- Scripts -->
+    <script src="./config.js"></script>
+    <script>
+        // Dynamic Account navigation link updating & auth check redirect
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        if (!isLoggedIn) {
+            window.location.href = "./login.html";
+        }
+        const navLoginBtn = document.getElementById("navLoginBtn");
+        if (navLoginBtn && isLoggedIn) {
+            navLoginBtn.href = "./profile.html";
+        }
 
-        resOrder.forEach((item) => {
-            showDataDiv.innerHTML += `
-        <div class="cardDetaislDiv" id="showDataDiv">
-            <div class="DetailsIMGmainDiv" data-id="${item._id}">
-                        <div>
-                            <img class="DetailsImgShow"
-                                src="${item.photo}">
-                        </div>
-                        <div class="DetailsProducatName">
-                            <p class="ProductNamesummary">${item.productName}</p>
-                            <p class="productSummaryrate">₹ ${item.rate}</p>
-                        </div>
-                        </div>
-                        <div class="btnmainDiv">
-                                   <div class="btndiv">
-                                       <svg width="16" height="16" viewBox="0 0 256 256">
-                                           <path fill="none" stroke="#717478" stroke-linecap="round" stroke-linejoin="round"
-                                               stroke-width="16"
-                                               d="M216 56H40M104 104v64M152 104v64M200 56v152a8 8 0 0 1-8 8H64a8 8 0 0 1-8-8V56M168 56V40a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v16">
-                                           </path>
-                                       </svg>
-                                       <div dir="auto" class="css-146c3p1"
-                                           style="color: rgb(113, 116, 120); flex-shrink: 1; text-align: center; background-color: rgba(0, 0, 0, 0); font-size: 17px; line-height: 24px; font-family: inter_semi_bold; letter-spacing: -0.01px;">
-                                           Remove</div>
-                                   </div>
-                                   <div class="btndiv">
-                                       <svg width="16" height="16" viewBox="0 0 256 256">
-                                           <path fill="none" d="M0 0h256v256H0z"></path>
-                                           <path fill="none" stroke="#717478" stroke-linecap="round" stroke-linejoin="round"
-                                               stroke-width="12" d="m96 240 16-80-64-24L160 16l-16 80 64 24L96 240z"></path>
-                                       </svg>
-                                       <div dir="auto" class="css-146c3p1"
-                                           style="color: rgb(113, 116, 120); flex-shrink: 1; text-align: center; background-color: rgba(0, 0, 0, 0); font-size: 17px; line-height: 20px; font-family: inter_semi_bold; letter-spacing: -0.01px;">
-                                           Buy this now</div>
-                                   </div>
-                               </div>
-                    </div>
-             </div>
-            `
+        /* ───────────────────────────────────────
+           TOAST NOTIFICATION
+        ─────────────────────────────────────── */
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            document.getElementById("toastMsg").textContent = msg;
+            t.classList.add("show");
+            setTimeout(() => t.classList.remove("show"), 3500);
+        }
 
-            document.querySelector("#DeletCard").addEventListener("click", async () => {
+        /* ───────────────────────────────────────
+           CART FUNCTIONALITY
+        ─────────────────────────────────────── */
+        let cartItems = [];
+        let productMap = {}; // Maps product name to its ID
 
-                try {
-                    let res = await fetch(`${BASE_URL}/card/${item._id}`, {
-                        method: "DELETE",
+        // Search within cart items & redirect on Enter
+        document.getElementById("searchInput").addEventListener("input", (e) => {
+            const q = e.target.value.toLowerCase().trim();
+            document.querySelectorAll(".cart-item").forEach(card => {
+                const name = card.querySelector(".item-name")?.textContent.toLowerCase() || "";
+                card.style.display = (!q || name.includes(q)) ? "" : "none";
+            });
+        });
+        document.getElementById("searchInput").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
+            }
+        });
 
+        // Load all products first to map names to database IDs for redirection
+        async function fetchProducts() {
+            try {
+                const res = await fetch(`${BASE_URL}/addProduct`);
+                if (res.ok) {
+                    const products = await res.json();
+                    products.forEach(p => {
+                        productMap[p.Productname.toLowerCase().trim()] = p._id;
                     });
-                    let data = await res.json()
-                    console.log(data);
-
-                    alert("Product deleted successFully")
-                    location.reload()
-
-
                 }
-                catch (err) {
-                    console.log(err)
+            } catch (err) {
+                console.error("Could not fetch product catalog:", err);
+            }
+        }
+
+        async function loadCart() {
+            try {
+                // Fetch the product catalog first so we have the IDs
+                await fetchProducts();
+
+                const res = await fetch(`${BASE_URL}/Card`);
+                if (!res.ok) throw new Error("Failed to fetch cart");
+
+                cartItems = await res.json();
+                renderCart();
+            } catch (err) {
+                console.error(err);
+                showErrorState();
+            }
+        }
+
+        function renderCart() {
+            const container = document.getElementById("cartContainer");
+            container.innerHTML = "";
+
+            // Update badge count
+            const cartCountBadge = document.getElementById("cartCount");
+            if (cartCountBadge) {
+                cartCountBadge.textContent = cartItems.length;
+            }
+
+            if (cartItems.length === 0) {
+                container.innerHTML = `
+                    <div class="stateBox">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                        <h3>Your Cart is Empty</h3>
+                        <p>Discover our beautiful premium jewelry collection and add items to your cart.</p>
+                        <a href="./allProduct.html" class="state-cta">Shop Collection</a>
+                    </div>`;
+                return;
+            }
+
+            cartItems.forEach((item, index) => {
+                const rate = Number(item.rate) || 0;
+                const formattedPrice = rate.toLocaleString("en-IN");
+
+                const card = document.createElement("div");
+                card.className = "cart-item";
+                card.style.animationDelay = `${index * 0.08}s`;
+
+                card.innerHTML = `
+                    <div class="item-img-wrap">
+                        <img class="item-img" src="${item.photo || 'https://via.placeholder.com/150'}" alt="${item.productName}" loading="lazy">
+                    </div>
+                    <div class="item-details">
+                        <span class="item-category">Jewellery Collection</span>
+                        <div class="item-name">${item.productName}</div>
+                        <div class="item-price">₹${formattedPrice}</div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-buy" data-name="${item.productName}">
+                            Buy this now
+                            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                        <button class="btn-remove" data-id="${item._id}">
+                            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                            Remove
+                        </button>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+
+            // Bind remove event listeners
+            document.querySelectorAll(".btn-remove").forEach(btn => {
+                btn.addEventListener("click", async (e) => {
+                    const id = e.currentTarget.dataset.id;
+                    await removeCartItem(id);
+                });
+            });
+
+            // Bind buy event listeners
+            document.querySelectorAll(".btn-buy").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    const pName = e.currentTarget.dataset.name.toLowerCase().trim();
+                    const productId = productMap[pName];
+                    if (productId) {
+                        window.location.href = `buyProduct.html?id=${productId}`;
+                    } else {
+                        // Fallback to all products or show toast
+                        showToast("⚠️ Could not locate product details. Please browse from catalog.");
+                        setTimeout(() => {
+                            window.location.href = "./allProduct.html";
+                        }, 2000);
+                    }
+                });
+            });
+        }
+
+        async function removeCartItem(id) {
+            try {
+                showToast("Removing item…");
+                const res = await fetch(`${BASE_URL}/card/${id}`, {
+                    method: "DELETE"
+                });
+
+                if (res.ok) {
+                    showToast("✅ Item removed successfully");
+                    // Reload cart instead of reloading page for premium UX
+                    await loadCart();
+                } else {
+                    throw new Error("Could not delete from database");
                 }
+            } catch (err) {
+                console.error(err);
+                showToast("❌ Error removing item. Please try again.");
+            }
+        }
 
+        function showErrorState() {
+            const container = document.getElementById("cartContainer");
+            container.innerHTML = `
+                <div class="stateBox">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <h3>Failed to Load Cart</h3>
+                    <p>There was a connection issue loading your shopping cart. Please check your connection and try again.</p>
+                    <button class="state-cta" onclick="loadCart()">Retry Connection</button>
+                </div>`;
+        }
 
-            })
-        })
-    }
-
-</script>
+        loadCart();
+    </script>
+</body>
 
 </html>
