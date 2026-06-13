@@ -511,6 +511,26 @@ app.post("/newUser/:userNumber", async (req, res) => {
 
 })
 
+//admin order status
+app.get("/orderStatusfilter", async (req, res) => {
+    try {
+
+        let { fromDate, toDate } = req.query;
+        let response = await placeOrderData.find({
+            orderDate: {
+                $gte: new Date(fromDate),
+                $lte: new Date(toDate + "T23:59:59.999Z")
+            }
+        });
+        res.status(200).json(response)
+
+
+    } catch (err) {
+        res.status(500).json("internal server error")
+        console.log(err);
+
+    }
+})
 
 app.listen(port, () => {
     console.log(`server is live on ${port}`);

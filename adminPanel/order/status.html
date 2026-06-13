@@ -222,9 +222,7 @@
     </div>
     <script src="./config.js"></script>
     <script>
-        document.querySelector("#searchBtn").addEventListener("click" , async ()=>{
-            alert("btn click")
-        })
+
         async function viewOrderDate() {
             const viewOrderDate = await fetch(`${BASE_URL}/viwePlaceOrder`)
             const resViewOrderdate = await viewOrderDate.json()
@@ -332,13 +330,10 @@
             })
         }
         document.querySelector("#searchBtn").addEventListener("click", async () => {
-            let btn = document.querySelector("#searchBtn")
-            console.log(btn);
 
             let formDate = document.querySelector("#formDate").value;
             let toDate = document.querySelector("#toDate").value;
             console.log("formDate", formDate, "ToDate", toDate);
-            console.log(document.querySelector("#formDate").value)
         })
 
     </script>
