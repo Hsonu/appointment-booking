@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Access – SJ Jewellery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --gold: #c9a96e;
+      --gold-dark: #a8854e;
+      --gold-light: #e8d4a8;
+      --gold-bg: #fdf7ee;
+      --cream: #faf8f5;
+      --text-h: #0d0d0f;
+      --text-body: #3d3d45;
+      --text-muted: #7a7a85;
+      --border: #e8e0d5;
+      --white: #ffffff;
+      --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    body {
+      font-family:'Inter',system-ui,sans-serif;
+      min-height:100vh;
+      background: var(--cream);
+      color: var(--text-body);
+      display:flex; align-items:center; justify-content:center;
+      padding:24px;
+      position:relative; overflow:hidden;
+    }
+    /* Ambient glow */
+    body::before {
+      content:''; position:fixed;
+      width:700px; height:700px; border-radius:50%;
+      background:radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+      top:-200px; right:-200px; pointer-events:none;
+    }
+    body::after {
+      content:''; position:fixed;
+      width:500px; height:500px; border-radius:50%;
+      background:radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+      bottom:-150px; left:-150px; pointer-events:none;
+    }
+    /* Decorative top bar */
+    .topAccent {
+      position:fixed; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+    }
+
+    .wrapper {
+      display:flex; width:min(900px,100%);
+      border-radius:20px; overflow:hidden;
+      box-shadow:0 24px 64px rgba(13,13,15,0.06), 0 0 0 1px var(--border);
+      position:relative; z-index:1;
+    }
+
+    /* Left brand panel */
+    .brand {
+      width:42%;
+      background: linear-gradient(160deg, var(--gold-bg) 0%, var(--cream) 100%);
+      padding:52px 40px;
+      display:flex; flex-direction:column; justify-content:space-between;
+      border-right:1px solid var(--border);
+      position:relative; overflow:hidden;
+    }
+    .brand::before {
+      content:''; position:absolute;
+      width:300px; height:300px; border-radius:50%;
+      background:radial-gradient(circle, rgba(201,169,110,0.15), transparent 70%);
+      bottom:-80px; right:-80px;
+    }
+    .brandLogo { position:relative; z-index:1; }
+    .logoMark {
+      width:52px; height:52px; border-radius:14px;
+      background:linear-gradient(135deg, var(--gold), var(--gold-dark));
+      display:flex; align-items:center; justify-content:center;
+      margin-bottom:16px;
+      box-shadow:0 8px 24px rgba(201,169,110,0.2);
+    }
+    .logoMark svg { width:28px; height:28px; fill:#ffffff; }
+    .logoName {
+      font-family:'Playfair Display',serif;
+      font-size:1.5rem; font-weight:700; color:var(--text-h); letter-spacing:0.04em;
+    }
+    .logoSub {
+      font-size:0.62rem; letter-spacing:0.22em; text-transform:uppercase;
+      color:var(--text-muted); margin-top:2px;
+    }
+    .goldDivider {
+      width:36px; height:1.5px; margin:24px 0;
+      background:linear-gradient(90deg, var(--gold), transparent);
+    }
+    .brandCopy { position:relative; z-index:1; }
+    .brandHeading {
+      font-family:'Playfair Display',serif;
+      font-size:1.6rem; font-weight:700; color:var(--text-h); line-height:1.3; margin-bottom:12px;
+    }
+    .brandHeading em { font-style:italic; color:var(--gold-dark); }
+    .brandDesc { font-size:0.83rem; color:var(--text-body); line-height:1.7; }
+    .brandFeatures { position:relative; z-index:1; }
+    .feat {
+      display:flex; align-items:center; gap:10px;
+      color:var(--text-body); font-size:0.78rem; margin-bottom:10px;
+    }
+    .feat::before {
+      content:''; width:6px; height:6px; border-radius:50%;
+      background:var(--gold-dark); flex-shrink:0;
+    }
+
+    /* Right form */
+    .form {
+      flex:1;
+      background: var(--white);
+      padding:52px 48px;
+      display:flex; flex-direction:column; justify-content:center;
+    }
+    .ownerBadge {
+      display:inline-flex; align-items:center; gap:7px;
+      background:var(--gold-bg);
+      border:1px solid var(--gold);
+      padding:5px 14px; border-radius:999px;
+      font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase;
+      color:var(--gold-dark); font-weight:600; margin-bottom:24px;
+    }
+    .formHeading {
+      font-family:'Playfair Display',serif;
+      font-size:1.7rem; font-weight:700; color:var(--text-h); margin-bottom:6px;
+    }
+    .formSub { font-size:0.84rem; color:var(--text-muted); margin-bottom:32px; }
+
+    .alert {
+      display:none; align-items:center; gap:10px;
+      padding:11px 14px; border-radius:10px;
+      font-size:0.82rem; font-weight:500; margin-bottom:20px;
+    }
+    .alert.show { display:flex; }
+    .alert.error { background:#fef2f2; color:#ef4444; border:1px solid #fee2e2; }
+    .alert.success { background:#f0fdf4; color:#15803d; border:1px solid #dcfce7; }
+
+    .fLabel { display:block; font-size:0.73rem; font-weight:600; color:var(--text-body); letter-spacing:0.05em; text-transform:uppercase; margin-bottom:8px; }
+    .fGroup { margin-bottom:20px; }
+    .inputWrap { position:relative; }
+    .inputIcon { position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none; }
+    .inputIcon svg { width:17px; height:17px; stroke:var(--gold-dark); fill:none; }
+    .fInput {
+      width:100%;
+      background:var(--white);
+      border:1.5px solid var(--border);
+      border-radius:10px;
+      padding:12px 14px 12px 44px;
+      font-size:0.9rem; color:var(--text-h); outline:none;
+      transition:all var(--transition); font-family:inherit;
+    }
+    .fInput::placeholder { color:var(--text-muted); }
+    .fInput:focus {
+      border-color:var(--gold);
+      background:var(--white);
+      box-shadow:0 0 0 3px rgba(201,169,110,0.15);
+    }
+
+    .submitBtn {
+      width:100%; padding:14px;
+      background:linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color:var(--text-h); border:none; border-radius:10px;
+      font-size:0.9rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+      cursor:pointer; font-family:inherit; transition:all var(--transition);
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      margin-top:8px;
+    }
+    .submitBtn:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(201,169,110,0.25); }
+    .submitBtn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+
+    .footNote { text-align:center; font-size:0.73rem; color:var(--text-muted); margin-top:22px; }
+    .footNote a { color:var(--gold-dark); text-decoration:none; font-weight:600; }
+    .footNote a:hover { text-decoration:underline; }
+
+    @media(max-width:640px) {
+      .brand { display:none; }
+      .form { padding:40px 28px; border-radius:20px; }
+      .wrapper { border-radius:20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topAccent"></div>
+  <div class="wrapper">
+
+    <!-- Left Brand -->
+    <div class="brand">
+      <div class="brandLogo">
+        <div class="logoMark">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="logoName">SJ Jewellery</div>
+        <div class="logoSub">Owner Console</div>
+        <div class="goldDivider"></div>
+      </div>
+      <div class="brandCopy">
+        <div class="brandHeading">Complete<br><em>Control</em><br>in Your Hands</div>
+        <div class="brandDesc">The owner panel gives you full visibility across all admin accounts, orders, and business performance.</div>
+      </div>
+      <div class="brandFeatures">
+        <div class="feat">View all admin orders in one place</div>
+        <div class="feat">Create & manage admin accounts</div>
+        <div class="feat">Total business performance overview</div>
+        <div class="feat">Secure owner-only access</div>
+      </div>
+    </div>
+
+    <!-- Right Form -->
+    <div class="form">
+      <div class="ownerBadge">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Owner Access Only
+      </div>
+      <div class="formHeading">Welcome Back</div>
+      <div class="formSub">Sign in to the owner control panel</div>
+
+      <div class="alert" id="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="alertText"></span>
+      </div>
+
+      <div class="fGroup">
+        <label class="fLabel" for="ownerId">Owner ID</label>
+        <div class="inputWrap">
+          <span class="inputIcon"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+          <input id="ownerId" class="fInput" type="text" placeholder="Enter your owner ID" autocomplete="username">
+        </div>
+      </div>
+
+      <div class="fGroup">
+        <label class="fLabel" for="ownerPass">Password</label>
+        <div class="inputWrap">
+          <span class="inputIcon"><svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
+          <input id="ownerPass" class="fInput" type="password" placeholder="Enter your password" autocomplete="current-password">
+        </div>
+      </div>
+
+      <button class="submitBtn" id="loginBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+        Enter Owner Panel
+      </button>
+
+      <div class="footNote">Regular admin? <a href="/admin">Admin Login →</a> &nbsp;·&nbsp; SJ Jewellery © 2026</div>
+    </div>
+  </div>
+
+  <script>
+    const loginBtn = document.getElementById("loginBtn");
+    const alertEl  = document.getElementById("alert");
+    const alertTxt = document.getElementById("alertText");
+
+    function showAlert(msg, type="error") {
+      alertTxt.textContent = msg;
+      alertEl.className = `alert ${type} show`;
+    }
+
+    loginBtn.addEventListener("click", async () => {
+      const adminId  = document.getElementById("ownerId").value.trim();
+      const password = document.getElementById("ownerPass").value.trim();
+      if (!adminId || !password) return showAlert("Please fill in all fields.");
+      loginBtn.disabled = true; loginBtn.textContent = "Signing in…";
+      try {
+        const res  = await fetch("/owner/login", {
+          method:"POST", headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({ adminId, password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          localStorage.setItem("ownerId", data.adminId);
+          localStorage.setItem("ownerLoggedIn","true");
+          showAlert("Welcome, Owner! Redirecting…", "success");
+          setTimeout(() => window.location.href = "/owner/dashboard", 1200);
+        } else {
+          showAlert(data.message || "Invalid credentials.");
+          loginBtn.disabled = false;
+          loginBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg> Enter Owner Panel`;
+        }
+      } catch {
+        showAlert("Connection error. Is the server running?");
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg> Enter Owner Panel`;
+      }
+    });
+    [document.getElementById("ownerId"), document.getElementById("ownerPass")].forEach(el =>
+      el.addEventListener("keydown", e => { if (e.key==="Enter") loginBtn.click(); })
+    );
+  </script>
+</body>
+</html>

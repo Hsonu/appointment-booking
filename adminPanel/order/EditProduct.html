@@ -105,12 +105,16 @@
       </nav>
       <div id="sidebarFooter">
         <div class="sidebarUser">
-          <div class="sidebarAvatar">A</div>
+          <div class="sidebarAvatar" id="sidebarAvatarChar">A</div>
           <div>
-            <div class="sidebarUserName">Admin</div>
-            <div class="sidebarUserRole">Super Admin</div>
+            <div class="sidebarUserName" id="sidebarAdminName">Admin</div>
+            <div class="sidebarUserRole">Admin Account</div>
           </div>
         </div>
+        <button onclick="adminLogout()" style="width:100%;margin-top:10px;background:#fee2e2;color:#b91c1c;border:none;border-radius:8px;padding:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;" onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          Sign Out
+        </button>
       </div>
     </aside>
 
@@ -283,6 +287,17 @@
 
   <script src="./config.js"></script>
   <script>
+    // ── Auth Guard ─────────────────────────────────────────────────────────
+    const ADMIN_ID = localStorage.getItem("adminId");
+    if (!ADMIN_ID) { window.location.href = "./login.html"; }
+    document.getElementById("sidebarAdminName").textContent = ADMIN_ID || "Admin";
+    document.getElementById("sidebarAvatarChar").textContent = (ADMIN_ID || "A").charAt(0).toUpperCase();
+    function adminLogout() {
+      localStorage.removeItem("adminId");
+      localStorage.removeItem("adminLoggedIn");
+      window.location.href = "./login.html";
+    }
+
     let deleteTargetId = null;
     let deleteTargetRow = null;
 
@@ -302,7 +317,8 @@
 
     async function getData() {
       try {
-        const res = await fetch(`${BASE_URL}/addProduct`);
+        // Send x-admin-id header so only this admin's products are returned
+        const res = await fetch(`${BASE_URL}/addProduct`, { headers: { "x-admin-id": ADMIN_ID } });
         const data = await res.json();
         renderProducts(data);
       } catch (err) {

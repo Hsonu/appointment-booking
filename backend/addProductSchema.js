@@ -31,6 +31,10 @@ const addProductSchema = new mongoose.Schema({
     },
     gst: {
         type: Number
+    },
+    createdBy: {
+        type: String,
+        default: "admin"
     }
 
 })

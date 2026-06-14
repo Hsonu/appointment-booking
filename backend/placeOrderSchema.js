@@ -86,6 +86,10 @@ const placeOrderDataSchema = new mongoose.Schema({
             default: ""
         }
 
+    },
+    adminId: {
+        type: String,
+        default: "admin"
     }
 });
 

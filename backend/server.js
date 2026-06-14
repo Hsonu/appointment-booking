@@ -9,6 +9,7 @@ const Card = require("./cardSchema");
 const login = require("./loginSchema");
 const address = require("./addressSchema")
 const user = require("./userLgoninSchema")
+const Admin = require("./adminSchema")
 const cors = require("cors");
 const Razorpar = require("razorpay")
 app.use(cors());
@@ -102,10 +103,252 @@ app.get("/", (req, res) => {
     // res.send("server is live ")
     res.sendFile(path.join(__dirname, "../frontend/index.html"));
 })
-// admin Login
+// ── Auto-seed Owner account on server start ──────────────────────────────────
+async function seedOwner() {
+    try {
+        const exists = await Admin.findOne({ adminId: "owner" });
+        if (!exists) {
+            await new Admin({ adminId: "owner", password: "owner@123", role: "owner" }).save();
+            console.log("✅ Owner account seeded  →  ID: owner  |  Pass: owner@123");
+        }
+    } catch (e) { console.log("Owner seed error:", e.message); }
+}
+seedOwner();
+
+// ── Owner Panel – serve HTML pages ───────────────────────────────────────────
+app.get("/owner", (req, res) => {
+    res.sendFile(path.join(__dirname, "../adminPanel/owner/owner-login.html"));
+});
+app.get("/owner/dashboard", (req, res) => {
+    res.sendFile(path.join(__dirname, "../adminPanel/owner/owner-dashboard.html"));
+});
+app.get("/owner/create-admin", (req, res) => {
+    res.sendFile(path.join(__dirname, "../adminPanel/owner/create-admin.html"));
+});
+app.get("/owner/orders", (req, res) => {
+    res.sendFile(path.join(__dirname, "../adminPanel/owner/owner-orders.html"));
+});
+
+// ── Owner Login ───────────────────────────────────────────────────────────────
+app.post("/owner/login", async (req, res) => {
+    try {
+        const { adminId, password } = req.body;
+        const admin = await Admin.findOne({ adminId });
+        if (!admin || admin.password !== password || admin.role !== "owner") {
+            return res.status(401).json({ message: "Invalid owner credentials" });
+        }
+        res.status(200).json({ message: "Owner login successful", adminId: admin.adminId, role: "owner" });
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// ── Owner: Create a new Admin (owner-only) ────────────────────────────────────
+app.post("/owner/create-admin", async (req, res) => {
+    try {
+        const ownerKey = req.headers["x-owner-id"];
+        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
+        if (!ownerAccount) {
+            return res.status(403).json({ message: "Access denied. Owner only." });
+        }
+        const { adminId, password } = req.body;
+        if (!adminId || !password) return res.status(400).json({ message: "Admin ID and password required" });
+        const existing = await Admin.findOne({ adminId });
+        if (existing) return res.status(409).json({ message: "Admin ID already exists" });
+        const newAdmin = new Admin({ adminId, password, role: "admin" });
+        await newAdmin.save();
+        res.status(200).json({ message: "Admin created successfully", adminId });
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// ── Owner: Get all admins list ────────────────────────────────────────────────
+app.get("/owner/admins", async (req, res) => {
+    try {
+        const ownerKey = req.headers["x-owner-id"];
+        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
+        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
+        const admins = await Admin.find({ role: "admin" });
+        res.json(admins);
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// ── Owner: Get ALL products from ALL admins ───────────────────────────────────
+app.get("/owner/all-products", async (req, res) => {
+    try {
+        const ownerKey = req.headers["x-owner-id"];
+        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
+        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
+        const products = await addProducts.find({});
+        res.json(products);
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// ── Owner: Get ALL orders from ALL admins ─────────────────────────────────────
+app.get("/owner/all-orders", async (req, res) => {
+    try {
+        const ownerKey = req.headers["x-owner-id"];
+        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
+        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
+        const orders = await placeOrderData.find({});
+        res.json(orders);
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// ── Owner: Change own username and password ──────────────────────────────────
+app.post("/owner/change-credentials", async (req, res) => {
+    try {
+        const ownerKey = req.headers["x-owner-id"];
+        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
+        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
+        
+        const { newAdminId, newPassword } = req.body;
+        if (!newAdminId || !newPassword) {
+            return res.status(400).json({ message: "New Owner ID and password are required" });
+        }
+        
+        // Ensure new ID does not conflict with existing admins
+        const existing = await Admin.findOne({ adminId: newAdminId });
+        if (existing && existing.role !== "owner") {
+            return res.status(409).json({ message: "Admin ID already exists" });
+        }
+        
+        // Update database
+        await Admin.updateOne({ role: "owner" }, { adminId: newAdminId, password: newPassword });
+        res.status(200).json({ message: "Owner credentials updated successfully", adminId: newAdminId });
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// ── Owner: Toggle Admin Active Status ────────────────────────────────────────
+app.post("/owner/toggle-admin-status", async (req, res) => {
+    try {
+        const ownerKey = req.headers["x-owner-id"];
+        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
+        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
+        
+        const { adminId, isActive } = req.body;
+        if (!adminId || isActive === undefined) {
+            return res.status(400).json({ message: "Admin ID and active status required" });
+        }
+        
+        await Admin.updateOne({ adminId, role: "admin" }, { isActive });
+        res.status(200).json({ message: `Admin status set to ${isActive}` });
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// ── Owner: Update Admin ID and Password ──────────────────────────────────────
+app.post("/owner/update-admin", async (req, res) => {
+    try {
+        const ownerKey = req.headers["x-owner-id"];
+        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
+        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
+        
+        const { adminId, newAdminId, newPassword } = req.body;
+        if (!adminId || !newAdminId || !newPassword) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+        
+        // Check conflict
+        const existing = await Admin.findOne({ adminId: newAdminId });
+        if (existing && existing.adminId !== adminId) {
+            return res.status(409).json({ message: "Admin ID already exists" });
+        }
+        
+        // Update admin credentials
+        await Admin.updateOne({ adminId, role: "admin" }, { adminId: newAdminId, password: newPassword });
+        
+        // Migrate database products/orders from old ID to new ID if ID was changed
+        if (newAdminId !== adminId) {
+            await addProducts.updateMany({ createdBy: adminId }, { createdBy: newAdminId });
+            await placeOrderData.updateMany({ adminId: adminId }, { adminId: newAdminId });
+        }
+        
+        res.status(200).json({ message: "Admin updated successfully" });
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// ── Owner: Delete Admin ──────────────────────────────────────────────────────
+app.delete("/owner/delete-admin/:adminId", async (req, res) => {
+    try {
+        const ownerKey = req.headers["x-owner-id"];
+        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
+        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
+        
+        const adminId = req.params.adminId;
+        await Admin.deleteOne({ adminId, role: "admin" });
+        res.status(200).json({ message: "Admin account deleted" });
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// Interceptor middleware to block deactivated or non-existent admins
+app.use(async (req, res, next) => {
+    const adminId = req.headers["x-admin-id"];
+    if (adminId) {
+        try {
+            const admin = await Admin.findOne({ adminId });
+            if (!admin || admin.isActive === false) {
+                return res.status(403).json({ message: "Account deactivated or invalid" });
+            }
+        } catch (err) {
+            return res.status(500).json({ message: "Internal server error" });
+        }
+    }
+    next();
+});
+
+// ── Admin Login (regular admins only) ────────────────────────────────────────
 app.get("/admin", (req, res) => {
-    res.sendFile(path.join(__dirname, "../adminPanel/order/addProduct.html"))
-})
+    res.sendFile(path.join(__dirname, "../adminPanel/order/login.html"));
+});
+
+// Public register page is DISABLED – only owner can create admins
+app.get("/admin/register", (req, res) => {
+    res.status(403).send(`
+        <html><body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;background:#0f172a;color:#fff;margin:0;flex-direction:column;gap:12px;">
+        <h2>🔒 Access Denied</h2>
+        <p style="color:#94a3b8">Admin registration is only allowed by the Owner.</p>
+        <a href="/owner" style="color:#6366f1">Owner Panel →</a>
+        </body></html>
+    `);
+});
+
+app.post("/admin/login", async (req, res) => {
+    try {
+        const { adminId, password } = req.body;
+        if (!adminId || !password) {
+            return res.status(400).json({ message: "Admin ID and password are required" });
+        }
+        const admin = await Admin.findOne({ adminId });
+        if (!admin) {
+            return res.status(401).json({ message: "Invalid admin ID or password" });
+        }
+        if (admin.password !== password) {
+            return res.status(401).json({ message: "Invalid admin ID or password" });
+        }
+        if (admin.isActive === false) {
+            return res.status(403).json({ message: "Account is deactivated. Contact Owner." });
+        }
+        res.status(200).json({ message: "Login successful", adminId: admin.adminId, role: admin.role });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
 app.post("/newClient", async (req, res) => {
     try {
         const data = req.body;
@@ -164,6 +407,9 @@ app.post("/addProduct", async (req, res) => {
 
         console.log(jpgReiult);
 
+        // Get the admin ID from request header (sent by admin panel)
+        const createdBy = req.headers["x-admin-id"] || "admin";
+
         const addProductdata = {
             Productname: req.body.Productname,
             Category: req.body.Category,
@@ -172,7 +418,8 @@ app.post("/addProduct", async (req, res) => {
             Rate: req.body.Rate,
             description: req.body.description,
             photo: jpgReiult.secure_url,
-            gst: req.body.gst
+            gst: req.body.gst,
+            createdBy
         };
 
         console.log(addProductdata);
@@ -197,8 +444,21 @@ app.post("/addProduct", async (req, res) => {
 //view all product
 
 app.get("/addProduct", async (req, res) => {
-    const viewProduct = await addProducts.find();
-    res.json(viewProduct);
+    try {
+        const adminId = req.headers["x-admin-id"];
+        let query = {};
+        if (adminId) {
+            // Also include old products that have no createdBy field (legacy data = belongs to "admin")
+            query.$or = [
+                { createdBy: adminId },
+                ...(adminId === "admin" ? [{ createdBy: { $exists: false } }, { createdBy: null }] : [])
+            ];
+        }
+        const viewProduct = await addProducts.find(query);
+        res.json(viewProduct);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 })
 //delete Product
 
@@ -221,7 +481,7 @@ app.put("/updateProduct/:id", async (req, res) => {
     try {
         const updateDataID = req.params.id;
         const { Productname, Category, SubCategory, description } = req.body;
-        
+
         let photoUrl = undefined;
         if (req.files && req.files.photo) {
             const fille = req.files.photo;
@@ -292,7 +552,6 @@ app.post("/placeOrder", async (req, res) => {
         let userNumber = req.body.useNumber;
         console.log(userNumber);
 
-
         let chackUser = await user.findOne({
             useNumber: userNumber
         });
@@ -302,7 +561,17 @@ app.post("/placeOrder", async (req, res) => {
                 message: "Please login"
             })
         }
-        const placeOrderDataBody = req.body;
+
+        // Resolve which admin owns this product so order goes to the right admin
+        let adminId = "admin";
+        if (req.body.productName) {
+            const productRecord = await addProducts.findOne({ Productname: req.body.productName });
+            if (productRecord && productRecord.createdBy) {
+                adminId = productRecord.createdBy;
+            }
+        }
+
+        const placeOrderDataBody = { ...req.body, adminId };
         const viewPlaceOrderData = new placeOrderData(placeOrderDataBody);
         const PlaceOrderResponse = await viewPlaceOrderData.save();
         console.log(req.body);
@@ -317,9 +586,21 @@ app.post("/placeOrder", async (req, res) => {
 })
 
 app.get("/viwePlaceOrder", async (req, res) => {
-
-    const viewDataPlaceOrder = await placeOrderData.find();
-    res.json(viewDataPlaceOrder);
+    try {
+        const adminId = req.headers["x-admin-id"];
+        let query = {};
+        if (adminId) {
+            // Also include old orders that have no adminId field (legacy data = belongs to "admin")
+            query.$or = [
+                { adminId: adminId },
+                ...(adminId === "admin" ? [{ adminId: { $exists: false } }, { adminId: null }] : [])
+            ];
+        }
+        const viewDataPlaceOrder = await placeOrderData.find(query);
+        res.json(viewDataPlaceOrder);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 //status Single data
@@ -533,21 +814,33 @@ app.post("/newUser/:userNumber", async (req, res) => {
 //admin order status
 app.get("/orderStatusfilter", async (req, res) => {
     try {
-
         let { fromDate, toDate } = req.query;
-        let response = await placeOrderData.find({
+        const adminId = req.headers["x-admin-id"];
+
+        let dateFilter = {
             orderDate: {
                 $gte: new Date(fromDate),
                 $lte: new Date(toDate + "T23:59:59.999Z")
             }
-        });
-        res.status(200).json(response)
+        };
 
+        let query;
+        if (adminId) {
+            // Also include old orders with no adminId (legacy data = belongs to "admin")
+            const adminFilter = adminId === "admin"
+                ? { $or: [{ adminId: adminId }, { adminId: { $exists: false } }, { adminId: null }] }
+                : { adminId: adminId };
+            query = { ...dateFilter, ...adminFilter };
+        } else {
+            query = dateFilter;
+        }
+
+        let response = await placeOrderData.find(query);
+        res.status(200).json(response)
 
     } catch (err) {
         res.status(500).json("internal server error")
         console.log(err);
-
     }
 })
 
