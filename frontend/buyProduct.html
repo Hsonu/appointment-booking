@@ -127,7 +127,7 @@
         }
 
         #navInner {
-            max-width: 1300px;
+            max-width: 100%;
             margin: 0 auto;
             height: 100%;
             display: flex;
@@ -348,6 +348,29 @@
             text-transform: uppercase;
             padding: 5px 14px;
             border-radius: 999px;
+        }
+
+        /* Out of Stock Overlay */
+        .out-of-stock-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition);
+        }
+
+        .out-of-stock-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         /* Thumbnail row */
@@ -833,6 +856,11 @@
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        .out-of-stock-img {
+            opacity: 0.65;
+            filter: grayscale(30%);
+        }
+
         .card-badge {
             position: absolute;
             top: 14px;
@@ -1165,16 +1193,49 @@
             }
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 860px) {
+            :root {
+                --header-h: 116px;
+            }
+
             #navInner {
-                padding: 0 16px;
-                gap: 12px;
+                flex-wrap: wrap;
+                padding: 10px 16px;
+                gap: 8px 12px;
+                height: 100%;
+                justify-content: space-between;
+            }
+
+            #navLogo {
+                order: 1;
+            }
+
+            .navActions {
+                order: 2;
+                margin-left: auto;
+                gap: 2px;
+            }
+
+            .navActionBtn {
+                padding: 6px 8px;
+                font-size: 0.6rem;
+            }
+
+            .navActionBtn svg {
+                width: 18px;
+                height: 18px;
             }
 
             #searchWrapper {
-                display: none;
+                display: block;
+                order: 3;
+                flex-basis: 100%;
+                max-width: 100%;
+                margin-top: 4px;
             }
+        }
 
+        @media (max-width: 640px) {
             #actionBtns {
                 flex-direction: column;
             }
@@ -1192,6 +1253,20 @@
 
             .card-img-wrap {
                 height: 180px;
+            }
+
+            .card-footer-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                margin-top: auto;
+            }
+
+            .BuyBtn {
+                width: 100%;
+                justify-content: center;
+                padding: 8px 12px;
+                font-size: 0.68rem;
             }
 
             .footerTop {
@@ -1295,6 +1370,11 @@
             <div id="mainImageWrap">
                 <img id="imgPhoto" src="" alt="Product image" loading="eager">
                 <span id="productImgBadge">✦ New Arrival</span>
+                <div id="outOfStockOverlay" class="out-of-stock-overlay">
+                    <span
+                        style="background:#dc2626; color:#fff; font-size:1.1rem; font-weight:700; padding:10px 24px; border-radius:8px; border:2px solid #fff; box-shadow:0 10px 25px rgba(220,38,38,0.45); letter-spacing:0.06em; text-transform:uppercase; font-family:sans-serif;">Out
+                        of Stock</span>
+                </div>
             </div>
             <div id="thumbRow" aria-label="Product thumbnails">
                 <!-- thumbnails injected by JS -->
@@ -1339,6 +1419,9 @@
             <div id="priceBlock">
                 <div id="productPrice">₹–</div>
                 <div id="gstNote">GST Included</div>
+                <div id="stockStatus"
+                    style="font-size:0.85rem; font-weight:600; margin-top:8px; display:flex; align-items:center; gap:6px;">
+                </div>
             </div>
 
             <!-- Description -->
@@ -1610,6 +1693,10 @@
             if (qty > 1) { qty--; document.getElementById("qtyValue").textContent = qty; }
         });
         document.getElementById("qtyPlus").addEventListener("click", () => {
+            if (currentProductData && qty >= currentProductData.Units) {
+                showToast(`⚠️ Cannot add more. Only ${currentProductData.Units} units in stock.`);
+                return;
+            }
             qty++;
             document.getElementById("qtyValue").textContent = qty;
         });
@@ -1654,23 +1741,57 @@
                 document.getElementById("breadcrumbCurrent").textContent = data.Productname;
                 if (data.Category) document.getElementById("productCategory").textContent = data.Category;
 
-                // Thumbnails (show same image 3× as placeholder)
+                // Thumbnails
                 const thumbRow = document.getElementById("thumbRow");
                 thumbRow.innerHTML = "";
-                for (let i = 0; i < 3; i++) {
+                const photosList = (data.photos && data.photos.length > 0)
+                    ? data.photos.filter(p => p)
+                    : (data.photo ? [data.photo] : []);
+
+                photosList.forEach((photoUrl, i) => {
                     const t = document.createElement("div");
                     t.className = "thumb" + (i === 0 ? " active" : "");
-                    t.innerHTML = `<img src="${data.photo}" alt="View ${i + 1}">`;
+                    t.innerHTML = `<img src="${photoUrl}" alt="View ${i + 1}">`;
                     t.addEventListener("click", () => {
                         document.querySelectorAll(".thumb").forEach(el => el.classList.remove("active"));
                         t.classList.add("active");
+                        document.getElementById("imgPhoto").src = photoUrl;
                     });
                     thumbRow.appendChild(t);
+                });
+
+                // Update stock status display
+                const stockStatusEl = document.getElementById("stockStatus");
+                const outOfStockOverlay = document.getElementById("outOfStockOverlay");
+                if (data.Units === undefined || data.Units === null || data.Units <= 0) {
+                    qty = 0;
+                    document.getElementById("qtyValue").textContent = 0;
+
+                    stockStatusEl.innerHTML = `<span style="color:#ef4444;">❌ Out of Stock</span>`;
+                    if (outOfStockOverlay) outOfStockOverlay.classList.add("show");
+
+                    const buyBtn = document.getElementById("buyNowBtn");
+                    buyBtn.disabled = true;
+                    buyBtn.textContent = "OUT OF STOCK";
+                    buyBtn.style.background = "#64748b";
+                    buyBtn.style.cursor = "not-allowed";
+
+                    const cartBtn = document.getElementById("addToCartBtn");
+                    cartBtn.disabled = true;
+                    cartBtn.style.cursor = "not-allowed";
+                    cartBtn.style.opacity = "0.5";
+                } else {
+                    if (outOfStockOverlay) outOfStockOverlay.classList.remove("show");
+                    if (data.Units <= 5) {
+                        stockStatusEl.innerHTML = `<span style="color:#f59e0b;">⚠️ Only ${data.Units} left in stock - order soon!</span>`;
+                    } else {
+                        stockStatusEl.innerHTML = ""; // Hide stock indicator when normally available
+                    }
                 }
 
                 // Buy Now
                 document.getElementById("buyNowBtn").addEventListener("click", () => {
-                    window.location.href = `productDetails.html?id=${id}`;
+                    window.location.href = `productDetails.html?id=${id}&qty=${qty}`;
                 });
 
                 // Add to Cart
@@ -1734,6 +1855,8 @@
                     const finalPrice = Math.round(item.Rate + gst);
                     const formatted = finalPrice.toLocaleString("en-IN");
 
+                    const isOutOfStock = (item.Units === undefined || item.Units === null || item.Units <= 0);
+
                     const card = document.createElement("div");
                     card.className = "product-card";
                     card.setAttribute("role", "listitem");
@@ -1742,9 +1865,13 @@
 
                     card.innerHTML = `
                         <div class="card-img-wrap">
-                            <img class="product-img" src="${item.photo}" alt="${item.Productname}" loading="lazy">
+                            <img class="product-img ${isOutOfStock ? 'out-of-stock-img' : ''}" src="${item.photo}" alt="${item.Productname}" loading="lazy">
                             <div class="card-img-overlay"><span class="card-quick-view">Quick View</span></div>
-                            <span class="card-badge">✦ New</span>
+                            ${isOutOfStock ? `
+                                <span class="card-badge" style="background:#dc2626; color:#fff;">Out of Stock</span>
+                            ` : `
+                                <span class="card-badge">✦ New</span>
+                            `}
                         </div>
                         <div class="card-body">
                             <div class="card-category">${item.Category || "Jewellery"}</div>
@@ -1754,10 +1881,16 @@
                                     <div class="card-price">₹${formatted}</div>
                                     <div class="card-gst">✓ GST Included</div>
                                 </div>
-                                <button class="BuyBtn" data-id="${item._id}" aria-label="Buy ${item.Productname}">
-                                    Buy Now
-                                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </button>
+                                ${isOutOfStock ? `
+                                    <button class="BuyBtn" data-id="${item._id}" style="background:#64748b; border-color:#64748b; opacity:0.9;" aria-label="View Details for ${item.Productname}">
+                                        Out of Stock
+                                    </button>
+                                ` : `
+                                    <button class="BuyBtn" data-id="${item._id}" aria-label="Buy ${item.Productname}">
+                                        Buy Now
+                                        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    </button>
+                                `}
                             </div>
                         </div>
                     `;

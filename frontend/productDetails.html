@@ -171,7 +171,7 @@
         }
 
         #navInner {
-            max-width: 1300px;
+            max-width: 100%;
             margin: 0 auto;
             height: 100%;
             display: flex;
@@ -717,16 +717,49 @@
             }
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 860px) {
+            :root {
+                --header-h: 116px;
+            }
+
             #navInner {
-                padding: 0 16px;
-                gap: 12px;
+                flex-wrap: wrap;
+                padding: 10px 16px;
+                gap: 8px 12px;
+                height: 100%;
+                justify-content: space-between;
+            }
+
+            #navLogo {
+                order: 1;
+            }
+
+            .navActions {
+                order: 2;
+                margin-left: auto;
+                gap: 2px;
+            }
+
+            .navActionBtn {
+                padding: 6px 8px;
+                font-size: 0.6rem;
+            }
+
+            .navActionBtn svg {
+                width: 18px;
+                height: 18px;
             }
 
             #searchWrapper {
-                display: none;
+                display: block;
+                order: 3;
+                flex-basis: 100%;
+                max-width: 100%;
+                margin-top: 4px;
             }
+        }
 
+        @media (max-width: 640px) {
             #customerDetailsForm {
                 grid-template-columns: 1fr;
             }
@@ -1168,6 +1201,7 @@
         async function getsingleProductSummar() {
             let parmas = new URLSearchParams(window.location.search);
             let id = parmas.get("id");
+            qty = Number(parmas.get("qty")) || 1;
             if (!id) {
                 showToast("❌ Checkout ID missing. Returning to catalog.");
                 setTimeout(() => { window.location.href = "./allProduct.html"; }, 2000);
@@ -1198,13 +1232,37 @@
                         <div class="productSummaryrate">₹${finalPrice.toLocaleString("en-IN")}</div>
                         <div class="qty-picker">
                             <button type="button" class="qty-btn" id="minBtn" aria-label="Decrease quantity">−</button>
-                            <span class="qty-val" id="qty">1</span>
+                            <span class="qty-val" id="qty">${qty}</span>
                             <button type="button" class="qty-btn" id="maxBtn" aria-label="Increase quantity">+</button>
                         </div>
                     </div>`;
 
                 // Update invoice calculations initially
-                updateInvoice(rateVal, gstPercent, gstVal, finalPrice);
+                let subtotal = rateVal * qty;
+                let initGstVal = (subtotal * gstPercent) / 100;
+                let initTotal = Math.round(subtotal + initGstVal);
+                updateInvoice(subtotal, gstPercent, initGstVal, initTotal);
+
+                // Check stock
+                if (productData.Units === undefined || productData.Units === null || productData.Units <= 0) {
+                    qty = 0;
+                    document.getElementById("qty").textContent = 0;
+                    document.getElementById("minBtn").disabled = true;
+                    document.getElementById("maxBtn").disabled = true;
+                    
+                    const pBtn = document.getElementById("PlaceOrderBtn");
+                    pBtn.disabled = true;
+                    pBtn.textContent = "OUT OF STOCK";
+                    pBtn.style.background = "#64748b";
+                    pBtn.style.cursor = "not-allowed";
+                    
+                    showToast("⚠️ This product is out of stock.");
+                } else if (qty > productData.Units) {
+                    qty = productData.Units;
+                    document.getElementById("qty").textContent = qty;
+                    recalcInvoice();
+                    showToast(`⚠️ Quantity adjusted to maximum available stock (${productData.Units} units).`);
+                }
 
                 // Bind Min/Max buttons dynamically
                 document.getElementById("minBtn").addEventListener("click", () => {
@@ -1215,6 +1273,10 @@
                 });
 
                 document.getElementById("maxBtn").addEventListener("click", () => {
+                    if (productData && qty >= productData.Units) {
+                        showToast(`⚠️ Cannot add more. Only ${productData.Units} units in stock.`);
+                        return;
+                    }
                     qty++;
                     recalcInvoice();
                 });
@@ -1252,6 +1314,15 @@
 
         // Place Order main trigger
         document.getElementById("PlaceOrderBtn").addEventListener("click", async () => {
+            if (!productData || productData.Units === undefined || productData.Units === null || productData.Units <= 0) {
+                showToast("⚠️ This product is out of stock.");
+                return;
+            }
+            if (qty > productData.Units) {
+                showToast(`⚠️ Insufficient stock. Only ${productData.Units} units available.`);
+                return;
+            }
+
             let hasError = false;
 
             // Gather inputs
@@ -1358,8 +1429,15 @@
                     const order = await orderRes.json();
                     console.log("Razorpay Order Data:", order);
 
+                    // Dynamically fetch the Razorpay public key from the backend
+                    const keyRes = await fetch(`${BASE_URL}/get-razorpay-key`);
+                    if (!keyRes.ok) {
+                        throw new Error("Could not fetch Razorpay key from backend");
+                    }
+                    const { key } = await keyRes.json();
+
                     const options = {
-                        key: "rzp_test_T009i1fdo0TocB",
+                        key: key,
                         amount: order.amount,
                         currency: order.currency,
                         order_id: order.id,

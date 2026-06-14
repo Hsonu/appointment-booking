@@ -129,7 +129,7 @@
                             </svg>
                         </div>
                         <div class="statInfo">
-                            <div class="statValue">₹ —</div>
+                            <div class="statValue" id="totalRevenue">₹ —</div>
                             <div class="statLabel">Revenue</div>
                             <div class="statChange">↑ This month</div>
                         </div>
@@ -285,21 +285,31 @@
                 document.getElementById("totalProducts").textContent = products.length;
                 document.getElementById("totalOrders").textContent = orders.length;
 
-                const pending = orders.filter(o => o.orderStatus === "Order Confirmed" || o.orderStatus === "Order Packed").length;
+                const pending = orders.filter(o => o.orderStatus === "Order Confirmed" || o.orderStatus === "Order Packed" || o.orderStatus === "Order Placed").length;
                 document.getElementById("pendingOrders").textContent = pending;
+
+                // Calculate and display revenue (exclude cancelled/returned orders)
+                const excludeFromRevenue = ["Cancelled", "Return Requested", "Return Completed"];
+                const revenue = orders
+                    .filter(o => !excludeFromRevenue.includes(o.orderStatus))
+                    .reduce((sum, o) => sum + parseFloat(o.withGstTotalAmount || o.totalAmount || 0), 0);
+                document.getElementById("totalRevenue").textContent = "₹" + revenue.toLocaleString("en-IN");
 
                 const tbody = document.getElementById("recentOrdersBody");
                 const recent = orders.slice(-5).reverse();
                 if (recent.length === 0) return;
-                tbody.innerHTML = recent.map(o => `
+                tbody.innerHTML = recent.map(o => {
+                    const amt = parseFloat(o.withGstTotalAmount || o.totalAmount || 0);
+                    return `
         <tr>
           <td>${o.customerName || "—"}</td>
           <td>${o.productName || "—"}</td>
-          <td>₹${o.withGstTotalAmount || o.totalAmount || 0}</td>
+          <td>₹${amt.toLocaleString("en-IN")}</td>
           <td><span class="badge ${statusBadge(o.orderStatus)}">${o.orderStatus || "—"}</span></td>
           <td>${new Date(o.orderDate).toLocaleDateString("en-IN")}</td>
         </tr>
-      `).join("");
+      `;
+                }).join("");
             } catch (err) {
                 console.error(err);
             }
@@ -308,7 +318,7 @@
         function statusBadge(s) {
             if (!s) return "badge-gray";
             if (s === "Delivered") return "badge-success";
-            if (s === "Cancelled") return "badge-danger";
+            if (s === "Cancelled" || s === "Return Requested" || s === "Return Completed") return "badge-danger";
             if (["In Transit", "Shipped", "Out For Delivery"].includes(s)) return "badge-info";
             return "badge-warning";
         }

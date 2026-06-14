@@ -171,7 +171,7 @@
         }
 
         #navInner {
-            max-width: 1300px;
+            max-width: 100%;
             margin: 0 auto;
             height: 100%;
             display: flex;
@@ -618,16 +618,49 @@
             }
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 860px) {
+            :root {
+                --header-h: 116px;
+            }
+
             #navInner {
-                padding: 0 16px;
-                gap: 12px;
+                flex-wrap: wrap;
+                padding: 10px 16px;
+                gap: 8px 12px;
+                height: 100%;
+                justify-content: space-between;
+            }
+
+            #navLogo {
+                order: 1;
+            }
+
+            .navActions {
+                order: 2;
+                margin-left: auto;
+                gap: 2px;
+            }
+
+            .navActionBtn {
+                padding: 6px 8px;
+                font-size: 0.6rem;
+            }
+
+            .navActionBtn svg {
+                width: 18px;
+                height: 18px;
             }
 
             #searchWrapper {
-                display: none;
+                display: block;
+                order: 3;
+                flex-basis: 100%;
+                max-width: 100%;
+                margin-top: 4px;
             }
+        }
 
+        @media (max-width: 640px) {
             .footerTop {
                 grid-template-columns: 1fr;
                 gap: 28px;

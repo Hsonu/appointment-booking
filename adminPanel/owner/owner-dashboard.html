@@ -178,6 +178,58 @@
       text-align:center; padding:48px 24px;
       font-family:'Playfair Display',serif; color:var(--text-muted); font-size:0.9rem;
     }
+
+    /* Settings Form */
+    .fGroup {
+      margin-bottom: 18px;
+    }
+    .fLabel {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-body);
+      margin-bottom: 8px;
+    }
+    .inputWrap {
+      position: relative;
+    }
+    .fInput {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--cream);
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      font-size: 0.88rem;
+      color: var(--text-h);
+      font-family: inherit;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .fInput::placeholder {
+      color: var(--text-muted);
+    }
+    .fInput:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+      background: var(--white);
+    }
+
+    /* Alert styling */
+    .alert {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 9px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-bottom: 18px;
+    }
+    .alert.show {
+      display: flex;
+    }
   </style>
 </head>
 <body>
@@ -333,8 +385,12 @@
       document.getElementById("totalAdmins").textContent   = admins.length;
       document.getElementById("totalProducts").textContent = products.length;
       document.getElementById("totalOrders").textContent   = orders.length;
-      const rev = orders.reduce((s,o)=>s+parseFloat(o.totalAmount||o.total||0),0);
-      document.getElementById("totalRevenue").textContent  = rev>0 ? rev.toLocaleString("en-IN") : "0";
+      // Calculate revenue (exclude cancelled/returned orders)
+      const excludeFromRevenue = ["Cancelled", "Return Requested", "Return Completed"];
+      const rev = orders
+        .filter(o => !excludeFromRevenue.includes(o.orderStatus))
+        .reduce((s,o)=>s+parseFloat(o.withGstTotalAmount||o.totalAmount||o.total||0),0);
+      document.getElementById("totalRevenue").textContent  = rev>0 ? "₹" + rev.toLocaleString("en-IN") : "₹0";
 
       const wrap = document.getElementById("adminsTable");
       if (!admins.length) {

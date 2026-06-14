@@ -29,6 +29,11 @@ const addProductSchema = new mongoose.Schema({
     photo: {
         type: String
     },
+    // Multiple images support
+    photos: {
+        type: [String],
+        default: []
+    },
     gst: {
         type: Number
     },

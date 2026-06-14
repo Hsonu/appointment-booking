@@ -128,8 +128,16 @@
     <select class="filterInput" id="adminFilter"><option value="">All Admins</option></select>
     <select class="filterInput" id="statusFilter">
       <option value="">All Statuses</option>
-      <option>Pending</option><option>Confirmed</option><option>Shipped</option>
-      <option>In Transit</option><option>Out For Delivery</option><option>Delivered</option><option>Cancelled</option>
+      <option>Order Placed</option>
+      <option>Order Confirmed</option>
+      <option>Order Packed</option>
+      <option>Shipped</option>
+      <option>In Transit</option>
+      <option>Out For Delivery</option>
+      <option>Delivered</option>
+      <option>Cancelled</option>
+      <option>Return Requested</option>
+      <option>Return Completed</option>
     </select>
   </div>
 
@@ -156,10 +164,11 @@
   let allOrders = [];
 
   function statusBadge(s) {
-    if (!s||s==="Pending")      return `<span class="badge badge-pending">${s||"Pending"}</span>`;
-    if (s==="Confirmed")        return `<span class="badge badge-confirmed">${s}</span>`;
+    if (!s||s==="Order Placed")  return `<span class="badge badge-pending">${s||"Order Placed"}</span>`;
+    if (s==="Order Confirmed"||s==="Order Packed") return `<span class="badge badge-confirmed">${s}</span>`;
     if (s==="Delivered")        return `<span class="badge badge-delivered">${s}</span>`;
     if (s==="Cancelled")        return `<span class="badge badge-cancelled">${s}</span>`;
+    if (s==="Return Requested"||s==="Return Completed") return `<span class="badge badge-cancelled">${s}</span>`;
     return `<span class="badge badge-shipped">${s}</span>`;
   }
 
@@ -177,7 +186,7 @@
         <td><div class="customerName">${name}</div><div class="customerPhone">${phone}</div></td>
         <td><span class="adminTag">${admin}</span></td>
         <td>${statusBadge(o.orderStatus||o.status)}</td>
-        <td><span class="amount">₹${amt}</span></td>
+        <td><span class="amount">₹${parseFloat(amt || 0).toLocaleString("en-IN")}</span></td>
         <td><span class="dateText">${date}</span></td>
       </tr>`;
     }).join("");

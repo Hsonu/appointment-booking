@@ -342,8 +342,8 @@
         <td class="colSubCategory">${item.SubCategory || '—'}</td>
         <td class="colGst">${item.gst || 3}%</td>
         <td class="colUnits">${item.Units}</td>
-        <td class="colRate">₹${item.Rate}</td>
-        <td>₹${totalAmount}</td>
+        <td class="colRate">₹${Number(item.Rate).toLocaleString("en-IN")}</td>
+        <td>₹${totalAmount.toLocaleString("en-IN")}</td>
         <td style="font-size:0.75rem;color:#64748b;">${new Date().toLocaleDateString("en-IN")}</td>
         <td>
           <div style="display:flex;gap:6px;">
@@ -467,7 +467,7 @@
           // Update total cell
           const totalAmountCell = row.cells[7];
           if (totalAmountCell) {
-            totalAmountCell.textContent = `₹${updatedProduct.Units * updatedProduct.Rate}`;
+            totalAmountCell.textContent = `₹${(updatedProduct.Units * updatedProduct.Rate).toLocaleString("en-IN")}`;
           }
         }
         document.getElementById("editModal").classList.remove("show");

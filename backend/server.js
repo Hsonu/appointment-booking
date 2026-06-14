@@ -1,6 +1,7 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 const db = require("./db")
 const booking = require("./booking");
 const addProducts = require("./addProductSchema");
@@ -30,27 +31,27 @@ app.use(express.urlencoded({ extended: true }));
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
-    cloud_name: 'drfdoy1od',
-    api_key: '773861696165423',
-    api_secret: 'wzsOT_E4C6oWKIEncQsu0w1f4x8'
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
+    host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port: Number(process.env.SMTP_PORT) || 587,
     secure: false,
     auth: {
-        user: "sonurajsonuraj4515@gmail.com",
-        pass: "iznitdhhvsbwrmty"
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
     }
 })
 //Payment
 const razorpay = new Razorpar({
-    key_id: "rzp_test_T009i1fdo0TocB",
-    key_secret: "D8kdYPrci3teHsWfyuqp6Eii"
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
 
 })
-console.log(process.razorpay);
+console.log("Razorpay initialized with key:", process.env.RAZORPAY_KEY_ID);
 app.post("/create-order", async (req, res) => {
     try {
         const options = {
@@ -81,7 +82,7 @@ app.post("/verify-payment", (req, res) => {
     } = req.body;
 
     const sign = crypto
-        .createHmac("sha256", "D8kdYPrci3teHsWfyuqp6Eii")
+        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
         .update(`${razorpay_order_id}|${razorpay_payment_id}`)
         .digest("hex");
 
@@ -96,6 +97,10 @@ app.post("/verify-payment", (req, res) => {
         success: false,
         message: "Invalid Payment"
     });
+});
+
+app.get("/get-razorpay-key", (req, res) => {
+    res.json({ key: process.env.RAZORPAY_KEY_ID });
 });
 
 
@@ -208,18 +213,18 @@ app.post("/owner/change-credentials", async (req, res) => {
         const ownerKey = req.headers["x-owner-id"];
         const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
         if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
-        
+
         const { newAdminId, newPassword } = req.body;
         if (!newAdminId || !newPassword) {
             return res.status(400).json({ message: "New Owner ID and password are required" });
         }
-        
+
         // Ensure new ID does not conflict with existing admins
         const existing = await Admin.findOne({ adminId: newAdminId });
         if (existing && existing.role !== "owner") {
             return res.status(409).json({ message: "Admin ID already exists" });
         }
-        
+
         // Update database
         await Admin.updateOne({ role: "owner" }, { adminId: newAdminId, password: newPassword });
         res.status(200).json({ message: "Owner credentials updated successfully", adminId: newAdminId });
@@ -234,12 +239,12 @@ app.post("/owner/toggle-admin-status", async (req, res) => {
         const ownerKey = req.headers["x-owner-id"];
         const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
         if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
-        
+
         const { adminId, isActive } = req.body;
         if (!adminId || isActive === undefined) {
             return res.status(400).json({ message: "Admin ID and active status required" });
         }
-        
+
         await Admin.updateOne({ adminId, role: "admin" }, { isActive });
         res.status(200).json({ message: `Admin status set to ${isActive}` });
     } catch (err) {
@@ -253,27 +258,27 @@ app.post("/owner/update-admin", async (req, res) => {
         const ownerKey = req.headers["x-owner-id"];
         const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
         if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
-        
+
         const { adminId, newAdminId, newPassword } = req.body;
         if (!adminId || !newAdminId || !newPassword) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        
+
         // Check conflict
         const existing = await Admin.findOne({ adminId: newAdminId });
         if (existing && existing.adminId !== adminId) {
             return res.status(409).json({ message: "Admin ID already exists" });
         }
-        
+
         // Update admin credentials
         await Admin.updateOne({ adminId, role: "admin" }, { adminId: newAdminId, password: newPassword });
-        
+
         // Migrate database products/orders from old ID to new ID if ID was changed
         if (newAdminId !== adminId) {
             await addProducts.updateMany({ createdBy: adminId }, { createdBy: newAdminId });
             await placeOrderData.updateMany({ adminId: adminId }, { adminId: newAdminId });
         }
-        
+
         res.status(200).json({ message: "Admin updated successfully" });
     } catch (err) {
         res.status(500).json({ message: "Internal server error" });
@@ -286,7 +291,7 @@ app.delete("/owner/delete-admin/:adminId", async (req, res) => {
         const ownerKey = req.headers["x-owner-id"];
         const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
         if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
-        
+
         const adminId = req.params.adminId;
         await Admin.deleteOne({ adminId, role: "admin" });
         res.status(200).json({ message: "Admin account deleted" });
@@ -397,15 +402,18 @@ app.post("/addProduct", async (req, res) => {
         console.log(req.body);
         console.log(req.files);
 
-        const fille = req.files.photo;
+        // Handle multiple files: express-fileupload sends an array if multiple, single object if one
+        let fileList = req.files.photo;
+        if (!Array.isArray(fileList)) {
+            fileList = [fileList];
+        }
 
-        const jpgReiult = await cloudinary.uploader.upload(
-            fille.tempFilePath
-        );
-        console.time("API");
-        console.timeEnd("API");
+        // Upload all images to Cloudinary
+        const uploadPromises = fileList.map(file => cloudinary.uploader.upload(file.tempFilePath));
+        const uploadResults = await Promise.all(uploadPromises);
+        const photoUrls = uploadResults.map(r => r.secure_url);
 
-        console.log(jpgReiult);
+        console.log("Uploaded photos:", photoUrls);
 
         // Get the admin ID from request header (sent by admin panel)
         const createdBy = req.headers["x-admin-id"] || "admin";
@@ -417,7 +425,8 @@ app.post("/addProduct", async (req, res) => {
             Units: req.body.Units,
             Rate: req.body.Rate,
             description: req.body.description,
-            photo: jpgReiult.secure_url,
+            photo: photoUrls[0],         // First image (backward compat)
+            photos: photoUrls,           // All images
             gst: req.body.gst,
             createdBy
         };
@@ -482,12 +491,25 @@ app.put("/updateProduct/:id", async (req, res) => {
         const updateDataID = req.params.id;
         const { Productname, Category, SubCategory, description } = req.body;
 
-        let photoUrl = undefined;
+        let photoUrls = [];
         if (req.files && req.files.photo) {
-            const fille = req.files.photo;
-            const jpgResult = await cloudinary.uploader.upload(fille.tempFilePath);
-            photoUrl = jpgResult.secure_url;
+            let fileList = req.files.photo;
+            if (!Array.isArray(fileList)) {
+                fileList = [fileList];
+            }
+            const uploadPromises = fileList.map(file => cloudinary.uploader.upload(file.tempFilePath));
+            const uploadResults = await Promise.all(uploadPromises);
+            photoUrls = uploadResults.map(r => r.secure_url);
         }
+
+        // Parse existing photos to keep (sent as JSON string from frontend)
+        let existingPhotos = [];
+        if (req.body.existingPhotos) {
+            try { existingPhotos = JSON.parse(req.body.existingPhotos); } catch (e) { }
+        }
+
+        // Combine existing kept photos + newly uploaded photos
+        const allPhotos = [...existingPhotos, ...photoUrls];
 
         const updateFields = {
             description,
@@ -499,8 +521,9 @@ app.put("/updateProduct/:id", async (req, res) => {
             gst: req.body.gst !== undefined ? Number(req.body.gst) : undefined
         };
 
-        if (photoUrl) {
-            updateFields.photo = photoUrl;
+        if (allPhotos.length > 0) {
+            updateFields.photo = allPhotos[0];   // First image (backward compat)
+            updateFields.photos = allPhotos;      // All images
         }
 
         const updateProductName = await addProducts.findByIdAndUpdate(
@@ -566,7 +589,16 @@ app.post("/placeOrder", async (req, res) => {
         let adminId = "admin";
         if (req.body.productName) {
             const productRecord = await addProducts.findOne({ Productname: req.body.productName });
-            if (productRecord && productRecord.createdBy) {
+            if (!productRecord) {
+                return res.status(404).json({ message: "Product not found" });
+            }
+            if (productRecord.Units < req.body.qty) {
+                return res.status(400).json({ message: `Insufficient stock. Only ${productRecord.Units} units available.` });
+            }
+            productRecord.Units -= req.body.qty;
+            await productRecord.save();
+
+            if (productRecord.createdBy) {
                 adminId = productRecord.createdBy;
             }
         }
@@ -613,18 +645,45 @@ app.get("/statusSingleData/:id", async (req, res) => {
 //updateorderStatus
 
 app.put("/updateOrderStatus/:id", async (req, res) => {
-    const updateOrderStatus = req.params.id;
-    const finddatabaseid = await placeOrderData.findById(updateOrderStatus)
-    const updateStatus = req.body;
-    console.log(finddatabaseid);
-    finddatabaseid.orderStatus = updateStatus.status;
-    await finddatabaseid.save()
+    try {
+        const updateOrderStatus = req.params.id;
+        const finddatabaseid = await placeOrderData.findById(updateOrderStatus);
+        if (!finddatabaseid) {
+            return res.status(404).json({ message: "Order not found" });
+        }
 
+        const updateStatus = req.body;
+        const previousStatus = finddatabaseid.orderStatus;
+        const newStatus = updateStatus.status;
 
-    res.json({
-        message: "working"
-    })
+        if (previousStatus !== newStatus) {
+            const isCancelledOrReturned = (status) => status === "Cancelled" || status === "Returned";
 
+            if (isCancelledOrReturned(newStatus) && !isCancelledOrReturned(previousStatus)) {
+                // Restore stock
+                await addProducts.updateOne(
+                    { Productname: finddatabaseid.productName },
+                    { $inc: { Units: finddatabaseid.qty } }
+                );
+            } else if (!isCancelledOrReturned(newStatus) && isCancelledOrReturned(previousStatus)) {
+                // Transitioning back to active - recheck and deduct stock
+                const productRecord = await addProducts.findOne({ Productname: finddatabaseid.productName });
+                if (productRecord) {
+                    if (productRecord.Units < finddatabaseid.qty) {
+                        return res.status(400).json({ message: `Cannot change status. Insufficient stock (only ${productRecord.Units} available).` });
+                    }
+                    productRecord.Units -= finddatabaseid.qty;
+                    await productRecord.save();
+                }
+            }
+        }
+
+        finddatabaseid.orderStatus = newStatus;
+        await finddatabaseid.save();
+        res.json({ message: "working" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 })
 
 // add card

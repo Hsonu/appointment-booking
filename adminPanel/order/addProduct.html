@@ -59,8 +59,12 @@
             <div class="sidebarUserRole">Admin Account</div>
           </div>
         </div>
-        <button onclick="adminLogout()" style="width:100%;margin-top:10px;background:#fee2e2;color:#b91c1c;border:none;border-radius:8px;padding:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s;" onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        <button onclick="adminLogout()"
+          style="width:100%;margin-top:10px;background:#fee2e2;color:#b91c1c;border:none;border-radius:8px;padding:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s;"
+          onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+          </svg>
           Sign Out
         </button>
       </div>
@@ -140,9 +144,11 @@
                 <textarea class="formTextarea" id="inputDescription" placeholder="Describe the product…"></textarea>
               </div>
 
-              <!-- File Upload -->
+              <!-- File Upload (Multiple) -->
               <div class="formGroup" style="margin-top:4px;">
-                <label class="formLabel">Product Image *</label>
+                <label class="formLabel">Product Images * <small
+                    style="font-weight:400;color:#94a3b8;text-transform:none;letter-spacing:0;">(select
+                    multiple)</small></label>
                 <label class="dropZone" id="dropZone" for="FillPhoto">
                   <svg viewBox="0 0 24 24" stroke-width="1.5">
                     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
@@ -151,14 +157,14 @@
                   </svg>
                   <div class="dropZoneText">
                     <span>Click to upload</span> or drag &amp; drop<br>
-                    <small style="color:#94a3b8;">PNG, JPG, WEBP up to 10MB</small>
+                    <small style="color:#94a3b8;">PNG, JPG, WEBP up to 10MB · Multiple files allowed</small>
                   </div>
-                  <input type="file" id="FillPhoto" accept="image/*">
+                  <input type="file" id="FillPhoto" accept="image/*" multiple>
                 </label>
-                <div id="filePreview" style="display:none;margin-top:10px;">
-                  <img id="previewImg"
-                    style="height:100px;border-radius:8px;object-fit:cover;border:1px solid #e2e8f0;">
-                  <span id="fileName" style="font-size:0.78rem;color:#64748b;margin-left:10px;"></span>
+                <div id="filePreview" style="display:none;margin-top:12px;">
+                  <div id="previewGrid"
+                    style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;"></div>
+                  <div id="fileCount" style="font-size:0.75rem;color:#64748b;margin-top:8px;"></div>
                 </div>
               </div>
 
@@ -276,11 +282,43 @@
     const pGstNote = document.getElementById("pGstNote");
     const pUnits = document.getElementById("pUnits");
 
+    let selectedFiles = []; // Track all selected files
+
     function showAlert(msg, type = "error") {
       alertText.textContent = msg;
       formAlert.className = `alertBanner ${type} show`;
     }
     function hideAlert() { formAlert.classList.remove("show"); }
+
+    // Render preview grid for selected files
+    function renderImagePreviews() {
+      const grid = document.getElementById("previewGrid");
+      const countEl = document.getElementById("fileCount");
+      if (!selectedFiles.length) {
+        document.getElementById("filePreview").style.display = "none";
+        document.getElementById("previewImgBox").innerHTML = `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+        return;
+      }
+      document.getElementById("filePreview").style.display = "block";
+      countEl.textContent = `${selectedFiles.length} image${selectedFiles.length > 1 ? 's' : ''} selected`;
+      grid.innerHTML = selectedFiles.map((file, i) => {
+        const url = URL.createObjectURL(file);
+        return `<div style="position:relative;border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;aspect-ratio:1;">
+          <img src="${url}" style="width:100%;height:100%;object-fit:cover;">
+          <button type="button" onclick="removeFile(${i})" style="position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:rgba(239,68,68,0.9);color:#fff;border:none;font-size:0.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;">✕</button>
+          ${i === 0 ? '<div style="position:absolute;bottom:0;left:0;right:0;background:rgba(201,169,110,0.9);color:#fff;font-size:0.6rem;text-align:center;padding:2px;font-weight:600;">MAIN</div>' : ''}
+        </div>`;
+      }).join("");
+      // Update big preview with first image
+      const firstUrl = URL.createObjectURL(selectedFiles[0]);
+      document.getElementById("previewImgBox").innerHTML = `<img src="${firstUrl}" style="width:100%;height:200px;object-fit:cover;">`;
+    }
+
+    // Remove a file from selection
+    window.removeFile = function (index) {
+      selectedFiles.splice(index, 1);
+      renderImagePreviews();
+    };
 
     // Live calc + preview
     function calculateTotal() {
@@ -303,16 +341,12 @@
     inputProductName.addEventListener("input", () => pName.textContent = inputProductName.value || "Product Name");
     inputCategoryName.addEventListener("input", () => pCat.textContent = inputCategoryName.value || "Category");
 
-    // Image preview
+    // Image selection (multiple)
     FillPhoto.addEventListener("change", () => {
-      const file = FillPhoto.files[0];
-      if (!file) return;
-      const url = URL.createObjectURL(file);
-      document.getElementById("previewImg").src = url;
-      document.getElementById("fileName").textContent = file.name;
-      document.getElementById("filePreview").style.display = "flex";
-      // Update big preview
-      document.getElementById("previewImgBox").innerHTML = `<img src="${url}" style="width:100%;height:200px;object-fit:cover;">`;
+      const newFiles = Array.from(FillPhoto.files);
+      if (!newFiles.length) return;
+      selectedFiles = [...selectedFiles, ...newFiles];
+      renderImagePreviews();
     });
 
     // Drag & drop
@@ -320,8 +354,9 @@
     dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag"));
     dropZone.addEventListener("drop", e => {
       e.preventDefault(); dropZone.classList.remove("drag");
-      FillPhoto.files = e.dataTransfer.files;
-      FillPhoto.dispatchEvent(new Event("change"));
+      const newFiles = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith("image/"));
+      selectedFiles = [...selectedFiles, ...newFiles];
+      renderImagePreviews();
     });
 
     // Save
@@ -332,8 +367,8 @@
         showAlert("Please fill in all required fields (*).");
         return;
       }
-      if (!FillPhoto.files[0]) {
-        showAlert("Please select a product image.");
+      if (!selectedFiles.length) {
+        showAlert("Please select at least one product image.");
         return;
       }
       SaveBtn.textContent = "Saving…";
@@ -345,9 +380,13 @@
         formData.append("Rate", Number(inputRate.value));
         formData.append("Units", Number(inputUnits.value));
         formData.append("description", inputDescription.value);
-        formData.append("photo", FillPhoto.files[0]);
         formData.append("SubCategory", inputSubCategoryName.value);
         formData.append("gst", Number(inputGST.value));
+
+        // Append all selected images with same key 'photo'
+        selectedFiles.forEach(file => {
+          formData.append("photo", file);
+        });
 
         // Send admin ID header so product is linked to this admin
         const res = await fetch(`${BASE_URL}/addProduct`, { method: "POST", headers: { "x-admin-id": ADMIN_ID }, body: formData });
@@ -366,10 +405,10 @@
     function clearForm() {
       [inputProductName, inputCategoryName, inputSubCategoryName, inputUnits, inputRate, inputGST, inputDescription].forEach(el => el.value = "");
       totalGST.value = ""; TotalAmount.value = "";
-      document.getElementById("filePreview").style.display = "none";
+      selectedFiles = [];
+      renderImagePreviews();
       pName.textContent = "Product Name"; pCat.textContent = "Category";
       pPrice.textContent = "₹ 0"; pUnits.textContent = "In Stock · 0";
-      document.getElementById("previewImgBox").innerHTML = `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
     }
 
     async function loadRecentProducts() {

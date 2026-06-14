@@ -14,6 +14,30 @@
     .dot-delivered  { background:#10b981; }
     .dot-cancelled  { background:#ef4444; }
     .dot-other      { background:#94a3b8; }
+
+    /* Status dropdown in table rows */
+    .statusSelect {
+      padding: 6px 10px;
+      border: 1.5px solid #e8e0d5;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #3d3d45;
+      background: #faf8f5;
+      font-family: inherit;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.28s ease, box-shadow 0.28s ease;
+      min-width: 150px;
+    }
+    .statusSelect:focus {
+      border-color: #c9a96e;
+      box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+      background: #fff;
+    }
+    .statusSelect:hover {
+      border-color: #c9a96e;
+    }
   </style>
 </head>
 <body>
@@ -95,6 +119,7 @@
               <label class="formLabel">Status Filter</label>
               <select class="formInput formSelect" id="statusFilter">
                 <option value="">All Statuses</option>
+                <option>Order Placed</option>
                 <option>Order Confirmed</option>
                 <option>Order Packed</option>
                 <option>Shipped</option>
@@ -206,18 +231,21 @@
       return;
     }
 
-    tbody.innerHTML = data.map((item, idx) => `
+    tbody.innerHTML = data.map((item, idx) => {
+      const rateAmt = parseFloat(item.rate || 0);
+      const totalAmt = parseFloat(item.withGstTotalAmount || item.totalAmount || 0);
+      return `
       <tr>
         <td style="color:#94a3b8;font-size:0.75rem;">#${idx+1}</td>
         <td style="font-weight:600;color:#0f172a;">${item.customerName || "—"}</td>
         <td>${item.productName || "—"}</td>
         <td>${item.qty || "—"}</td>
-        <td>₹${item.rate || 0}</td>
+        <td>₹${rateAmt.toLocaleString("en-IN")}</td>
         <td>${item.gst || 0}%</td>
-        <td style="font-weight:600;">₹${item.withGstTotalAmount || item.totalAmount || 0}</td>
+        <td style="font-weight:600;">₹${totalAmt.toLocaleString("en-IN")}</td>
         <td>
           <select class="statusSelect" data-id="${item._id}">
-            ${["Order Confirmed","Order Packed","Shipped","In Transit","Out For Delivery","Delivered","Cancelled","Return Requested","Return Completed"]
+            ${["Order Placed","Order Confirmed","Order Packed","Shipped","In Transit","Out For Delivery","Delivered","Cancelled","Return Requested","Return Completed"]
               .map(s => `<option value="${s}" ${item.orderStatus === s ? "selected":""}>${s}</option>`).join("")}
           </select>
         </td>
@@ -228,7 +256,8 @@
           <button class="btn btn-primary btn-sm updateBtn" data-id="${item._id}">Update</button>
         </td>
       </tr>
-    `).join("");
+    `;
+    }).join("");
 
     // Attach update event listeners
     document.querySelectorAll(".updateBtn").forEach(btn => {

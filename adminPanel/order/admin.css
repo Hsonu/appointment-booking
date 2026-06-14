@@ -723,6 +723,50 @@ input, select, textarea { font-family: inherit; }
 }
 .modalSubtitle { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 24px; }
 
+/* ── MODAL OVERLAY (used by EditProduct, status pages) ── */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 16px;
+}
+.modalOverlay.show {
+  display: flex;
+}
+.modalOverlay .modalBox {
+  position: relative;
+  width: min(500px, 94vw);
+}
+.modalClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--gold-bg);
+  color: var(--text-muted);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  z-index: 10;
+}
+.modalClose:hover {
+  background: var(--danger-light);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
 /* ── SEARCH / FILTER BAR ── */
 .filterBar {
   display: flex; gap: 10px; align-items: center;
@@ -753,6 +797,18 @@ input, select, textarea { font-family: inherit; }
   transition: border-color var(--transition);
 }
 .filterSelect:focus { border-color: var(--gold); }
+
+/* Search / Filter Row */
+.searchRow {
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.searchRow .formGroup {
+  flex: 1;
+  min-width: 140px;
+}
 
 /* ── STATUS DOT ── */
 .statusDot {
@@ -861,3 +917,45 @@ input, select, textarea { font-family: inherit; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--gold-light); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ── DROP ZONE (File Upload) ── */
+.dropZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 16px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: var(--gold-bg);
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+  min-height: 140px;
+}
+.dropZone:hover {
+  border-color: var(--gold);
+  background: rgba(201, 169, 110, 0.06);
+}
+.dropZone.drag {
+  border-color: var(--gold) !important;
+  background: rgba(201, 169, 110, 0.1) !important;
+}
+.dropZone svg {
+  width: 32px; height: 32px;
+  stroke: var(--gold-dark); fill: none;
+  margin-bottom: 8px;
+}
+.dropZone input[type="file"] {
+  display: none;
+}
+.dropZoneText {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.dropZoneText span {
+  color: var(--gold-dark);
+  font-weight: 600;
+  text-decoration: underline;
+}

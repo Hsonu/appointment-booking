@@ -128,7 +128,7 @@
         }
 
         #navInner {
-            max-width: 1300px;
+            max-width: 100%;
             margin: 0 auto;
             height: 100%;
             display: flex;
@@ -621,6 +621,11 @@
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        .out-of-stock-img {
+            opacity: 0.65;
+            filter: grayscale(30%);
+        }
+
         .card-badge {
             position: absolute;
             top: 14px;
@@ -937,16 +942,49 @@
             }
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 860px) {
+            :root {
+                --header-h: 116px;
+            }
+
             #navInner {
-                padding: 0 16px;
-                gap: 12px;
+                flex-wrap: wrap;
+                padding: 10px 16px;
+                gap: 8px 12px;
+                height: 100%;
+                justify-content: space-between;
+            }
+
+            #navLogo {
+                order: 1;
+            }
+
+            .navActions {
+                order: 2;
+                margin-left: auto;
+                gap: 2px;
+            }
+
+            .navActionBtn {
+                padding: 6px 8px;
+                font-size: 0.6rem;
+            }
+
+            .navActionBtn svg {
+                width: 18px;
+                height: 18px;
             }
 
             #searchWrapper {
-                display: none;
+                display: block;
+                order: 3;
+                flex-basis: 100%;
+                max-width: 100%;
+                margin-top: 4px;
             }
+        }
 
+        @media (max-width: 640px) {
             #mainDivCard {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 14px;
@@ -955,6 +993,20 @@
 
             .card-img-wrap {
                 height: 200px;
+            }
+
+            .card-footer-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                margin-top: auto;
+            }
+
+            .BuyBtn {
+                width: 100%;
+                justify-content: center;
+                padding: 8px 12px;
+                font-size: 0.68rem;
             }
 
             .footerTop {
@@ -1462,6 +1514,8 @@
                 let finalPrice = Math.round(item.Rate + gstAmount);
                 let formatted = finalPrice.toLocaleString("en-IN");
 
+                const isOutOfStock = (item.Units === undefined || item.Units === null || item.Units <= 0);
+
                 const card = document.createElement("div");
                 card.className = "product-card";
                 card.setAttribute("role", "listitem");
@@ -1470,11 +1524,15 @@
 
                 card.innerHTML = `
                     <div class="card-img-wrap">
-                        <img class="product-img" src="${item.photo}" alt="${item.Productname}" loading="lazy">
+                        <img class="product-img ${isOutOfStock ? 'out-of-stock-img' : ''}" src="${item.photo}" alt="${item.Productname}" loading="lazy">
                         <div class="card-img-overlay">
                             <span class="card-quick-view">Quick View</span>
                         </div>
-                        <span class="card-badge">✦ New</span>
+                        ${isOutOfStock ? `
+                            <span class="card-badge" style="background:#dc2626; color:#fff;">Out of Stock</span>
+                        ` : `
+                            <span class="card-badge">✦ New</span>
+                        `}
                     </div>
                     <div class="card-body">
                         <div class="card-category" data-sub="${item.SubCategory || ''}">${item.Category || "Jewellery"}</div>
@@ -1484,10 +1542,16 @@
                                 <div class="card-price" data-raw="${finalPrice}">₹${formatted}</div>
                                 <div class="card-gst">✓ GST Included</div>
                             </div>
-                            <button class="BuyBtn" data-id="${item._id}" aria-label="Buy ${item.Productname}">
-                                Buy Now
-                                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </button>
+                            ${isOutOfStock ? `
+                                <button class="BuyBtn" data-id="${item._id}" style="background:#64748b; border-color:#64748b; opacity:0.9;" aria-label="View Details for ${item.Productname}">
+                                    Out of Stock
+                                </button>
+                            ` : `
+                                <button class="BuyBtn" data-id="${item._id}" aria-label="Buy ${item.Productname}">
+                                    Buy Now
+                                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </button>
+                            `}
                         </div>
                     </div>
                 `;
