@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Reports – SJ Jewellery Owner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --gold:#c9a96e; --gold-dark:#a8854e; --gold-light:#e8d4a8;
+      --gold-bg:#fdf7ee;
+      --cream:#faf8f5;
+      --white:#ffffff;
+      --text-h:#0d0d0f;
+      --text-body:#3d3d45;
+      --text-muted:#7a7a85;
+      --border:#e8e0d5;
+      --border-solid:#e8e0d5;
+      --transition:0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+    body { font-family:'Inter',sans-serif; background:var(--cream); color:var(--text-body); min-height:100vh; display:flex; }
+
+    /* ── Sidebar ── */
+    .sidebar { width:248px; background:var(--white); border-right:1px solid var(--border); display:flex; flex-direction:column; position:fixed; top:0; left:0; height:100vh; z-index:100; }
+    .sidebarTop { padding:22px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px; }
+    .sidebarLogoMark { width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,var(--gold),var(--gold-dark)); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 4px 14px rgba(201,169,110,0.25); }
+    .sidebarLogoMark svg { width:22px; height:22px; fill:var(--white); }
+    .sidebarBrandName { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:var(--text-h); letter-spacing:0.03em; }
+    .sidebarBrandRole { font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dark); margin-top:1px; }
+    
+    .sidebarNav { flex:1; padding:18px 12px; }
+    .navSection { font-size:0.6rem; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--text-muted); padding:6px 8px 4px; margin-top:8px; }
+    .navLink { display:flex; align-items:center; gap:11px; padding:10px 12px; border-radius:9px; font-size:0.83rem; font-weight:500; color:var(--text-body); text-decoration:none; transition:all var(--transition); margin-bottom:2px; }
+    .navLink:hover { background:var(--gold-bg); color:var(--gold-dark); }
+    .navLink.active { background:var(--gold-bg); color:var(--gold-dark); border:1px solid var(--gold); }
+    .navLink svg { width:16px; height:16px; flex-shrink:0; stroke:currentColor; fill:none; }
+    .sidebarFooter { padding:16px; border-top:1px solid var(--border); }
+    .ownerCard { padding:12px; border-radius:10px; background:var(--gold-bg); border:1px solid var(--gold); display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+    .ownerAvatar { width:36px; height:36px; border-radius:9px; flex-shrink:0; background:linear-gradient(135deg,var(--gold),var(--gold-dark)); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:#ffffff; }
+    .ownerName { font-size:0.82rem; font-weight:600; color:var(--text-h); }
+    .ownerRole { font-size:0.65rem; color:var(--gold-dark); }
+    .logoutBtn { width:100%; padding:9px; border:1px solid rgba(239,68,68,0.2); background:rgba(239,68,68,0.05); color:#dc2626; border-radius:8px; font-size:0.75rem; font-weight:600; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:7px; transition:all var(--transition); }
+    .logoutBtn:hover { background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); }
+
+    /* ── Main ── */
+    .main { margin-left:248px; flex:1; padding:32px; }
+    .topbar { margin-bottom:24px; display:flex; justify-content:space-between; align-items:flex-end; gap:20px; }
+    .pageEyebrow { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-dark); font-weight:600; margin-bottom:6px; }
+    .pageTitle { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--text-h); margin-bottom:4px; }
+    .goldLine { width:40px; height:2px; background:linear-gradient(90deg,var(--gold),transparent); border-radius:2px; margin:12px 0; }
+    .pageSubtitle { font-size:0.84rem; color:var(--text-muted); }
+
+    /* Summary Stats */
+    .statsGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:24px; }
+    .statCard {
+      background:var(--white); border:1px solid var(--border-solid);
+      border-radius:14px; padding:20px;
+      position:relative; overflow:hidden; transition:transform var(--transition), box-shadow var(--transition);
+      box-shadow:0 4px 12px rgba(0,0,0,0.02);
+    }
+    .statCard:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.05); }
+    .statCard::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg, var(--accent,var(--gold)), transparent);
+    }
+    .statCard.blue::before  { --accent:#3b82f6; }
+    .statCard.green::before { --accent:#10b981; }
+    .statCard.purple::before { --accent:#8b5cf6; }
+    
+    .statEmoji { font-size:1.4rem; margin-bottom:8px; }
+    .statNum { font-family:'Inter',sans-serif; font-size:1.55rem; font-weight:700; color:var(--text-h); line-height:1.2; }
+    .statLabel { font-size:0.75rem; color:var(--text-muted); margin-top:4px; letter-spacing:0.02em; font-weight:500; }
+
+    /* Filters Section */
+    .filterCard { background:var(--white); border:1px solid var(--border-solid); border-radius:14px; padding:20px; margin-bottom:24px; box-shadow:0 4px 12px rgba(0,0,0,0.02); }
+    .filterGrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; }
+    .fGroup { display:flex; flex-direction:column; gap:6px; }
+    .fLabel { font-size:0.68rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-muted); }
+    .filterInput {
+      background:var(--cream); border:1.5px solid var(--border-solid);
+      border-radius:8px; color:var(--text-h); padding:9px 12px;
+      font-size:0.83rem; font-family:inherit; outline:none; transition:border-color var(--transition), background var(--transition);
+      width:100%;
+    }
+    .filterInput:focus { border-color:var(--gold); background:var(--white); }
+    .filterInput::placeholder { color:var(--text-muted); }
+
+    /* Table & Actions */
+    .card { background:var(--white); border:1px solid var(--border-solid); border-radius:14px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.02); }
+    .cardHead { padding:16px 22px; border-bottom:1px solid var(--border-solid); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .cardTitle { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:600; color:var(--text-h); display:flex; align-items:center; gap:8px; }
+    .cardTitle svg { width:18px; height:18px; stroke:var(--gold-dark); fill:none; }
+    
+    .goldBtn {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 18px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+      color:#ffffff; border:none; border-radius:8px;
+      font-size:0.75rem; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;
+      text-decoration:none; cursor:pointer; font-family:inherit;
+      transition:all var(--transition);
+      box-shadow:0 4px 12px rgba(201,169,110,0.2);
+    }
+    .goldBtn:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(201,169,110,0.35); }
+    .goldBtn:active { transform:translateY(0); }
+
+    .tableWrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; min-width:850px; }
+    thead { background:var(--gold-bg); }
+    th { padding:12px 18px; text-align:left; font-size:0.65rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-dark); border-bottom:1px solid var(--border-solid); white-space:nowrap; }
+    td { padding:13px 18px; font-size:0.82rem; border-bottom:1px solid var(--border-solid); color:var(--text-body); vertical-align:middle; }
+    tr:last-child td { border-bottom:none; }
+    tr:hover td { background:var(--gold-bg); }
+
+    .customerName { font-weight:600; color:var(--text-h); }
+    .customerPhone { font-size:0.72rem; color:var(--text-muted); margin-top:2px; }
+    .adminTag { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:999px; font-size:0.7rem; font-weight:600; background:var(--gold-bg); color:var(--gold-dark); border:1px solid var(--gold); }
+    .adminTag::before { content:'✦'; font-size:0.55rem; }
+    
+    .badge { display:inline-block; padding:3px 10px; border-radius:999px; font-size:0.68rem; font-weight:600; letter-spacing:0.04em; }
+    .badge-pending   { background:rgba(245,158,11,0.08);  color:#d97706; border:1px solid rgba(245,158,11,0.2); }
+    .badge-confirmed { background:rgba(59,130,246,0.08);  color:#2563eb; border:1px solid rgba(59,130,246,0.2); }
+    .badge-shipped   { background:rgba(139,92,246,0.08);  color:#7c3aed; border:1px solid rgba(139,92,246,0.2); }
+    .badge-delivered { background:var(--gold-bg); color:var(--gold-dark); border:1px solid var(--gold); }
+    .badge-cancelled { background:rgba(239,68,68,0.08);   color:#dc2626; border:1px solid rgba(239,68,68,0.2); }
+    
+    .prodName { font-weight:600; color:var(--text-h); }
+    .prodMeta { font-size:0.72rem; color:var(--text-muted); margin-top:2px; }
+    .amount { font-family:'Inter',sans-serif; font-size:0.92rem; font-weight:600; color:var(--text-h); }
+    .dateText { font-size:0.75rem; color:var(--text-muted); }
+    .empty { text-align:center; padding:52px 24px; font-family:'Playfair Display',serif; color:var(--text-muted); font-size:0.95rem; }
+
+    .gstInfo { font-size:0.7rem; color:var(--text-muted); margin-top:1px; }
+    .paymentMethodPill { font-size:0.72rem; font-weight:500; color:var(--text-body); background:#f1f3f5; padding:2px 8px; border-radius:4px; }
+
+    /* Custom Multi-select Dropdown */
+    .dropdown-container {
+      position: relative;
+      width: 100%;
+    }
+    .dropdown-btn {
+      background: var(--cream);
+      border: 1.5px solid var(--border-solid);
+      border-radius: 8px;
+      color: var(--text-h);
+      padding: 9px 12px;
+      font-size: 0.83rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color var(--transition), background var(--transition);
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .dropdown-btn:focus {
+      border-color: var(--gold);
+      background: var(--white);
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      border: 1px solid var(--border-solid);
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      z-index: 100;
+      max-height: 240px;
+      overflow-y: auto;
+      padding: 6px 0;
+      margin-top: 4px;
+    }
+    .dropdown-menu.show {
+      display: block;
+    }
+    .dropdown-item {
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background var(--transition);
+      user-select: none;
+    }
+    .dropdown-item:hover {
+      background: var(--gold-bg);
+    }
+    .dropdown-item input[type="checkbox"] {
+      accent-color: var(--gold-dark);
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
+    .dropdown-item label {
+      font-size: 0.82rem;
+      cursor: pointer;
+      color: var(--text-body);
+      flex: 1;
+    }
+    .dropdown-divider {
+      height: 1px;
+      background: var(--border-solid);
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebarTop">
+    <div class="sidebarLogoMark">
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    </div>
+    <div>
+      <div class="sidebarBrandName">SJ Jewellery</div>
+      <div class="sidebarBrandRole">Owner Panel</div>
+    </div>
+  </div>
+  <nav class="sidebarNav">
+    <div class="navSection">Overview</div>
+    <a class="navLink" href="/owner/dashboard">
+      <svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a class="navLink" href="/owner/orders">
+      <svg viewBox="0 0 24 24" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+      All Orders
+    </a>
+    <a class="navLink active" href="/owner/reports">
+      <svg viewBox="0 0 24 24" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      Reports
+    </a>
+    <div class="navSection">Management</div>
+    <a class="navLink" href="/owner/create-admin">
+      <svg viewBox="0 0 24 24" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+      Create Admin
+    </a>
+  </nav>
+  <div class="sidebarFooter">
+    <div class="ownerCard">
+      <div class="ownerAvatar" id="ownerAvatarChar">O</div>
+      <div>
+        <div class="ownerName" id="ownerNameDisplay">Owner</div>
+        <div class="ownerRole">✦ Super Admin</div>
+      </div>
+    </div>
+    <button class="logoutBtn" onclick="ownerLogout()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      Sign Out
+    </button>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+  <div class="topbar">
+    <div>
+      <div class="pageEyebrow">Business Intelligence</div>
+      <div class="pageTitle">Sales & Orders Reports</div>
+      <div class="goldLine"></div>
+      <div class="pageSubtitle">Filter, analyze and export professional business registry documents</div>
+    </div>
+    <button class="goldBtn" id="generateReportBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      Generate Report (PDF)
+    </button>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="statsGrid">
+    <div class="statCard">
+      <div class="statEmoji">📊</div>
+      <div class="statNum" id="summaryTotalOrders">0</div>
+      <div class="statLabel">Total Orders</div>
+    </div>
+    <div class="statCard purple">
+      <div class="statEmoji">🛍️</div>
+      <div class="statNum" id="summaryItemsSold">0</div>
+      <div class="statLabel">Total Items Sold</div>
+    </div>
+    <div class="statCard blue">
+      <div class="statEmoji">💎</div>
+      <div class="statNum" id="summaryBaseAmount">₹0</div>
+      <div class="statLabel">Base Amount (Before Tax)</div>
+    </div>
+    <div class="statCard rose" style="--accent:#f59e0b;">
+      <div class="statEmoji">🧾</div>
+      <div class="statNum" id="summaryGstAmount">₹0</div>
+      <div class="statLabel">GST Tax Collected</div>
+    </div>
+    <div class="statCard green">
+      <div class="statEmoji">💰</div>
+      <div class="statNum" id="summaryGrossRevenue">₹0</div>
+      <div class="statLabel">Gross Amount (With Tax)</div>
+    </div>
+  </div>
+
+  <!-- Filters Block -->
+  <div class="filterCard">
+    <div class="filterGrid">
+      <div class="fGroup">
+        <label class="fLabel" for="searchInput">Search Registry</label>
+        <input class="filterInput" type="text" id="searchInput" placeholder="Customer name, phone, product...">
+      </div>
+      <div class="fGroup">
+        <label class="fLabel" for="startDate">Start Date</label>
+        <input class="filterInput" type="date" id="startDate">
+      </div>
+      <div class="fGroup">
+        <label class="fLabel" for="endDate">End Date</label>
+        <input class="filterInput" type="date" id="endDate">
+      </div>
+      <div class="fGroup">
+        <label class="fLabel" for="adminFilter">Admin Account</label>
+        <select class="filterInput" id="adminFilter">
+          <option value="">All Admins</option>
+        </select>
+      </div>
+      <div class="fGroup">
+        <label class="fLabel">Order Statuses</label>
+        <div class="dropdown-container" id="statusDropdownContainer">
+          <button type="button" class="dropdown-btn" id="statusDropdownBtn">
+            <span id="statusDropdownLabel">All Statuses</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition: transform var(--transition);"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="dropdown-menu" id="statusDropdownMenu">
+            <div class="dropdown-item" id="selectAllItem">
+              <input type="checkbox" id="status-all" checked>
+              <label for="status-all" style="font-weight: 600;">Select All</label>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item">
+              <input type="checkbox" class="status-checkbox" value="Order Placed" checked>
+              <label>Order Placed</label>
+            </div>
+            <div class="dropdown-item">
+              <input type="checkbox" class="status-checkbox" value="Order Confirmed" checked>
+              <label>Order Confirmed</label>
+            </div>
+            <div class="dropdown-item">
+              <input type="checkbox" class="status-checkbox" value="Order Packed" checked>
+              <label>Order Packed</label>
+            </div>
+            <div class="dropdown-item">
+              <input type="checkbox" class="status-checkbox" value="Shipped" checked>
+              <label>Shipped</label>
+            </div>
+            <div class="dropdown-item">
+              <input type="checkbox" class="status-checkbox" value="In Transit" checked>
+              <label>In Transit</label>
+            </div>
+            <div class="dropdown-item">
+              <input type="checkbox" class="status-checkbox" value="Out For Delivery" checked>
+              <label>Out For Delivery</label>
+            </div>
+            <div class="dropdown-item">
+              <input type="checkbox" class="status-checkbox" value="Delivered" checked>
+              <label>Delivered</label>
+            </div>
+            <div class="dropdown-item">
+              <input type="checkbox" class="status-checkbox" value="Cancelled" checked>
+              <label>Cancelled</label>
+            </div>
+            <div class="dropdown-item">
+              <input type="checkbox" class="status-checkbox" value="Return Requested" checked>
+              <label>Return Requested</label>
+            </div>
+            <div class="dropdown-item">
+              <input type="checkbox" class="status-checkbox" value="Return Completed" checked>
+              <label>Return Completed</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fGroup">
+        <label class="fLabel" for="paymentFilter">Payment Method</label>
+        <select class="filterInput" id="paymentFilter">
+          <option value="">All Methods</option>
+          <option>Online</option>
+          <option>Cash</option>
+          <option>COD</option>
+          <option>Card</option>
+          <option>UPI</option>
+        </select>
+      </div>
+      <div class="fGroup">
+        <label class="fLabel" for="sortBy">Sort By</label>
+        <select class="filterInput" id="sortBy">
+          <option value="date-desc">Date (Newest First)</option>
+          <option value="date-asc">Date (Oldest First)</option>
+          <option value="amount-desc">Amount (High to Low)</option>
+          <option value="amount-asc">Amount (Low to High)</option>
+          <option value="qty-desc">Qty (High to Low)</option>
+          <option value="qty-asc">Qty (Low to High)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Registry Table -->
+  <div class="card">
+    <div class="cardHead">
+      <div class="cardTitle">
+        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Filtered Order Registry
+      </div>
+      <div style="font-size: 0.78rem; font-weight: 600; color: var(--gold-dark);" id="filteredCount">0 entries matching</div>
+    </div>
+    <div class="tableWrap" id="tableWrap">
+      <div class="empty">Loading order records...</div>
+    </div>
+  </div>
+</main>
+
+<!-- jsPDF and jsPDF-AutoTable CDNs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+  const OWNER_ID = localStorage.getItem("ownerId");
+  if (!OWNER_ID) window.location.href = "/owner";
+  document.getElementById("ownerNameDisplay").textContent = OWNER_ID || "Owner";
+  document.getElementById("ownerAvatarChar").textContent  = (OWNER_ID||"O").charAt(0).toUpperCase();
+
+  function ownerLogout(){ 
+    localStorage.removeItem("ownerId"); 
+    localStorage.removeItem("ownerLoggedIn"); 
+    window.location.href="/owner"; 
+  }
+
+  const H = { "x-owner-id": OWNER_ID };
+  let allOrders = [];
+  let filteredOrders = [];
+
+  function statusBadge(s) {
+    const status = s || "Order Placed";
+    if (status === "Order Placed")  return `<span class="badge badge-pending">${status}</span>`;
+    if (status === "Order Confirmed" || status === "Order Packed") return `<span class="badge badge-confirmed">${status}</span>`;
+    if (status === "Delivered") return `<span class="badge badge-delivered">${status}</span>`;
+    if (status === "Cancelled" || status === "Return Requested" || status === "Return Completed") return `<span class="badge badge-cancelled">${status}</span>`;
+    return `<span class="badge badge-shipped">${status}</span>`;
+  }
+
+  async function loadData() {
+    try {
+      const [oRes, aRes] = await Promise.all([
+        fetch("/owner/all-orders", { headers: H }),
+        fetch("/owner/admins", { headers: H })
+      ]);
+      
+      allOrders = await oRes.json();
+      const admins = await aRes.json();
+      
+      const adminSel = document.getElementById("adminFilter");
+      admins.forEach(a => {
+        const opt = document.createElement("option");
+        opt.value = a.adminId;
+        opt.textContent = a.adminId;
+        adminSel.appendChild(opt);
+      });
+
+      applyFiltersAndSort();
+    } catch (e) {
+      console.error(e);
+      document.getElementById("tableWrap").innerHTML = '<div class="empty">Failed to load order data.</div>';
+    }
+  }
+
+  // Multi-select dropdown interaction
+  const statusDropdownBtn = document.getElementById("statusDropdownBtn");
+  const statusDropdownMenu = document.getElementById("statusDropdownMenu");
+  const statusDropdownContainer = document.getElementById("statusDropdownContainer");
+  const selectAllCheckbox = document.getElementById("status-all");
+  const statusCheckboxes = document.querySelectorAll(".status-checkbox");
+  const statusDropdownLabel = document.getElementById("statusDropdownLabel");
+
+  statusDropdownBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    statusDropdownMenu.classList.toggle("show");
+    const svg = statusDropdownBtn.querySelector("svg");
+    if (statusDropdownMenu.classList.contains("show")) {
+      svg.style.transform = "rotate(180deg)";
+    } else {
+      svg.style.transform = "rotate(0deg)";
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!statusDropdownContainer.contains(e.target)) {
+      statusDropdownMenu.classList.remove("show");
+      statusDropdownBtn.querySelector("svg").style.transform = "rotate(0deg)";
+    }
+  });
+
+  selectAllCheckbox.addEventListener("change", () => {
+    const isChecked = selectAllCheckbox.checked;
+    statusCheckboxes.forEach(cb => {
+      cb.checked = isChecked;
+    });
+    updateDropdownLabelAndFilter();
+  });
+
+  statusCheckboxes.forEach(cb => {
+    cb.addEventListener("change", () => {
+      const allChecked = Array.from(statusCheckboxes).every(c => c.checked);
+      const noneChecked = Array.from(statusCheckboxes).every(c => !c.checked);
+      selectAllCheckbox.checked = allChecked;
+      selectAllCheckbox.indeterminate = !allChecked && !noneChecked;
+      updateDropdownLabelAndFilter();
+    });
+  });
+
+  function updateDropdownLabelAndFilter() {
+    const checkedBoxes = Array.from(statusCheckboxes).filter(c => c.checked);
+    if (checkedBoxes.length === statusCheckboxes.length) {
+      statusDropdownLabel.textContent = "All Statuses";
+    } else if (checkedBoxes.length === 0) {
+      statusDropdownLabel.textContent = "No Status Selected";
+    } else if (checkedBoxes.length <= 2) {
+      statusDropdownLabel.textContent = checkedBoxes.map(c => c.value).join(", ");
+    } else {
+      statusDropdownLabel.textContent = `${checkedBoxes.length} Statuses Selected`;
+    }
+    applyFiltersAndSort();
+  }
+
+  function applyFiltersAndSort() {
+    const searchVal = document.getElementById("searchInput").value.toLowerCase().trim();
+    const startDateVal = document.getElementById("startDate").value;
+    const endDateVal = document.getElementById("endDate").value;
+    const adminVal = document.getElementById("adminFilter").value;
+    
+    // Get checked status values
+    const selectedStatuses = Array.from(statusCheckboxes)
+      .filter(c => c.checked)
+      .map(c => c.value);
+      
+    const paymentVal = document.getElementById("paymentFilter").value;
+    const sortVal = document.getElementById("sortBy").value;
+
+    // Filter
+    filteredOrders = allOrders.filter(o => {
+      // Search term match
+      const cName = (o.fullName || o.customerName || o.name || "").toLowerCase();
+      const cPhone = (o.phoneNumber || o.customerMobileNumber || o.phone || o.mobile || "").toString().toLowerCase();
+      const pName = (o.productName || "").toLowerCase();
+      const admin = (o.adminId || "admin").toLowerCase();
+      const matchesSearch = !searchVal || 
+        cName.includes(searchVal) || 
+        cPhone.includes(searchVal) || 
+        pName.includes(searchVal) || 
+        admin.includes(searchVal);
+
+      // Admin match
+      const matchesAdmin = !adminVal || (o.adminId || "admin") === adminVal;
+
+      // Status match (multi-select check)
+      const oStatus = o.orderStatus || o.status || "Order Placed";
+      const matchesStatus = selectedStatuses.includes(oStatus);
+
+      // Payment Method match
+      const pMethod = (o.paymentMethod || "").toLowerCase();
+      const matchesPayment = !paymentVal || pMethod.includes(paymentVal.toLowerCase());
+
+      // Date range match
+      let matchesDate = true;
+      if (o.orderDate) {
+        const oDate = new Date(o.orderDate);
+        oDate.setHours(0,0,0,0);
+        
+        if (startDateVal) {
+          const sDate = new Date(startDateVal);
+          sDate.setHours(0,0,0,0);
+          if (oDate < sDate) matchesDate = false;
+        }
+        if (endDateVal) {
+          const eDate = new Date(endDateVal);
+          eDate.setHours(23,59,59,999);
+          if (oDate > eDate) matchesDate = false;
+        }
+      } else if (startDateVal || endDateVal) {
+        matchesDate = false; // Has filters but no order date
+      }
+
+      return matchesSearch && matchesAdmin && matchesStatus && matchesPayment && matchesDate;
+    });
+
+    // Sort
+    filteredOrders.sort((a, b) => {
+      let valA, valB;
+      
+      if (sortVal.startsWith("date")) {
+        valA = a.orderDate ? new Date(a.orderDate).getTime() : 0;
+        valB = b.orderDate ? new Date(b.orderDate).getTime() : 0;
+        return sortVal.endsWith("desc") ? valB - valA : valA - valB;
+      }
+      
+      if (sortVal.startsWith("amount")) {
+        valA = parseFloat(a.withGstTotalAmount || a.totalAmount || a.total || 0);
+        valB = parseFloat(b.withGstTotalAmount || b.totalAmount || b.total || 0);
+        return sortVal.endsWith("desc") ? valB - valA : valA - valB;
+      }
+      
+      if (sortVal.startsWith("qty")) {
+        valA = parseInt(a.qty || 0);
+        valB = parseInt(b.qty || 0);
+        return sortVal.endsWith("desc") ? valB - valA : valA - valB;
+      }
+      
+      return 0;
+    });
+
+    // Calculate Summary statistics
+    const totalOrders = filteredOrders.length;
+    let baseTotal = 0;
+    let gstTotal = 0;
+    let grossTotal = 0;
+    let totalItems = 0;
+
+    filteredOrders.forEach(o => {
+      const qty = parseInt(o.qty || 0);
+      const rate = parseFloat(o.rate || o.amount || 0);
+      const baseAmt = parseFloat(o.totalAmount || (qty * rate) || 0);
+      const gstPercent = parseFloat(o.gst || 0);
+      const gstAmt = parseFloat(o.gstAmount || (baseAmt * gstPercent / 100) || 0);
+      const totalAmt = parseFloat(o.withGstTotalAmount || (baseAmt + gstAmt) || baseAmt || 0);
+
+      baseTotal += baseAmt;
+      gstTotal += gstAmt;
+      grossTotal += totalAmt;
+      totalItems += qty;
+    });
+
+    // Update Summary UI
+    document.getElementById("summaryTotalOrders").textContent = totalOrders.toLocaleString("en-IN");
+    document.getElementById("summaryItemsSold").textContent = totalItems.toLocaleString("en-IN");
+    document.getElementById("summaryBaseAmount").textContent = "₹" + baseTotal.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById("summaryGstAmount").textContent = "₹" + gstTotal.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById("summaryGrossRevenue").textContent = "₹" + grossTotal.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById("filteredCount").textContent = `${totalOrders} entries matching`;
+
+    renderTable();
+  }
+
+  function renderTable() {
+    const wrap = document.getElementById("tableWrap");
+    if (!filteredOrders.length) {
+      wrap.innerHTML = '<div class="empty">No matching order records found with current filters.</div>';
+      return;
+    }
+
+    const rows = filteredOrders.map(o => {
+      const name = o.fullName || o.customerName || o.name || "—";
+      const phone = o.phoneNumber || o.customerMobileNumber || o.phone || o.mobile || "—";
+      const product = o.productName || "—";
+      const qty = parseInt(o.qty || 0);
+      const rate = parseFloat(o.rate || o.amount || 0);
+      const baseAmt = parseFloat(o.totalAmount || (qty * rate) || 0);
+      const gstPercent = parseFloat(o.gst || 0);
+      const gstAmt = parseFloat(o.gstAmount || (baseAmt * gstPercent / 100) || 0);
+      const totalAmt = parseFloat(o.withGstTotalAmount || (baseAmt + gstAmt) || baseAmt || 0);
+      
+      const admin = o.adminId || "admin";
+      const date = o.orderDate ? new Date(o.orderDate).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric", hour: '2-digit', minute: '2-digit' }) : "—";
+      const payment = o.paymentMethod || "COD";
+      const status = o.orderStatus || o.status || "Order Placed";
+
+      return `<tr>
+        <td><span class="dateText">${date}</span></td>
+        <td><div class="customerName">${name}</div><div class="customerPhone">${phone}</div></td>
+        <td><div class="prodName">${product}</div></td>
+        <td style="text-align:center;"><strong>${qty}</strong></td>
+        <td>₹${rate.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
+        <td>₹${baseAmt.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
+        <td style="text-align:center;">${gstPercent > 0 ? `${gstPercent}%` : '0%'}</td>
+        <td>₹${gstAmt.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
+        <td><span class="amount">₹${totalAmt.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span></td>
+        <td>
+          ${statusBadge(status)}
+          <div style="margin-top: 5px;"><span class="adminTag">${admin}</span></div>
+          <div style="margin-top: 5px; font-size: 0.72rem; color: var(--text-muted);">${payment}</div>
+        </td>
+      </tr>`;
+    }).join("");
+
+    wrap.innerHTML = `<table>
+      <thead>
+        <tr>
+          <th>Date & Time</th>
+          <th>Customer</th>
+          <th>Product</th>
+          <th style="text-align:center;">Qty</th>
+          <th>Rate</th>
+          <th>Base Amount</th>
+          <th style="text-align:center;">GST %</th>
+          <th>GST Amount</th>
+          <th>Total Amount</th>
+          <th>Status / Admin</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>`;
+  }
+
+  // Register Filter Events
+  document.getElementById("searchInput").addEventListener("input", applyFiltersAndSort);
+  document.getElementById("startDate").addEventListener("change", applyFiltersAndSort);
+  document.getElementById("endDate").addEventListener("change", applyFiltersAndSort);
+  document.getElementById("adminFilter").addEventListener("change", applyFiltersAndSort);
+  document.getElementById("paymentFilter").addEventListener("change", applyFiltersAndSort);
+  document.getElementById("sortBy").addEventListener("change", applyFiltersAndSort);
+
+  // PDF Generation Function
+  document.getElementById("generateReportBtn").addEventListener("click", () => {
+    if (filteredOrders.length === 0) {
+      alert("No data available to generate report. Adjust your filters.");
+      return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    
+    // Create Landscape A4 Document
+    const doc = new jsPDF({
+      orientation: "landscape",
+      unit: "mm",
+      format: "a4"
+    });
+
+    // Color definitions matching the design
+    const colorGold = [201, 169, 110]; // #c9a96e
+    const colorGoldDark = [168, 133, 78]; // #a8854e
+    const colorDarkText = [13, 13, 15]; // #0d0d0f
+    const colorMutedText = [122, 122, 133]; // #7a7a85
+
+    // Title & Brand Header
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(22);
+    doc.setTextColor(colorGoldDark[0], colorGoldDark[1], colorGoldDark[2]);
+    doc.text("SJ JEWELLERY", 14, 18);
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(colorMutedText[0], colorMutedText[1], colorMutedText[2]);
+    doc.text("Owner Panel Business Reports & Analytics Registry", 14, 23);
+
+    // Current Date
+    const now = new Date().toLocaleString("en-IN");
+    doc.text(`Generated: ${now}`, 297 - 14, 18, { align: "right" });
+    doc.text(`Operator: Owner (Super Admin)`, 297 - 14, 23, { align: "right" });
+
+    // Gold decorative horizontal rule
+    doc.setDrawColor(colorGold[0], colorGold[1], colorGold[2]);
+    doc.setLineWidth(0.6);
+    doc.line(14, 26, 297 - 14, 26);
+
+    // Filter Constraints summary banner
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.setTextColor(colorDarkText[0], colorDarkText[1], colorDarkText[2]);
+    
+    let filterSummary = "Active Filter Settings: ";
+    const sTerm = document.getElementById("searchInput").value.trim();
+    const sDate = document.getElementById("startDate").value;
+    const eDate = document.getElementById("endDate").value;
+    const adm = document.getElementById("adminFilter").value;
+    
+    // Multi-select status summary
+    const checkedBoxes = Array.from(statusCheckboxes).filter(c => c.checked);
+    let statText = "";
+    if (checkedBoxes.length === statusCheckboxes.length) {
+      statText = "All Statuses";
+    } else if (checkedBoxes.length === 0) {
+      statText = "None";
+    } else {
+      statText = checkedBoxes.map(c => c.value).join(", ");
+    }
+    
+    const paym = document.getElementById("paymentFilter").value;
+    
+    let filterPieces = [];
+    if (sTerm) filterPieces.push(`Search="${sTerm}"`);
+    if (sDate || eDate) filterPieces.push(`DateRange=(${sDate || 'Start'} to ${eDate || 'End'})`);
+    if (adm) filterPieces.push(`Admin="${adm}"`);
+    if (checkedBoxes.length < statusCheckboxes.length) {
+      filterPieces.push(`Statuses="${statText}"`);
+    }
+    if (paym) filterPieces.push(`Payment="${paym}"`);
+    
+    if (filterPieces.length === 0) {
+      filterSummary += "All Registry Data (No filter limits)";
+    } else {
+      filterSummary += filterPieces.join(" | ");
+    }
+    
+    doc.setFont("helvetica", "normal");
+    doc.text(filterSummary, 14, 32);
+
+    // Summary Metric Boxes Layout (Drawn client-side inside PDF)
+    // Calculating metrics
+    let grossTotal = 0;
+    let baseTotal = 0;
+    let gstTotal = 0;
+    let itemsTotal = 0;
+
+    filteredOrders.forEach(o => {
+      const qty = parseInt(o.qty || 0);
+      const rate = parseFloat(o.rate || o.amount || 0);
+      const baseAmt = parseFloat(o.totalAmount || (qty * rate) || 0);
+      const gstPercent = parseFloat(o.gst || 0);
+      const gstAmt = parseFloat(o.gstAmount || (baseAmt * gstPercent / 100) || 0);
+      const totalAmt = parseFloat(o.withGstTotalAmount || (baseAmt + gstAmt) || baseAmt || 0);
+
+      grossTotal += totalAmt;
+      baseTotal += baseAmt;
+      gstTotal += gstAmt;
+      itemsTotal += qty;
+    });
+
+    const boxWidth = 51;
+    const boxHeight = 16;
+    const startY = 36;
+    const gap = 4;
+
+    const drawStatBox = (x, label, value, color) => {
+      doc.setFillColor(250, 248, 245); // Cream bg
+      doc.setDrawColor(232, 224, 213); // Border
+      doc.setLineWidth(0.3);
+      doc.rect(x, startY, boxWidth, boxHeight, "FD");
+      
+      // Top accent colored border
+      doc.setFillColor(color[0], color[1], color[2]);
+      doc.rect(x, startY, boxWidth, 1.2, "F");
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(7.5);
+      doc.setTextColor(colorMutedText[0], colorMutedText[1], colorMutedText[2]);
+      doc.text(label, x + 3, startY + 5.5);
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10.5);
+      doc.setTextColor(colorDarkText[0], colorDarkText[1], colorDarkText[2]);
+      doc.text(value, x + 3, startY + 11.5);
+    };
+
+    drawStatBox(14, "TOTAL ORDERS", `${filteredOrders.length} bookings`, colorGoldDark);
+    drawStatBox(14 + (boxWidth + gap), "TOTAL ITEMS SOLD", `${itemsTotal} items`, [139, 92, 246]);
+    drawStatBox(14 + (boxWidth + gap)*2, "BASE AMT (PRE-TAX)", `INR ${baseTotal.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, [59, 130, 246]);
+    drawStatBox(14 + (boxWidth + gap)*3, "GST TAX COLLECTED", `INR ${gstTotal.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, [245, 158, 11]);
+    drawStatBox(14 + (boxWidth + gap)*4, "GROSS REVENUE", `INR ${grossTotal.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, [16, 185, 129]);
+
+    // Data Table headers & rows
+    const tableHeaders = [
+      ["Date & Time", "Customer / Admin", "Product Name", "Qty", "Rate (INR)", "Base (INR)", "GST %", "GST Amt", "Total (INR)", "Status"]
+    ];
+
+    const tableRows = filteredOrders.map(o => {
+      const dateStr = o.orderDate ? new Date(o.orderDate).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "—";
+      const name = o.fullName || o.customerName || o.name || "—";
+      const phone = o.phoneNumber || o.customerMobileNumber || o.phone || o.mobile || "—";
+      const admin = o.adminId || "admin";
+      const customerStr = `${name}\nTel: ${phone}\nBy: ${admin}`;
+      
+      const product = o.productName || "—";
+      const qty = parseInt(o.qty || 0);
+      const rate = parseFloat(o.rate || o.amount || 0);
+      const baseAmt = parseFloat(o.totalAmount || (qty * rate) || 0);
+      const gstPercent = parseFloat(o.gst || 0);
+      const gstAmt = parseFloat(o.gstAmount || (baseAmt * gstPercent / 100) || 0);
+      const totalAmt = parseFloat(o.withGstTotalAmount || (baseAmt + gstAmt) || baseAmt || 0);
+      const status = o.orderStatus || o.status || "Order Placed";
+      const payM = o.paymentMethod || "COD";
+
+      return [
+        dateStr,
+        customerStr,
+        product,
+        qty.toString(),
+        rate.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+        baseAmt.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+        gstPercent > 0 ? `${gstPercent}%` : '0%',
+        gstAmt.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+        totalAmt.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+        `${status}\n(${payM})`
+      ];
+    });
+
+    // AutoTable layout logic
+    doc.autoTable({
+      startY: startY + boxHeight + 6,
+      head: tableHeaders,
+      body: tableRows,
+      theme: "grid",
+      headStyles: {
+        fillColor: [201, 169, 110], // Gold theme colors
+        textColor: [13, 13, 15],
+        fontStyle: "bold",
+        fontSize: 7.5,
+        halign: "left",
+        valign: "middle"
+      },
+      bodyStyles: {
+        fontSize: 7,
+        textColor: [61, 61, 69],
+        valign: "top"
+      },
+      alternateRowStyles: {
+        fillColor: [253, 247, 238] // Very light gold cream bg
+      },
+      columnStyles: {
+        0: { cellWidth: 26 }, // Date
+        1: { cellWidth: 35 }, // Customer
+        2: { cellWidth: 42 }, // Product Name
+        3: { cellWidth: 10, halign: "center" }, // Qty
+        4: { cellWidth: 20, halign: "right" }, // Rate
+        5: { cellWidth: 22, halign: "right" }, // Base
+        6: { cellWidth: 12, halign: "center" }, // GST %
+        7: { cellWidth: 22, halign: "right" }, // GST Amt
+        8: { cellWidth: 25, fontStyle: "bold", halign: "right" }, // Total Amount
+        9: { cellWidth: 25 }  // Status
+      },
+      margin: { left: 14, right: 14 },
+      didDrawPage: (data) => {
+        // Footer signature & page numbers
+        const pageCount = doc.internal.getNumberOfPages();
+        doc.setFontSize(7.5);
+        doc.setTextColor(colorMutedText[0], colorMutedText[1], colorMutedText[2]);
+        doc.text(
+          `Page ${data.pageNumber} of ${pageCount}`,
+          297 - 14,
+          210 - 8,
+          { align: "right" }
+        );
+        doc.text(
+          "Confidential Document — SJ Jewellery Super Admin Auditing Registry",
+          14,
+          210 - 8
+        );
+      }
+    });
+
+    // Output blob and open in new tab
+    const pdfBlob = doc.output("blob");
+    const blobUrl = URL.createObjectURL(pdfBlob);
+    window.open(blobUrl, "_blank");
+  });
+
+  loadData();
+</script>
+</body>
+</html>

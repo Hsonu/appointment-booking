@@ -1,188 +1,460 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Owner Dashboard – SJ Jewellery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <style>
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    :root {
-      --gold:#c9a96e; --gold-dark:#a8854e; --gold-light:#e8d4a8;
-      --gold-bg:#fdf7ee;
-      --cream:#faf8f5;
-      --white:#ffffff;
-      --text-h:#0d0d0f;
-      --text-body:#3d3d45;
-      --text-muted:#7a7a85;
-      --border:#e8e0d5;
-      --border-solid:#e8e0d5;
-      --transition:0.28s cubic-bezier(0.4,0,0.2,1);
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    body { font-family:'Inter',sans-serif; background:var(--cream); color:var(--text-body); min-height:100vh; display:flex; }
+
+    :root {
+      --gold: #c9a96e;
+      --gold-dark: #a8854e;
+      --gold-light: #e8d4a8;
+      --gold-bg: #fdf7ee;
+      --cream: #faf8f5;
+      --white: #ffffff;
+      --text-h: #0d0d0f;
+      --text-body: #3d3d45;
+      --text-muted: #7a7a85;
+      --border: #e8e0d5;
+      --border-solid: #e8e0d5;
+      --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text-body);
+      min-height: 100vh;
+      display: flex;
+    }
 
     /* ── Sidebar ── */
     .sidebar {
-      width:248px; background:var(--white); border-right:1px solid var(--border);
-      display:flex; flex-direction:column; position:fixed; top:0; left:0; height:100vh; z-index:100;
+      width: 248px;
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 100;
     }
+
     .sidebarTop {
-      padding:22px 20px; border-bottom:1px solid var(--border);
-      display:flex; align-items:center; gap:12px;
+      padding: 22px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
+
     .sidebarLogoMark {
-      width:40px; height:40px; border-radius:10px;
-      background:linear-gradient(135deg,var(--gold),var(--gold-dark));
-      display:flex; align-items:center; justify-content:center; flex-shrink:0;
-      box-shadow:0 4px 14px rgba(201,169,110,0.2);
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(201, 169, 110, 0.2);
     }
-    .sidebarLogoMark svg { width:22px; height:22px; fill:var(--white); }
+
+    .sidebarLogoMark svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--white);
+    }
+
     .sidebarBrandName {
-      font-family:'Playfair Display',serif;
-      font-size:0.95rem; font-weight:700; color:var(--text-h); letter-spacing:0.03em;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-h);
+      letter-spacing: 0.03em;
     }
+
     .sidebarBrandRole {
-      font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase;
-      color:var(--gold-dark); margin-top:1px;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-top: 1px;
     }
 
-    .sidebarNav { flex:1; padding:18px 12px; overflow-y:auto; }
-    .navSection { font-size:0.6rem; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--text-muted); padding:6px 8px 4px; margin-top:8px; }
+    .sidebarNav {
+      flex: 1;
+      padding: 18px 12px;
+      overflow-y: auto;
+    }
+
+    .navSection {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 6px 8px 4px;
+      margin-top: 8px;
+    }
+
     .navLink {
-      display:flex; align-items:center; gap:11px;
-      padding:10px 12px; border-radius:9px;
-      font-size:0.83rem; font-weight:500; color:var(--text-body);
-      text-decoration:none; transition:all var(--transition); margin-bottom:2px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 10px 12px;
+      border-radius: 9px;
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: var(--text-body);
+      text-decoration: none;
+      transition: all var(--transition);
+      margin-bottom: 2px;
     }
-    .navLink:hover { background:var(--gold-bg); color:var(--gold-dark); }
-    .navLink.active { background:var(--gold-bg); color:var(--gold-dark); border:1px solid var(--gold); }
-    .navLink svg { width:16px; height:16px; flex-shrink:0; stroke:currentColor; fill:none; }
 
-    .sidebarFooter { padding:16px; border-top:1px solid var(--border); }
+    .navLink:hover {
+      background: var(--gold-bg);
+      color: var(--gold-dark);
+    }
+
+    .navLink.active {
+      background: var(--gold-bg);
+      color: var(--gold-dark);
+      border: 1px solid var(--gold);
+    }
+
+    .navLink svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    .sidebarFooter {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
     .ownerCard {
-      padding:12px; border-radius:10px;
-      background:var(--gold-bg); border:1px solid var(--gold);
-      display:flex; align-items:center; gap:10px; margin-bottom:10px;
+      padding: 12px;
+      border-radius: 10px;
+      background: var(--gold-bg);
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
     }
+
     .ownerAvatar {
-      width:36px; height:36px; border-radius:9px; flex-shrink:0;
-      background:linear-gradient(135deg,var(--gold),var(--gold-dark));
-      display:flex; align-items:center; justify-content:center;
-      font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:#ffffff;
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
     }
-    .ownerName { font-size:0.82rem; font-weight:600; color:var(--text-h); }
-    .ownerRole { font-size:0.65rem; color:var(--gold-dark); }
+
+    .ownerName {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-h);
+    }
+
+    .ownerRole {
+      font-size: 0.65rem;
+      color: var(--gold-dark);
+    }
+
     .logoutBtn {
-      width:100%; padding:9px; border:1px solid rgba(239,68,68,0.2);
-      background:rgba(239,68,68,0.05); color:#dc2626;
-      border-radius:8px; font-size:0.75rem; font-weight:600;
-      cursor:pointer; font-family:inherit;
-      display:flex; align-items:center; justify-content:center; gap:7px;
-      transition:all var(--transition);
+      width: 100%;
+      padding: 9px;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      background: rgba(239, 68, 68, 0.05);
+      color: #dc2626;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all var(--transition);
     }
-    .logoutBtn:hover { background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); }
+
+    .logoutBtn:hover {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.3);
+    }
 
     /* ── Main ── */
-    .main { margin-left:248px; flex:1; padding:32px; }
+    .main {
+      margin-left: 248px;
+      flex: 1;
+      padding: 32px;
+    }
 
     /* Topbar */
-    .topbar { margin-bottom:30px; }
+    .topbar {
+      margin-bottom: 30px;
+    }
+
     .pageEyebrow {
-      font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase;
-      color:var(--gold-dark); font-weight:600; margin-bottom:6px;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      font-weight: 600;
+      margin-bottom: 6px;
     }
+
     .pageTitle {
-      font-family:'Playfair Display',serif;
-      font-size:1.8rem; font-weight:700; color:var(--text-h); margin-bottom:4px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-h);
+      margin-bottom: 4px;
     }
-    .pageSubtitle { font-size:0.84rem; color:var(--text-muted); }
+
+    .pageSubtitle {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
 
     /* Gold divider */
-    .goldLine { width:40px; height:2px; background:linear-gradient(90deg,var(--gold),transparent); border-radius:2px; margin:14px 0; }
+    .goldLine {
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      border-radius: 2px;
+      margin: 14px 0;
+    }
 
     /* Stats */
-    .statsGrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:16px; margin-bottom:30px; }
+    .statsGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
     .statCard {
-      background:var(--white); border:1px solid var(--border-solid);
-      border-radius:14px; padding:22px 22px 20px;
-      position:relative; overflow:hidden; transition:transform var(--transition);
-      box-shadow:0 4px 12px rgba(0,0,0,0.02);
+      background: var(--white);
+      border: 1px solid var(--border-solid);
+      border-radius: 14px;
+      padding: 22px 22px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
     }
-    .statCard:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.05); }
+
+    .statCard:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
     .statCard::before {
-      content:''; position:absolute; top:0; left:0; right:0; height:2.5px;
-      background:linear-gradient(90deg, var(--accent,var(--gold)), transparent);
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2.5px;
+      background: linear-gradient(90deg, var(--accent, var(--gold)), transparent);
     }
-    .statCard.green::before { --accent:#10b981; }
-    .statCard.blue::before  { --accent:#3b82f6; }
-    .statCard.rose::before  { --accent:#f43f5e; }
-    .statEmoji { font-size:1.5rem; margin-bottom:12px; }
+
+    .statCard.green::before {
+      --accent: #10b981;
+    }
+
+    .statCard.blue::before {
+      --accent: #3b82f6;
+    }
+
+    .statCard.rose::before {
+      --accent: #f43f5e;
+    }
+
+    .statEmoji {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+
     .statNum {
-      font-family:'Playfair Display',serif;
-      font-size:2.2rem; font-weight:700; color:var(--text-h); line-height:1;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-h);
+      line-height: 1;
     }
-    .statLabel { font-size:0.75rem; color:var(--text-muted); margin-top:5px; letter-spacing:0.03em; }
+
+    .statLabel {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 5px;
+      letter-spacing: 0.03em;
+    }
 
     /* Section cards */
     .card {
-      background:var(--white); border:1px solid var(--border-solid);
-      border-radius:14px; overflow:hidden; margin-bottom:22px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.02);
+      background: var(--white);
+      border: 1px solid var(--border-solid);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
     }
-    .cardHead {
-      padding:16px 22px; border-bottom:1px solid var(--border-solid);
-      display:flex; align-items:center; justify-content:space-between;
-    }
-    .cardTitle {
-      font-family:'Playfair Display',serif;
-      font-size:1rem; font-weight:600; color:var(--text-h);
-      display:flex; align-items:center; gap:8px;
-    }
-    .cardTitle svg { width:17px; height:17px; stroke:var(--gold-dark); fill:none; }
-    .goldBtn {
-      display:inline-flex; align-items:center; gap:7px;
-      padding:8px 16px;
-      background:linear-gradient(135deg,var(--gold),var(--gold-dark));
-      color:var(--text-h); border:none; border-radius:8px;
-      font-size:0.75rem; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;
-      text-decoration:none; cursor:pointer; font-family:inherit;
-      transition:all var(--transition);
-    }
-    .goldBtn:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(201,169,110,0.3); }
 
-    table { width:100%; border-collapse:collapse; }
-    thead { background:var(--gold-bg); }
+    .cardHead {
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border-solid);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cardTitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-h);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cardTitle svg {
+      width: 17px;
+      height: 17px;
+      stroke: var(--gold-dark);
+      fill: none;
+    }
+
+    .goldBtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: var(--text-h);
+      border: none;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all var(--transition);
+    }
+
+    .goldBtn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(201, 169, 110, 0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: var(--gold-bg);
+    }
+
     th {
-      padding:11px 18px; text-align:left;
-      font-size:0.65rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
-      color:var(--gold-dark); border-bottom:1px solid var(--border-solid);
+      padding: 11px 18px;
+      text-align: left;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      border-bottom: 1px solid var(--border-solid);
     }
+
     td {
-      padding:13px 18px; font-size:0.83rem;
-      border-bottom:1px solid var(--border-solid);
-      color:var(--text-body);
+      padding: 13px 18px;
+      font-size: 0.83rem;
+      border-bottom: 1px solid var(--border-solid);
+      color: var(--text-body);
     }
-    tr:last-child td { border-bottom:none; }
-    tr:hover td { background:var(--gold-bg); }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--gold-bg);
+    }
 
     .pill {
-      display:inline-flex; align-items:center; gap:5px;
-      padding:3px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
     }
-    .pill.admin { background:var(--gold-bg); color:var(--gold-dark); border:1px solid var(--gold); }
-    .statMini { font-size:0.82rem; font-weight:600; color:var(--text-h); }
-    .statMiniLabel { font-size:0.7rem; color:var(--text-muted); }
+
+    .pill.admin {
+      background: var(--gold-bg);
+      color: var(--gold-dark);
+      border: 1px solid var(--gold);
+    }
+
+    .statMini {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-h);
+    }
+
+    .statMiniLabel {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
     .empty {
-      text-align:center; padding:48px 24px;
-      font-family:'Playfair Display',serif; color:var(--text-muted); font-size:0.9rem;
+      text-align: center;
+      padding: 48px 24px;
+      font-family: 'Playfair Display', serif;
+      color: var(--text-muted);
+      font-size: 0.9rem;
     }
 
     /* Settings Form */
     .fGroup {
       margin-bottom: 18px;
     }
+
     .fLabel {
       display: block;
       font-size: 0.7rem;
@@ -192,9 +464,11 @@
       color: var(--text-body);
       margin-bottom: 8px;
     }
+
     .inputWrap {
       position: relative;
     }
+
     .fInput {
       width: 100%;
       padding: 11px 14px;
@@ -207,9 +481,11 @@
       outline: none;
       transition: border-color var(--transition), box-shadow var(--transition);
     }
+
     .fInput::placeholder {
       color: var(--text-muted);
     }
+
     .fInput:focus {
       border-color: var(--gold);
       box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
@@ -227,245 +503,298 @@
       font-weight: 500;
       margin-bottom: 18px;
     }
+
     .alert.show {
       display: flex;
     }
   </style>
 </head>
+
 <body>
 
-<!-- Sidebar -->
-<aside class="sidebar">
-  <div class="sidebarTop">
-    <div class="sidebarLogoMark">
-      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-    </div>
-    <div>
-      <div class="sidebarBrandName">SJ Jewellery</div>
-      <div class="sidebarBrandRole">Owner Panel</div>
-    </div>
-  </div>
-  <nav class="sidebarNav">
-    <div class="navSection">Overview</div>
-    <a class="navLink active" href="/owner/dashboard">
-      <svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
-      Dashboard
-    </a>
-    <a class="navLink" href="/owner/orders">
-      <svg viewBox="0 0 24 24" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-      All Orders
-    </a>
-    <div class="navSection">Management</div>
-    <a class="navLink" href="/owner/create-admin">
-      <svg viewBox="0 0 24 24" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
-      Create Admin
-    </a>
-  </nav>
-  <div class="sidebarFooter">
-    <div class="ownerCard">
-      <div class="ownerAvatar" id="ownerAvatarChar">O</div>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebarTop">
+      <div class="sidebarLogoMark">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      </div>
       <div>
-        <div class="ownerName" id="ownerNameDisplay">Owner</div>
-        <div class="ownerRole">✦ Super Admin</div>
+        <div class="sidebarBrandName">SJ Jewellery</div>
+        <div class="sidebarBrandRole">Owner Panel</div>
       </div>
     </div>
-    <button class="logoutBtn" onclick="ownerLogout()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-      Sign Out
-    </button>
-  </div>
-</aside>
-
-<!-- Main -->
-<main class="main">
-  <div class="topbar">
-    <div class="pageEyebrow">Owner Dashboard</div>
-    <div class="pageTitle">Business Overview</div>
-    <div class="goldLine"></div>
-    <div class="pageSubtitle">Complete view across all admin accounts & orders</div>
-  </div>
-
-  <!-- Stats -->
-  <div class="statsGrid">
-    <div class="statCard">
-      <div class="statEmoji">👥</div>
-      <div class="statNum" id="totalAdmins">—</div>
-      <div class="statLabel">Total Admins</div>
-    </div>
-    <div class="statCard blue">
-      <div class="statEmoji">📦</div>
-      <div class="statNum" id="totalProducts">—</div>
-      <div class="statLabel">Total Products</div>
-    </div>
-    <div class="statCard green">
-      <div class="statEmoji">🛒</div>
-      <div class="statNum" id="totalOrders">—</div>
-      <div class="statLabel">Total Orders</div>
-    </div>
-    <div class="statCard rose">
-      <div class="statEmoji">💰</div>
-      <div class="statNum" id="totalRevenue">—</div>
-      <div class="statLabel">Revenue (₹)</div>
-    </div>
-  </div>
-
-  <!-- Admins table -->
-  <div class="card">
-    <div class="cardHead">
-      <div class="cardTitle">
-        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-        Admin Accounts
-      </div>
-      <a class="goldBtn" href="/owner/create-admin">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Add Admin
+    <nav class="sidebarNav">
+      <div class="navSection">Overview</div>
+      <a class="navLink active" href="/owner/dashboard">
+        <svg viewBox="0 0 24 24" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="14" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" />
+        </svg>
+        Dashboard
       </a>
-    </div>
-    <div id="adminsTable"><div class="empty">Loading…</div></div>
-  </div>
-
-  <!-- Owner Credentials Settings -->
-  <div class="card" style="margin-top: 30px; max-width: 500px;">
-    <div class="cardHead" style="background: var(--gold-bg);">
-      <div class="cardTitle">
-        <svg viewBox="0 0 24 24" stroke-width="2" style="width:17px; height:17px; stroke:var(--gold-dark); fill:none;"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Owner Account Settings
-      </div>
-    </div>
-    <div style="padding: 24px;">
-      <div id="settingsAlert" class="alert" style="display:none; align-items:center; gap:10px; padding:10px 14px; border-radius:9px; font-size:0.82rem; font-weight:500; margin-bottom:18px;">
-        <span id="settingsAlertText"></span>
-      </div>
-      <div class="fGroup">
-        <label class="fLabel" for="ownerNewId" style="display:block; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-body); margin-bottom:8px;">New Owner ID</label>
-        <div class="inputWrap">
-          <input id="ownerNewId" class="fInput" type="text" placeholder="Enter new Owner ID">
+      <a class="navLink" href="/owner/orders">
+        <svg viewBox="0 0 24 24" stroke-width="2">
+          <path
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+        All Orders
+      </a>
+      <a class="navLink" href="/owner/reports">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        Reports
+      </a>
+      <div class="navSection">Management</div>
+      <a class="navLink" href="/owner/create-admin">
+        <svg viewBox="0 0 24 24" stroke-width="2">
+          <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <line x1="19" y1="8" x2="19" y2="14" />
+          <line x1="22" y1="11" x2="16" y2="11" />
+        </svg>
+        Create Admin
+      </a>
+    </nav>
+    <div class="sidebarFooter">
+      <div class="ownerCard">
+        <div class="ownerAvatar" id="ownerAvatarChar">O</div>
+        <div>
+          <div class="ownerName" id="ownerNameDisplay">Owner</div>
+          <div class="ownerRole">✦ Super Admin</div>
         </div>
       </div>
-      <div class="fGroup">
-        <label class="fLabel" for="ownerNewPass" style="display:block; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-body); margin-bottom:8px;">New Password</label>
-        <div class="inputWrap">
-          <input id="ownerNewPass" class="fInput" type="text" placeholder="Enter new password">
-        </div>
-      </div>
-      <button class="goldBtn" id="updateOwnerBtn" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-        Save Changes
+      <button class="logoutBtn" onclick="ownerLogout()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+        </svg>
+        Sign Out
       </button>
     </div>
-  </div>
-</main>
+  </aside>
 
-<script>
-  const OWNER_ID = localStorage.getItem("ownerId");
-  if (!OWNER_ID) window.location.href = "/owner";
-  document.getElementById("ownerNameDisplay").textContent = OWNER_ID || "Owner";
-  document.getElementById("ownerAvatarChar").textContent  = (OWNER_ID || "O").charAt(0).toUpperCase();
+  <!-- Main -->
+  <main class="main">
+    <div class="topbar">
+      <div class="pageEyebrow">Owner Dashboard</div>
+      <div class="pageTitle">Business Overview</div>
+      <div class="goldLine"></div>
+      <div class="pageSubtitle">Complete view across all admin accounts & orders</div>
+    </div>
 
-  document.getElementById("ownerNewId").value = OWNER_ID || "";
+    <!-- Stats -->
+    <div class="statsGrid">
+      <div class="statCard">
+        <div class="statEmoji">👥</div>
+        <div class="statNum" id="totalAdmins">—</div>
+        <div class="statLabel">Total Admins</div>
+      </div>
+      <div class="statCard blue">
+        <div class="statEmoji">📦</div>
+        <div class="statNum" id="totalProducts">—</div>
+        <div class="statLabel">Total Products</div>
+      </div>
+      <div class="statCard green">
+        <div class="statEmoji">🛒</div>
+        <div class="statNum" id="totalOrders">—</div>
+        <div class="statLabel">Total Orders</div>
+      </div>
+      <div class="statCard rose">
+        <div class="statEmoji">💰</div>
+        <div class="statNum" id="totalRevenue">—</div>
+        <div class="statLabel">Revenue (₹)</div>
+      </div>
+    </div>
 
-  function ownerLogout() {
-    localStorage.removeItem("ownerId"); localStorage.removeItem("ownerLoggedIn");
-    window.location.href = "/owner";
-  }
+    <!-- Admins table -->
+    <div class="card">
+      <div class="cardHead">
+        <div class="cardTitle">
+          <svg viewBox="0 0 24 24" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+          </svg>
+          Admin Accounts
+        </div>
+        <a class="goldBtn" href="/owner/create-admin">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          Add Admin
+        </a>
+      </div>
+      <div id="adminsTable">
+        <div class="empty">Loading…</div>
+      </div>
+    </div>
 
-  const H = { "x-owner-id": OWNER_ID };
+    <!-- Owner Credentials Settings -->
+    <div class="card" style="margin-top: 30px; max-width: 500px;">
+      <div class="cardHead" style="background: var(--gold-bg);">
+        <div class="cardTitle">
+          <svg viewBox="0 0 24 24" stroke-width="2"
+            style="width:17px; height:17px; stroke:var(--gold-dark); fill:none;">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          Owner Account Settings
+        </div>
+      </div>
+      <div style="padding: 24px;">
+        <div id="settingsAlert" class="alert"
+          style="display:none; align-items:center; gap:10px; padding:10px 14px; border-radius:9px; font-size:0.82rem; font-weight:500; margin-bottom:18px;">
+          <span id="settingsAlertText"></span>
+        </div>
+        <div class="fGroup">
+          <label class="fLabel" for="ownerNewId"
+            style="display:block; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-body); margin-bottom:8px;">New
+            Owner ID</label>
+          <div class="inputWrap">
+            <input id="ownerNewId" class="fInput" type="text" placeholder="Enter new Owner ID">
+          </div>
+        </div>
+        <div class="fGroup">
+          <label class="fLabel" for="ownerNewPass"
+            style="display:block; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-body); margin-bottom:8px;">New
+            Password</label>
+          <div class="inputWrap">
+            <input id="ownerNewPass" class="fInput" type="text" placeholder="Enter new password">
+          </div>
+        </div>
+        <button class="goldBtn" id="updateOwnerBtn"
+          style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+            <polyline points="17 21 17 13 7 13 7 21" />
+            <polyline points="7 3 7 8 15 8" />
+          </svg>
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </main>
 
-  async function load() {
-    try {
-      const [aRes, pRes, oRes] = await Promise.all([
-        fetch("/owner/admins",       { headers: H }),
-        fetch("/owner/all-products", { headers: H }),
-        fetch("/owner/all-orders",   { headers: H })
-      ]);
-      const admins   = await aRes.json();
-      const products = await pRes.json();
-      const orders   = await oRes.json();
+  <script>
+    const OWNER_ID = localStorage.getItem("ownerId");
+    if (!OWNER_ID) window.location.href = "/owner";
+    document.getElementById("ownerNameDisplay").textContent = OWNER_ID || "Owner";
+    document.getElementById("ownerAvatarChar").textContent = (OWNER_ID || "O").charAt(0).toUpperCase();
 
-      document.getElementById("totalAdmins").textContent   = admins.length;
-      document.getElementById("totalProducts").textContent = products.length;
-      document.getElementById("totalOrders").textContent   = orders.length;
-      // Calculate revenue (exclude cancelled/returned orders)
-      const excludeFromRevenue = ["Cancelled", "Return Requested", "Return Completed"];
-      const rev = orders
-        .filter(o => !excludeFromRevenue.includes(o.orderStatus))
-        .reduce((s,o)=>s+parseFloat(o.withGstTotalAmount||o.totalAmount||o.total||0),0);
-      document.getElementById("totalRevenue").textContent  = rev>0 ? "₹" + rev.toLocaleString("en-IN") : "₹0";
+    document.getElementById("ownerNewId").value = OWNER_ID || "";
 
-      const wrap = document.getElementById("adminsTable");
-      if (!admins.length) {
-        wrap.innerHTML = `<div class="empty">No admin accounts yet. <a href="/owner/create-admin" style="color:var(--gold-dark)">Create one →</a></div>`;
-        return;
-      }
-      const rows = admins.map(a => {
-        const aP = products.filter(p=>p.createdBy===a.adminId).length;
-        const aO = orders.filter(o=>o.adminId===a.adminId).length;
-        const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}) : "—";
-        return `<tr>
+    function ownerLogout() {
+      localStorage.removeItem("ownerId"); localStorage.removeItem("ownerLoggedIn");
+      window.location.href = "/owner";
+    }
+
+    const H = { "x-owner-id": OWNER_ID };
+
+    async function load() {
+      try {
+        const [aRes, pRes, oRes] = await Promise.all([
+          fetch("/owner/admins", { headers: H }),
+          fetch("/owner/all-products", { headers: H }),
+          fetch("/owner/all-orders", { headers: H })
+        ]);
+        const admins = await aRes.json();
+        const products = await pRes.json();
+        const orders = await oRes.json();
+
+        document.getElementById("totalAdmins").textContent = admins.length;
+        document.getElementById("totalProducts").textContent = products.length;
+        document.getElementById("totalOrders").textContent = orders.length;
+        // Calculate revenue (exclude cancelled/returned orders)
+        const excludeFromRevenue = ["Cancelled", "Return Requested", "Return Completed"];
+        const rev = orders
+          .filter(o => !excludeFromRevenue.includes(o.orderStatus))
+          .reduce((s, o) => s + parseFloat(o.withGstTotalAmount || o.totalAmount || o.total || 0), 0);
+        document.getElementById("totalRevenue").textContent = rev > 0 ? "₹" + rev.toLocaleString("en-IN") : "₹0";
+
+        const wrap = document.getElementById("adminsTable");
+        if (!admins.length) {
+          wrap.innerHTML = `<div class="empty">No admin accounts yet. <a href="/owner/create-admin" style="color:var(--gold-dark)">Create one →</a></div>`;
+          return;
+        }
+        const rows = admins.map(a => {
+          const aP = products.filter(p => p.createdBy === a.adminId).length;
+          const aO = orders.filter(o => o.adminId === a.adminId).length;
+          const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "—";
+          return `<tr>
           <td><strong style="color:var(--text-h)">${a.adminId}</strong></td>
           <td><span class="pill admin">Admin</span></td>
           <td><span class="statMini">${aP}</span><br><span class="statMiniLabel">products</span></td>
           <td><span class="statMini">${aO}</span><br><span class="statMiniLabel">orders</span></td>
           <td style="color:var(--text-muted);font-size:0.78rem">${date}</td>
         </tr>`;
-      }).join("");
-      wrap.innerHTML = `<table>
+        }).join("");
+        wrap.innerHTML = `<table>
         <thead><tr><th>Admin ID</th><th>Role</th><th>Products</th><th>Orders</th><th>Joined</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>`;
-    } catch(e) { console.error(e); }
-  }
-  load();
-
-  // Handle owner credential update
-  const settingsAlertEl = document.getElementById("settingsAlert");
-  const settingsAlertTxt = document.getElementById("settingsAlertText");
-  const updateOwnerBtn = document.getElementById("updateOwnerBtn");
-
-  function showSettingsAlert(msg, type="error") {
-    settingsAlertTxt.textContent = msg;
-    settingsAlertEl.style.display = "flex";
-    if (type === "success") {
-      settingsAlertEl.style.background = "#f0fdf4";
-      settingsAlertEl.style.color = "#15803d";
-      settingsAlertEl.style.border = "1px solid #dcfce7";
-    } else {
-      settingsAlertEl.style.background = "#fef2f2";
-      settingsAlertEl.style.color = "#ef4444";
-      settingsAlertEl.style.border = "1px solid #fee2e2";
+      } catch (e) { console.error(e); }
     }
-  }
+    load();
 
-  updateOwnerBtn.addEventListener("click", async () => {
-    const newAdminId = document.getElementById("ownerNewId").value.trim();
-    const newPassword = document.getElementById("ownerNewPass").value.trim();
-    if (!newAdminId || !newPassword) {
-      return showSettingsAlert("Please fill in both fields.");
-    }
-    updateOwnerBtn.disabled = true;
-    updateOwnerBtn.textContent = "Updating...";
-    try {
-      const res = await fetch("/owner/change-credentials", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", ...H },
-        body: JSON.stringify({ newAdminId, newPassword })
-      });
-      const data = await res.json();
-      if (res.ok) {
-        showSettingsAlert("Owner credentials updated successfully! Re-loading...", "success");
-        localStorage.setItem("ownerId", newAdminId);
-        setTimeout(() => {
-          window.location.reload();
-        }, 1200);
+    // Handle owner credential update
+    const settingsAlertEl = document.getElementById("settingsAlert");
+    const settingsAlertTxt = document.getElementById("settingsAlertText");
+    const updateOwnerBtn = document.getElementById("updateOwnerBtn");
+
+    function showSettingsAlert(msg, type = "error") {
+      settingsAlertTxt.textContent = msg;
+      settingsAlertEl.style.display = "flex";
+      if (type === "success") {
+        settingsAlertEl.style.background = "#f0fdf4";
+        settingsAlertEl.style.color = "#15803d";
+        settingsAlertEl.style.border = "1px solid #dcfce7";
       } else {
-        showSettingsAlert(data.message || "Failed to update credentials.");
+        settingsAlertEl.style.background = "#fef2f2";
+        settingsAlertEl.style.color = "#ef4444";
+        settingsAlertEl.style.border = "1px solid #fee2e2";
       }
-    } catch {
-      showSettingsAlert("Connection error.");
     }
-    updateOwnerBtn.disabled = false;
-    updateOwnerBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save Changes`;
-  });
-</script>
+
+    updateOwnerBtn.addEventListener("click", async () => {
+      const newAdminId = document.getElementById("ownerNewId").value.trim();
+      const newPassword = document.getElementById("ownerNewPass").value.trim();
+      if (!newAdminId || !newPassword) {
+        return showSettingsAlert("Please fill in both fields.");
+      }
+      updateOwnerBtn.disabled = true;
+      updateOwnerBtn.textContent = "Updating...";
+      try {
+        const res = await fetch("/owner/change-credentials", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", ...H },
+          body: JSON.stringify({ newAdminId, newPassword })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showSettingsAlert("Owner credentials updated successfully! Re-loading...", "success");
+          localStorage.setItem("ownerId", newAdminId);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1200);
+        } else {
+          showSettingsAlert(data.message || "Failed to update credentials.");
+        }
+      } catch {
+        showSettingsAlert("Connection error.");
+      }
+      updateOwnerBtn.disabled = false;
+      updateOwnerBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save Changes`;
+    });
+  </script>
 </body>
+
 </html>

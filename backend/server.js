@@ -133,6 +133,9 @@ app.get("/owner/create-admin", (req, res) => {
 app.get("/owner/orders", (req, res) => {
     res.sendFile(path.join(__dirname, "../adminPanel/owner/owner-orders.html"));
 });
+app.get("/owner/reports", (req, res) => {
+    res.sendFile(path.join(__dirname, "../adminPanel/owner/owner-reports.html"));
+});
 
 // ── Owner Login ───────────────────────────────────────────────────────────────
 app.post("/owner/login", async (req, res) => {

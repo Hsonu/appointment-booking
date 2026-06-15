@@ -1,235 +1,632 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>All Orders – SJ Jewellery Owner</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <style>
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    :root {
-      --gold:#c9a96e; --gold-dark:#a8854e; --gold-light:#e8d4a8;
-      --gold-bg:#fdf7ee;
-      --cream:#faf8f5;
-      --white:#ffffff;
-      --text-h:#0d0d0f;
-      --text-body:#3d3d45;
-      --text-muted:#7a7a85;
-      --border:#e8e0d5;
-      --border-solid:#e8e0d5;
-      --transition:0.28s cubic-bezier(0.4,0,0.2,1);
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    body { font-family:'Inter',sans-serif; background:var(--cream); color:var(--text-body); min-height:100vh; display:flex; }
 
-    .sidebar { width:248px; background:var(--white); border-right:1px solid var(--border); display:flex; flex-direction:column; position:fixed; top:0; left:0; height:100vh; z-index:100; }
-    .sidebarTop { padding:22px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px; }
-    .sidebarLogoMark { width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,var(--gold),var(--gold-dark)); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 4px 14px rgba(201,169,110,0.25); }
-    .sidebarLogoMark svg { width:22px; height:22px; fill:var(--white); }
-    .sidebarBrandName { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:var(--text-h); letter-spacing:0.03em; }
-    .sidebarBrandRole { font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dark); margin-top:1px; }
-    .sidebarNav { flex:1; padding:18px 12px; }
-    .navSection { font-size:0.6rem; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--text-muted); padding:6px 8px 4px; margin-top:8px; }
-    .navLink { display:flex; align-items:center; gap:11px; padding:10px 12px; border-radius:9px; font-size:0.83rem; font-weight:500; color:var(--text-body); text-decoration:none; transition:all var(--transition); margin-bottom:2px; }
-    .navLink:hover { background:var(--gold-bg); color:var(--gold-dark); }
-    .navLink.active { background:var(--gold-bg); color:var(--gold-dark); border:1px solid var(--gold); }
-    .navLink svg { width:16px; height:16px; flex-shrink:0; stroke:currentColor; fill:none; }
-    .sidebarFooter { padding:16px; border-top:1px solid var(--border); }
-    .ownerCard { padding:12px; border-radius:10px; background:var(--gold-bg); border:1px solid var(--gold); display:flex; align-items:center; gap:10px; margin-bottom:10px; }
-    .ownerAvatar { width:36px; height:36px; border-radius:9px; flex-shrink:0; background:linear-gradient(135deg,var(--gold),var(--gold-dark)); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:#ffffff; }
-    .ownerName { font-size:0.82rem; font-weight:600; color:var(--text-h); }
-    .ownerRole { font-size:0.65rem; color:var(--gold-dark); }
-    .logoutBtn { width:100%; padding:9px; border:1px solid rgba(239,68,68,0.2); background:rgba(239,68,68,0.05); color:#dc2626; border-radius:8px; font-size:0.75rem; font-weight:600; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:7px; transition:all var(--transition); }
-    .logoutBtn:hover { background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); }
+    :root {
+      --gold: #c9a96e;
+      --gold-dark: #a8854e;
+      --gold-light: #e8d4a8;
+      --gold-bg: #fdf7ee;
+      --cream: #faf8f5;
+      --white: #ffffff;
+      --text-h: #0d0d0f;
+      --text-body: #3d3d45;
+      --text-muted: #7a7a85;
+      --border: #e8e0d5;
+      --border-solid: #e8e0d5;
+      --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-    .main { margin-left:248px; flex:1; padding:32px; }
-    .topbar { margin-bottom:24px; }
-    .pageEyebrow { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-dark); font-weight:600; margin-bottom:6px; }
-    .pageTitle { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--text-h); margin-bottom:4px; }
-    .goldLine { width:40px; height:2px; background:linear-gradient(90deg,var(--gold),transparent); border-radius:2px; margin:12px 0; }
-    .pageSubtitle { font-size:0.84rem; color:var(--text-muted); }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text-body);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 248px;
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 100;
+    }
+
+    .sidebarTop {
+      padding: 22px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebarLogoMark {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(201, 169, 110, 0.25);
+    }
+
+    .sidebarLogoMark svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--white);
+    }
+
+    .sidebarBrandName {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-h);
+      letter-spacing: 0.03em;
+    }
+
+    .sidebarBrandRole {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-top: 1px;
+    }
+
+    .sidebarNav {
+      flex: 1;
+      padding: 18px 12px;
+    }
+
+    .navSection {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 6px 8px 4px;
+      margin-top: 8px;
+    }
+
+    .navLink {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 10px 12px;
+      border-radius: 9px;
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: var(--text-body);
+      text-decoration: none;
+      transition: all var(--transition);
+      margin-bottom: 2px;
+    }
+
+    .navLink:hover {
+      background: var(--gold-bg);
+      color: var(--gold-dark);
+    }
+
+    .navLink.active {
+      background: var(--gold-bg);
+      color: var(--gold-dark);
+      border: 1px solid var(--gold);
+    }
+
+    .navLink svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    .sidebarFooter {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .ownerCard {
+      padding: 12px;
+      border-radius: 10px;
+      background: var(--gold-bg);
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .ownerAvatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .ownerName {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-h);
+    }
+
+    .ownerRole {
+      font-size: 0.65rem;
+      color: var(--gold-dark);
+    }
+
+    .logoutBtn {
+      width: 100%;
+      padding: 9px;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      background: rgba(239, 68, 68, 0.05);
+      color: #dc2626;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all var(--transition);
+    }
+
+    .logoutBtn:hover {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .main {
+      margin-left: 248px;
+      flex: 1;
+      padding: 32px;
+    }
+
+    .topbar {
+      margin-bottom: 24px;
+    }
+
+    .pageEyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .pageTitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-h);
+      margin-bottom: 4px;
+    }
+
+    .goldLine {
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      border-radius: 2px;
+      margin: 12px 0;
+    }
+
+    .pageSubtitle {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
 
     /* Filters */
-    .filters { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
-    .filterInput {
-      background:var(--white); border:1.5px solid var(--border-solid);
-      border-radius:9px; color:var(--text-h); padding:9px 14px;
-      font-size:0.83rem; font-family:inherit; outline:none; transition:border-color var(--transition);
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
     }
-    .filterInput:focus { border-color:var(--gold); }
-    .filterInput::placeholder { color:var(--text-muted); }
-    .filterInput option { background:var(--white); color:var(--text-body); }
+
+    .filterInput {
+      background: var(--white);
+      border: 1.5px solid var(--border-solid);
+      border-radius: 9px;
+      color: var(--text-h);
+      padding: 9px 14px;
+      font-size: 0.83rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    .filterInput:focus {
+      border-color: var(--gold);
+    }
+
+    .filterInput::placeholder {
+      color: var(--text-muted);
+    }
+
+    .filterInput option {
+      background: var(--white);
+      color: var(--text-body);
+    }
 
     /* Table */
-    .card { background:var(--white); border:1px solid var(--border-solid); border-radius:14px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.02); }
-    .cardHead { padding:16px 22px; border-bottom:1px solid var(--border-solid); display:flex; align-items:center; justify-content:space-between; }
-    .cardTitle { font-family:'Playfair Display',serif; font-size:1rem; font-weight:600; color:var(--text-h); display:flex; align-items:center; gap:8px; }
-    .cardTitle svg { width:16px; height:16px; stroke:var(--gold-dark); fill:none; }
-    .orderCount { font-size:0.78rem; color:var(--text-muted); }
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border-solid);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
 
-    table { width:100%; border-collapse:collapse; }
-    thead { background:var(--gold-bg); }
-    th { padding:11px 18px; text-align:left; font-size:0.63rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-dark); border-bottom:1px solid var(--border-solid); white-space:nowrap; }
-    td { padding:13px 18px; font-size:0.82rem; border-bottom:1px solid var(--border-solid); color:var(--text-body); }
-    tr:last-child td { border-bottom:none; }
-    tr:hover td { background:var(--gold-bg); }
+    .cardHead {
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border-solid);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-    .customerName { font-weight:600; color:var(--text-h); }
-    .customerPhone { font-size:0.72rem; color:var(--text-muted); margin-top:1px; }
-    .adminTag { display:inline-flex; align-items:center; gap:5px; padding:3px 9px; border-radius:999px; font-size:0.7rem; font-weight:600; background:var(--gold-bg); color:var(--gold-dark); border:1px solid var(--gold); }
-    .adminTag::before { content:'✦'; font-size:0.55rem; }
-    .badge { display:inline-block; padding:3px 10px; border-radius:999px; font-size:0.68rem; font-weight:600; letter-spacing:0.04em; }
-    .badge-pending   { background:rgba(245,158,11,0.08);  color:#d97706; border:1px solid rgba(245,158,11,0.2); }
-    .badge-confirmed { background:rgba(59,130,246,0.08);  color:#2563eb; border:1px solid rgba(59,130,246,0.2); }
-    .badge-shipped   { background:rgba(139,92,246,0.08);  color:#7c3aed; border:1px solid rgba(139,92,246,0.2); }
-    .badge-delivered { background:var(--gold-bg); color:var(--gold-dark); border:1px solid var(--gold); }
-    .badge-cancelled { background:rgba(239,68,68,0.08);   color:#dc2626; border:1px solid rgba(239,68,68,0.2); }
-    .amount { font-family:'Playfair Display',serif; font-size:0.92rem; font-weight:600; color:var(--text-h); }
-    .dateText { font-size:0.75rem; color:var(--text-muted); }
-    .empty { text-align:center; padding:52px 24px; font-family:'Playfair Display',serif; color:var(--text-muted); font-size:0.95rem; }
+    .cardTitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-h);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cardTitle svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--gold-dark);
+      fill: none;
+    }
+
+    .orderCount {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: var(--gold-bg);
+    }
+
+    th {
+      padding: 11px 18px;
+      text-align: left;
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      border-bottom: 1px solid var(--border-solid);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 13px 18px;
+      font-size: 0.82rem;
+      border-bottom: 1px solid var(--border-solid);
+      color: var(--text-body);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--gold-bg);
+    }
+
+    .customerName {
+      font-weight: 600;
+      color: var(--text-h);
+    }
+
+    .customerPhone {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .adminTag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: var(--gold-bg);
+      color: var(--gold-dark);
+      border: 1px solid var(--gold);
+    }
+
+    .adminTag::before {
+      content: '✦';
+      font-size: 0.55rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-pending {
+      background: rgba(245, 158, 11, 0.08);
+      color: #d97706;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .badge-confirmed {
+      background: rgba(59, 130, 246, 0.08);
+      color: #2563eb;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .badge-shipped {
+      background: rgba(139, 92, 246, 0.08);
+      color: #7c3aed;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .badge-delivered {
+      background: var(--gold-bg);
+      color: var(--gold-dark);
+      border: 1px solid var(--gold);
+    }
+
+    .badge-cancelled {
+      background: rgba(239, 68, 68, 0.08);
+      color: #dc2626;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .amount {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-h);
+    }
+
+    .dateText {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .empty {
+      text-align: center;
+      padding: 52px 24px;
+      font-family: 'Playfair Display', serif;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
   </style>
 </head>
+
 <body>
 
-<aside class="sidebar">
-  <div class="sidebarTop">
-    <div class="sidebarLogoMark"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-    <div><div class="sidebarBrandName">SJ Jewellery</div><div class="sidebarBrandRole">Owner Panel</div></div>
-  </div>
-  <nav class="sidebarNav">
-    <div class="navSection">Overview</div>
-    <a class="navLink" href="/owner/dashboard"><svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
-    <a class="navLink active" href="/owner/orders"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>All Orders</a>
-    <div class="navSection">Management</div>
-    <a class="navLink" href="/owner/create-admin"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>Create Admin</a>
-  </nav>
-  <div class="sidebarFooter">
-    <div class="ownerCard">
-      <div class="ownerAvatar" id="ownerAvatarChar">O</div>
-      <div><div class="ownerName" id="ownerNameDisplay">Owner</div><div class="ownerRole">✦ Super Admin</div></div>
-    </div>
-    <button class="logoutBtn" onclick="ownerLogout()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign Out
-    </button>
-  </div>
-</aside>
-
-<main class="main">
-  <div class="topbar">
-    <div class="pageEyebrow">Complete View</div>
-    <div class="pageTitle">All Orders</div>
-    <div class="goldLine"></div>
-    <div class="pageSubtitle">Every order across all admin accounts</div>
-  </div>
-
-  <div class="filters">
-    <input class="filterInput" type="text" id="searchInput" placeholder="Search by customer name or phone…" style="min-width:240px">
-    <select class="filterInput" id="adminFilter"><option value="">All Admins</option></select>
-    <select class="filterInput" id="statusFilter">
-      <option value="">All Statuses</option>
-      <option>Order Placed</option>
-      <option>Order Confirmed</option>
-      <option>Order Packed</option>
-      <option>Shipped</option>
-      <option>In Transit</option>
-      <option>Out For Delivery</option>
-      <option>Delivered</option>
-      <option>Cancelled</option>
-      <option>Return Requested</option>
-      <option>Return Completed</option>
-    </select>
-  </div>
-
-  <div class="card">
-    <div class="cardHead">
-      <div class="cardTitle">
-        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-        Order Registry
+  <aside class="sidebar">
+    <div class="sidebarTop">
+      <div class="sidebarLogoMark"><svg viewBox="0 0 24 24">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg></div>
+      <div>
+        <div class="sidebarBrandName">SJ Jewellery</div>
+        <div class="sidebarBrandRole">Owner Panel</div>
       </div>
-      <div class="orderCount" id="orderCount">Loading…</div>
     </div>
-    <div id="tableWrap"><div class="empty">Loading orders…</div></div>
-  </div>
-</main>
+    <nav class="sidebarNav">
+      <div class="navSection">Overview</div>
+      <a class="navLink" href="/owner/dashboard"><svg viewBox="0 0 24 24" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="14" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" />
+        </svg>Dashboard</a>
+      <a class="navLink active" href="/owner/orders"><svg viewBox="0 0 24 24" stroke-width="2">
+          <path
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>All Orders</a>
+      <a class="navLink" href="/owner/reports"><svg viewBox="0 0 24 24" stroke-width="2" fill="none">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>Reports</a>
+      <div class="navSection">Management</div>
+      <a class="navLink" href="/owner/create-admin"><svg viewBox="0 0 24 24" stroke-width="2">
+          <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <line x1="19" y1="8" x2="19" y2="14" />
+          <line x1="22" y1="11" x2="16" y2="11" />
+        </svg>Create Admin</a>
+    </nav>
+    <div class="sidebarFooter">
+      <div class="ownerCard">
+        <div class="ownerAvatar" id="ownerAvatarChar">O</div>
+        <div>
+          <div class="ownerName" id="ownerNameDisplay">Owner</div>
+          <div class="ownerRole">✦ Super Admin</div>
+        </div>
+      </div>
+      <button class="logoutBtn" onclick="ownerLogout()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+        </svg>Sign Out
+      </button>
+    </div>
+  </aside>
 
-<script>
-  const OWNER_ID = localStorage.getItem("ownerId");
-  if (!OWNER_ID) window.location.href = "/owner";
-  document.getElementById("ownerNameDisplay").textContent = OWNER_ID || "Owner";
-  document.getElementById("ownerAvatarChar").textContent  = (OWNER_ID||"O").charAt(0).toUpperCase();
-  function ownerLogout(){ localStorage.removeItem("ownerId"); localStorage.removeItem("ownerLoggedIn"); window.location.href="/owner"; }
+  <main class="main">
+    <div class="topbar">
+      <div class="pageEyebrow">Complete View</div>
+      <div class="pageTitle">All Orders</div>
+      <div class="goldLine"></div>
+      <div class="pageSubtitle">Every order across all admin accounts</div>
+    </div>
 
-  const H = { "x-owner-id": OWNER_ID };
-  let allOrders = [];
+    <div class="filters">
+      <input class="filterInput" type="text" id="searchInput" placeholder="Search by customer name or phone…"
+        style="min-width:240px">
+      <select class="filterInput" id="adminFilter">
+        <option value="">All Admins</option>
+      </select>
+      <select class="filterInput" id="statusFilter">
+        <option value="">All Statuses</option>
+        <option>Order Placed</option>
+        <option>Order Confirmed</option>
+        <option>Order Packed</option>
+        <option>Shipped</option>
+        <option>In Transit</option>
+        <option>Out For Delivery</option>
+        <option>Delivered</option>
+        <option>Cancelled</option>
+        <option>Return Requested</option>
+        <option>Return Completed</option>
+      </select>
+    </div>
 
-  function statusBadge(s) {
-    if (!s||s==="Order Placed")  return `<span class="badge badge-pending">${s||"Order Placed"}</span>`;
-    if (s==="Order Confirmed"||s==="Order Packed") return `<span class="badge badge-confirmed">${s}</span>`;
-    if (s==="Delivered")        return `<span class="badge badge-delivered">${s}</span>`;
-    if (s==="Cancelled")        return `<span class="badge badge-cancelled">${s}</span>`;
-    if (s==="Return Requested"||s==="Return Completed") return `<span class="badge badge-cancelled">${s}</span>`;
-    return `<span class="badge badge-shipped">${s}</span>`;
-  }
+    <div class="card">
+      <div class="cardHead">
+        <div class="cardTitle">
+          <svg viewBox="0 0 24 24" stroke-width="2">
+            <path
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          Order Registry
+        </div>
+        <div class="orderCount" id="orderCount">Loading…</div>
+      </div>
+      <div id="tableWrap">
+        <div class="empty">Loading orders…</div>
+      </div>
+    </div>
+  </main>
 
-  function render(orders){
-    const wrap = document.getElementById("tableWrap");
-    document.getElementById("orderCount").textContent = `${orders.length} orders`;
-    if(!orders.length){ wrap.innerHTML='<div class="empty">No orders found.</div>'; return; }
-    const rows = orders.map(o => {
-      const name  = o.fullName||o.name||o.customerName||"—";
-      const phone = o.phoneNumber||o.phone||o.mobile||"—";
-      const amt   = o.totalAmount||o.total||o.amount||"—";
-      const admin = o.adminId||"admin";
-      const date  = o.orderDate ? new Date(o.orderDate).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}) : "—";
-      return `<tr>
+  <script>
+    const OWNER_ID = localStorage.getItem("ownerId");
+    if (!OWNER_ID) window.location.href = "/owner";
+    document.getElementById("ownerNameDisplay").textContent = OWNER_ID || "Owner";
+    document.getElementById("ownerAvatarChar").textContent = (OWNER_ID || "O").charAt(0).toUpperCase();
+    function ownerLogout() { localStorage.removeItem("ownerId"); localStorage.removeItem("ownerLoggedIn"); window.location.href = "/owner"; }
+
+    const H = { "x-owner-id": OWNER_ID };
+    let allOrders = [];
+
+    function statusBadge(s) {
+      if (!s || s === "Order Placed") return `<span class="badge badge-pending">${s || "Order Placed"}</span>`;
+      if (s === "Order Confirmed" || s === "Order Packed") return `<span class="badge badge-confirmed">${s}</span>`;
+      if (s === "Delivered") return `<span class="badge badge-delivered">${s}</span>`;
+      if (s === "Cancelled") return `<span class="badge badge-cancelled">${s}</span>`;
+      if (s === "Return Requested" || s === "Return Completed") return `<span class="badge badge-cancelled">${s}</span>`;
+      return `<span class="badge badge-shipped">${s}</span>`;
+    }
+
+    function render(orders) {
+      const wrap = document.getElementById("tableWrap");
+      document.getElementById("orderCount").textContent = `${orders.length} orders`;
+      if (!orders.length) { wrap.innerHTML = '<div class="empty">No orders found.</div>'; return; }
+      const rows = orders.map(o => {
+        const name = o.fullName || o.name || o.customerName || "—";
+        const phone = o.phoneNumber || o.phone || o.mobile || "—";
+        const amt = o.totalAmount || o.total || o.amount || "—";
+        const admin = o.adminId || "admin";
+        const date = o.orderDate ? new Date(o.orderDate).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "—";
+        return `<tr>
         <td><div class="customerName">${name}</div><div class="customerPhone">${phone}</div></td>
         <td><span class="adminTag">${admin}</span></td>
-        <td>${statusBadge(o.orderStatus||o.status)}</td>
+        <td>${statusBadge(o.orderStatus || o.status)}</td>
         <td><span class="amount">₹${parseFloat(amt || 0).toLocaleString("en-IN")}</span></td>
         <td><span class="dateText">${date}</span></td>
       </tr>`;
-    }).join("");
-    wrap.innerHTML = `<table><thead><tr><th>Customer</th><th>Admin</th><th>Status</th><th>Amount</th><th>Date</th></tr></thead><tbody>${rows}</tbody></table>`;
-  }
+      }).join("");
+      wrap.innerHTML = `<table><thead><tr><th>Customer</th><th>Admin</th><th>Status</th><th>Amount</th><th>Date</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }
 
-  function applyFilters(){
-    const s = document.getElementById("searchInput").value.toLowerCase();
-    const a = document.getElementById("adminFilter").value;
-    const st= document.getElementById("statusFilter").value;
-    render(allOrders.filter(o => {
-      const name  = (o.fullName||o.name||o.customerName||"").toLowerCase();
-      const phone = (o.phoneNumber||o.phone||o.mobile||"").toLowerCase();
-      const admin = o.adminId||"admin";
-      const status= o.orderStatus||o.status||"";
-      if(s && !name.includes(s) && !phone.includes(s)) return false;
-      if(a && admin!==a) return false;
-      if(st && status!==st) return false;
-      return true;
-    }));
-  }
+    function applyFilters() {
+      const s = document.getElementById("searchInput").value.toLowerCase();
+      const a = document.getElementById("adminFilter").value;
+      const st = document.getElementById("statusFilter").value;
+      render(allOrders.filter(o => {
+        const name = (o.fullName || o.name || o.customerName || "").toLowerCase();
+        const phone = (o.phoneNumber || o.phone || o.mobile || "").toLowerCase();
+        const admin = o.adminId || "admin";
+        const status = o.orderStatus || o.status || "";
+        if (s && !name.includes(s) && !phone.includes(s)) return false;
+        if (a && admin !== a) return false;
+        if (st && status !== st) return false;
+        return true;
+      }));
+    }
 
-  async function loadOrders(){
-    try {
-      const [oRes,aRes] = await Promise.all([
-        fetch("/owner/all-orders",{headers:H}),
-        fetch("/owner/admins",{headers:H})
-      ]);
-      allOrders = await oRes.json();
-      const admins = await aRes.json();
-      const sel = document.getElementById("adminFilter");
-      admins.forEach(a => {
-        const opt=document.createElement("option");
-        opt.value=a.adminId; opt.textContent=a.adminId; sel.appendChild(opt);
-      });
-      render(allOrders);
-    } catch { document.getElementById("tableWrap").innerHTML='<div class="empty">Failed to load orders.</div>'; }
-  }
+    async function loadOrders() {
+      try {
+        const [oRes, aRes] = await Promise.all([
+          fetch("/owner/all-orders", { headers: H }),
+          fetch("/owner/admins", { headers: H })
+        ]);
+        allOrders = await oRes.json();
+        const admins = await aRes.json();
+        const sel = document.getElementById("adminFilter");
+        admins.forEach(a => {
+          const opt = document.createElement("option");
+          opt.value = a.adminId; opt.textContent = a.adminId; sel.appendChild(opt);
+        });
+        render(allOrders);
+      } catch { document.getElementById("tableWrap").innerHTML = '<div class="empty">Failed to load orders.</div>'; }
+    }
 
-  document.getElementById("searchInput").addEventListener("input", applyFilters);
-  document.getElementById("adminFilter").addEventListener("change", applyFilters);
-  document.getElementById("statusFilter").addEventListener("change", applyFilters);
-  loadOrders();
-</script>
+    document.getElementById("searchInput").addEventListener("input", applyFilters);
+    document.getElementById("adminFilter").addEventListener("change", applyFilters);
+    document.getElementById("statusFilter").addEventListener("change", applyFilters);
+    loadOrders();
+  </script>
 </body>
+
 </html>
