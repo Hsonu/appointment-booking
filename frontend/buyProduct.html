@@ -1417,7 +1417,11 @@
 
             <!-- Price -->
             <div id="priceBlock">
-                <div id="productPrice">₹–</div>
+                <div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;">
+                    <span id="productPrice" style="font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-h);">₹–</span>
+                    <span id="productOriginalPrice" style="display: none; text-decoration: line-through; color: var(--text-muted); font-size: 1.1rem;">₹–</span>
+                    <span id="productDiscountBadge" class="badge" style="display: none; background: #fee2e2; color: #ef4444; border: 1px solid #fee2e2; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;">10% OFF</span>
+                </div>
                 <div id="gstNote">GST Included</div>
                 <div id="stockStatus"
                     style="font-size:0.85rem; font-weight:600; margin-top:8px; display:flex; align-items:center; gap:6px;">
@@ -1727,14 +1731,29 @@
                 currentProductData = data;
 
                 const gstPercent = (data.gst !== undefined && data.gst !== null && !isNaN(Number(data.gst))) ? Number(data.gst) : 3;
-                const gst = (data.Rate * gstPercent) / 100;
-                const finalPrice = Math.round(gst + data.Rate);
+                const discount = data.discount || 0;
+                
+                const originalPrice = Math.round(data.Rate + (data.Rate * gstPercent) / 100);
+                const discountedRate = data.Rate * (1 - discount / 100);
+                const finalPrice = Math.round(discountedRate + (discountedRate * gstPercent) / 100);
                 const formatted = finalPrice.toLocaleString("en-IN");
 
                 // Update page
                 document.title = `${data.Productname} – SJ Jewellery`;
                 document.getElementById("productTitle").textContent = data.Productname;
                 document.getElementById("productPrice").textContent = `₹${formatted}`;
+
+                const pOrig = document.getElementById("productOriginalPrice");
+                const pBadge = document.getElementById("productDiscountBadge");
+                if (discount > 0) {
+                    pOrig.style.display = "inline";
+                    pOrig.textContent = `₹${originalPrice.toLocaleString("en-IN")}`;
+                    pBadge.style.display = "inline";
+                    pBadge.textContent = `${discount}% OFF`;
+                } else {
+                    pOrig.style.display = "none";
+                    pBadge.style.display = "none";
+                }
                 document.getElementById("productDesc").textContent = data.description || "A beautifully handcrafted piece from our exclusive collection, designed to last a lifetime.";
                 document.getElementById("imgPhoto").src = data.photo;
                 document.getElementById("imgPhoto").alt = data.Productname;

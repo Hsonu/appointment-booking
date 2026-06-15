@@ -130,12 +130,26 @@
                   <input class="formInput" id="inputGST" type="number" placeholder="0" min="0" max="100">
                 </div>
                 <div class="formGroup">
-                  <label class="formLabel" for="totalGST">GST Amount</label>
+                  <label class="formLabel" for="inputDiscount">Discount %</label>
+                  <input class="formInput" id="inputDiscount" type="number" placeholder="0" min="0" max="100">
+                </div>
+                <div class="formGroup">
+                  <label class="formLabel" for="totalGST">GST Amount (on discounted rate)</label>
                   <input class="formInput" id="totalGST" type="text" readonly placeholder="Auto-calculated">
                 </div>
                 <div class="formGroup">
-                  <label class="formLabel" for="TotalAmount">Total Amount</label>
-                  <input class="formInput" id="TotalAmount" type="text" readonly placeholder="Auto-calculated">
+                  <label class="formLabel" for="OriginalTotal">Original Total (MRP with GST)</label>
+                  <input class="formInput" id="OriginalTotal" type="text" readonly placeholder="Auto-calculated">
+                </div>
+                <div class="formGroup">
+                  <label class="formLabel" for="DiscountAmount">Discount Amount (₹)</label>
+                  <input class="formInput" id="DiscountAmount" type="text" readonly placeholder="Auto-calculated">
+                </div>
+                <div class="formGroup" style="grid-column: span 2;">
+                  <label class="formLabel" for="TotalAmount" style="color: #c9a96e; font-weight: 700;">Sell Amount
+                    (Final Price with GST) *</label>
+                  <input class="formInput" id="TotalAmount" type="text" readonly placeholder="Auto-calculated"
+                    style="border-color: #c9a96e; font-weight: 700; color: #c9a96e;">
                 </div>
               </div>
 
@@ -205,7 +219,11 @@
                   <div id="pCat" style="font-size:0.75rem;color:#64748b;margin:4px 0 12px;">Category</div>
                   <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div>
-                      <div id="pPrice" style="font-size:1.1rem;font-weight:700;color:#6366f1;">₹ 0</div>
+                      <div style="display: flex; align-items: baseline; gap: 6px;">
+                        <span id="pOriginalPrice" style="text-decoration: line-through; color: #94a3b8; font-size: 0.85rem; display: none;">₹ 0</span>
+                        <span id="pPrice" style="font-size:1.1rem;font-weight:700;color:#6366f1;">₹ 0</span>
+                        <span id="pDiscountBadge" class="badge" style="background:#fee2e2; color:#ef4444; font-size:0.65rem; font-weight:700; padding: 2px 4px; border-radius: 4px; display: none;">10% OFF</span>
+                      </div>
                       <div id="pGstNote" style="font-size:0.68rem;color:#94a3b8;">GST included</div>
                     </div>
                     <span class="badge badge-success" id="pUnits">In Stock · 0</span>
@@ -325,18 +343,44 @@
       const rate = Number(inputRate.value) || 0;
       const units = Number(inputUnits.value) || 0;
       const gst = Number(inputGST.value) || 0;
-      const sub = rate * units;
-      const gstAmt = (sub * gst) / 100;
-      const total = sub + gstAmt;
-      totalGST.value = gstAmt ? `₹${gstAmt.toFixed(2)}` : "";
-      TotalAmount.value = total ? `₹${total.toFixed(2)}` : "";
-      // Update preview
-      pPrice.textContent = `₹${Math.round(rate + (rate * gst) / 100)}`;
+      const discount = Number(document.getElementById("inputDiscount").value) || 0;
+
+      const originalTotalUnit = rate * (1 + gst / 100);
+      const originalTotalAll = originalTotalUnit * units;
+
+      const discountedRateUnit = rate * (1 - discount / 100);
+      const gstAmtUnit = discountedRateUnit * (gst / 100);
+      const sellPriceUnit = discountedRateUnit + gstAmtUnit;
+
+      const sellAmountAll = sellPriceUnit * units;
+      const discountAmtAll = originalTotalAll - sellAmountAll;
+      const gstAmtAll = gstAmtUnit * units;
+
+      totalGST.value = gstAmtAll ? `₹${gstAmtAll.toFixed(2)}` : "";
+      document.getElementById("OriginalTotal").value = originalTotalAll ? `₹${originalTotalAll.toFixed(2)}` : "";
+      document.getElementById("DiscountAmount").value = discountAmtAll ? `₹${discountAmtAll.toFixed(2)}` : "";
+      TotalAmount.value = sellAmountAll ? `₹${sellAmountAll.toFixed(2)}` : "";
+
+      // Update live preview card
+      const formattedSell = Math.round(sellPriceUnit);
+      const formattedOriginal = Math.round(originalTotalUnit);
+
+      if (discount > 0) {
+        document.getElementById("pOriginalPrice").style.display = "inline";
+        document.getElementById("pOriginalPrice").textContent = `₹${formattedOriginal}`;
+        document.getElementById("pDiscountBadge").style.display = "inline";
+        document.getElementById("pDiscountBadge").textContent = `${discount}% OFF`;
+      } else {
+        document.getElementById("pOriginalPrice").style.display = "none";
+        document.getElementById("pDiscountBadge").style.display = "none";
+      }
+
+      pPrice.textContent = `₹${formattedSell}`;
       pGstNote.textContent = gst ? `GST ${gst}% included` : "No GST";
       pUnits.textContent = `In Stock · ${units}`;
     }
 
-    [inputRate, inputUnits, inputGST].forEach(el => el.addEventListener("input", calculateTotal));
+    [inputRate, inputUnits, inputGST, document.getElementById("inputDiscount")].forEach(el => el && el.addEventListener("input", calculateTotal));
 
     inputProductName.addEventListener("input", () => pName.textContent = inputProductName.value || "Product Name");
     inputCategoryName.addEventListener("input", () => pCat.textContent = inputCategoryName.value || "Category");
@@ -382,6 +426,7 @@
         formData.append("description", inputDescription.value);
         formData.append("SubCategory", inputSubCategoryName.value);
         formData.append("gst", Number(inputGST.value));
+        formData.append("discount", Number(document.getElementById("inputDiscount").value) || 0);
 
         // Append all selected images with same key 'photo'
         selectedFiles.forEach(file => {
@@ -403,12 +448,16 @@
     });
 
     function clearForm() {
-      [inputProductName, inputCategoryName, inputSubCategoryName, inputUnits, inputRate, inputGST, inputDescription].forEach(el => el.value = "");
+      [inputProductName, inputCategoryName, inputSubCategoryName, inputUnits, inputRate, inputGST, inputDescription, document.getElementById("inputDiscount")].forEach(el => el && (el.value = ""));
       totalGST.value = ""; TotalAmount.value = "";
+      document.getElementById("OriginalTotal").value = "";
+      document.getElementById("DiscountAmount").value = "";
       selectedFiles = [];
       renderImagePreviews();
       pName.textContent = "Product Name"; pCat.textContent = "Category";
       pPrice.textContent = "₹ 0"; pUnits.textContent = "In Stock · 0";
+      document.getElementById("pOriginalPrice").style.display = "none";
+      document.getElementById("pDiscountBadge").style.display = "none";
     }
 
     async function loadRecentProducts() {
@@ -420,13 +469,22 @@
         const recent = data.slice(-5).reverse();
         if (!recent.length) { tbody.innerHTML = `<tr><td colspan="5"><div class="emptyState" style="padding:20px;"><p>No products yet</p></div></td></tr>`; return; }
         tbody.innerHTML = recent.map(p => {
-          const gst = (p.Rate * p.gst) / 100;
+          const discount = p.discount || 0;
+          const discountedRate = p.Rate * (1 - discount / 100);
+          const gst = (discountedRate * p.gst) / 100;
           return `<tr>
           <td>${p.Productname}</td>
           <td>${p.Category}</td>
           <td>${p.Units}</td>
-          <td>₹${p.Rate}</td>
-          <td>₹${Math.round(p.Rate + gst)}</td>
+          <td>
+            ${discount > 0 ? `
+              <span style="text-decoration: line-through; color: #94a3b8; font-size: 0.75rem;">₹${p.Rate}</span>
+              <span style="font-weight:600; color:#10b981;">₹${Math.round(discountedRate)}</span>
+            ` : `
+              <span>₹${p.Rate}</span>
+            `}
+          </td>
+          <td>₹${Math.round((discountedRate + gst) * p.Units)}</td>
         </tr>`;
         }).join("");
       } catch (e) { }

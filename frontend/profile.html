@@ -1325,9 +1325,9 @@
                     const ordersRes = await fetch(`${BASE_URL}/viwePlaceOrder`);
                     if (ordersRes.ok) {
                         const orders = await ordersRes.json();
-                        const userOrders = orders.filter(ord => 
-                            String(ord.customerMobileNumber) === String(userNumber) || 
-                            String(ord.useNumber) === String(userNumber) || 
+                        const userOrders = orders.filter(ord =>
+                            String(ord.customerMobileNumber) === String(userNumber) ||
+                            String(ord.useNumber) === String(userNumber) ||
                             String(ord.phone) === String(userNumber)
                         );
 
@@ -1340,7 +1340,7 @@
                                 state: "",
                                 pinCode: ""
                             };
-                            
+
                             if (!orderAddressObj.fullAddress && latestOrder.customerAdd) {
                                 orderAddressObj.fullAddress = latestOrder.customerAdd;
                             }
@@ -1368,7 +1368,7 @@
             document.getElementById("profileEmailDisplay").textContent = email || "Not registered";
 
             if (addressObj && (addressObj.fullAddress || addressObj.city || addressObj.state)) {
-                document.getElementById("profileAddressDisplay").textContent = 
+                document.getElementById("profileAddressDisplay").textContent =
                     `${addressObj.fullAddress || ''}${addressObj.city ? ', ' + addressObj.city : ''}${addressObj.district ? ', ' + addressObj.district : ''}${addressObj.state ? ', ' + addressObj.state : ''}${addressObj.pinCode ? ' - ' + addressObj.pinCode : ''}`;
 
                 // Set form defaults
@@ -1381,7 +1381,7 @@
                 document.getElementById("profilePincodeInput").value = addressObj.pinCode || "";
             } else {
                 document.getElementById("profileAddressDisplay").textContent = "No delivery address registered yet. Click 'Edit Profile details' to add.";
-                
+
                 // Clear inputs except phone/email defaults if they exist
                 document.getElementById("profileNameInput").value = name === "Premium Member" ? "" : name;
                 document.getElementById("profileEmailInput").value = email === "Not registered" ? "" : email;

@@ -1093,10 +1093,12 @@
                 const pKey = item.productName.toLowerCase().trim();
                 const matchedProduct = productMap[pKey];
                 const gstPercent = (matchedProduct && matchedProduct.gst !== undefined && matchedProduct.gst !== null && !isNaN(Number(matchedProduct.gst))) ? Number(matchedProduct.gst) : 3;
+                const discount = (matchedProduct && matchedProduct.discount) || 0;
 
                 const rate = Number(item.rate) || 0;
-                const gstAmount = (rate * gstPercent) / 100;
-                const finalPrice = Math.round(rate + gstAmount);
+                const originalPrice = Math.round(rate + (rate * gstPercent) / 100);
+                const discountedRate = rate * (1 - discount / 100);
+                const finalPrice = Math.round(discountedRate + (discountedRate * gstPercent) / 100);
                 const formattedPrice = finalPrice.toLocaleString("en-IN");
 
                 const card = document.createElement("div");
@@ -1110,7 +1112,15 @@
                     <div class="item-details">
                         <span class="item-category">${(matchedProduct && matchedProduct.Category) || 'Jewellery Collection'}</span>
                         <div class="item-name">${item.productName}</div>
-                        <div class="item-price">₹${formattedPrice}</div>
+                        <div class="item-price">
+                            ${discount > 0 ? `
+                                <span style="text-decoration: line-through; color: var(--text-muted); font-size: 0.85rem; margin-right: 6px; font-weight: 400;">₹${originalPrice.toLocaleString("en-IN")}</span>
+                                <span>₹${formattedPrice}</span>
+                                <span style="font-size: 0.7rem; background: #fee2e2; color: #ef4444; padding: 2px 6px; border-radius: 4px; font-weight: bold; margin-left: 6px;">${discount}% OFF</span>
+                            ` : `
+                                <span>₹${formattedPrice}</span>
+                            `}
+                        </div>
                         <div class="card-gst" style="font-size:0.68rem;color:var(--text-muted);margin-top:1px;">✓ GST Included</div>
                     </div>
                     <div class="item-actions">

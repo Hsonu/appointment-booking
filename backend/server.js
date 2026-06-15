@@ -428,6 +428,7 @@ app.post("/addProduct", async (req, res) => {
             photo: photoUrls[0],         // First image (backward compat)
             photos: photoUrls,           // All images
             gst: req.body.gst,
+            discount: req.body.discount ? Number(req.body.discount) : 0,
             createdBy
         };
 
@@ -518,7 +519,8 @@ app.put("/updateProduct/:id", async (req, res) => {
             SubCategory,
             Units: req.body.Units !== undefined ? Number(req.body.Units) : undefined,
             Rate: req.body.Rate !== undefined ? Number(req.body.Rate) : undefined,
-            gst: req.body.gst !== undefined ? Number(req.body.gst) : undefined
+            gst: req.body.gst !== undefined ? Number(req.body.gst) : undefined,
+            discount: req.body.discount !== undefined ? Number(req.body.discount) : undefined
         };
 
         if (allPhotos.length > 0) {

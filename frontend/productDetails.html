@@ -978,8 +978,13 @@
                         <!-- Invoice rows -->
                         <div class="receipt-breakdown">
                             <div class="receipt-row">
-                                <span>Subtotal</span>
+                                <span>Subtotal (MRP before GST)</span>
                                 <span>₹<span id="ProductPrice">0.00</span></span>
+                            </div>
+                            <div class="receipt-row" id="discountRow"
+                                style="display:none; color: #ef4444; font-weight: 500;">
+                                <span>Discount (<span id="discountPercent">0</span>%)</span>
+                                <span>−₹<span id="discountAmount">0.00</span></span>
                             </div>
                             <div class="receipt-row">
                                 <span>GST (<span id="GSTSamble">0</span>%)</span>
@@ -1218,8 +1223,11 @@
                 // Math constants
                 let rateVal = Number(productData.Rate) || 0;
                 let gstPercent = (productData.gst !== undefined && productData.gst !== null && !isNaN(Number(productData.gst))) ? Number(productData.gst) : 3;
-                let gstVal = (rateVal * gstPercent) / 100;
-                finalPrice = Math.round(rateVal + gstVal);
+                let discount = productData.discount || 0;
+
+                let discountedRate = rateVal * (1 - discount / 100);
+                let gstVal = (discountedRate * gstPercent) / 100;
+                finalPrice = Math.round(discountedRate + gstVal);
 
                 // Render dynamic details inside summary block
                 const summaryProductBlock = document.getElementById("summaryProductBlock");
@@ -1228,7 +1236,10 @@
                         <img class="summary-img" src="${productData.photo || 'https://via.placeholder.com/150'}" alt="${productData.Productname}" loading="lazy">
                     </div>
                     <div class="summary-details">
-                        <div class="ProductNamesummary">${productData.Productname}</div>
+                        <div class="ProductNamesummary">
+                            ${productData.Productname}
+                            ${discount > 0 ? `<span class="badge" style="background:#fee2e2; color:#ef4444; font-size:0.65rem; font-weight:700; padding: 2px 6px; border-radius: 4px; margin-left: 6px;">${discount}% OFF</span>` : ''}
+                        </div>
                         <div class="productSummaryrate">₹${finalPrice.toLocaleString("en-IN")}</div>
                         <div class="qty-picker">
                             <button type="button" class="qty-btn" id="minBtn" aria-label="Decrease quantity">−</button>
@@ -1238,10 +1249,7 @@
                     </div>`;
 
                 // Update invoice calculations initially
-                let subtotal = rateVal * qty;
-                let initGstVal = (subtotal * gstPercent) / 100;
-                let initTotal = Math.round(subtotal + initGstVal);
-                updateInvoice(subtotal, gstPercent, initGstVal, initTotal);
+                recalcInvoice();
 
                 // Check stock
                 if (productData.Units === undefined || productData.Units === null || productData.Units <= 0) {
@@ -1249,13 +1257,13 @@
                     document.getElementById("qty").textContent = 0;
                     document.getElementById("minBtn").disabled = true;
                     document.getElementById("maxBtn").disabled = true;
-                    
+
                     const pBtn = document.getElementById("PlaceOrderBtn");
                     pBtn.disabled = true;
                     pBtn.textContent = "OUT OF STOCK";
                     pBtn.style.background = "#64748b";
                     pBtn.style.cursor = "not-allowed";
-                    
+
                     showToast("⚠️ This product is out of stock.");
                 } else if (qty > productData.Units) {
                     qty = productData.Units;
@@ -1290,17 +1298,30 @@
         function recalcInvoice() {
             let rateVal = Number(productData.Rate) || 0;
             let gstPercent = (productData.gst !== undefined && productData.gst !== null && !isNaN(Number(productData.gst))) ? Number(productData.gst) : 3;
+            let discount = productData.discount || 0;
 
             let subtotal = rateVal * qty;
-            let gstVal = (subtotal * gstPercent) / 100;
-            let total = Math.round(subtotal + gstVal);
+            let discountAmt = subtotal * (discount / 100);
+            let discountedSub = subtotal - discountAmt;
+            let gstVal = (discountedSub * gstPercent) / 100;
+            let total = Math.round(discountedSub + gstVal);
 
-            updateInvoice(subtotal, gstPercent, gstVal, total);
+            updateInvoice(subtotal, discount, discountAmt, gstPercent, gstVal, total);
         }
 
-        function updateInvoice(subtotal, gstPercent, gstVal, total) {
+        function updateInvoice(subtotal, discount, discountAmt, gstPercent, gstVal, total) {
             document.getElementById("qty").textContent = qty;
             document.getElementById("ProductPrice").textContent = subtotal.toLocaleString("en-IN");
+
+            const discRow = document.getElementById("discountRow");
+            if (discount > 0) {
+                discRow.style.display = "flex";
+                document.getElementById("discountPercent").textContent = discount;
+                document.getElementById("discountAmount").textContent = discountAmt.toLocaleString("en-IN");
+            } else {
+                discRow.style.display = "none";
+            }
+
             document.getElementById("GSTSamble").textContent = gstPercent;
             document.getElementById("PeroductGST").textContent = gstVal.toLocaleString("en-IN");
             document.getElementById("totalAmount").textContent = total.toLocaleString("en-IN");
@@ -1308,7 +1329,18 @@
             // Sync with sub-rate tag
             const rateTag = document.querySelector(".productSummaryrate");
             if (rateTag) {
-                rateTag.textContent = `₹${total.toLocaleString("en-IN")}`;
+                const discount = productData.discount || 0;
+                const rateVal = Number(productData.Rate) || 0;
+                const gstPercent = (productData.gst !== undefined && productData.gst !== null && !isNaN(Number(productData.gst))) ? Number(productData.gst) : 3;
+                const unitOriginalPrice = Math.round(rateVal * (1 + gstPercent / 100));
+                const unitSellPrice = Math.round(rateVal * (1 - discount / 100) * (1 + gstPercent / 100));
+
+                rateTag.innerHTML = `
+                    ${discount > 0 ? `
+                        <span style="text-decoration: line-through; color: var(--text-muted); font-size: 0.82rem; margin-right: 6px; font-weight: normal;">₹${(unitOriginalPrice * qty).toLocaleString("en-IN")}</span>
+                    ` : ''}
+                    ₹${(unitSellPrice * qty).toLocaleString("en-IN")}
+                `;
             }
         }
 
@@ -1373,12 +1405,14 @@
 
                 if (paymentMethod === "COD") {
                     // Direct Place Order without Razorpay
+                    const discount = productData.discount || 0;
+                    const discountedRate = productData.Rate * (1 - discount / 100);
                     const orderPayload = {
                         withGstTotalAmount: paymentAmount,
                         gst: Number(document.getElementById("GSTSamble").textContent),
                         gstAmount: Number(document.getElementById("PeroductGST").textContent.replace(/,/g, "")),
                         qty: qty,
-                        totalAmount: Number(document.getElementById("ProductPrice").textContent.replace(/,/g, "")),
+                        totalAmount: discountedRate * qty,
                         address: addressData,
                         name: savedName,
                         phone: savedPhone,
@@ -1390,7 +1424,7 @@
                         paymentMethod: "COD",
                         paymentType: "COD",
                         productName: productData.Productname,
-                        rate: productData.Rate,
+                        rate: discountedRate,
                         photo: productData.photo,
                         description: productData.description || "",
                         orderStatus: "Order Placed"
@@ -1454,12 +1488,14 @@
                                 if (verifyData.success) {
                                     showToast("✅ Payment Verified & Received!");
 
+                                    const discount = productData.discount || 0;
+                                    const discountedRate = productData.Rate * (1 - discount / 100);
                                     const orderPayload = {
                                         withGstTotalAmount: paymentAmount,
                                         gst: Number(document.getElementById("GSTSamble").textContent),
                                         gstAmount: Number(document.getElementById("PeroductGST").textContent.replace(/,/g, "")),
                                         qty: qty,
-                                        totalAmount: Number(document.getElementById("ProductPrice").textContent.replace(/,/g, "")),
+                                        totalAmount: discountedRate * qty,
                                         address: addressData,
                                         name: savedName,
                                         phone: savedPhone,
@@ -1471,7 +1507,7 @@
                                         paymentMethod: "Online Payment",
                                         paymentType: "Prepaid",
                                         productName: productData.Productname,
-                                        rate: productData.Rate,
+                                        rate: discountedRate,
                                         photo: productData.photo,
                                         description: productData.description || "",
                                         orderStatus: "Order Placed"

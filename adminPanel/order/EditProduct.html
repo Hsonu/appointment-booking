@@ -229,6 +229,10 @@
               <input class="formInput" id="editSubCategory" placeholder="Subcategory">
             </div>
             <div class="formGroup">
+              <label class="formLabel">Discount %</label>
+              <input class="formInput" id="editDiscount" type="number" placeholder="0" min="0" max="100">
+            </div>
+            <div class="formGroup">
               <label class="formLabel">GST (%) *</label>
               <input class="formInput" id="editGst" type="number" placeholder="GST Percentage" min="0" value="3">
             </div>
@@ -236,9 +240,23 @@
               <label class="formLabel">Units *</label>
               <input class="formInput" id="editUnits" type="number" placeholder="Units" min="0">
             </div>
-            <div class="formGroup col-span-2">
+            <div class="formGroup">
               <label class="formLabel">Rate (₹) *</label>
               <input class="formInput" id="editRate" type="number" placeholder="Rate" min="0">
+            </div>
+            <div class="formGroup col-span-2" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 6px;">
+              <div>
+                <div style="font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Original Price (incl. GST)</div>
+                <div id="calcOriginalPrice" style="font-size: 0.95rem; font-weight: 700; color: #334155; margin-top: 4px;">₹0</div>
+              </div>
+              <div>
+                <div style="font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Discount Amount</div>
+                <div id="calcDiscountAmount" style="font-size: 0.95rem; font-weight: 700; color: #ef4444; margin-top: 4px;">₹0</div>
+              </div>
+              <div>
+                <div style="font-size: 0.72rem; color: #4f46e5; text-transform: uppercase; font-weight: 700;">Final Sell Price</div>
+                <div id="calcSellPrice" style="font-size: 0.95rem; font-weight: 800; color: #4f46e5; margin-top: 4px;">₹0</div>
+              </div>
             </div>
             <div class="formGroup col-span-2">
               <label class="formLabel">Description</label>
@@ -334,15 +352,28 @@
         return;
       }
       tbody.innerHTML = data.map(item => {
-        const totalAmount = item.Units * item.Rate;
-        return `<tr data-id="${item._id}" data-desc="${item.description || ''}">
+        const gstPercent = (item.gst !== undefined && item.gst !== null && !isNaN(Number(item.gst))) ? Number(item.gst) : 3;
+        const discount = item.discount || 0;
+        const originalPrice = Math.round(item.Rate * (1 + gstPercent / 100));
+        const sellPrice = Math.round(item.Rate * (1 - discount / 100) * (1 + gstPercent / 100));
+        const totalAmount = item.Units * sellPrice;
+
+        return `<tr data-id="${item._id}" data-desc="${item.description || ''}" data-rate="${item.Rate}" data-gst="${gstPercent}" data-discount="${discount}">
         <td><img class="productThumb" src="${item.photo}" alt="${item.Productname}" onerror="this.src='https://via.placeholder.com/40'"></td>
         <td class="colName" style="font-weight:600;color:#0f172a;">${item.Productname}</td>
         <td class="colCategory">${item.Category}</td>
         <td class="colSubCategory">${item.SubCategory || '—'}</td>
-        <td class="colGst">${item.gst || 3}%</td>
+        <td class="colGst">${gstPercent}%</td>
         <td class="colUnits">${item.Units}</td>
-        <td class="colRate">₹${Number(item.Rate).toLocaleString("en-IN")}</td>
+        <td class="colRate">
+          ${discount > 0 ? `
+            <span style="text-decoration: line-through; color: #94a3b8; font-size: 0.8rem; display: block;">₹${originalPrice.toLocaleString("en-IN")}</span>
+            <span style="font-weight: 600; color: #10b981;">₹${sellPrice.toLocaleString("en-IN")}</span>
+            <span style="font-size: 0.7rem; background: #fee2e2; color: #ef4444; padding: 2px 4px; border-radius: 4px; font-weight: bold; display: inline-block; margin-top: 2px;">${discount}% OFF</span>
+          ` : `
+            <span>₹${originalPrice.toLocaleString("en-IN")}</span>
+          `}
+        </td>
         <td>₹${totalAmount.toLocaleString("en-IN")}</td>
         <td style="font-size:0.75rem;color:#64748b;">${new Date().toLocaleDateString("en-IN")}</td>
         <td>
@@ -363,19 +394,25 @@
         btn.addEventListener("click", () => {
           const row = btn.closest("tr");
           const id = btn.dataset.id;
+          const rateVal = Number(row.dataset.rate) || 0;
+          const gstVal = Number(row.dataset.gst) || 0;
+          const discountVal = Number(row.dataset.discount) || 0;
+
           document.getElementById("editId").value = id;
           document.getElementById("editName").value = row.querySelector(".colName").textContent;
           document.getElementById("editCategory").value = row.querySelector(".colCategory").textContent;
           document.getElementById("editSubCategory").value = row.querySelector(".colSubCategory").textContent.replace("—", "");
-          document.getElementById("editGst").value = row.querySelector(".colGst").textContent.replace("%", "");
+          document.getElementById("editGst").value = gstVal;
           document.getElementById("editUnits").value = row.querySelector(".colUnits").textContent;
-          document.getElementById("editRate").value = row.querySelector(".colRate").textContent.replace("₹", "");
+          document.getElementById("editRate").value = rateVal;
+          document.getElementById("editDiscount").value = discountVal;
           document.getElementById("editDescription").value = row.dataset.desc || "";
 
           // Image Preview setup
           document.getElementById("editPreviewImg").src = row.querySelector(".productThumb").src;
           document.getElementById("editFillPhoto").value = "";
 
+          updateEditModalCalculations();
           document.getElementById("modalAlert").classList.remove("show");
           document.getElementById("editModal").classList.add("show");
         });
@@ -420,6 +457,7 @@
       const gst = Number(document.getElementById("editGst").value);
       const units = Number(document.getElementById("editUnits").value);
       const rate = Number(document.getElementById("editRate").value);
+      const discount = Number(document.getElementById("editDiscount").value) || 0;
       const description = document.getElementById("editDescription").value;
 
       if (!productName || !category || isNaN(units) || isNaN(rate) || isNaN(gst)) {
@@ -436,6 +474,7 @@
         formData.append("gst", gst);
         formData.append("Units", units);
         formData.append("Rate", rate);
+        formData.append("discount", discount);
         formData.append("description", description);
 
         if (editFillPhoto.files[0]) {
@@ -460,14 +499,33 @@
           row.querySelector(".colSubCategory").textContent = updatedProduct.SubCategory || "—";
           row.querySelector(".colGst").textContent = `${updatedProduct.gst}%`;
           row.querySelector(".colUnits").textContent = updatedProduct.Units;
-          row.querySelector(".colRate").textContent = `₹${updatedProduct.Rate}`;
           row.querySelector(".productThumb").src = updatedProduct.photo;
           row.dataset.desc = updatedProduct.description;
+          row.dataset.rate = updatedProduct.Rate;
+          row.dataset.gst = updatedProduct.gst;
+          row.dataset.discount = updatedProduct.discount;
 
-          // Update total cell
+          // Update rate and total cells
+          const uGst = updatedProduct.gst || 0;
+          const uDiscount = updatedProduct.discount || 0;
+          const originalPrice = Math.round(updatedProduct.Rate * (1 + uGst / 100));
+          const sellPrice = Math.round(updatedProduct.Rate * (1 - uDiscount / 100) * (1 + uGst / 100));
+          const totalAmount = updatedProduct.Units * sellPrice;
+
+          const rateCell = row.querySelector(".colRate");
+          if (rateCell) {
+            rateCell.innerHTML = uDiscount > 0 ? `
+              <span style="text-decoration: line-through; color: #94a3b8; font-size: 0.8rem; display: block;">₹${originalPrice.toLocaleString("en-IN")}</span>
+              <span style="font-weight: 600; color: #10b981;">₹${sellPrice.toLocaleString("en-IN")}</span>
+              <span style="font-size: 0.7rem; background: #fee2e2; color: #ef4444; padding: 2px 4px; border-radius: 4px; font-weight: bold; display: inline-block; margin-top: 2px;">${uDiscount}% OFF</span>
+            ` : `
+              <span>₹${originalPrice.toLocaleString("en-IN")}</span>
+            `;
+          }
+
           const totalAmountCell = row.cells[7];
           if (totalAmountCell) {
-            totalAmountCell.textContent = `₹${(updatedProduct.Units * updatedProduct.Rate).toLocaleString("en-IN")}`;
+            totalAmountCell.textContent = `₹${totalAmount.toLocaleString("en-IN")}`;
           }
         }
         document.getElementById("editModal").classList.remove("show");
@@ -478,6 +536,24 @@
         saveBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="#fff"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg> Save Changes`;
         saveBtn.disabled = false;
       }
+    });
+
+    function updateEditModalCalculations() {
+      const rate = Number(document.getElementById("editRate").value) || 0;
+      const gst = Number(document.getElementById("editGst").value) || 0;
+      const discount = Number(document.getElementById("editDiscount").value) || 0;
+
+      const originalPrice = Math.round(rate * (1 + gst / 100));
+      const sellPrice = Math.round(rate * (1 - discount / 100) * (1 + gst / 100));
+      const discountAmt = originalPrice - sellPrice;
+
+      document.getElementById("calcOriginalPrice").textContent = `₹${originalPrice.toLocaleString("en-IN")}`;
+      document.getElementById("calcDiscountAmount").textContent = `₹${discountAmt.toLocaleString("en-IN")}`;
+      document.getElementById("calcSellPrice").textContent = `₹${sellPrice.toLocaleString("en-IN")}`;
+    }
+
+    ["editRate", "editGst", "editDiscount"].forEach(id => {
+      document.getElementById(id).addEventListener("input", updateEditModalCalculations);
     });
 
     // Confirm delete
