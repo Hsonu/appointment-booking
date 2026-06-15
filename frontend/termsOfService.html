@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Appointment – SJ Jewellery</title>
+    <title>Terms of Service – SJ Jewellery</title>
     <meta name="description"
-        content="Book a private jewellery appointment with SJ Jewellery. Get personalised guidance on rings, necklaces, and custom jewellery.">
+        content="Read the Terms of Service of SJ Jewellery – Learn about our product pricing, shipping terms, account verification, and legal conditions.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -64,13 +64,7 @@
             max-width: 100%;
         }
 
-        button {
-            font-family: inherit;
-            cursor: pointer;
-            border: none;
-        }
-
-        /* WhatsApp */
+        /* Float Elements */
         .whatsapp-float {
             position: fixed;
             width: 56px;
@@ -89,7 +83,6 @@
 
         .whatsapp-float:hover {
             transform: scale(1.12);
-            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
         }
 
         .whatsapp-float img {
@@ -168,7 +161,6 @@
 
         #searchInput:focus {
             border-color: var(--gold);
-            background: rgba(255, 255, 255, 0.12);
             box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
         }
 
@@ -199,7 +191,7 @@
             padding: 8px 12px;
             border-radius: 10px;
             border: 1.5px solid transparent;
-            transition: border-color var(--transition), background var(--transition);
+            transition: all var(--transition);
             cursor: pointer;
             color: rgba(255, 255, 255, 0.8);
             font-size: 0.65rem;
@@ -242,54 +234,48 @@
             justify-content: center;
         }
 
-        /* Page Banner */
-        #pageBanner {
+        /* Hero Banner */
+        #heroBanner {
             margin-top: var(--header-h);
-            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-2) 100%);
-            padding: 72px 24px 64px;
-            text-align: center;
+            height: 320px;
             position: relative;
             overflow: hidden;
+            background: var(--dark);
         }
 
-        #pageBanner::before {
-            content: '';
+        #heroBanner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        #heroBannerContent {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(ellipse at 60% 40%, rgba(201, 169, 110, 0.12) 0%, transparent 60%);
-            pointer-events: none;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
         }
 
-        #bannerEyebrow {
+        #heroBannerContent p {
             font-size: 0.68rem;
             letter-spacing: 0.25em;
             text-transform: uppercase;
             color: var(--gold);
             font-weight: 600;
             margin-bottom: 14px;
-            animation: fadeUp 0.6s ease forwards;
         }
 
-        #bannerTitle {
+        #heroBannerContent h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-size: clamp(2rem, 5vw, 3.4rem);
             font-weight: 700;
             color: #fff;
             line-height: 1.15;
-            margin-bottom: 16px;
-            animation: fadeUp 0.7s 0.05s ease both;
-        }
-
-        #bannerSub {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.6);
-            max-width: 520px;
-            margin: 0 auto;
-            line-height: 1.7;
-            animation: fadeUp 0.8s 0.1s ease both;
         }
 
         .goldLine {
@@ -301,224 +287,61 @@
             margin: 16px auto 0;
         }
 
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(18px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Contact Section */
-        #contactSection {
-            max-width: 1100px;
+        /* Content Sections */
+        .policyContainer {
+            max-width: 900px;
             margin: 0 auto;
-            padding: 72px 24px;
-            display: grid;
-            grid-template-columns: 1fr 1.3fr;
-            gap: 60px;
-            align-items: start;
+            padding: 64px 24px;
         }
 
-        /* Info Panel */
-        #contactInfo {
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
-
-        #contactInfo h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-h);
-        }
-
-        #contactInfo p {
-            font-size: 0.9rem;
-            line-height: 1.75;
-            color: var(--text-muted);
-        }
-
-        .contactItem {
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-        }
-
-        .contactIcon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 4px 14px rgba(201, 169, 110, 0.3);
-        }
-
-        .contactIcon svg {
-            width: 20px;
-            height: 20px;
-            fill: none;
-            stroke: #fff;
-            stroke-width: 2;
-        }
-
-        .contactItemText strong {
-            font-size: 0.82rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: var(--text-h);
-            display: block;
-            margin-bottom: 3px;
-        }
-
-        .contactItemText span {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-        }
-
-        /* Form Card */
-        #contactForm {
+        .policyCard {
             background: var(--white);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.07);
             border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 48px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
         }
 
-        #formTitle {
+        .policyCard h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-top: 32px;
+            margin-bottom: 16px;
             font-weight: 700;
-            color: var(--text-h);
-            margin-bottom: 6px;
+            border-left: 3px solid var(--gold);
+            padding-left: 14px;
         }
 
-        #formSubtitle {
-            font-size: 0.84rem;
-            color: var(--text-muted);
-            margin-bottom: 28px;
+        .policyCard h2:first-of-type {
+            margin-top: 0;
         }
 
-        .formGroup {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+        .policyCard p {
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: var(--text-body);
             margin-bottom: 20px;
         }
 
-        .formGroup label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+        .policyCard ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            list-style-type: disc;
+        }
+
+        .policyCard li {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text-body);
+            margin-bottom: 8px;
+        }
+
+        .lastUpdated {
+            font-size: 0.8rem;
             color: var(--text-muted);
-        }
-
-        .formGroup input {
-            padding: 12px 16px;
-            border: 1.5px solid var(--border);
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-family: inherit;
-            color: var(--text-h);
-            background: var(--cream);
-            outline: none;
-            transition: border-color var(--transition), box-shadow var(--transition);
-        }
-
-        .formGroup input:focus {
-            border-color: var(--gold);
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.12);
-        }
-
-        .formGroup input::placeholder {
-            color: var(--text-muted);
-        }
-
-        #submitBtn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--dark);
-            font-family: inherit;
-            font-size: 0.88rem;
-            font-weight: 700;
-            letter-spacing: 0.07em;
-            text-transform: uppercase;
-            border: none;
-            border-radius: 999px;
-            cursor: pointer;
-            transition: transform var(--transition), box-shadow var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        #submitBtn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 28px rgba(201, 169, 110, 0.45);
-        }
-
-        #submitBtn svg {
-            width: 16px;
-            height: 16px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2.5;
-        }
-
-        .formNote {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 14px;
-        }
-
-        /* Toast */
-        #toast {
-            position: fixed;
-            bottom: 100px;
-            right: 28px;
-            background: var(--dark);
-            color: #fff;
-            padding: 13px 20px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
-            z-index: 9998;
-            transform: translateY(20px);
-            opacity: 0;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-        }
-
-        #toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        #toast svg {
-            width: 18px;
-            height: 18px;
-            fill: none;
-            stroke: var(--gold);
-            stroke-width: 2.5;
-            flex-shrink: 0;
+            margin-bottom: 32px;
+            font-style: italic;
         }
 
         /* Footer */
@@ -526,6 +349,7 @@
             background: var(--dark-2);
             color: rgba(255, 255, 255, 0.75);
             padding: 64px 24px 32px;
+            border-top: 1px solid var(--border);
         }
 
         .footerInner {
@@ -648,15 +472,8 @@
             letter-spacing: 0.05em;
         }
 
+        /* Responsive Layout styles */
         @media (max-width: 860px) {
-            #contactSection {
-                grid-template-columns: 1fr;
-            }
-
-            .footerTop {
-                grid-template-columns: 1fr 1fr;
-            }
-
             :root {
                 --header-h: 116px;
             }
@@ -698,13 +515,23 @@
             }
         }
 
+        @media (max-width: 768px) {
+            .footerTop {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            #heroBanner {
+                height: 240px;
+            }
+
+            .policyCard {
+                padding: 24px;
+            }
+        }
+
         @media (max-width: 640px) {
             .footerTop {
                 grid-template-columns: 1fr;
-            }
-
-            #contactForm {
-                padding: 24px;
             }
         }
     </style>
@@ -712,20 +539,19 @@
 
 <body>
 
-    <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
-        class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+    <!-- WhatsApp float -->
+    <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products."
+        class="whatsapp-float" target="_blank" rel="noopener noreferrer">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
 
-    <div id="toast" role="alert"><svg viewBox="0 0 24 24">
-            <path d="M20 6L9 17l-5-5" />
-        </svg><span id="toastMsg"></span></div>
-
-    <!-- Header -->
+    <!-- Header / Navbar -->
     <header id="siteHeader">
         <div id="navInner">
-            <a id="navLogo" href="./index.html"><span class="brand-name">SJ Jewellery</span><span
-                    class="brand-tagline">Crafted with love</span></a>
+            <a id="navLogo" href="./index.html">
+                <span class="brand-name">SJ Jewellery</span>
+                <span class="brand-tagline">Crafted with love</span>
+            </a>
             <div id="searchWrapper">
                 <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2">
                     <circle cx="11" cy="11" r="8" />
@@ -734,122 +560,122 @@
                 <input id="searchInput" type="text" placeholder="Search jewellery…" autocomplete="off">
             </div>
             <nav class="navActions">
-                <a href="./order.html" class="navActionBtn"><svg viewBox="0 0 24 24">
-                        <path
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>Orders</a>
-                <a href="./login.html" class="navActionBtn"><svg viewBox="0 0 24 24">
+                <a href="./order.html" class="navActionBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>Orders
+                </a>
+                <a href="./login.html" class="navActionBtn">
+                    <svg viewBox="0 0 24 24">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
-                    </svg>Account</a>
-                <a href="./card.html" class="navActionBtn cartWrap"><svg viewBox="0 0 24 24">
+                    </svg>Account
+                </a>
+                <a href="./card.html" class="navActionBtn cartWrap">
+                    <svg viewBox="0 0 24 24">
                         <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
                         <line x1="3" y1="6" x2="21" y2="6" />
                         <path d="M16 10a4 4 0 01-8 0" />
-                    </svg>Cart<span class="cartBadge">0</span></a>
+                    </svg>Cart<span class="cartBadge">0</span>
+                </a>
             </nav>
         </div>
     </header>
 
-    <!-- Banner -->
-    <section id="pageBanner">
-        <p id="bannerEyebrow">✦ Get In Touch</p>
-        <h1 id="bannerTitle">Book Your Private<br><em>Jewellery Appointment</em></h1>
-        <p id="bannerSub">Experience personalised guidance from our jewellery experts. We're here to help you find the
-            perfect piece.</p>
-        <span class="goldLine"></span>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contactSection">
-
-        <!-- Left Info -->
-        <div id="contactInfo">
-            <div>
-                <h2>Visit Us or Reach Out</h2>
-                <p>We'd love to meet you in person. Book a private appointment at our showroom or reach us via phone or
-                    WhatsApp.</p>
-            </div>
-            <div class="contactItem">
-                <div class="contactIcon"><svg viewBox="0 0 24 24">
-                        <path
-                            d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
-                    </svg></div>
-                <div class="contactItemText"><strong>Phone / WhatsApp</strong><span>+91 86036 32642</span></div>
-            </div>
-            <div class="contactItem">
-                <div class="contactIcon"><svg viewBox="0 0 24 24">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                        <polyline points="22,6 12,13 2,6" />
-                    </svg></div>
-                <div class="contactItemText"><strong>Email</strong><span>sonurajsonuraj4515@gmail.com</span></div>
-            </div>
-            <div class="contactItem">
-                <div class="contactIcon"><svg viewBox="0 0 24 24">
-                        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
-                        <circle cx="12" cy="10" r="3" />
-                    </svg></div>
-                <div class="contactItemText"><strong>Showroom</strong><span>SJ Jewellery, Seepz, India</span></div>
-            </div>
-            <div class="contactItem">
-                <div class="contactIcon"><svg viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" />
-                        <polyline points="12 6 12 12 16 14" />
-                    </svg></div>
-                <div class="contactItemText"><strong>Hours</strong><span>Mon–Sat · 10 AM – 8 PM</span></div>
-            </div>
+    <!-- Hero Banner -->
+    <div id="heroBanner">
+        <img src="https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/AT_Offer/01/Desktop.jpg"
+            alt="SJ Jewellery Showroom Banner">
+        <div id="heroBannerContent">
+            <p>✦ Legal & Responsibility</p>
+            <h1>Terms of Service</h1>
+            <span class="goldLine"></span>
         </div>
+    </div>
 
-        <!-- Right Form -->
-        <div id="contactForm">
-            <div id="formTitle">Book an Appointment</div>
-            <div id="formSubtitle">Fill in your details and we'll confirm your slot.</div>
-            <form id="appointmentForm">
-                <div class="formGroup">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" placeholder="Your full name" required>
-                </div>
-                <div class="formGroup">
-                    <label for="mobileNumber">Phone Number</label>
-                    <input type="number" id="mobileNumber" placeholder="10-digit mobile number" required>
-                </div>
-                <div class="formGroup">
-                    <label for="emailId">Email Address</label>
-                    <input type="email" id="emailId" placeholder="your@email.com" required>
-                </div>
-                <button id="submitBtn" type="submit">
-                    Book Appointment
-                    <svg viewBox="0 0 24 24">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </button>
-                <p class="formNote">We respect your privacy. Your information is never shared.</p>
-            </form>
+    <!-- Main Content Container -->
+    <main class="policyContainer">
+        <div class="policyCard">
+            <div class="lastUpdated">Last Updated: June 15, 2026</div>
+
+            <p>Welcome to SJ Jewellery. These Terms of Service ("Terms") govern your access to and use of our website, mobile application, showroom appointments, and the purchase of our handcrafted gold, diamond, and platinum jewellery. By using our website or placing an order, you agree to comply with and be bound by these Terms.</p>
+
+            <h2>1. User Account & Security</h2>
+            <p>To place orders or book showroom appointments, you may be required to verify your details:</p>
+            <ul>
+                <li><strong>OTP Verification:</strong> We use secure One-Time Passwords (OTPs) sent to your mobile number to authenticate your identity. You agree to provide a valid, active 10-digit mobile number belonging to you.</li>
+                <li><strong>Session Security:</strong> Local login tokens are stored securely in your browser to maintain your session. You are responsible for preventing unauthorized access to your account and devices.</li>
+            </ul>
+
+            <h2>2. Product Accuracy & Metal Pricing</h2>
+            <p>We make every effort to display the details, metal weights, and gemstone characteristics of our jewellery as accurately as possible:</p>
+            <ul>
+                <li><strong>BIS Certification:</strong> All gold, diamond, and platinum items are BIS Hallmark Certified and come with official laboratory certificates (GIA, IGI, or brand equivalents).</li>
+                <li><strong>Market Price Fluctuations:</strong> Due to continuous fluctuations in precious metal rates (gold, platinum, silver) and currency markets, prices listed on the website are subject to update and adjustment at any time without prior notice.</li>
+            </ul>
+
+            <h2>3. Purchases, Payments, and Razorpay</h2>
+            <p>When you purchase products from SJ Jewellery:</p>
+            <ul>
+                <li><strong>Payment Gateway:</strong> All payments are processed through Razorpay, a secure external transaction processor compliance with PCI-DSS. We do not store or see your raw credit card, debit card, or net banking numbers.</li>
+                <li><strong>Cash on Delivery (COD):</strong> COD is available for eligible pin codes and cart values. COD orders are subject to confirmation via WhatsApp or phone call prior to shipping.</li>
+            </ul>
+
+            <h2>4. Shipping, Delivery, and Handover</h2>
+            <p>We offer free, fully insured shipping on all orders pan-India:</p>
+            <ul>
+                <li><strong>Delivery Security:</strong> Due to the high value of jewellery shipments, deliveries will only be handed over to the buyer or authorized recipient upon presenting a secure pin code sent to the registered mobile number, or a physical signature.</li>
+                <li><strong>Fulfillment Timelines:</strong> Estimated shipping dates are provided at checkout, but may be subject to minor variations due to location accessibility or logistics partner delays.</li>
+            </ul>
+
+            <h2>5. Returns, Refunds, and Custom Orders</h2>
+            <p>Our return policy is governed strictly to protect value and authenticity:</p>
+            <ul>
+                <li><strong>Refund Policy:</strong> Returns and refunds are managed in accordance with our <a href="./refundPolicy.html" style="color: var(--gold); text-decoration: underline;">Refund Policy</a>. Eligible standard designs can be returned within 30 days of delivery.</li>
+                <li><strong>Bespoke Items:</strong> Customized engravings, custom-crafted designs, gold coins, and resizing modifications made at the customer's request are completely non-returnable and non-refundable.</li>
+            </ul>
+
+            <h2>6. Intellectual Property</h2>
+            <p>All content displayed on this website, including but not limited to texts, high-resolution product photographs, brand logos, custom UI designs, graphics, and software scripts, is the exclusive property of SJ Jewellery and is protected by copyright, trademark, and intellectual property laws of India.</p>
+
+            <h2>7. Limitation of Liability</h2>
+            <p>SJ Jewellery shall not be liable for any direct, indirect, incidental, or consequential damages resulting from the use of our services, shipping delays by insured carriers, or daily market gold price adjustments post-order placement.</p>
+
+            <h2>8. Contact Information</h2>
+            <p>For questions or issues regarding these Terms of Service, please contact our support desk:</p>
+            <ul>
+                <li><strong>Email:</strong> sonurajsonuraj4515@gmail.com</li>
+                <li><strong>Phone / WhatsApp:</strong> +91 8603632642</li>
+                <li><strong>Office Address:</strong> SEEPZ, Andheri East, Mumbai, 400096</li>
+            </ul>
         </div>
-    </section>
+    </main>
 
     <!-- Footer -->
-    <footer id="siteFooter">
+    <footer id="siteFooter" role="contentinfo">
         <div class="footerInner">
             <div class="footerTop">
                 <div class="footerBrand">
                     <div class="footerLogo">SJ Jewellery</div>
-                    <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary.
-                        Handcrafted with passion, delivered with pride.</p>
+                    <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary. Handcrafted with passion, delivered with pride.</p>
                     <div class="footerSocial">
-                        <a href="#" class="socialIcon" aria-label="Instagram"><svg viewBox="0 0 24 24">
+                        <a href="#" class="socialIcon" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24">
                                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                                 <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
                                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                            </svg></a>
-                        <a href="#" class="socialIcon" aria-label="Facebook"><svg viewBox="0 0 24 24">
+                            </svg>
+                        </a>
+                        <a href="#" class="socialIcon" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24">
                                 <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
-                            </svg></a>
-                        <a href="https://wa.me/918603632642" class="socialIcon" aria-label="WhatsApp"
-                            target="_blank"><svg viewBox="0 0 24 24">
-                                <path
-                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
-                            </svg></a>
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/918603632642" class="socialIcon" aria-label="WhatsApp" target="_blank">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                            </svg>
+                        </a>
                     </div>
                 </div>
                 <div class="footerCol">
@@ -881,18 +707,22 @@
                 </div>
             </div>
             <div class="footerBottom">
-                <p class="footerCopy">&copy; 2026 <span>SJ Jewellery</span>. All rights reserved.</p>
-                <div class="footerPayments"><span class="payBadge">UPI</span><span class="payBadge">Razorpay</span><span
-                        class="payBadge">Net Banking</span><span class="payBadge">COD</span></div>
+                <p class="footerCopy">&copy; 2026 <span>SJ Jewellery</span>. All rights reserved. Crafted with ♥</p>
+                <div class="footerPayments">
+                    <span class="payBadge">UPI</span>
+                    <span class="payBadge">Razorpay</span>
+                    <span class="payBadge">Net Banking</span>
+                    <span class="payBadge">COD</span>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="./config.js"></script>
     <script>
-        // Dynamic Account navigation link updating & click interception
         const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-        const navLoginBtn = document.getElementById("navLoginBtn");
+        const navLoginBtn = document.getElementById("navLoginBtn") || document.querySelector("a[href='./login.html']");
         if (navLoginBtn && isLoggedIn) {
             navLoginBtn.href = "./profile.html";
         }
@@ -914,43 +744,6 @@
             }
         }
 
-        function showToast(msg) {
-            const t = document.getElementById("toast");
-            document.getElementById("toastMsg").textContent = msg;
-            t.classList.add("show");
-            setTimeout(() => t.classList.remove("show"), 3500);
-        }
-
-        document.getElementById("appointmentForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const fullName = document.getElementById("fullName").value.trim();
-            const mobileNumber = document.getElementById("mobileNumber").value.trim();
-            const emailId = document.getElementById("emailId").value.trim();
-
-            if (!fullName || !mobileNumber || !emailId) {
-                showToast("⚠️ Please fill in all fields.");
-                return;
-            }
-            const btn = document.getElementById("submitBtn");
-            btn.disabled = true;
-            btn.textContent = "Booking…";
-            try {
-                const response = await fetch(`${BASE_URL}/newClient`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ FullName: fullName, mobileNumber, email: emailId })
-                });
-                await response.json();
-                showToast(`✅ Appointment booked for ${fullName}!`);
-                document.getElementById("appointmentForm").reset();
-            } catch (err) {
-                console.error(err);
-                showToast("❌ Something went wrong. Please try again.");
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = 'Book Appointment <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
-            }
-        });
         async function fetchCartCount() {
             try {
                 const res = await fetch(`${BASE_URL}/Card`);
@@ -965,7 +758,6 @@
         }
         fetchCartCount();
 
-        // Redirect navbar search to allProduct list
         document.getElementById("searchInput").addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
                 window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
