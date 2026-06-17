@@ -940,7 +940,12 @@
         // Load placed orders
         async function allOrder() {
             try {
-                let res = await fetch(`${BASE_URL}/viwePlaceOrder`);
+                const userNumber = localStorage.getItem("userNumber") || "";
+                let res = await fetch(`${BASE_URL}/viwePlaceOrder`, {
+                    headers: {
+                        "x-user-number": userNumber
+                    }
+                });
                 if (!res.ok) throw new Error("Could not load orders");
 
                 let resOrder = await res.json();

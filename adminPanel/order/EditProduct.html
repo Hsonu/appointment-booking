@@ -483,6 +483,7 @@
 
         const res = await fetch(`${BASE_URL}/updateProduct/${id}`, {
           method: "PUT",
+          headers: { "x-admin-id": ADMIN_ID },
           body: formData
         });
 
@@ -561,7 +562,10 @@
       const btn = document.getElementById("confirmDeleteBtn");
       btn.textContent = "Deleting…"; btn.disabled = true;
       try {
-        const res = await fetch(`${BASE_URL}/DelProduct/${deleteTargetId}`, { method: "DELETE" });
+        const res = await fetch(`${BASE_URL}/DelProduct/${deleteTargetId}`, {
+          method: "DELETE",
+          headers: { "x-admin-id": ADMIN_ID }
+        });
         if (!res.ok) throw new Error("Delete failed");
         deleteTargetRow?.remove();
         document.getElementById("deleteModal").classList.remove("show");

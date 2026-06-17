@@ -270,7 +270,10 @@
         try {
           const res = await fetch(`${BASE_URL}/updateOrderStatus/${id}`, {
             method: "PUT",
-            headers: { "Content-Type":"application/json" },
+            headers: { 
+              "Content-Type": "application/json",
+              "x-admin-id": ADMIN_ID
+            },
             body: JSON.stringify({ status })
           });
           if (!res.ok) throw new Error();

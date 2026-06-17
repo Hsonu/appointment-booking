@@ -1,29 +1,58 @@
-require("dotenv").config();
+// Global Crash Prevention
+process.on("uncaughtException", (err) => {
+    console.error("🔥 CRITICAL: Uncaught Exception caught:", err.stack || err);
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+    console.error("🔥 CRITICAL: Unhandled Rejection caught at:", promise, "reason:", reason);
+});
+
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;
-const db = require("./db")
+const db = require("./db");
 const booking = require("./booking");
 const addProducts = require("./addProductSchema");
 const placeOrderData = require("./placeOrderSchema");
 const Card = require("./cardSchema");
 const login = require("./loginSchema");
-const address = require("./addressSchema")
-const user = require("./userLgoninSchema")
-const Admin = require("./adminSchema")
+const address = require("./addressSchema");
+const user = require("./userLgoninSchema");
+const Admin = require("./adminSchema");
 const cors = require("cors");
-const Razorpar = require("razorpay")
+const Razorpar = require("razorpay");
+
+// Validate Environment Variables
+function validateEnv() {
+    const required = [
+        "MONGO_URI",
+        "CLOUDINARY_CLOUD_NAME",
+        "CLOUDINARY_API_KEY",
+        "CLOUDINARY_API_SECRET",
+        "RAZORPAY_KEY_ID",
+        "RAZORPAY_KEY_SECRET"
+    ];
+    const missing = required.filter(key => !process.env[key]);
+    if (missing.length > 0) {
+        console.warn("⚠️ WARNING: Missing Environment Variables:");
+        missing.forEach(key => console.warn(`   - ${key}`));
+        console.warn("⚠️ Features relying on these variables (like MongoDB, Razorpay, or Cloudinary) will fail.");
+    } else {
+        console.log("✅ All required environment variables are verified.");
+    }
+}
+validateEnv();
+
 app.use(cors());
 app.use(express.json());
-const path = require("path");
 app.use(express.static(path.join(__dirname, "../frontend")));
-app.use(express.static(path.join(__dirname, "../adminPanel")))
-app.use("/admin", express.static(path.join(__dirname, "../adminPanel/order")))
+app.use(express.static(path.join(__dirname, "../adminPanel")));
+app.use("/admin", express.static(path.join(__dirname, "../adminPanel/order")));
 const nodemailer = require("nodemailer");
 const fileUpload = require("express-fileupload");
-// fileUpload({
-//     useTempFiles: true
-// })
+
 app.use(fileUpload({
     useTempFiles: true
 }));
@@ -44,42 +73,69 @@ const transporter = nodemailer.createTransport({
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS
     }
-})
-//Payment
-const razorpay = new Razorpar({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET
+});
 
-})
-console.log("Razorpay initialized with key:", process.env.RAZORPAY_KEY_ID);
-app.post("/create-order", async (req, res) => {
+// Safe Razorpay Initialization
+let razorpay = null;
+if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) {
     try {
+        razorpay = new Razorpar({
+            key_id: process.env.RAZORPAY_KEY_ID,
+            key_secret: process.env.RAZORPAY_KEY_SECRET
+        });
+        console.log("✅ Razorpay gateway initialized successfully.");
+    } catch (err) {
+        console.error("❌ Razorpay Initialization Error:", err.message);
+    }
+} else {
+    console.warn("⚠️ Razorpay credentials missing. Payment gateway is disabled.");
+}
+
+app.post("/create-order", async (req, res, next) => {
+    try {
+        if (!razorpay) {
+            return res.status(503).json({
+                message: "Razorpay payment gateway is not configured or disabled on this server."
+            });
+        }
+        const amount = Number(req.body.amount);
+        if (!amount || isNaN(amount) || amount <= 0) {
+            return res.status(400).json({ message: "Invalid amount value." });
+        }
         const options = {
-            amount: req.body.amount * 100,
+            amount: Math.round(amount * 100),
             currency: "INR",
             receipt: "receipt_" + Date.now()
         };
-        const order = await razorpay.orders.create(options)
-        res.status(200).json(order)
-        console.log(options)
+        const order = await razorpay.orders.create(options);
+        res.status(200).json(order);
+    } catch (err) {
+        next(err);
     }
+});
 
-    catch (err) {
-        console.log(err);
-        res.status(500).json({
-            message: "Order Creation Failed"
-        })
-    }
-})
 const crypto = require("crypto");
 
 app.post("/verify-payment", (req, res) => {
     console.log("Verify Route Hit");
+    if (!process.env.RAZORPAY_KEY_SECRET) {
+        return res.status(503).json({
+            success: false,
+            message: "Payment gateway credentials are not configured on the server."
+        });
+    }
     const {
         razorpay_order_id,
         razorpay_payment_id,
         razorpay_signature
     } = req.body;
+
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+        return res.status(400).json({
+            success: false,
+            message: "Missing required payment verification parameters."
+        });
+    }
 
     const sign = crypto
         .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
@@ -95,11 +151,14 @@ app.post("/verify-payment", (req, res) => {
 
     res.status(400).json({
         success: false,
-        message: "Invalid Payment"
+        message: "Invalid Payment Signature"
     });
 });
 
 app.get("/get-razorpay-key", (req, res) => {
+    if (!process.env.RAZORPAY_KEY_ID) {
+        return res.status(503).json({ error: "Razorpay key is not configured on the server." });
+    }
     res.json({ key: process.env.RAZORPAY_KEY_ID });
 });
 
@@ -319,6 +378,27 @@ app.use(async (req, res, next) => {
     next();
 });
 
+// Middleware to enforce admin access
+async function requireAdmin(req, res, next) {
+    const adminId = req.headers["x-admin-id"];
+    if (!adminId) {
+        return res.status(401).json({ message: "Unauthorized: x-admin-id header is required." });
+    }
+    try {
+        const admin = await Admin.findOne({ adminId });
+        if (!admin) {
+            return res.status(403).json({ message: "Forbidden: Invalid Admin ID." });
+        }
+        if (admin.isActive === false) {
+            return res.status(403).json({ message: "Forbidden: Admin account is deactivated." });
+        }
+        req.admin = admin;
+        next();
+    } catch (err) {
+        next(err);
+    }
+}
+
 // ── Admin Login (regular admins only) ────────────────────────────────────────
 app.get("/admin", (req, res) => {
     res.sendFile(path.join(__dirname, "../adminPanel/order/login.html"));
@@ -399,7 +479,7 @@ app.post("/newClient", async (req, res) => {
     }
 })
 
-app.post("/addProduct", async (req, res) => {
+app.post("/addProduct", requireAdmin, async (req, res) => {
     try {
 
         console.log(req.body);
@@ -475,7 +555,7 @@ app.get("/addProduct", async (req, res) => {
 })
 //delete Product
 
-app.delete("/DelProduct/:id", async (req, res) => {
+app.delete("/DelProduct/:id", requireAdmin, async (req, res) => {
     try {
         const id = req.params.id;
         const deleted = await addProducts.findByIdAndDelete(id);
@@ -490,7 +570,7 @@ app.delete("/DelProduct/:id", async (req, res) => {
     }
 })
 
-app.put("/updateProduct/:id", async (req, res) => {
+app.put("/updateProduct/:id", requireAdmin, async (req, res) => {
     try {
         const updateDataID = req.params.id;
         const { Productname, Category, SubCategory, description } = req.body;
@@ -625,14 +705,26 @@ app.post("/placeOrder", async (req, res) => {
 app.get("/viwePlaceOrder", async (req, res) => {
     try {
         const adminId = req.headers["x-admin-id"];
+        const userNumber = req.headers["x-user-number"];
         let query = {};
+
         if (adminId) {
-            // Also include old orders that have no adminId field (legacy data = belongs to "admin")
+            // Admin order retrieval
             query.$or = [
                 { adminId: adminId },
                 ...(adminId === "admin" ? [{ adminId: { $exists: false } }, { adminId: null }] : [])
             ];
+        } else if (userNumber) {
+            // Customer order retrieval
+            query.$or = [
+                { customerMobileNumber: userNumber },
+                { useNumber: userNumber }
+            ];
+        } else {
+            // Unauthenticated - block query access
+            return res.status(401).json({ message: "Unauthorized: Missing administrative or customer identification headers." });
         }
+
         const viewDataPlaceOrder = await placeOrderData.find(query);
         res.json(viewDataPlaceOrder);
     } catch (err) {
@@ -649,7 +741,7 @@ app.get("/statusSingleData/:id", async (req, res) => {
 
 //updateorderStatus
 
-app.put("/updateOrderStatus/:id", async (req, res) => {
+app.put("/updateOrderStatus/:id", requireAdmin, async (req, res) => {
     try {
         const updateOrderStatus = req.params.id;
         const finddatabaseid = await placeOrderData.findById(updateOrderStatus);
@@ -746,7 +838,8 @@ app.post("/send-otp", async (req, res) => {
     try {
         const { number } = req.body;
 
-        const otp = Math.floor(1000 + Math.random() * 9000).toString();
+        // Generate secure 6-digit OTP to match UI expectations
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
         let user = await login.findOne({ number });
 
@@ -876,7 +969,7 @@ app.post("/newUser/:userNumber", async (req, res) => {
 })
 
 //admin order status
-app.get("/orderStatusfilter", async (req, res) => {
+app.get("/orderStatusfilter", requireAdmin, async (req, res) => {
     try {
         let { fromDate, toDate } = req.query;
         const adminId = req.headers["x-admin-id"];
@@ -907,6 +1000,15 @@ app.get("/orderStatusfilter", async (req, res) => {
         console.log(err);
     }
 })
+
+// Global Error Handling Middleware
+app.use((err, req, res, next) => {
+    console.error("❌ Express caught unhandled runtime error:", err.stack || err);
+    res.status(err.status || 500).json({
+        success: false,
+        message: err.message || "Internal Server Error"
+    });
+});
 
 app.listen(port, () => {
     console.log(`server is live on ${port}`);

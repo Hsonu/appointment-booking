@@ -1322,7 +1322,9 @@
                     renderProfileInfo(userAddressRecord.name, userAddressRecord.email, userAddressRecord.address);
                 } else {
                     // Fallback: Check Order History for address / name data
-                    const ordersRes = await fetch(`${BASE_URL}/viwePlaceOrder`);
+                    const ordersRes = await fetch(`${BASE_URL}/viwePlaceOrder`, {
+                        headers: { "x-user-number": userNumber }
+                    });
                     if (ordersRes.ok) {
                         const orders = await ordersRes.json();
                         const userOrders = orders.filter(ord =>
@@ -1507,7 +1509,9 @@
         ─────────────────────────────────────── */
         async function loadOrderHistory() {
             try {
-                const res = await fetch(`${BASE_URL}/viwePlaceOrder`);
+                const res = await fetch(`${BASE_URL}/viwePlaceOrder`, {
+                    headers: { "x-user-number": userNumber }
+                });
                 if (!res.ok) throw new Error("Orders API load failed");
 
                 const orders = await res.json();

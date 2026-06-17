@@ -10,9 +10,7 @@ const addProductSchema = new mongoose.Schema({
         required: true
     },
     SubCategory: {
-        type: String,
-        required: true,
-        unique: true
+        type: String
     },
     Units: {
         type: Number,
@@ -23,8 +21,7 @@ const addProductSchema = new mongoose.Schema({
         required: true
     },
     description: {
-        type: String,
-        required: true
+        type: String
     },
     photo: {
         type: String
@@ -45,8 +42,7 @@ const addProductSchema = new mongoose.Schema({
         type: String,
         default: "admin"
     }
+});
 
-})
 const addProducts = mongoose.model("addProduct", addProductSchema);
-
 module.exports = addProducts;
