@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details – SJ Jewellery</title>
+    <script src="/auto-logout.js"></script>
     <meta name="description"
         content="View product details, pricing and buy handcrafted jewellery from SJ Jewellery. Gold, diamond & platinum pieces crafted with love.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1710,9 +1711,16 @@
         ─────────────────────────────────────── */
         function showToast(msg) {
             const toast = document.getElementById("toast");
-            document.getElementById("toastMsg").textContent = msg;
-            toast.classList.add("show");
-            setTimeout(() => toast.classList.remove("show"), 3000);
+            if (toast) {
+                const svg = toast.querySelector("svg");
+                if (svg) {
+                    const hasIcon = /^[^\w\s]/.test(msg.trim());
+                    svg.style.display = hasIcon ? "none" : "";
+                }
+                document.getElementById("toastMsg").textContent = msg;
+                toast.classList.add("show");
+                setTimeout(() => toast.classList.remove("show"), 3000);
+            }
         }
 
         /* ───────────────────────────────────────

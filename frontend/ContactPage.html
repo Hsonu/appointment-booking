@@ -916,9 +916,16 @@
 
         function showToast(msg) {
             const t = document.getElementById("toast");
-            document.getElementById("toastMsg").textContent = msg;
-            t.classList.add("show");
-            setTimeout(() => t.classList.remove("show"), 3500);
+            if (t) {
+                const svg = t.querySelector("svg");
+                if (svg) {
+                    const hasIcon = /^[^\w\s]/.test(msg.trim());
+                    svg.style.display = hasIcon ? "none" : "";
+                }
+                document.getElementById("toastMsg").textContent = msg;
+                t.classList.add("show");
+                setTimeout(() => t.classList.remove("show"), 3500);
+            }
         }
 
         document.getElementById("appointmentForm").addEventListener("submit", async (e) => {

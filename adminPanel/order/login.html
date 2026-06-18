@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Login – SJ Jewellery</title>
+  <script src="/auto-logout.js"></script>
   <meta name="description" content="Admin login portal for SJ Jewellery management panel.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -352,6 +353,9 @@
         if (res.ok) {
           localStorage.setItem("adminId", data.adminId);
           localStorage.setItem("adminLoggedIn", "true");
+          if (data.sessionToken) {
+            localStorage.setItem("adminSessionToken", data.sessionToken);
+          }
           loginBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Redirecting…`;
           setTimeout(() => window.location.href = "./addProduct.html", 600);
         } else {

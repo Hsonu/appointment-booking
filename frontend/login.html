@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Access – SJ Jewellery</title>
+    <script src="/auto-logout.js"></script>
     <meta name="description"
         content="Log in to your SJ Jewellery account securely with a mobile OTP. View orders, track shipments and manage your cart.">
 
@@ -885,9 +886,16 @@
         ─────────────────────────────────────── */
         function showToast(msg) {
             const t = document.getElementById("toast");
-            document.getElementById("toastMsg").textContent = msg;
-            t.classList.add("show");
-            setTimeout(() => t.classList.remove("show"), 3500);
+            if (t) {
+                const svg = t.querySelector("svg");
+                if (svg) {
+                    const hasIcon = /^[^\w\s]/.test(msg.trim());
+                    svg.style.display = hasIcon ? "none" : "";
+                }
+                document.getElementById("toastMsg").textContent = msg;
+                t.classList.add("show");
+                setTimeout(() => t.classList.remove("show"), 3500);
+            }
         }
 
         /* ───────────────────────────────────────
@@ -1000,6 +1008,9 @@
                         });
                         const newUser = await data.json();
                         console.log("User data:", newUser);
+                        if (newUser.sessionToken) {
+                            localStorage.setItem("userSessionToken", newUser.sessionToken);
+                        }
 
                         // Redirect to index page
                         setTimeout(() => {

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart – SJ Jewellery</title>
+    <script src="/auto-logout.js"></script>
     <meta name="description"
         content="View and manage items in your shopping cart at SJ Jewellery. Handcrafted luxury gold and diamond collections.">
 
@@ -1012,9 +1013,16 @@
         ─────────────────────────────────────── */
         function showToast(msg) {
             const t = document.getElementById("toast");
-            document.getElementById("toastMsg").textContent = msg;
-            t.classList.add("show");
-            setTimeout(() => t.classList.remove("show"), 3500);
+            if (t) {
+                const svg = t.querySelector("svg");
+                if (svg) {
+                    const hasIcon = /^[^\w\s]/.test(msg.trim());
+                    svg.style.display = hasIcon ? "none" : "";
+                }
+                document.getElementById("toastMsg").textContent = msg;
+                t.classList.add("show");
+                setTimeout(() => t.classList.remove("show"), 3500);
+            }
         }
 
         /* ───────────────────────────────────────

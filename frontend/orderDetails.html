@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Details – SJ Jewellery</title>
+    <script src="/auto-logout.js"></script>
     <meta name="description" content="View your order receipt, tracking details, and purchase summary at SJ Jewellery.">
 
     <!-- Fonts -->
@@ -1640,8 +1641,8 @@
                         document.getElementById("returnDetailReason").textContent = data.returnReason || "Not provided";
                         
                         const refundCol = document.getElementById("returnDetailRefundCol");
-                        // Only show refund details column if returnType is Refund and not COD (COD does not show refund process details)
-                        if (data.returnType === "Refund" && !isCOD) {
+                        // Show refund details column if returnType is Refund (for both COD and Online Payment)
+                        if (data.returnType === "Refund") {
                             refundCol.style.display = "block";
                             document.getElementById("returnDetailRefundPayment").textContent = data.refundPaymentDetails || "No details provided";
                             
@@ -1704,7 +1705,7 @@
 
             if (isReturn) {
                 const isCOD = currentOrder && currentOrder.paymentMethod === "COD";
-                const returnType = isCOD ? "Exchange" : (currentOrder ? currentOrder.returnType : "Return");
+                const returnType = currentOrder ? currentOrder.returnType : "Return";
                 const sLower = (status || "").toLowerCase().trim();
                 
                 // Progress calculations
@@ -1749,9 +1750,9 @@
                     step4Dot = "✓";
                     progressColor = "#10b981"; // green
                     progressPercent = 100;
-                    if (sLower === "refund completed") step4Label = isCOD ? "Return Completed" : "Refund Completed";
+                    if (sLower === "refund completed") step4Label = "Refund Completed";
                     else if (sLower === "delivered a replacement") step4Label = "Replacement Delivered";
-                    else if (sLower === "not delivered") step4Label = isCOD ? "Return Completed" : "Not Delivered (Refunded)";
+                    else if (sLower === "not delivered") step4Label = "Not Delivered (Refunded)";
                     else step4Label = "Return Completed";
                 }
 

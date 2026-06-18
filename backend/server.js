@@ -25,6 +25,8 @@ const Admin = require("./adminSchema");
 const Complaint = require("./complaintSchema");
 const cors = require("cors");
 const Razorpar = require("razorpay");
+const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 
 // Validate Environment Variables
 function validateEnv() {
@@ -116,7 +118,7 @@ app.post("/create-order", async (req, res, next) => {
     }
 });
 
-const crypto = require("crypto");
+
 
 app.post("/verify-payment", (req, res) => {
     console.log("Verify Route Hit");
@@ -172,10 +174,16 @@ app.get("/", (req, res) => {
 // ── Auto-seed Owner account on server start ──────────────────────────────────
 async function seedOwner() {
     try {
-        const exists = await Admin.findOne({ adminId: "owner" });
-        if (!exists) {
-            await new Admin({ adminId: "owner", password: "owner@123", role: "owner" }).save();
+        let owner = await Admin.findOne({ role: "owner" });
+        if (!owner) {
+            owner = new Admin({ adminId: "owner", password: "owner@123", role: "owner" });
+            await owner.save();
             console.log("✅ Owner account seeded  →  ID: owner  |  Pass: owner@123");
+        } else if (!owner.password.startsWith("$2a$") && !owner.password.startsWith("$2b$")) {
+            console.log("Migrating legacy owner password to encrypted format...");
+            owner.password = owner.password; // Triggers pre-save hook
+            owner.markModified("password");
+            await owner.save();
         }
     } catch (e) { console.log("Owner seed error:", e.message); }
 }
@@ -203,23 +211,32 @@ app.post("/owner/login", async (req, res) => {
     try {
         const { adminId, password } = req.body;
         const admin = await Admin.findOne({ adminId });
-        if (!admin || admin.password !== password || admin.role !== "owner") {
+        if (!admin || admin.role !== "owner") {
             return res.status(401).json({ message: "Invalid owner credentials" });
         }
-        res.status(200).json({ message: "Owner login successful", adminId: admin.adminId, role: "owner" });
+        const isMatch = await bcrypt.compare(password, admin.password);
+        if (!isMatch) {
+            return res.status(401).json({ message: "Invalid owner credentials" });
+        }
+        
+        const sessionToken = crypto.randomBytes(32).toString("hex");
+        admin.currentSessionToken = sessionToken;
+        await admin.save();
+
+        res.status(200).json({ 
+            message: "Owner login successful", 
+            adminId: admin.adminId, 
+            role: "owner",
+            sessionToken
+        });
     } catch (err) {
         res.status(500).json({ message: "Internal server error" });
     }
 });
 
 // ── Owner: Create a new Admin (owner-only) ────────────────────────────────────
-app.post("/owner/create-admin", async (req, res) => {
+app.post("/owner/create-admin", requireOwner, async (req, res) => {
     try {
-        const ownerKey = req.headers["x-owner-id"];
-        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
-        if (!ownerAccount) {
-            return res.status(403).json({ message: "Access denied. Owner only." });
-        }
         const { adminId, password } = req.body;
         if (!adminId || !password) return res.status(400).json({ message: "Admin ID and password required" });
         const existing = await Admin.findOne({ adminId });
@@ -233,11 +250,8 @@ app.post("/owner/create-admin", async (req, res) => {
 });
 
 // ── Owner: Get all admins list ────────────────────────────────────────────────
-app.get("/owner/admins", async (req, res) => {
+app.get("/owner/admins", requireOwner, async (req, res) => {
     try {
-        const ownerKey = req.headers["x-owner-id"];
-        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
-        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
         const admins = await Admin.find({ role: "admin" });
         res.json(admins);
     } catch (err) {
@@ -246,11 +260,8 @@ app.get("/owner/admins", async (req, res) => {
 });
 
 // ── Owner: Get ALL products from ALL admins ───────────────────────────────────
-app.get("/owner/all-products", async (req, res) => {
+app.get("/owner/all-products", requireOwner, async (req, res) => {
     try {
-        const ownerKey = req.headers["x-owner-id"];
-        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
-        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
         const products = await addProducts.find({});
         res.json(products);
     } catch (err) {
@@ -259,11 +270,8 @@ app.get("/owner/all-products", async (req, res) => {
 });
 
 // ── Owner: Get ALL orders from ALL admins ─────────────────────────────────────
-app.get("/owner/all-orders", async (req, res) => {
+app.get("/owner/all-orders", requireOwner, async (req, res) => {
     try {
-        const ownerKey = req.headers["x-owner-id"];
-        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
-        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
         const orders = await placeOrderData.find({});
         res.json(orders);
     } catch (err) {
@@ -272,12 +280,8 @@ app.get("/owner/all-orders", async (req, res) => {
 });
 
 // ── Owner: Change own username and password ──────────────────────────────────
-app.post("/owner/change-credentials", async (req, res) => {
+app.post("/owner/change-credentials", requireOwner, async (req, res) => {
     try {
-        const ownerKey = req.headers["x-owner-id"];
-        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
-        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
-
         const { newAdminId, newPassword } = req.body;
         if (!newAdminId || !newPassword) {
             return res.status(400).json({ message: "New Owner ID and password are required" });
@@ -289,8 +293,13 @@ app.post("/owner/change-credentials", async (req, res) => {
             return res.status(409).json({ message: "Admin ID already exists" });
         }
 
-        // Update database
-        await Admin.updateOne({ role: "owner" }, { adminId: newAdminId, password: newPassword });
+        // Update database via document save to trigger pre-save hashing hook
+        const ownerDoc = req.admin;
+        if (ownerDoc) {
+            ownerDoc.adminId = newAdminId;
+            ownerDoc.password = newPassword;
+            await ownerDoc.save();
+        }
         res.status(200).json({ message: "Owner credentials updated successfully", adminId: newAdminId });
     } catch (err) {
         res.status(500).json({ message: "Internal server error" });
@@ -298,12 +307,8 @@ app.post("/owner/change-credentials", async (req, res) => {
 });
 
 // ── Owner: Toggle Admin Active Status ────────────────────────────────────────
-app.post("/owner/toggle-admin-status", async (req, res) => {
+app.post("/owner/toggle-admin-status", requireOwner, async (req, res) => {
     try {
-        const ownerKey = req.headers["x-owner-id"];
-        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
-        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
-
         const { adminId, isActive } = req.body;
         if (!adminId || isActive === undefined) {
             return res.status(400).json({ message: "Admin ID and active status required" });
@@ -317,12 +322,8 @@ app.post("/owner/toggle-admin-status", async (req, res) => {
 });
 
 // ── Owner: Update Admin ID and Password ──────────────────────────────────────
-app.post("/owner/update-admin", async (req, res) => {
+app.post("/owner/update-admin", requireOwner, async (req, res) => {
     try {
-        const ownerKey = req.headers["x-owner-id"];
-        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
-        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
-
         const { adminId, newAdminId, newPassword } = req.body;
         if (!adminId || !newAdminId || !newPassword) {
             return res.status(400).json({ message: "All fields are required" });
@@ -334,8 +335,13 @@ app.post("/owner/update-admin", async (req, res) => {
             return res.status(409).json({ message: "Admin ID already exists" });
         }
 
-        // Update admin credentials
-        await Admin.updateOne({ adminId, role: "admin" }, { adminId: newAdminId, password: newPassword });
+        // Update database via document save to trigger pre-save hashing hook
+        const adminDoc = await Admin.findOne({ adminId, role: "admin" });
+        if (adminDoc) {
+            adminDoc.adminId = newAdminId;
+            adminDoc.password = newPassword;
+            await adminDoc.save();
+        }
 
         // Migrate database products/orders from old ID to new ID if ID was changed
         if (newAdminId !== adminId) {
@@ -350,12 +356,8 @@ app.post("/owner/update-admin", async (req, res) => {
 });
 
 // ── Owner: Delete Admin ──────────────────────────────────────────────────────
-app.delete("/owner/delete-admin/:adminId", async (req, res) => {
+app.delete("/owner/delete-admin/:adminId", requireOwner, async (req, res) => {
     try {
-        const ownerKey = req.headers["x-owner-id"];
-        const ownerAccount = await Admin.findOne({ adminId: ownerKey, role: "owner" });
-        if (!ownerAccount) return res.status(403).json({ message: "Access denied" });
-
         const adminId = req.params.adminId;
         await Admin.deleteOne({ adminId, role: "admin" });
         res.status(200).json({ message: "Admin account deleted" });
@@ -383,8 +385,12 @@ app.use(async (req, res, next) => {
 // Middleware to enforce admin access
 async function requireAdmin(req, res, next) {
     const adminId = req.headers["x-admin-id"];
+    const sessionToken = req.headers["x-session-token"];
     if (!adminId) {
         return res.status(401).json({ message: "Unauthorized: x-admin-id header is required." });
+    }
+    if (!sessionToken) {
+        return res.status(401).json({ message: "Unauthorized: x-session-token header is required." });
     }
     try {
         const admin = await Admin.findOne({ adminId });
@@ -393,6 +399,33 @@ async function requireAdmin(req, res, next) {
         }
         if (admin.isActive === false) {
             return res.status(403).json({ message: "Forbidden: Admin account is deactivated." });
+        }
+        if (admin.currentSessionToken !== sessionToken) {
+            return res.status(401).json({ message: "Session expired or logged in from another device." });
+        }
+        req.admin = admin;
+        next();
+    } catch (err) {
+        next(err);
+    }
+}
+
+async function requireOwner(req, res, next) {
+    const ownerId = req.headers["x-owner-id"] || req.headers["x-admin-id"];
+    const sessionToken = req.headers["x-session-token"];
+    if (!ownerId) {
+        return res.status(401).json({ message: "Unauthorized: Owner identification is required." });
+    }
+    if (!sessionToken) {
+        return res.status(401).json({ message: "Unauthorized: x-session-token header is required." });
+    }
+    try {
+        const admin = await Admin.findOne({ adminId: ownerId, role: "owner" });
+        if (!admin) {
+            return res.status(403).json({ message: "Access denied. Owner only." });
+        }
+        if (admin.currentSessionToken !== sessionToken) {
+            return res.status(401).json({ message: "Session expired or logged in from another device." });
         }
         req.admin = admin;
         next();
@@ -427,13 +460,24 @@ app.post("/admin/login", async (req, res) => {
         if (!admin) {
             return res.status(401).json({ message: "Invalid admin ID or password" });
         }
-        if (admin.password !== password) {
+        const isMatch = await bcrypt.compare(password, admin.password);
+        if (!isMatch) {
             return res.status(401).json({ message: "Invalid admin ID or password" });
         }
         if (admin.isActive === false) {
             return res.status(403).json({ message: "Account is deactivated. Contact Owner." });
         }
-        res.status(200).json({ message: "Login successful", adminId: admin.adminId, role: admin.role });
+        
+        const sessionToken = crypto.randomBytes(32).toString("hex");
+        admin.currentSessionToken = sessionToken;
+        await admin.save();
+
+        res.status(200).json({ 
+            message: "Login successful", 
+            adminId: admin.adminId, 
+            role: admin.role,
+            sessionToken
+        });
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: "Internal server error" });
@@ -660,6 +704,7 @@ app.get("/singleProduct/:id", async (req, res) => {
 app.post("/placeOrder", async (req, res) => {
     try {
         let userNumber = req.body.useNumber;
+        const sessionToken = req.headers["x-session-token"];
         console.log(userNumber);
 
         let chackUser = await user.findOne({
@@ -669,6 +714,12 @@ app.post("/placeOrder", async (req, res) => {
         if (!chackUser) {
             return res.status(401).json({
                 message: "Please login"
+            })
+        }
+
+        if (!sessionToken || chackUser.currentSessionToken !== sessionToken) {
+            return res.status(401).json({
+                message: "Session expired or logged in from another device."
             })
         }
 
@@ -708,16 +759,25 @@ app.get("/viwePlaceOrder", async (req, res) => {
     try {
         const adminId = req.headers["x-admin-id"];
         const userNumber = req.headers["x-user-number"];
+        const sessionToken = req.headers["x-session-token"];
         let query = {};
 
         if (adminId) {
             // Admin order retrieval
+            const admin = await Admin.findOne({ adminId });
+            if (!admin || admin.currentSessionToken !== sessionToken) {
+                return res.status(401).json({ message: "Session expired or logged in from another device." });
+            }
             query.$or = [
                 { adminId: adminId },
                 ...(adminId === "admin" ? [{ adminId: { $exists: false } }, { adminId: null }] : [])
             ];
         } else if (userNumber) {
             // Customer order retrieval
+            const customer = await user.findOne({ useNumber: userNumber });
+            if (!customer || customer.currentSessionToken !== sessionToken) {
+                return res.status(401).json({ message: "Session expired or logged in from another device." });
+            }
             query.$or = [
                 { customerMobileNumber: userNumber },
                 { useNumber: userNumber }
@@ -1126,20 +1186,27 @@ app.post("/newUser/:userNumber", async (req, res) => {
             useNumber: uesrNumberIn
         });
 
+        const sessionToken = crypto.randomBytes(32).toString("hex");
+
         if (existingUser) {
+            existingUser.currentSessionToken = sessionToken;
+            await existingUser.save();
             return res.status(200).json({
                 message: "Ueser Alredy Exists ",
-                user: existingUser
+                user: existingUser,
+                sessionToken
             });
         }
         let userResponse = new user({
-            useNumber: uesrNumberIn
+            useNumber: uesrNumberIn,
+            currentSessionToken: sessionToken
 
         });
         let save = await userResponse.save()
         return res.status(200).json({
             message: "New User Saved",
-            data: save
+            data: save,
+            sessionToken
         })
 
     }
