@@ -739,6 +739,377 @@
             }
         }
 
+        /* ═══════════════════════════════════════════
+           MODAL SYSTEM & COMPLAINTS
+        ═══════════════════════════════════════════ */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(13, 13, 15, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 500px;
+            padding: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            transform: scale(0.9);
+            transition: transform var(--transition);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--dark);
+        }
+
+        .modal-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text-h);
+            margin-bottom: 16px;
+        }
+
+        .modal-question {
+            font-size: 0.95rem;
+            color: var(--text-body);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .input-group label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-group textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1.5px solid var(--border);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            resize: none;
+            transition: border-color var(--transition);
+        }
+
+        .input-group textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn-secondary {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: var(--cream);
+            border: 1.5px solid var(--border);
+            color: var(--text-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-muted);
+            background: #fff;
+        }
+
+        .btn-danger {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+        }
+
+        .btn-primary {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-dark);
+            box-shadow: 0 4px 12px rgba(201, 169, 110, 0.25);
+        }
+
+        .btn-action-cancel {
+            background: #fff;
+            border: 1.5px solid #ef4444;
+            color: #ef4444;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition);
+        }
+
+        .btn-action-cancel:hover:not(:disabled) {
+            background: #ef4444;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+        }
+
+        .btn-action-cancel:disabled {
+            border-color: var(--border);
+            color: var(--text-muted);
+            background: #fff;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-action-cancel-return {
+            background: #fff;
+            border: 1.5px solid #ef4444;
+            color: #ef4444;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition);
+        }
+
+        .btn-action-cancel-return:hover:not(:disabled) {
+            background: #ef4444;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+        }
+
+        .btn-action-cancel-return:disabled {
+            border-color: var(--border);
+            color: var(--text-muted);
+            background: #fff;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-action-complain {
+            background: #fff;
+            border: 1.5px solid var(--gold);
+            color: var(--gold-dark);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition);
+        }
+
+        .btn-action-complain:hover {
+            background: var(--gold);
+            color: var(--dark);
+            box-shadow: 0 4px 12px rgba(201, 169, 110, 0.15);
+        }
+
+        /* Toast notifications */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--dark);
+            color: #fff;
+            border: 1px solid var(--gold);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast-notification.active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Complaints section styling */
+        .complaints-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+        }
+
+        .complaints-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .complaint-item {
+            padding: 16px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .complaint-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .complaint-status {
+            background: var(--gold-bg);
+            color: var(--gold-dark);
+            padding: 2px 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .complaint-text {
+            font-size: 0.88rem;
+            color: var(--text-body);
+            line-height: 1.5;
+        }
+
+        /* Return request styling */
+        .return-options-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .return-option-card {
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .return-option-card:hover {
+            border-color: var(--gold);
+            background: var(--gold-bg);
+        }
+
+        .return-option-card input[type="radio"] {
+            accent-color: var(--gold-dark);
+            cursor: pointer;
+        }
+
+        .return-option-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-h);
+        }
+
+        .btn-action-return {
+            background: #fff;
+            border: 1.5px solid var(--gold);
+            color: var(--gold-dark);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition);
+        }
+
+        .btn-action-return:hover:not(:disabled) {
+            background: var(--gold);
+            color: var(--dark);
+            box-shadow: 0 4px 12px rgba(201, 169, 110, 0.15);
+        }
+
+        .btn-action-return:disabled {
+            border-color: var(--border);
+            color: var(--text-muted);
+            background: #fff;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
         /* Print styles for downloadable retail tax invoice */
         .print-header {
             display: none;
@@ -985,6 +1356,26 @@
                         Delivery Status: <span class="productSummarystatus" id="orderStatusLabel">Pending</span>
                     </div>
                 </div>
+                <!-- Order Actions -->
+                <div class="order-actions" id="orderActions"
+                    style="display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap;"></div>
+            </div>
+
+            <!-- Return & Refund Details Card -->
+            <div class="detail-card" id="returnDetailsCard" style="display: none;">
+                <h3>Return & Refund Details</h3>
+                <div class="info-grid">
+                    <div class="info-col">
+                        <h4>Request Information</h4>
+                        <p>Request Type: <strong id="returnDetailType">—</strong></p>
+                        <p style="margin-top: 6px;">Return Reason: <span id="returnDetailReason" style="color: var(--text-body); font-weight: 500;">—</span></p>
+                    </div>
+                    <div class="info-col" id="returnDetailRefundCol">
+                        <h4>Refund Payment Details</h4>
+                        <p id="returnDetailRefundPayment" style="background: var(--cream); padding: 8px 12px; border-radius: 8px; font-family: monospace; font-weight: 600; font-size: 0.82rem; border: 1px dashed rgba(201, 169, 110, 0.4); margin-top: 6px;">—</p>
+                        <p style="margin-top: 8px;">Refund Status: <strong id="returnDetailRefundStatus" style="color: var(--gold);">Pending</strong></p>
+                    </div>
+                </div>
             </div>
 
             <!-- Card 2: Details grid -->
@@ -1023,12 +1414,118 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Complaints Card -->
+            <div class="complaints-card" id="complaintsCard" style="display: none;">
+                <h3>Order Complaints & Support</h3>
+                <div class="complaints-list" id="complaintsList">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
         </div>
     </main>
+
+    <!-- Cancellation Modal -->
+    <div id="cancelOrderModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeCancelModal">&times;</button>
+            <h3>Cancel Order</h3>
+            <p class="modal-question">Are you sure you want to cancel this order?</p>
+            <div class="input-group">
+                <label for="cancelReasonInput">Please provide a reason for cancellation:</label>
+                <textarea id="cancelReasonInput"
+                    placeholder="e.g., Ordered by mistake, wrong size, delayed delivery..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button id="cancelModalBackBtn" class="btn-secondary">No, Keep Order</button>
+                <button id="cancelModalConfirmBtn" class="btn-danger">Yes, Cancel Order</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complaint Modal -->
+    <div id="complaintModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeComplaintModal">&times;</button>
+            <h3>File a Complaint</h3>
+            <p class="modal-question">Please describe the issue you are facing with this order.</p>
+            <div class="input-group">
+                <label for="complaintTextInput">Complaint details:</label>
+                <textarea id="complaintTextInput"
+                    placeholder="e.g., Wrong item delivered, damage on item, polishing issue..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button id="complaintModalBackBtn" class="btn-secondary">Cancel</button>
+                <button id="complaintModalSubmitBtn" class="btn-primary">Submit Complaint</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Return Order Modal -->
+    <div id="returnOrderModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeReturnModal">&times;</button>
+            <h3>Return Order</h3>
+            <p class="modal-question">Please select a return option and describe the reason.</p>
+
+            <div class="input-group">
+                <label>Select Return Type:</label>
+                <div class="return-options-group">
+                    <label class="return-option-card">
+                        <input type="radio" name="returnType" value="Refund" checked>
+                        <span class="return-option-label">Refund</span>
+                    </label>
+                    <label class="return-option-card">
+                        <input type="radio" name="returnType" value="Exchange">
+                        <span class="return-option-label">Exchange</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="returnReasonInput">Reason for Return:</label>
+                <textarea id="returnReasonInput"
+                    placeholder="e.g., Wrong size, damaged product, not as expected..."></textarea>
+            </div>
+
+            <div class="input-group" id="refundPaymentDetailsGroup">
+                <label for="refundPaymentInput">Refund Payment Method Details:</label>
+                <textarea id="refundPaymentInput"
+                    placeholder="Enter bank transfer details (A/C No, IFSC, bank name) or UPI ID..."></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button id="returnModalBackBtn" class="btn-secondary">No, Keep Order</button>
+                <button id="returnModalSubmitBtn" class="btn-primary">Submit Return</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Return Modal -->
+    <div id="cancelReturnModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeCancelReturnModal">&times;</button>
+            <h3>Cancel Return Request</h3>
+            <p class="modal-question">Are you sure you want to cancel your return request? The order status will revert
+                to "Delivered".</p>
+            <div class="modal-actions">
+                <button id="cancelReturnModalBackBtn" class="btn-secondary">No, Keep Request</button>
+                <button id="cancelReturnModalConfirmBtn" class="btn-danger">Yes, Cancel Return</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="toast-notification">
+        <span id="toastMessage"></span>
+    </div>
 
     <!-- Scripts -->
     <script src="./config.js"></script>
     <script>
+        // Global state for current order
+        let currentOrder = null;
+
         // Dynamic Account navigation link updating & auth check redirect
         const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
         if (!isLoggedIn) {
@@ -1123,6 +1620,48 @@
                 document.getElementById("PeroductGST").textContent = (data.gstAmount || 0).toLocaleString("en-IN");
                 document.getElementById("totalAmount").textContent = (data.withGstTotalAmount || 0).toLocaleString("en-IN");
 
+                // Store order data globally
+                currentOrder = data;
+
+                // Render actions
+                renderActionButtons(data, id);
+
+                // Load complaints
+                loadComplaints(id);
+
+                // Populate Return & Refund Details Card
+                const returnDetailsCard = document.getElementById("returnDetailsCard");
+                if (returnDetailsCard) {
+                    if (data.returnType || data.returnReason) {
+                        returnDetailsCard.style.display = "block";
+                        document.getElementById("returnDetailType").textContent = data.returnType || "Return";
+                        document.getElementById("returnDetailReason").textContent = data.returnReason || "Not provided";
+                        
+                        const refundCol = document.getElementById("returnDetailRefundCol");
+                        if (data.returnType === "Refund") {
+                            refundCol.style.display = "block";
+                            document.getElementById("returnDetailRefundPayment").textContent = data.refundPaymentDetails || "No details provided";
+                            
+                            const refundStatus = document.getElementById("returnDetailRefundStatus");
+                            if (data.orderStatus === "Refund Completed") {
+                                refundStatus.innerHTML = `<span style="color: #10b981; font-weight: 700;">✓ Payment Completed</span>`;
+                            } else if (data.orderStatus === "Refund Accepted") {
+                                refundStatus.innerHTML = `<span style="color: #3b82f6; font-weight: 700;">Approved (Processing Payment)</span>`;
+                            } else if (data.orderStatus === "Out For Pickup") {
+                                refundStatus.innerHTML = `<span style="color: #8b5cf6; font-weight: 700;">Out For Pickup</span>`;
+                            } else if (data.orderStatus === "Order Picked Up") {
+                                refundStatus.innerHTML = `<span style="color: #3b82f6; font-weight: 700;">Order Picked Up</span>`;
+                            } else {
+                                refundStatus.innerHTML = `<span style="color: #f59e0b; font-weight: 700;">Pending Approval</span>`;
+                            }
+                        } else {
+                            refundCol.style.display = "none";
+                        }
+                    } else {
+                        returnDetailsCard.style.display = "none";
+                    }
+                }
+
             } catch (err) {
                 console.error(err);
                 document.getElementById("invoiceNumber").textContent = "⚠️ Failed to fetch order summary details.";
@@ -1148,11 +1687,92 @@
             if (!container) return;
 
             const isCancelled = (status || "").toLowerCase().includes("cancel");
-            const isReturn = (status || "").toLowerCase().includes("return");
+            const isReturn = (status || "").toLowerCase().includes("return") ||
+                (status || "").toLowerCase().includes("refund") ||
+                (status || "").toLowerCase().includes("replace") ||
+                (status || "").toLowerCase().includes("reprocess") ||
+                (status || "").toLowerCase().includes("pickup") ||
+                (status || "").toLowerCase().includes("picked") ||
+                (status || "").toLowerCase().includes("not delivered");
 
             const formattedDate = orderDate ? new Date(orderDate).toLocaleDateString("en-IN", {
                 day: "numeric", month: "short"
             }) : "";
+
+            if (isReturn) {
+                const returnType = currentOrder ? currentOrder.returnType : "Return";
+                const sLower = (status || "").toLowerCase().trim();
+                
+                // Progress calculations
+                let step3Class = "";
+                let step3Dot = "3";
+                let step3Label = "Out For Pickup";
+                
+                let step4Class = "";
+                let step4Dot = "4";
+                let step4Label = returnType === "Refund" ? "Refund Completed" : "Exchange Completed";
+                
+                let progressPercent = 33;
+                let progressColor = "#f59e0b"; // orange
+
+                if (sLower === "return requested") {
+                    step3Class = "";
+                    step3Dot = "3";
+                    step3Label = "Pickup Pending";
+                    progressPercent = 33;
+                } else if (sLower === "out for pickup") {
+                    step3Class = "active";
+                    step3Dot = "3";
+                    step3Label = "Out For Pickup";
+                    progressPercent = 50;
+                } else if (sLower === "order picked up") {
+                    step3Class = "completed";
+                    step3Dot = "✓";
+                    step3Label = "Order Picked Up";
+                    progressPercent = 66;
+                } else if (sLower === "refund accepted" || sLower === "reprocess") {
+                    step3Class = "completed";
+                    step3Dot = "✓";
+                    step3Label = "Order Picked Up";
+                    step4Class = "active";
+                    step4Label = returnType === "Refund" ? "Refund Accepted" : "Reprocessing";
+                    progressPercent = 83;
+                } else if (sLower === "refund completed" || sLower === "return completed" || sLower === "delivered a replacement" || sLower === "not delivered") {
+                    step3Class = "completed";
+                    step3Dot = "✓";
+                    step3Label = "Order Picked Up";
+                    step4Class = "completed";
+                    step4Dot = "✓";
+                    progressColor = "#10b981"; // green
+                    progressPercent = 100;
+                    if (sLower === "refund completed") step4Label = "Refund Completed";
+                    else if (sLower === "delivered a replacement") step4Label = "Replacement Delivered";
+                    else if (sLower === "not delivered") step4Label = "Not Delivered (Refunded)";
+                    else step4Label = "Return Completed";
+                }
+
+                container.innerHTML = `
+                    <div class="tracking-timeline" style="min-width: 480px; justify-content: space-between;">
+                        <div class="timeline-progress-bar" style="width: ${progressPercent}%; background: ${progressColor};"></div>
+                        <div class="timeline-step completed">
+                            <div class="step-dot" style="background:#10b981; border-color:#10b981; color:#fff;">✓</div>
+                            <div class="step-label">Delivered</div>
+                        </div>
+                        <div class="timeline-step completed">
+                            <div class="step-dot" style="background:#10b981; border-color:#10b981; color:#fff;">✓</div>
+                            <div class="step-label">Return Requested (${returnType})</div>
+                        </div>
+                        <div class="timeline-step ${step3Class}">
+                            <div class="step-dot" style="${step3Class === 'completed' ? 'background:#10b981; border-color:#10b981; color:#fff;' : step3Class === 'active' ? 'border-color:#f59e0b; color:#f59e0b;' : ''}">${step3Dot}</div>
+                            <div class="step-label">${step3Label}</div>
+                        </div>
+                        <div class="timeline-step ${step4Class}">
+                            <div class="step-dot" style="${step4Class === 'completed' ? 'background:#10b981; border-color:#10b981; color:#fff;' : step4Class === 'active' ? 'border-color:#f59e0b; color:#f59e0b;' : ''}">${step4Dot}</div>
+                            <div class="step-label">${step4Label}</div>
+                        </div>
+                    </div>`;
+                return;
+            }
 
             if (isCancelled) {
                 container.innerHTML = `
@@ -1167,27 +1787,6 @@
                             <div class="step-dot" style="background:#ef4444; border-color:#ef4444; color:#fff;">✕</div>
                             <div class="step-label" style="color:#ef4444;">Cancelled</div>
                             <div class="step-date">Cancelled</div>
-                        </div>
-                    </div>`;
-                return;
-            }
-
-            if (isReturn) {
-                const isCompleted = (status || "").toLowerCase().includes("complete");
-                container.innerHTML = `
-                    <div class="tracking-timeline" style="min-width: 400px; justify-content: space-around;">
-                        <div class="timeline-progress-bar" style="width: ${isCompleted ? '100%' : '50%'}; background: #f59e0b;"></div>
-                        <div class="timeline-step completed">
-                            <div class="step-dot" style="background:#10b981; border-color:#10b981; color:#fff;">✓</div>
-                            <div class="step-label">Delivered</div>
-                        </div>
-                        <div class="timeline-step completed">
-                            <div class="step-dot" style="background:#f59e0b; border-color:#f59e0b; color:#fff;">✓</div>
-                            <div class="step-label">Return Requested</div>
-                        </div>
-                        <div class="timeline-step ${isCompleted ? 'completed' : 'active'}">
-                            <div class="step-dot" style="${isCompleted ? 'background:#f59e0b; border-color:#f59e0b; color:#fff;' : 'border-color:#f59e0b; color:#f59e0b;'}">${isCompleted ? '✓' : '3'}</div>
-                            <div class="step-label">Return Completed</div>
                         </div>
                     </div>`;
                 return;
@@ -1235,6 +1834,421 @@
                 ${stepsHTML}
             `;
         }
+
+        // Modal management
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add("active");
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove("active");
+            if (modalId === "cancelOrderModal") {
+                document.getElementById("cancelReasonInput").value = "";
+            } else if (modalId === "complaintModal") {
+                document.getElementById("complaintTextInput").value = "";
+            } else if (modalId === "returnOrderModal") {
+                document.getElementById("returnReasonInput").value = "";
+                document.getElementById("refundPaymentInput").value = "";
+                const radios = document.getElementsByName("returnType");
+                if (radios.length > 0) radios[0].checked = true;
+                const payGroup = document.getElementById("refundPaymentDetailsGroup");
+                if (payGroup) payGroup.style.display = "block";
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toastNotification");
+            const toastMsg = document.getElementById("toastMessage");
+            if (toast && toastMsg) {
+                toastMsg.textContent = message;
+                toast.classList.add("active");
+                setTimeout(() => {
+                    toast.classList.remove("active");
+                }, 4000);
+            }
+        }
+
+        function escapeHTML(str) {
+            if (!str) return "";
+            return str.replace(/[&<>'"]/g,
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        function renderActionButtons(data, orderId) {
+            const orderActions = document.getElementById("orderActions");
+            if (!orderActions) return;
+            orderActions.innerHTML = "";
+
+            const status = (data.orderStatus || "").toLowerCase();
+            const isDelivered = status.includes("deliver") || status.includes("replace");
+            const isCancelled = status.includes("cancel") || status.includes("refund") || status.includes("not delivered");
+            const isReturned = status.includes("return") || status.includes("refund") || status.includes("replace") || status.includes("reprocess") || status.includes("pickup") || status.includes("picked") || status.includes("not delivered");
+
+            // Cancel Order Button
+            const cancelBtn = document.createElement("button");
+            cancelBtn.className = "btn-action-cancel";
+            cancelBtn.id = "cancelOrderBtn";
+            if (isDelivered) {
+                cancelBtn.disabled = true;
+                cancelBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                    </svg>
+                    Delivered (Cannot Cancel)`;
+            } else if (isCancelled) {
+                cancelBtn.disabled = true;
+                let cancelLabel = "Cancelled";
+                if (status === "refund accepted") cancelLabel = "Refund Accepted (Cannot Cancel)";
+                if (status === "not delivered") cancelLabel = "Not Delivered (Cannot Cancel)";
+                cancelBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                    </svg>
+                    ${cancelLabel}`;
+            } else if (isReturned) {
+                cancelBtn.disabled = true;
+                cancelBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                    </svg>
+                    Returned (Cannot Cancel)`;
+            } else {
+                cancelBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                    </svg>
+                    Cancel Order`;
+                cancelBtn.addEventListener("click", () => openModal("cancelOrderModal"));
+            }
+            orderActions.appendChild(cancelBtn);
+
+            // Complain Button
+            const complainBtn = document.createElement("button");
+            complainBtn.className = "btn-action-complain";
+            complainBtn.id = "complainBtn";
+            complainBtn.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                Report Issue / Complain`;
+            complainBtn.addEventListener("click", () => openModal("complaintModal"));
+            orderActions.appendChild(complainBtn);
+
+            // Return Order Button (only show if delivered or returned)
+            const showReturnBtn = isDelivered || isReturned;
+            if (showReturnBtn) {
+                const returnBtn = document.createElement("button");
+                returnBtn.className = "btn-action-return";
+                returnBtn.id = "returnOrderBtn";
+                
+                const isProcessedOrPending = ["return requested", "out for pickup", "order picked up", "refund accepted", "refund completed", "not delivered", "reprocess", "return completed", "cancelled"].includes(status);
+                
+                if (isProcessedOrPending) {
+                    returnBtn.disabled = true;
+                    let returnLabel = "Return Completed";
+                    if (status.includes("requested")) {
+                        returnLabel = "Return Requested";
+                    } else if (status === "out for pickup") {
+                        returnLabel = "Out For Pickup";
+                    } else if (status === "order picked up") {
+                        returnLabel = "Order Picked Up";
+                    } else if (status === "refund accepted") {
+                        returnLabel = "Refund Accepted";
+                    } else if (status === "refund completed") {
+                        returnLabel = "Refund Completed";
+                    } else if (status === "reprocess") {
+                        returnLabel = "Reprocessing Exchange";
+                    } else if (status === "not delivered") {
+                        returnLabel = "Not Delivered (Refunded)";
+                    } else if (status === "cancelled") {
+                        returnLabel = "Cancelled";
+                    }
+                    returnBtn.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                            <polyline points="23 4 23 10 17 10" />
+                            <polyline points="1 20 1 14 7 14" />
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                        </svg>
+                        ${returnLabel}`;
+                } else if ((data.exchangeCount || 0) >= 3) {
+                    returnBtn.disabled = true;
+                    returnBtn.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                            <polyline points="23 4 23 10 17 10" />
+                            <polyline points="1 20 1 14 7 14" />
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                        </svg>
+                        Return Limit Reached (Max 3)`;
+                } else {
+                    returnBtn.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                            <polyline points="23 4 23 10 17 10" />
+                            <polyline points="1 20 1 14 7 14" />
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                        </svg>
+                        Return Order`;
+                    returnBtn.addEventListener("click", () => openModal("returnOrderModal"));
+                }
+                orderActions.appendChild(returnBtn);
+
+                if (isReturned && status.includes("requested")) {
+                    const cancelReturnBtn = document.createElement("button");
+                    cancelReturnBtn.className = "btn-action-cancel-return";
+                    cancelReturnBtn.id = "cancelReturnBtn";
+                    cancelReturnBtn.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="15" y1="9" x2="9" y2="15" />
+                        </svg>
+                        Cancel Return Request`;
+                    cancelReturnBtn.addEventListener("click", () => openModal("cancelReturnModal"));
+                    orderActions.appendChild(cancelReturnBtn);
+                }
+            }
+        }
+
+        async function loadComplaints(orderId) {
+            try {
+                const res = await fetch(`${BASE_URL}/orderComplaints/${orderId}`);
+                if (res.ok) {
+                    const complaints = await res.json();
+                    const complaintsCard = document.getElementById("complaintsCard");
+                    const complaintsList = document.getElementById("complaintsList");
+                    if (!complaintsCard || !complaintsList) return;
+
+                    if (complaints.length > 0) {
+                        complaintsCard.style.display = "block";
+                        complaintsList.innerHTML = complaints.map(c => `
+                            <div class="complaint-item">
+                                <div class="complaint-meta">
+                                    <span>Filed on ${new Date(c.createdAt).toLocaleDateString("en-IN", {
+                            day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
+                        })}</span>
+                                    <span class="complaint-status">${c.status}</span>
+                                </div>
+                                <div class="complaint-text">${escapeHTML(c.complaintText)}</div>
+                            </div>
+                        `).join("");
+                    } else {
+                        complaintsCard.style.display = "none";
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to load complaints", err);
+            }
+        }
+
+        // Setup Modal Event Listeners
+        document.getElementById("closeCancelModal").addEventListener("click", () => closeModal("cancelOrderModal"));
+        document.getElementById("cancelModalBackBtn").addEventListener("click", () => closeModal("cancelOrderModal"));
+        document.getElementById("closeComplaintModal").addEventListener("click", () => closeModal("complaintModal"));
+        document.getElementById("complaintModalBackBtn").addEventListener("click", () => closeModal("complaintModal"));
+
+        // Confirm cancellation action
+        document.getElementById("cancelModalConfirmBtn").addEventListener("click", async () => {
+            if (!currentOrder) return;
+            const reason = document.getElementById("cancelReasonInput").value.trim();
+            if (!reason) {
+                alert("Please provide a reason for cancellation.");
+                return;
+            }
+
+            try {
+                const confirmBtn = document.getElementById("cancelModalConfirmBtn");
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = "Cancelling...";
+
+                const res = await fetch(`${BASE_URL}/cancelOrder/${currentOrder._id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ reason })
+                });
+
+                if (res.ok) {
+                    showToast("Cancel order successfully");
+                    closeModal("cancelOrderModal");
+                    // Refresh order details page data
+                    await orderstatuse();
+                } else {
+                    const errData = await res.json();
+                    alert(`Error: ${errData.message || "Failed to cancel order"}`);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error: Network or server issue.");
+            } finally {
+                const confirmBtn = document.getElementById("cancelModalConfirmBtn");
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = "Yes, Cancel Order";
+            }
+        });
+
+        // Submit complaint action
+        document.getElementById("complaintModalSubmitBtn").addEventListener("click", async () => {
+            if (!currentOrder) return;
+            const complaintText = document.getElementById("complaintTextInput").value.trim();
+            if (!complaintText) {
+                alert("Please describe your complaint.");
+                return;
+            }
+
+            const customerMobileNumber = currentOrder.customerMobileNumber || currentOrder.useNumber || currentOrder.phone || localStorage.getItem("userNumber") || "N/A";
+            const productName = currentOrder.productName || "Product";
+
+            try {
+                const submitBtn = document.getElementById("complaintModalSubmitBtn");
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Submitting...";
+
+                const res = await fetch(`${BASE_URL}/submitComplaint`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        orderId: currentOrder._id,
+                        customerMobileNumber,
+                        productName,
+                        complaintText
+                    })
+                });
+
+                if (res.ok) {
+                    showToast("Complaint submitted successfully");
+                    closeModal("complaintModal");
+                    await loadComplaints(currentOrder._id);
+                } else {
+                    const errData = await res.json();
+                    alert(`Error: ${errData.message || "Failed to submit complaint"}`);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error: Network or server issue.");
+            } finally {
+                const submitBtn = document.getElementById("complaintModalSubmitBtn");
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Complaint";
+            }
+        });
+
+        // Setup Return Modal Event Listeners
+        document.getElementById("closeReturnModal").addEventListener("click", () => closeModal("returnOrderModal"));
+        document.getElementById("returnModalBackBtn").addEventListener("click", () => closeModal("returnOrderModal"));
+
+        // Toggle Payment Details field based on Return Type selection
+        const returnTypeRadios = document.getElementsByName("returnType");
+        returnTypeRadios.forEach(radio => {
+            radio.addEventListener("change", (e) => {
+                const payGroup = document.getElementById("refundPaymentDetailsGroup");
+                if (payGroup) {
+                    payGroup.style.display = e.target.value === "Refund" ? "block" : "none";
+                }
+            });
+        });
+
+        // Submit return request action
+        document.getElementById("returnModalSubmitBtn").addEventListener("click", async () => {
+            if (!currentOrder) return;
+
+            // Get selected return type
+            let returnType = "Refund";
+            const selectedRadio = document.querySelector('input[name="returnType"]:checked');
+            if (selectedRadio) {
+                returnType = selectedRadio.value;
+            }
+
+            const returnReason = document.getElementById("returnReasonInput").value.trim();
+            if (!returnReason) {
+                alert("Please provide a reason for the return.");
+                return;
+            }
+
+            let refundPaymentDetails = "";
+            if (returnType === "Refund") {
+                refundPaymentDetails = document.getElementById("refundPaymentInput").value.trim();
+                if (!refundPaymentDetails) {
+                    alert("Please provide your payment details for the refund.");
+                    return;
+                }
+            }
+
+            try {
+                const submitBtn = document.getElementById("returnModalSubmitBtn");
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Submitting...";
+
+                const res = await fetch(`${BASE_URL}/returnOrder/${currentOrder._id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        returnType,
+                        returnReason,
+                        refundPaymentDetails
+                    })
+                });
+
+                if (res.ok) {
+                    showToast("Return request submitted successfully");
+                    closeModal("returnOrderModal");
+                    // Refresh order details page data
+                    await orderstatuse();
+                } else {
+                    const errData = await res.json();
+                    alert(`Error: ${errData.message || "Failed to submit return request"}`);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error: Network or server issue.");
+            } finally {
+                const submitBtn = document.getElementById("returnModalSubmitBtn");
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Return";
+            }
+        });
+
+        // Setup Cancel Return Modal Event Listeners
+        document.getElementById("closeCancelReturnModal").addEventListener("click", () => closeModal("cancelReturnModal"));
+        document.getElementById("cancelReturnModalBackBtn").addEventListener("click", () => closeModal("cancelReturnModal"));
+
+        document.getElementById("cancelReturnModalConfirmBtn").addEventListener("click", async () => {
+            if (!currentOrder) return;
+            try {
+                const confirmBtn = document.getElementById("cancelReturnModalConfirmBtn");
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = "Cancelling...";
+
+                const res = await fetch(`${BASE_URL}/cancelReturn/${currentOrder._id}`, {
+                    method: "POST"
+                });
+
+                if (res.ok) {
+                    showToast("Return request cancelled successfully");
+                    closeModal("cancelReturnModal");
+                    await orderstatuse();
+                } else {
+                    const errData = await res.json();
+                    alert(`Error: ${errData.message || "Failed to cancel return request"}`);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error: Network or server issue.");
+            } finally {
+                const confirmBtn = document.getElementById("cancelReturnModalConfirmBtn");
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = "Yes, Cancel Return";
+            }
+        });
 
         orderstatuse();
     </script>

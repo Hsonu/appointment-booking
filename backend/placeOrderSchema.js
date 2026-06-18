@@ -87,6 +87,26 @@ const placeOrderDataSchema = new mongoose.Schema({
         }
 
     },
+    cancelReason: {
+        type: String,
+        default: ""
+    },
+    returnType: {
+        type: String,
+        default: ""
+    },
+    returnReason: {
+        type: String,
+        default: ""
+    },
+    refundPaymentDetails: {
+        type: String,
+        default: ""
+    },
+    exchangeCount: {
+        type: Number,
+        default: 0
+    },
     adminId: {
         type: String,
         default: "admin"

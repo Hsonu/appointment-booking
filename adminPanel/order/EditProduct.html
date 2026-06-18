@@ -101,6 +101,22 @@
             </svg>
             Orders
           </a>
+          <a class="navItem" href="./returns.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10" />
+              <polyline points="1 20 1 14 7 14" />
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+            </svg>
+            Returns
+          </a>
+          <a class="navItem" href="./complaints.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            Complaints
+          </a>
         </div>
       </nav>
       <div id="sidebarFooter">
@@ -111,8 +127,12 @@
             <div class="sidebarUserRole">Admin Account</div>
           </div>
         </div>
-        <button onclick="adminLogout()" style="width:100%;margin-top:10px;background:#fee2e2;color:#b91c1c;border:none;border-radius:8px;padding:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;" onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        <button onclick="adminLogout()"
+          style="width:100%;margin-top:10px;background:#fee2e2;color:#b91c1c;border:none;border-radius:8px;padding:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;"
+          onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+          </svg>
           Sign Out
         </button>
       </div>
@@ -244,18 +264,25 @@
               <label class="formLabel">Rate (₹) *</label>
               <input class="formInput" id="editRate" type="number" placeholder="Rate" min="0">
             </div>
-            <div class="formGroup col-span-2" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 6px;">
+            <div class="formGroup col-span-2"
+              style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 6px;">
               <div>
-                <div style="font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Original Price (incl. GST)</div>
-                <div id="calcOriginalPrice" style="font-size: 0.95rem; font-weight: 700; color: #334155; margin-top: 4px;">₹0</div>
+                <div style="font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Original
+                  Price (incl. GST)</div>
+                <div id="calcOriginalPrice"
+                  style="font-size: 0.95rem; font-weight: 700; color: #334155; margin-top: 4px;">₹0</div>
               </div>
               <div>
-                <div style="font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Discount Amount</div>
-                <div id="calcDiscountAmount" style="font-size: 0.95rem; font-weight: 700; color: #ef4444; margin-top: 4px;">₹0</div>
+                <div style="font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Discount
+                  Amount</div>
+                <div id="calcDiscountAmount"
+                  style="font-size: 0.95rem; font-weight: 700; color: #ef4444; margin-top: 4px;">₹0</div>
               </div>
               <div>
-                <div style="font-size: 0.72rem; color: #4f46e5; text-transform: uppercase; font-weight: 700;">Final Sell Price</div>
-                <div id="calcSellPrice" style="font-size: 0.95rem; font-weight: 800; color: #4f46e5; margin-top: 4px;">₹0</div>
+                <div style="font-size: 0.72rem; color: #4f46e5; text-transform: uppercase; font-weight: 700;">Final Sell
+                  Price</div>
+                <div id="calcSellPrice" style="font-size: 0.95rem; font-weight: 800; color: #4f46e5; margin-top: 4px;">
+                  ₹0</div>
               </div>
             </div>
             <div class="formGroup col-span-2">

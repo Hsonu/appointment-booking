@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Returns & Refunds – SJ Jewellery Admin</title>
+  <link rel="stylesheet" href="./admin.css">
+  <style>
+    .statusDot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .dot-confirmed {
+      background: #f59e0b;
+    }
+
+    .dot-shipped {
+      background: #3b82f6;
+    }
+
+    .dot-delivered {
+      background: #10b981;
+    }
+
+    .dot-cancelled {
+      background: #ef4444;
+    }
+
+    .dot-return-req {
+      background: #f59e0b;
+    }
+
+    .dot-return-comp {
+      background: #10b981;
+    }
+
+    .dot-other {
+      background: #94a3b8;
+    }
+
+    .statusSelect {
+      padding: 6px 10px;
+      border: 1.5px solid #e8e0d5;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #3d3d45;
+      background: #faf8f5;
+      font-family: inherit;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.28s ease, box-shadow 0.28s ease;
+      min-width: 150px;
+    }
+
+    .statusSelect:focus {
+      border-color: #c9a96e;
+      box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+      background: #fff;
+    }
+
+    .statusSelect:hover {
+      border-color: #c9a96e;
+    }
+
+    .copyBtn {
+      background: #faf8f5;
+      border: 1px solid #c9a96e;
+      color: #c9a96e;
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .copyBtn:hover {
+      background: #c9a96e;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="adminLayout">
+
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div id="sidebarHeader">
+        <div id="sidebarLogo">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+        </div>
+        <div>
+          <div id="sidebarTitle">SJ Jewellery</div>
+          <div id="sidebarSubtitle">Admin Console</div>
+        </div>
+      </div>
+      <nav id="sidebarNav">
+        <div class="navSection">
+          <div class="navSectionLabel">Main</div>
+          <a class="navItem" href="../Dashboard.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+            </svg>
+            Dashboard
+          </a>
+          <a class="navItem" href="./Order.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            Products
+          </a>
+          <a class="navItem" href="./status.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2" />
+            </svg>
+            Orders
+          </a>
+          <a class="navItem active" href="./returns.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10" />
+              <polyline points="1 20 1 14 7 14" />
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+            </svg>
+            Returns
+          </a>
+          <a class="navItem" href="./complaints.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            Complaints
+          </a>
+        </div>
+      </nav>
+      <div id="sidebarFooter">
+        <div class="sidebarUser">
+          <div class="sidebarAvatar" id="sidebarAvatarChar">A</div>
+          <div>
+            <div class="sidebarUserName" id="sidebarAdminName">Admin</div>
+            <div class="sidebarUserRole">Admin Account</div>
+          </div>
+        </div>
+        <button onclick="adminLogout()"
+          style="width:100%;margin-top:10px;background:#fee2e2;color:#b91c1c;border:none;border-radius:8px;padding:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;"
+          onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+          </svg>
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <div id="adminContent">
+      <header id="adminTopbar">
+        <div class="topbarLeft">
+          <span class="topbarPageTitle">Returns & Refunds</span>
+          <span class="topbarBreadcrumb">Home / Returns</span>
+        </div>
+        <div class="topbarRight">
+          <button class="btn btn-primary btn-sm" onclick="loadReturns()">
+            <svg viewBox="0 0 24 24" fill="#fff" style="width:15px;height:15px;vertical-align:middle;margin-right:4px;">
+              <path
+                d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
+            </svg>
+            Refresh
+          </button>
+        </div>
+      </header>
+
+      <main id="adminBody">
+        <!-- Toast Notification -->
+        <div id="toast"
+          style="display:none;position:fixed;bottom:24px;right:24px;background:#10b981;color:#fff;padding:12px 20px;border-radius:10px;font-size:0.85rem;font-weight:600;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.2);animation:fadeIn 0.3s ease;">
+          ✓ Action completed
+        </div>
+
+        <div class="adminCard fadeIn">
+          <div class="adminCardHeader">
+            <div>
+              <div class="adminCardTitle">Return & Exchange Requests</div>
+              <div class="adminCardSubtitle" id="returnsCountLabel">Loading…</div>
+            </div>
+          </div>
+          <div class="tableWrapper">
+            <table class="adminTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Customer</th>
+                  <th>Product Details</th>
+                  <th>Return Type</th>
+                  <th>Reason</th>
+                  <th>Refund Details</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="returnsTableBody">
+                <tr>
+                  <td colspan="8">
+                    <div class="emptyState">
+                      <p>Loading return requests…</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="./config.js"></script>
+  <script>
+    // Auth Guard
+    const ADMIN_ID = localStorage.getItem("adminId");
+    if (!ADMIN_ID) { window.location.href = "./login.html"; }
+    document.getElementById("sidebarAdminName").textContent = ADMIN_ID || "Admin";
+    document.getElementById("sidebarAvatarChar").textContent = (ADMIN_ID || "A").charAt(0).toUpperCase();
+
+    function adminLogout() {
+      localStorage.removeItem("adminId");
+      localStorage.removeItem("adminLoggedIn");
+      window.location.href = "./login.html";
+    }
+
+    function showToast(msg = "Updated!", color = "#10b981") {
+      const t = document.getElementById("toast");
+      t.textContent = "✓ " + msg;
+      t.style.background = color;
+      t.style.display = "block";
+      setTimeout(() => t.style.display = "none", 2500);
+    }
+
+    function copyToClipboard(text) {
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast("Payment details copied to clipboard!");
+      }).catch(() => {
+        showToast("Copy failed", "#ef4444");
+      });
+    }
+
+    function getStatusBadge(s) {
+      if (!s) return `<span class="badge badge-gray">—</span>`;
+      if (s === "Return Requested") return `<span class="badge badge-warning" style="background:#fffbeb;color:#b45309;border:1px solid #fef3c7;"><span class="statusDot dot-return-req"></span>${s}</span>`;
+      if (s === "Out For Pickup") return `<span class="badge" style="background:#faf5ff;color:#6b21a8;border:1px solid #f3e8ff;"><span class="statusDot" style="background:#8b5cf6;"></span>Out For Pickup</span>`;
+      if (s === "Order Picked Up") return `<span class="badge" style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;"><span class="statusDot" style="background:#10b981;"></span>Order Picked Up</span>`;
+      if (s === "Refund Accepted") return `<span class="badge badge-danger" style="background:#fef2f2;color:#ef4444;border:1px solid #fee2e2;"><span class="statusDot dot-cancelled"></span>Refund Accepted</span>`;
+      if (s === "Refund Completed") return `<span class="badge badge-success" style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;"><span class="statusDot dot-return-comp"></span>Refund Completed</span>`;
+      if (s === "Return Completed") return `<span class="badge badge-success" style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;"><span class="statusDot dot-return-comp"></span>${s}</span>`;
+      if (s === "Delivered a replacement") return `<span class="badge badge-success" style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;"><span class="statusDot dot-delivered"></span>Delivered replacement</span>`;
+      if (s === "Reprocess") return `<span class="badge badge-info" style="background:#f0f9ff;color:#0284c7;border:1px solid #bae6fd;"><span class="statusDot dot-shipped"></span>Reprocessing</span>`;
+      if (s === "Not Delivered") return `<span class="badge badge-gray" style="background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;"><span class="statusDot dot-other"></span>Not Delivered</span>`;
+      return `<span class="badge badge-warning"><span class="statusDot dot-confirmed"></span>${s}</span>`;
+    }
+
+    async function loadReturns() {
+      const tbody = document.getElementById("returnsTableBody");
+      try {
+        const res = await fetch(`${BASE_URL}/viwePlaceOrder`, { headers: { "x-admin-id": ADMIN_ID } });
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+
+        // Filter out return / exchange request orders
+        const returnOrders = data.filter(item => item.returnType);
+
+        document.getElementById("returnsCountLabel").textContent = `${returnOrders.length} return request${returnOrders.length !== 1 ? "s" : ""} found`;
+
+        if (!returnOrders.length) {
+          tbody.innerHTML = `<tr><td colspan="8"><div class="emptyState"><p>No return or refund requests found</p></div></td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = returnOrders.map((item, idx) => {
+          const totalAmt = parseFloat(item.withGstTotalAmount || item.totalAmount || 0);
+          const isRefund = (item.returnType || "").toLowerCase() === "refund";
+          const payDetails = item.refundPaymentDetails || "";
+
+          return `
+            <tr class="orderRow">
+              <td style="color:#94a3b8;font-size:0.75rem;">#${idx + 1}</td>
+              <td>
+                <div style="font-weight:600;color:#0f172a;">${item.customerName || "—"}</div>
+                <div style="font-size:0.75rem;color:#64748b;">${item.customerMobileNumber || "—"}</div>
+              </td>
+              <td>
+                <div style="font-weight:500;">${item.productName || "—"}</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Qty: ${item.qty || 1} | ₹${totalAmt.toLocaleString("en-IN")}</div>
+              </td>
+              <td>
+                <span class="badge" style="background:${isRefund ? '#fffbeb;color:#b45309;border:1px solid #fef3c7;' : '#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;'}font-weight:700;">
+                  ${item.returnType}
+                </span>
+              </td>
+              <td style="max-width:180px;font-size:0.78rem;color:#475569;" title="${item.returnReason || ''}">
+                ${item.returnReason || "—"}
+              </td>
+              <td>
+                ${isRefund && payDetails ? `
+                  <div style="display:inline-flex;align-items:center;">
+                    <span style="font-family:monospace;font-size:0.75rem;background:#f8fafc;padding:3px 6px;border-radius:4px;border:1px solid #e2e8f0;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${payDetails}">
+                      ${payDetails}
+                    </span>
+                    <button class="copyBtn" onclick="copyToClipboard('${payDetails.replace(/'/g, "\\'")}')">
+                      Copy
+                    </button>
+                  </div>
+                ` : '—'}
+              </td>
+              <td>
+                <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-start;">
+                  ${getStatusBadge(item.orderStatus)}
+                  <select class="statusSelect" data-id="${item._id}">
+                    ${(() => {
+              const baseOptions = ["Order Placed", "Order Confirmed", "Order Packed", "Shipped", "In Transit", "Out For Delivery", "Delivered", "Cancelled"];
+              let endOptions = ["Return Requested", "Out For Pickup", "Order Picked Up", "Return Completed"];
+              if (item.returnType === "Exchange") {
+                endOptions = ["Return Requested", "Out For Pickup", "Order Picked Up", "Return Completed", "Delivered a replacement", "Reprocess"];
+              } else if (item.returnType === "Refund") {
+                endOptions = ["Return Requested", "Out For Pickup", "Order Picked Up", "Refund Accepted", "Refund Completed", "Not Delivered", "Reprocess"];
+              }
+              const allOptions = [...baseOptions, ...endOptions];
+              if (item.orderStatus && !allOptions.includes(item.orderStatus)) {
+                allOptions.push(item.orderStatus);
+              }
+              return allOptions;
+            })()
+              .map(s => `<option value="${s}" ${item.orderStatus === s ? "selected" : ""}>${s}</option>`).join("")}
+                  </select>
+                </div>
+              </td>
+              <td>
+                <button class="btn btn-primary btn-sm updateBtn" data-id="${item._id}">Update</button>
+              </td>
+            </tr>
+          `;
+        }).join("");
+
+        // Update handler
+        document.querySelectorAll(".updateBtn").forEach(btn => {
+          btn.addEventListener("click", async () => {
+            const id = btn.dataset.id;
+            const row = btn.closest("tr");
+            const status = row.querySelector(".statusSelect").value;
+            btn.textContent = "…";
+            btn.disabled = true;
+            try {
+              const res = await fetch(`${BASE_URL}/updateOrderStatus/${id}`, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                  "x-admin-id": ADMIN_ID
+                },
+                body: JSON.stringify({ status })
+              });
+              if (!res.ok) throw new Error();
+              showToast("Status updated!");
+              loadReturns();
+            } catch {
+              showToast("Update failed", "#ef4444");
+              btn.textContent = "Update"; btn.disabled = false;
+            }
+          });
+        });
+
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="8"><div class="emptyState"><p>Failed to load return requests</p></div></td></tr>`;
+      }
+    }
+
+    loadReturns();
+  </script>
+</body>
+
+</html>

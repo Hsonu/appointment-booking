@@ -22,6 +22,7 @@ const login = require("./loginSchema");
 const address = require("./addressSchema");
 const user = require("./userLgoninSchema");
 const Admin = require("./adminSchema");
+const Complaint = require("./complaintSchema");
 const cors = require("cors");
 const Razorpar = require("razorpay");
 
@@ -740,6 +741,176 @@ app.get("/statusSingleData/:id", async (req, res) => {
     res.json(idStatuse)
 })
 
+// Customer Cancel Order
+app.post("/cancelOrder/:id", async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const { reason } = req.body;
+
+        const order = await placeOrderData.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        const currentStatus = (order.orderStatus || "").toLowerCase();
+        if (currentStatus === "delivered" || currentStatus === "delivered a replacement") {
+            return res.status(400).json({ message: "Delivered orders cannot be cancelled." });
+        }
+        if (currentStatus === "cancelled" || currentStatus === "order cancelled") {
+            return res.status(400).json({ message: "Order is already cancelled." });
+        }
+
+        const previousStatus = order.orderStatus;
+        order.orderStatus = "Cancelled";
+        order.cancelReason = reason || "Cancelled by customer";
+        await order.save();
+
+        // Restore stock
+        const isCancelledOrReturned = (status) => {
+            const s = (status || "").toLowerCase();
+            return s.includes("cancel") || s.includes("return");
+        };
+
+        if (!isCancelledOrReturned(previousStatus)) {
+            await addProducts.updateOne(
+                { Productname: order.productName },
+                { $inc: { Units: order.qty } }
+            );
+        }
+
+        res.status(200).json({ message: "Order cancelled successfully", order });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Submit Order Complaint
+app.post("/submitComplaint", async (req, res) => {
+    try {
+        const { orderId, customerMobileNumber, productName, complaintText } = req.body;
+        if (!orderId || !customerMobileNumber || !productName || !complaintText) {
+            return res.status(400).json({ message: "All complaint fields are required." });
+        }
+
+        const newComplaint = new Complaint({
+            orderId,
+            customerMobileNumber,
+            productName,
+            complaintText,
+            status: "Pending"
+        });
+
+        const savedComplaint = await newComplaint.save();
+        res.status(200).json({ message: "Complaint filed successfully", complaint: savedComplaint });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Get Complaints for a Single Order
+app.get("/orderComplaints/:orderId", async (req, res) => {
+    try {
+        const complaints = await Complaint.find({ orderId: req.params.orderId });
+        res.json(complaints);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Get all complaints for admin
+app.get("/admin/allComplaints", requireAdmin, async (req, res) => {
+    try {
+        const complaints = await Complaint.find({}).sort({ createdAt: -1 });
+        res.json(complaints);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Update complaint status
+app.put("/updateComplaintStatus/:id", requireAdmin, async (req, res) => {
+    try {
+        const { status } = req.body;
+        if (!status) {
+            return res.status(400).json({ message: "Status is required." });
+        }
+        const updated = await Complaint.findByIdAndUpdate(
+            req.params.id,
+            { status },
+            { new: true }
+        );
+        if (!updated) {
+            return res.status(404).json({ message: "Complaint not found." });
+        }
+        res.status(200).json({ message: "Complaint status updated successfully", complaint: updated });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Customer return order request
+app.post("/returnOrder/:id", async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const { returnType, returnReason, refundPaymentDetails } = req.body;
+
+        if (!returnType || !returnReason) {
+            return res.status(400).json({ message: "Return type and reason are required." });
+        }
+
+        const order = await placeOrderData.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        const currentStatus = (order.orderStatus || "").toLowerCase();
+        if (currentStatus !== "delivered" && currentStatus !== "delivered a replacement") {
+            return res.status(400).json({ message: "Only delivered orders can be returned." });
+        }
+
+        if ((order.exchangeCount || 0) >= 3) {
+            return res.status(400).json({ message: "Return limit reached (Maximum 3 exchanges allowed)." });
+        }
+
+        order.orderStatus = "Return Requested";
+        order.returnType = returnType;
+        order.returnReason = returnReason;
+        order.refundPaymentDetails = returnType === "Refund" ? refundPaymentDetails : "";
+        await order.save();
+
+        res.status(200).json({ message: "Return request submitted successfully", order });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Customer cancel return request
+app.post("/cancelReturn/:id", async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const order = await placeOrderData.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        const currentStatus = (order.orderStatus || "").toLowerCase();
+        if (currentStatus !== "return requested") {
+            return res.status(400).json({ message: "Only return requests that are pending can be cancelled." });
+        }
+
+        order.orderStatus = "Delivered";
+        order.returnType = "";
+        order.returnReason = "";
+        order.refundPaymentDetails = "";
+        await order.save();
+
+        res.status(200).json({ message: "Return request cancelled successfully", order });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
 //updateorderStatus
 
 app.put("/updateOrderStatus/:id", requireAdmin, async (req, res) => {
@@ -755,7 +926,19 @@ app.put("/updateOrderStatus/:id", requireAdmin, async (req, res) => {
         const newStatus = updateStatus.status;
 
         if (previousStatus !== newStatus) {
-            const isCancelledOrReturned = (status) => status === "Cancelled" || status === "Returned";
+            if (previousStatus === "Return Requested" && finddatabaseid.returnType === "Exchange") {
+                if (newStatus === "Delivered a replacement" || newStatus === "Reprocess") {
+                    finddatabaseid.exchangeCount = (finddatabaseid.exchangeCount || 0) + 1;
+                }
+            }
+
+            const isCancelledOrReturned = (status) =>
+                status === "Cancelled" ||
+                status === "Returned" ||
+                status === "Return Completed" ||
+                status === "Refund Accepted" ||
+                status === "Refund Completed" ||
+                status === "Not Delivered";
 
             if (isCancelledOrReturned(newStatus) && !isCancelledOrReturned(previousStatus)) {
                 // Restore stock
