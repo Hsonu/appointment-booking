@@ -1419,9 +1419,13 @@
             <!-- Price -->
             <div id="priceBlock">
                 <div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;">
-                    <span id="productPrice" style="font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-h);">₹–</span>
-                    <span id="productOriginalPrice" style="display: none; text-decoration: line-through; color: var(--text-muted); font-size: 1.1rem;">₹–</span>
-                    <span id="productDiscountBadge" class="badge" style="display: none; background: #fee2e2; color: #ef4444; border: 1px solid #fee2e2; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;">10% OFF</span>
+                    <span id="productPrice"
+                        style="font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-h);">₹–</span>
+                    <span id="productOriginalPrice"
+                        style="display: none; text-decoration: line-through; color: var(--text-muted); font-size: 1.1rem;">₹–</span>
+                    <span id="productDiscountBadge" class="badge"
+                        style="display: none; background: #fee2e2; color: #ef4444; border: 1px solid #fee2e2; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;">10%
+                        OFF</span>
                 </div>
                 <div id="gstNote">GST Included</div>
                 <div id="stockStatus"
@@ -1740,7 +1744,7 @@
 
                 const gstPercent = (data.gst !== undefined && data.gst !== null && !isNaN(Number(data.gst))) ? Number(data.gst) : 3;
                 const discount = data.discount || 0;
-                
+
                 const originalPrice = Math.round(data.Rate + (data.Rate * gstPercent) / 100);
                 const discountedRate = data.Rate * (1 - discount / 100);
                 const finalPrice = Math.round(discountedRate + (discountedRate * gstPercent) / 100);

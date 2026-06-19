@@ -2,13 +2,17 @@ const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema({
     FullName: {
-        type: String
+        type: String,
+        required: true
     },
     mobileNumber: {
-        type: Number
+        type: Number,
+        required: true
     },
     email: {
-        type: String
+        type: String,
+        required: true,
+        match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please fill a valid email address"]
     }
 })
 
