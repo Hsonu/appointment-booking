@@ -1913,51 +1913,47 @@
             const isCancelled = status.includes("cancel") || status.includes("refund") || status.includes("not delivered");
             const isReturned = status.includes("return") || status.includes("refund") || status.includes("replace") || status.includes("reprocess") || status.includes("pickup") || status.includes("picked") || status.includes("not delivered");
 
-            const isCOD = data.paymentMethod === "COD";
-
-            // Cancel Order Button (Only show for Online Payment, i.e. not COD)
-            if (!isCOD) {
-                const cancelBtn = document.createElement("button");
-                cancelBtn.className = "btn-action-cancel";
-                cancelBtn.id = "cancelOrderBtn";
-                if (isDelivered) {
-                    cancelBtn.disabled = true;
-                    cancelBtn.innerHTML = `
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
-                            <circle cx="12" cy="12" r="10" />
-                            <line x1="15" y1="9" x2="9" y2="15" />
-                        </svg>
-                        Delivered (Cannot Cancel)`;
-                } else if (isCancelled) {
-                    cancelBtn.disabled = true;
-                    let cancelLabel = "Cancelled";
-                    if (status === "refund accepted") cancelLabel = "Refund Accepted (Cannot Cancel)";
-                    if (status === "not delivered") cancelLabel = "Not Delivered (Cannot Cancel)";
-                    cancelBtn.innerHTML = `
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
-                            <circle cx="12" cy="12" r="10" />
-                            <line x1="15" y1="9" x2="9" y2="15" />
-                        </svg>
-                        ${cancelLabel}`;
-                } else if (isReturned) {
-                    cancelBtn.disabled = true;
-                    cancelBtn.innerHTML = `
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
-                            <circle cx="12" cy="12" r="10" />
-                            <line x1="15" y1="9" x2="9" y2="15" />
-                        </svg>
-                        Returned (Cannot Cancel)`;
-                } else {
-                    cancelBtn.innerHTML = `
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
-                            <circle cx="12" cy="12" r="10" />
-                            <line x1="15" y1="9" x2="9" y2="15" />
-                        </svg>
-                        Cancel Order`;
-                    cancelBtn.addEventListener("click", () => openModal("cancelOrderModal"));
-                }
-                orderActions.appendChild(cancelBtn);
+            // Cancel Order Button
+            const cancelBtn = document.createElement("button");
+            cancelBtn.className = "btn-action-cancel";
+            cancelBtn.id = "cancelOrderBtn";
+            if (isDelivered) {
+                cancelBtn.disabled = true;
+                cancelBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                    </svg>
+                    Delivered (Cannot Cancel)`;
+            } else if (isCancelled) {
+                cancelBtn.disabled = true;
+                let cancelLabel = "Cancelled";
+                if (status === "refund accepted") cancelLabel = "Refund Accepted (Cannot Cancel)";
+                if (status === "not delivered") cancelLabel = "Not Delivered (Cannot Cancel)";
+                cancelBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                    </svg>
+                    ${cancelLabel}`;
+            } else if (isReturned) {
+                cancelBtn.disabled = true;
+                cancelBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                    </svg>
+                    Returned (Cannot Cancel)`;
+            } else {
+                cancelBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                    </svg>
+                    Cancel Order`;
+                cancelBtn.addEventListener("click", () => openModal("cancelOrderModal"));
             }
+            orderActions.appendChild(cancelBtn);
 
             // Complain Button
             const complainBtn = document.createElement("button");
