@@ -23,6 +23,7 @@ const address = require("./addressSchema");
 const user = require("./userLgoninSchema");
 const Admin = require("./adminSchema");
 const Complaint = require("./complaintSchema");
+const Blog = require("./blogSchema");
 const cors = require("cors");
 const Razorpar = require("razorpay");
 const bcrypt = require("bcryptjs");
@@ -230,6 +231,58 @@ app.post("/owner/login", async (req, res) => {
             sessionToken
         });
     } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// ── Blog Operations ───────────────────────────────────────────────────────────
+app.get("/blogs", async (req, res) => {
+    try {
+        const blogs = await Blog.find({}).sort({ createdAt: -1 });
+        res.json(blogs);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post("/owner/blogs", requireOwner, async (req, res) => {
+    try {
+        const { title, content, tag } = req.body;
+        if (!title || !content) {
+            return res.status(400).json({ message: "Title and content are required" });
+        }
+
+        let photoUrl = "";
+        if (req.files && req.files.photo) {
+            const uploadResult = await cloudinary.uploader.upload(req.files.photo.tempFilePath);
+            photoUrl = uploadResult.secure_url;
+        }
+
+        const newBlog = new Blog({
+            title,
+            content,
+            tag: tag || "Jewellery",
+            photo: photoUrl
+        });
+
+        await newBlog.save();
+        res.status(200).json({ message: "Blog post created successfully", blog: newBlog });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+app.delete("/owner/blogs/:id", requireOwner, async (req, res) => {
+    try {
+        const id = req.params.id;
+        const deleted = await Blog.findByIdAndDelete(id);
+        if (!deleted) {
+            return res.status(404).json({ message: "Blog post not found" });
+        }
+        res.status(200).json({ message: "Blog post deleted successfully" });
+    } catch (err) {
+        console.error(err);
         res.status(500).json({ message: "Internal server error" });
     }
 });

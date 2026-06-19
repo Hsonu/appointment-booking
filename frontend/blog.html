@@ -4,21 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Orders – SJ Jewellery</title>
+    <title>Blog – SJ Jewellery | Jewellery Guides, Trends & Tips</title>
+    <meta name="description"
+        content="Explore the SJ Jewellery blog for expert guides on gold, diamond & platinum jewellery care, styling tips, and the latest trends in Indian jewellery.">
     <script src="/auto-logout.js"></script>
-    <meta name="description" content="Track your past and active orders from SJ Jewellery's luxury collection.">
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet">
-
     <style>
-        /* ═══════════════════════════════════════════
-           DESIGN TOKENS
-        ═══════════════════════════════════════════ */
         :root {
             --gold: #c9a96e;
             --gold-dark: #a8854e;
@@ -27,7 +22,6 @@
             --cream: #faf8f5;
             --dark: #0d0d0f;
             --dark-2: #1a1a1f;
-            --dark-3: #2a2a30;
             --text-h: #0d0d0f;
             --text-body: #3d3d45;
             --text-muted: #7a7a85;
@@ -38,9 +32,6 @@
             --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ═══════════════════════════════════════════
-           RESET & BASE
-        ═══════════════════════════════════════════ */
         *,
         *::before,
         *::after {
@@ -58,18 +49,11 @@
             background: var(--cream);
             color: var(--text-body);
             overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
         a {
             text-decoration: none;
             color: inherit;
-        }
-
-        p {
-            margin: 0;
         }
 
         ul {
@@ -81,15 +65,7 @@
             max-width: 100%;
         }
 
-        button {
-            font-family: inherit;
-            cursor: pointer;
-            border: none;
-        }
-
-        /* ═══════════════════════════════════════════
-           WHATSAPP FLOAT
-        ═══════════════════════════════════════════ */
+        /* Float Elements */
         .whatsapp-float {
             position: fixed;
             width: 56px;
@@ -108,7 +84,6 @@
 
         .whatsapp-float:hover {
             transform: scale(1.12);
-            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
         }
 
         .whatsapp-float img {
@@ -116,9 +91,7 @@
             height: 32px;
         }
 
-        /* ═══════════════════════════════════════════
-           HEADER / NAVBAR
-        ═══════════════════════════════════════════ */
+        /* Header */
         #siteHeader {
             position: fixed;
             top: 0;
@@ -129,7 +102,6 @@
             background: rgba(13, 13, 15, 0.95);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(201, 169, 110, 0.2);
-            transition: background var(--transition), backdrop-filter var(--transition), border-color var(--transition);
         }
 
         #navInner {
@@ -190,7 +162,6 @@
 
         #searchInput:focus {
             border-color: var(--gold);
-            background: rgba(255, 255, 255, 0.12);
             box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
         }
 
@@ -221,7 +192,7 @@
             padding: 8px 12px;
             border-radius: 10px;
             border: 1.5px solid transparent;
-            transition: border-color var(--transition), background var(--transition);
+            transition: all var(--transition);
             cursor: pointer;
             color: rgba(255, 255, 255, 0.8);
             font-size: 0.65rem;
@@ -264,292 +235,216 @@
             justify-content: center;
         }
 
-        /* ═══════════════════════════════════════════
-           MAIN ORDERS SECTION
-        ═══════════════════════════════════════════ */
-        main {
-            margin-top: calc(var(--header-h) + 40px);
-            flex: 1;
-            padding-bottom: 72px;
+        /* Hero Banner */
+        #heroBanner {
+            margin-top: var(--header-h);
+            height: 320px;
+            position: relative;
+            overflow: hidden;
+            background: var(--dark);
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 24px;
+        #heroBanner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
         }
 
-        .orders-header {
+        #heroBannerContent {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            margin-bottom: 40px;
+            padding: 24px;
         }
 
-        .orders-header h1 {
+        #heroBannerContent p {
+            font-size: 0.68rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        #heroBannerContent h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-size: clamp(2rem, 5vw, 3.4rem);
             font-weight: 700;
-            color: var(--text-h);
-            margin-bottom: 8px;
-        }
-
-        .orders-header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+            color: #fff;
+            line-height: 1.15;
         }
 
         .goldLine {
             display: block;
-            width: 50px;
+            width: 40px;
             height: 2px;
             background: linear-gradient(90deg, var(--gold), var(--gold-light));
             border-radius: 2px;
-            margin: 12px auto 0;
+            margin: 16px auto 0;
         }
 
-        /* Orders Grid */
-        .orders-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        /* Blog Grid */
+        .blogContainer {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 64px 24px;
+        }
+
+        .blogGrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .blogCard {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+            transition: transform var(--transition), box-shadow var(--transition);
             cursor: pointer;
         }
 
-        /* Order Card */
-        .order-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-            animation: cardFadeIn 0.5s ease forwards;
-            opacity: 0;
+        .blogCard:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
         }
 
-        @keyframes cardFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .blogCard:hover .blogImg {
+            transform: scale(1.05);
         }
 
-        .order-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-            border-color: var(--gold);
-        }
-
-        .order-img-wrap {
-            width: 90px;
-            height: 90px;
-            border-radius: 10px;
+        .blogImgWrap {
+            height: 220px;
             overflow: hidden;
-            background: #f8f4ef;
-            border: 1px solid rgba(201, 169, 110, 0.1);
-            flex-shrink: 0;
+            position: relative;
         }
 
-        .order-img {
+        .blogImg {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .order-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .order-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-h);
-        }
-
-        .order-price {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+        .blogTag {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.6rem;
             font-weight: 700;
-            color: var(--text-h);
-            margin-top: 4px;
-        }
-
-        .order-meta {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .status-badge {
-            font-size: 0.65rem;
-            font-weight: 700;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 999px;
-            background: var(--gold-bg);
-            color: var(--gold-dark);
-            border: 1px solid rgba(201, 169, 110, 0.3);
         }
 
-        .order-chevron {
-            color: var(--gold);
+        .blogBody {
+            padding: 24px;
+        }
+
+        .blogDate {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--cream);
-            transition: background var(--transition), transform var(--transition);
+            gap: 6px;
         }
 
-        .order-card:hover .order-chevron {
-            background: var(--gold-bg);
-            transform: translateX(4px);
-        }
-
-        .order-chevron svg {
-            width: 18px;
-            height: 18px;
+        .blogDate svg {
+            width: 14px;
+            height: 14px;
             fill: none;
-            stroke: currentColor;
-            stroke-width: 2.2;
-        }
-
-        /* Skeletons */
-        .skeleton-item {
-            background: #fff;
-            border-radius: var(--radius);
-            padding: 20px;
-            display: flex;
-            gap: 24px;
-            border: 1px solid var(--border);
-        }
-
-        .skeleton-img {
-            width: 90px;
-            height: 90px;
-            border-radius: 10px;
-            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
-            background-size: 200%;
-            animation: shimmer 1.4s infinite;
-        }
-
-        .skeleton-details {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .skeleton-line {
-            height: 12px;
-            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
-            background-size: 200%;
-            animation: shimmer 1.4s infinite;
-            border-radius: 6px;
-        }
-
-        .skeleton-line.name {
-            width: 45%;
-        }
-
-        .skeleton-line.meta {
-            width: 25%;
-        }
-
-        @keyframes shimmer {
-            0% {
-                background-position: 200% 0;
-            }
-
-            100% {
-                background-position: -200% 0;
-            }
-        }
-
-        /* Empty & Error State */
-        .stateBox {
-            text-align: center;
-            padding: 80px 24px;
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .stateBox svg {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 20px;
             stroke: var(--gold);
-            opacity: 0.8;
+            stroke-width: 2;
         }
 
-        .stateBox h3 {
+        .blogTitle {
             font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            color: var(--text-h);
-            margin-bottom: 10px;
+            font-size: 1.15rem;
             font-weight: 700;
+            color: var(--text-h);
+            line-height: 1.35;
+            margin-bottom: 12px;
         }
 
-        .stateBox p {
-            font-size: 0.9rem;
+        .blogExcerpt {
+            font-size: 0.88rem;
             color: var(--text-muted);
-            margin-bottom: 28px;
-            max-width: 340px;
-            margin-left: auto;
-            margin-right: auto;
+            line-height: 1.65;
+            margin-bottom: 18px;
         }
 
-        .state-cta {
+        .blogReadMore {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px 28px;
-            background: var(--dark);
-            color: #fff;
-            font-size: 0.82rem;
+            gap: 6px;
+            font-size: 0.78rem;
             font-weight: 700;
             letter-spacing: 0.06em;
             text-transform: uppercase;
-            border-radius: 999px;
-            transition: all var(--transition);
+            color: var(--gold);
+            transition: gap var(--transition);
         }
 
-        .state-cta:hover {
-            background: var(--gold);
-            color: var(--dark);
-            box-shadow: 0 8px 24px rgba(201, 169, 110, 0.35);
+        .blogCard:hover .blogReadMore {
+            gap: 10px;
         }
 
-        /* ═══════════════════════════════════════════
-           FOOTER
-        ═══════════════════════════════════════════ */
+        .blogReadMore svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+        }
+
+        /* Section Header */
+        .sectionIntro {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .sectionIntro .eyebrow {
+            font-size: 0.68rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .sectionIntro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            color: var(--text-h);
+            margin-bottom: 14px;
+        }
+
+        .sectionIntro p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.65;
+        }
+
+        /* Footer */
         #siteFooter {
             background: var(--dark-2);
             color: rgba(255, 255, 255, 0.75);
             padding: 64px 24px 32px;
-            margin-top: auto;
+            border-top: 1px solid var(--border);
         }
 
         .footerInner {
@@ -564,7 +459,6 @@
             padding-bottom: 48px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-
 
         .footerLogo {
             font-family: 'Playfair Display', serif;
@@ -673,17 +567,7 @@
             letter-spacing: 0.05em;
         }
 
-        /* Responsive design */
-        @media (max-width: 900px) {
-            .footerTop {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .footerBrand {
-                grid-column: 1 / -1;
-            }
-        }
-
+        /* Responsive Layout styles */
         @media (max-width: 860px) {
             :root {
                 --header-h: 116px;
@@ -726,15 +610,23 @@
             }
         }
 
+        @media (max-width: 768px) {
+            .footerTop {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            #heroBanner {
+                height: 240px;
+            }
+
+            .blogGrid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 640px) {
             .footerTop {
                 grid-template-columns: 1fr;
-                gap: 28px;
-            }
-
-            .footerBottom {
-                flex-direction: column;
-                text-align: center;
             }
         }
     </style>
@@ -742,88 +634,254 @@
 
 <body>
 
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
-        class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+    <!-- WhatsApp float -->
+    <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products."
+        class="whatsapp-float" target="_blank" rel="noopener noreferrer">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
 
-    <!-- ═══════════════ HEADER ═══════════════ -->
-    <header id="siteHeader" role="banner">
+    <!-- Header / Navbar -->
+    <header id="siteHeader">
         <div id="navInner">
-            <a id="navLogo" href="./index.html" aria-label="SJ Jewellery Home">
+            <a id="navLogo" href="./index.html">
                 <span class="brand-name">SJ Jewellery</span>
                 <span class="brand-tagline">Crafted with love</span>
             </a>
-
-            <!-- Search wrapper -->
-            <div id="searchWrapper" role="search">
-                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+            <div id="searchWrapper">
+                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2">
                     <circle cx="11" cy="11" r="8" />
                     <path d="M21 21l-4.35-4.35" />
                 </svg>
-                <input id="searchInput" type="text" placeholder="Search orders…" autocomplete="off"
-                    aria-label="Search items">
+                <input id="searchInput" type="text" placeholder="Search jewellery…" autocomplete="off">
             </div>
-
-            <nav class="navActions" aria-label="User actions">
-                <a href="./order.html" class="navActionBtn" id="navOrderBtn">
+            <nav class="navActions">
+                <a href="./order.html" class="navActionBtn">
                     <svg viewBox="0 0 24 24">
                         <path
                             d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
-                    Orders
+                    </svg>Orders
                 </a>
-                <a href="./login.html" class="navActionBtn" id="navLoginBtn">
+                <a href="./login.html" class="navActionBtn">
                     <svg viewBox="0 0 24 24">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
-                    </svg>
-                    Account
+                    </svg>Account
                 </a>
-                <a href="./card.html" class="navActionBtn cartWrap" id="navCartBtn" aria-label="Shopping cart">
+                <a href="./card.html" class="navActionBtn cartWrap">
                     <svg viewBox="0 0 24 24">
                         <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
                         <line x1="3" y1="6" x2="21" y2="6" />
                         <path d="M16 10a4 4 0 01-8 0" />
-                    </svg>
-                    Cart
-                    <span class="cartBadge" id="cartCount" aria-label="items in cart">0</span>
+                    </svg>Cart<span class="cartBadge">0</span>
                 </a>
             </nav>
         </div>
     </header>
 
-    <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
-    <main>
-        <div class="container">
-            <div class="orders-header">
-                <h1>My Orders</h1>
-                <p>Track delivery status and view transaction details.</p>
-                <span class="goldLine"></span>
-            </div>
+    <!-- Hero Banner -->
+    <div id="heroBanner">
+        <img src="https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/AT_Offer/01/Desktop.jpg"
+            alt="SJ Jewellery Blog Banner">
+        <div id="heroBannerContent">
+            <p>✦ Insights & Inspiration</p>
+            <h1>Our Blog</h1>
+            <span class="goldLine"></span>
+        </div>
+    </div>
 
-            <!-- Orders grid -->
-            <div class="orders-grid" id="ordersContainer">
-                <div class="skeleton-item">
-                    <div class="skeleton-img"></div>
-                    <div class="skeleton-details">
-                        <div class="skeleton-line name"></div>
-                        <div class="skeleton-line meta"></div>
-                    </div>
+    <!-- Blog Section -->
+    <main class="blogContainer">
+        <div class="sectionIntro">
+            <p class="eyebrow">✦ Latest Articles</p>
+            <h2>Jewellery Guides, Trends & Tips</h2>
+            <p>Expert advice on caring for your precious jewellery, styling inspiration, and the latest from the world
+                of gold, diamond, and platinum craftsmanship.</p>
+        </div>
+
+        <div class="blogGrid">
+            <!-- Blog Card 1 -->
+            <article class="blogCard">
+                <div class="blogImgWrap">
+                    <img class="blogImg"
+                        src="https://images.unsplash.com/photo-1515562141589-67f0d0ce0ae3?w=600&h=400&fit=crop"
+                        alt="Gold jewellery care guide">
+                    <span class="blogTag">Guide</span>
                 </div>
-                <div class="skeleton-item">
-                    <div class="skeleton-img"></div>
-                    <div class="skeleton-details">
-                        <div class="skeleton-line name"></div>
-                        <div class="skeleton-line meta"></div>
+                <div class="blogBody">
+                    <div class="blogDate">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                        June 10, 2026
                     </div>
+                    <h3 class="blogTitle">How to Care for Your Gold Jewellery at Home</h3>
+                    <p class="blogExcerpt">Learn the essential tips for cleaning, storing, and maintaining the
+                        brilliance of your gold ornaments with simple household items.</p>
+                    <span class="blogReadMore">
+                        Read Article
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </span>
                 </div>
-            </div>
+            </article>
+
+            <!-- Blog Card 2 -->
+            <article class="blogCard">
+                <div class="blogImgWrap">
+                    <img class="blogImg"
+                        src="https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=600&h=400&fit=crop"
+                        alt="Diamond buying guide">
+                    <span class="blogTag">Education</span>
+                </div>
+                <div class="blogBody">
+                    <div class="blogDate">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                        May 28, 2026
+                    </div>
+                    <h3 class="blogTitle">The 4Cs of Diamond Buying: A Complete Guide</h3>
+                    <p class="blogExcerpt">Understand cut, clarity, colour, and carat weight to make confident decisions
+                        when purchasing your next diamond piece.</p>
+                    <span class="blogReadMore">
+                        Read Article
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </span>
+                </div>
+            </article>
+
+            <!-- Blog Card 3 -->
+            <article class="blogCard">
+                <div class="blogImgWrap">
+                    <img class="blogImg"
+                        src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&h=400&fit=crop"
+                        alt="Wedding jewellery trends">
+                    <span class="blogTag">Trends</span>
+                </div>
+                <div class="blogBody">
+                    <div class="blogDate">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                        May 15, 2026
+                    </div>
+                    <h3 class="blogTitle">Top Bridal Jewellery Trends for 2026</h3>
+                    <p class="blogExcerpt">From layered necklaces to polki sets, explore the most popular bridal
+                        jewellery trends making waves in Indian weddings this year.</p>
+                    <span class="blogReadMore">
+                        Read Article
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </span>
+                </div>
+            </article>
+
+            <!-- Blog Card 4 -->
+            <article class="blogCard">
+                <div class="blogImgWrap">
+                    <img class="blogImg"
+                        src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&h=400&fit=crop"
+                        alt="BIS Hallmark">
+                    <span class="blogTag">Certification</span>
+                </div>
+                <div class="blogBody">
+                    <div class="blogDate">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                        April 22, 2026
+                    </div>
+                    <h3 class="blogTitle">Understanding BIS Hallmarking in India</h3>
+                    <p class="blogExcerpt">Why BIS Hallmark certification matters, how to verify it, and what every gold
+                        buyer should know about purity standards in India.</p>
+                    <span class="blogReadMore">
+                        Read Article
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </span>
+                </div>
+            </article>
+
+            <!-- Blog Card 5 -->
+            <article class="blogCard">
+                <div class="blogImgWrap">
+                    <img class="blogImg"
+                        src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=400&fit=crop"
+                        alt="Everyday jewellery styling">
+                    <span class="blogTag">Styling</span>
+                </div>
+                <div class="blogBody">
+                    <div class="blogDate">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                        April 5, 2026
+                    </div>
+                    <h3 class="blogTitle">5 Ways to Style Everyday Gold Jewellery</h3>
+                    <p class="blogExcerpt">Practical tips for incorporating delicate gold pieces into your daily
+                        wardrobe — from office looks to casual outings.</p>
+                    <span class="blogReadMore">
+                        Read Article
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </span>
+                </div>
+            </article>
+
+            <!-- Blog Card 6 -->
+            <article class="blogCard">
+                <div class="blogImgWrap">
+                    <img class="blogImg"
+                        src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&h=400&fit=crop"
+                        alt="Gold investment guide">
+                    <span class="blogTag">Investment</span>
+                </div>
+                <div class="blogBody">
+                    <div class="blogDate">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                        March 18, 2026
+                    </div>
+                    <h3 class="blogTitle">Gold as an Investment: Physical vs Digital</h3>
+                    <p class="blogExcerpt">An honest comparison between buying physical gold jewellery and digital gold,
+                        helping you decide what suits your financial goals.</p>
+                    <span class="blogReadMore">
+                        Read Article
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </span>
+                </div>
+            </article>
         </div>
     </main>
 
-    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <!-- Footer -->
     <footer id="siteFooter" role="contentinfo">
         <div class="footerInner">
             <div class="footerTop">
@@ -852,18 +910,15 @@
                         </a>
                     </div>
                 </div>
-
                 <div class="footerCol">
                     <h4>Shop</h4>
                     <ul>
                         <li><a href="./allProduct.html">All Jewelry</a></li>
                         <li><a href="./allProduct.html">Rings</a></li>
                         <li><a href="./allProduct.html">Necklaces</a></li>
-                        <li><a href="./allProduct.html">Bangles</a></li>
                         <li><a href="./allProduct.html">New Arrivals</a></li>
                     </ul>
                 </div>
-
                 <div class="footerCol">
                     <h4>Company</h4>
                     <ul>
@@ -874,7 +929,6 @@
                         <li><a href="./blog.html">Blog</a></li>
                     </ul>
                 </div>
-
                 <div class="footerCol">
                     <h4>Legal</h4>
                     <ul>
@@ -885,7 +939,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="footerBottom">
                 <p class="footerCopy">&copy; 2026 <span>SJ Jewellery</span>. All rights reserved. Crafted with ♥</p>
                 <div class="footerPayments">
@@ -901,129 +954,48 @@
     <!-- Scripts -->
     <script src="./config.js"></script>
     <script>
-        // Dynamic Account navigation link updating & auth check redirect
         const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-        if (!isLoggedIn) {
-            window.location.href = "./login.html";
-        }
-        const navLoginBtn = document.getElementById("navLoginBtn");
+        const navLoginBtn = document.getElementById("navLoginBtn") || document.querySelector("a[href='./login.html']");
         if (navLoginBtn && isLoggedIn) {
             navLoginBtn.href = "./profile.html";
         }
 
-        // Fetch cart badge count
+        if (!isLoggedIn) {
+            const navOrderBtn = document.getElementById("navOrderBtn");
+            const navCartBtn = document.getElementById("navCartBtn");
+            if (navOrderBtn) {
+                navOrderBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    window.location.href = "./login.html";
+                });
+            }
+            if (navCartBtn) {
+                navCartBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    window.location.href = "./login.html";
+                });
+            }
+        }
+
         async function fetchCartCount() {
             try {
                 const res = await fetch(`${BASE_URL}/Card`);
                 if (res.ok) {
                     const data = await res.json();
-                    document.getElementById("cartCount").textContent = data.length;
+                    const badge = document.querySelector(".cartBadge");
+                    if (badge) badge.textContent = data.length;
                 }
             } catch (err) {
-                console.error("Cart count fetch failed", err);
+                console.error(err);
             }
         }
         fetchCartCount();
 
-        // Search through orders & redirect on Enter
-        document.getElementById("searchInput").addEventListener("input", (e) => {
-            const q = e.target.value.toLowerCase().trim();
-            document.querySelectorAll(".order-card").forEach(card => {
-                const name = card.querySelector(".order-name")?.textContent.toLowerCase() || "";
-                card.style.display = (!q || name.includes(q)) ? "" : "none";
-            });
-        });
         document.getElementById("searchInput").addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
                 window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
             }
         });
-
-        // Load placed orders
-        async function allOrder() {
-            try {
-                const userNumber = localStorage.getItem("userNumber") || "";
-                let res = await fetch(`${BASE_URL}/viwePlaceOrder`, {
-                    headers: {
-                        "x-user-number": userNumber
-                    }
-                });
-                if (!res.ok) throw new Error("Could not load orders");
-
-                let resOrder = await res.json();
-                allorderView(resOrder);
-            } catch (err) {
-                console.error(err);
-                showErrorState();
-            }
-        }
-
-        function allorderView(resOrder) {
-            const container = document.getElementById("ordersContainer");
-            container.innerHTML = "";
-
-            if (!resOrder.length) {
-                container.innerHTML = `
-                    <div class="stateBox">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8m-4-4v8"/></svg>
-                        <h3>No Orders Found</h3>
-                        <p>You haven't placed any orders yet. Explore our exquisite collection and shop now!</p>
-                        <a href="./allProduct.html" class="state-cta">Browse Jewelry</a>
-                    </div>`;
-                return;
-            }
-
-            resOrder.forEach((item, index) => {
-                const rateVal = Number(item.withGstTotalAmount) || Number(item.rate) || 0;
-                const formattedPrice = rateVal.toLocaleString("en-IN");
-
-                const card = document.createElement("div");
-                card.className = "order-card";
-                card.setAttribute("data-id", item._id);
-                card.style.animationDelay = `${index * 0.08}s`;
-
-                card.innerHTML = `
-                    <div class="order-img-wrap">
-                        <img class="order-img" src="${item.photo || 'https://via.placeholder.com/150'}" alt="${item.productName}" loading="lazy">
-                    </div>
-                    <div class="order-info">
-                        <div class="order-name">${item.productName}</div>
-                        <div class="order-price">₹${formattedPrice}</div>
-                        <div class="order-meta">
-                            <span>Status:</span>
-                            <span class="status-badge">${item.orderStatus || 'Processing'}</span>
-                        </div>
-                    </div>
-                    <div class="order-chevron">
-                        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-                    </div>
-                `;
-
-                container.appendChild(card);
-            });
-
-            // Handle redirection using event delegation
-            container.addEventListener("click", (event) => {
-                const card = event.target.closest(".order-card");
-                if (card) {
-                    const id = card.dataset.id;
-                    window.location.href = `orderDetails.html?id=${id}`;
-                }
-            });
-        }
-
-        function showErrorState() {
-            const container = document.getElementById("ordersContainer");
-            container.innerHTML = `
-                <div class="stateBox">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    <h3>Failed to Load Orders</h3>
-                    <p>There was a connection issue fetching your orders. Please check your connection and try again.</p>
-                    <button class="state-cta" onclick="allOrder()">Retry Connection</button>
-                </div>`;
-        }
-
-        allOrder();
     </script>
 </body>
 
