@@ -4,7 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- PWA configuration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0d0d0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SJ Jewellery">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <title>Refund & Return Policy – SJ Jewellery</title>
+    <script src="/auto-logout.js"></script>
     <meta name="description"
         content="Read the Refund and Return Policy of SJ Jewellery – 30 days return options, certificate verification guidelines, and refund process details.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -530,6 +538,29 @@
         }
 
         @media (max-width: 640px) {
+            /* Navbar: icons-only mode on small screens */
+            .navActionBtn {
+                font-size: 0;
+                padding: 6px;
+                gap: 0;
+            }
+
+            .navActionBtn svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .cartBadge {
+                top: 0;
+                right: 0;
+                width: 15px;
+                height: 15px;
+                font-size: 0.55rem;
+            }
+
+            :root {
+                --header-h: 100px;
+            }
             .footerTop {
                 grid-template-columns: 1fr;
             }
@@ -790,6 +821,17 @@
                 window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
             }
         });
+    </script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('./service-worker.js')
+                .then(function(reg) { console.log('[SW] Registered:', reg.scope); })
+                .catch(function(err) { console.error('[SW] Failed:', err); });
+        });
+    }
     </script>
 </body>
 

@@ -31,4 +31,22 @@ db.on("error", (err) => {
     console.error("🔴 mongoose connection error:", err.message);
 });
 
+// Drop stale unique email_1 index from users collection if it exists
+db.once("open", async () => {
+    try {
+        const collections = await db.db.listCollections({ name: "users" }).toArray();
+        if (collections.length > 0) {
+            const indexes = await db.db.collection("users").indexes();
+            const hasEmailIndex = indexes.some(idx => idx.name === "email_1");
+            if (hasEmailIndex) {
+                console.log("⚠️ Stale email_1 index found on users collection. Dropping it...");
+                await db.db.collection("users").dropIndex("email_1");
+                console.log("✅ Successfully dropped stale email_1 index.");
+            }
+        }
+    } catch (err) {
+        console.error("❌ Error checking/dropping stale users email index:", err.message);
+    }
+});
+
 module.exports = db;

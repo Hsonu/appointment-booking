@@ -998,20 +998,28 @@
                     actionBtn.disabled = true;
                     actionBtn.textContent = "Verifying…";
 
-                    if (Number(inPuteOTP) === Number(generatedOTP)) {
-                        showToast("✅ Login Successful! Redirecting…");
-                        localStorage.setItem("isLoggedIn", "true");
-                        localStorage.setItem("userNumber", userNumber);
-
+                    if (String(inPuteOTP) === String(generatedOTP)) {
                         // Call new user creation
                         const data = await fetch(`${BASE_URL}/newUser/${userNumber}`, {
                             method: "POST"
                         });
+
+                        if (!data.ok) {
+                            const errData = await data.json().catch(() => ({}));
+                            throw new Error(errData.message || "Failed to establish secure session on server.");
+                        }
+
                         const newUser = await data.json();
                         console.log("User data:", newUser);
                         if (newUser.sessionToken) {
                             localStorage.setItem("userSessionToken", newUser.sessionToken);
+                        } else {
+                            throw new Error("No session token received from server.");
                         }
+
+                        showToast("✅ Login Successful! Redirecting…");
+                        localStorage.setItem("isLoggedIn", "true");
+                        localStorage.setItem("userNumber", userNumber);
 
                         // Redirect to index page
                         setTimeout(() => {

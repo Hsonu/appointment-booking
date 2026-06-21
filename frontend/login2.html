@@ -54,12 +54,14 @@
             <div id="LoginMainDiv">
                 <div id="secDiv">
                     <p id="loginSystem">Login/Sign up</p>
-                    <p id="inpute-p"><input id="loginNUmber" type="number" placeholder="Number"></p>
+                    <p id="inpute-p"><input id="loginNUmber" type="tel" maxlength="10" inputmode="numeric"
+                            placeholder="Number"></p>
                     <p id="pLoginBtn">
                         <button id="loginBtn">Send OTP</button>
                     </p>
 
-                    <p id="inpute-p"><input id="OTP" type="number" style="display: none;" placeholder="OTP"></p>
+                    <p id="inpute-p"><input id="OTP" type="tel" maxlength="6" inputmode="numeric" style="display: none;"
+                            placeholder="OTP"></p>
                     <p id="OTPP" style="display: none;">Deemo OTP</p>
                     <p id="pLoginBtn">
                         <button id="VerifyOTP" style="display: none;">Verify OTP</button>
@@ -122,6 +124,14 @@
     </footer>
     <script src="./config.js"></script>
     <script>
+        // Ensure only digits and max length for inputs
+        document.getElementById("loginNUmber").addEventListener("input", (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '').substring(0, 10);
+        });
+        document.getElementById("OTP").addEventListener("input", (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '').substring(0, 6);
+        });
+
         let generatedOTP = ""
         document.querySelector("#loginBtn").addEventListener("click", async () => {
             const number = document.querySelector("#loginNUmber").value;
