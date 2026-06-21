@@ -13,6 +13,14 @@
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet">
 
+    <!-- PWA configuration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0d0d0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SJ Jewellery">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
     <style>
         /* ═══════════════════════════════════════════
            DESIGN TOKENS
@@ -1058,6 +1066,147 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ═══════════════════════════════════════════
+           PWA INSTALL POPUP
+        ═══════════════════════════════════════════ */
+        .pwa-install-banner {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: min(420px, calc(100vw - 48px));
+            background: rgba(26, 26, 31, 0.92);
+            backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(201, 169, 110, 0.3);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(201, 169, 110, 0.1);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transform: translateY(120px) scale(0.95);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+        }
+
+        .pwa-install-banner.show {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .pwa-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .pwa-icon-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--dark);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .pwa-icon-wrap img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .pwa-title-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pwa-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.02em;
+        }
+
+        .pwa-subtitle {
+            font-size: 0.65rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            margin-top: 1px;
+        }
+
+        .pwa-body-text {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.5;
+        }
+
+        .pwa-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pwa-btn-install {
+            flex: 1;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 11px 18px;
+            border-radius: 999px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .pwa-btn-install:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(201, 169, 110, 0.35);
+        }
+
+        .pwa-btn-dismiss {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .pwa-btn-dismiss:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        @media (max-width: 576px) {
+            .pwa-install-banner {
+                bottom: 16px;
+                right: 16px;
+                left: 16px;
+                width: auto;
+                padding: 18px;
+            }
+        }
     </style>
 </head>
 
@@ -1336,6 +1485,26 @@
         </div>
     </footer>
 
+    <!-- PWA Install Popup Banner -->
+    <div id="pwaInstallBanner" class="pwa-install-banner" aria-live="polite" aria-label="Install Web App">
+        <div class="pwa-header">
+            <div class="pwa-icon-wrap">
+                <img src="./icon-192.png" alt="SJ Jewellery Logo">
+            </div>
+            <div class="pwa-title-group">
+                <span class="pwa-title">SJ Jewellery</span>
+                <span class="pwa-subtitle">Official App</span>
+            </div>
+        </div>
+        <div class="pwa-body-text">
+            Add SJ Jewellery to your home screen for quick access to collections, seamless checkout, and offline updates.
+        </div>
+        <div class="pwa-actions">
+            <button id="pwaBtnDismiss" class="pwa-btn-dismiss">Not Now</button>
+            <button id="pwaBtnInstall" class="pwa-btn-install">Install App</button>
+        </div>
+    </div>
+
     <script src="./config.js"></script>
     <script>
         /* ───────────────────────────────────────
@@ -1503,6 +1672,76 @@
         }
 
         getData();
+
+        /* ───────────────────────────────────────
+           PWA SERVICE WORKER & INSTALL POPUP
+        ─────────────────────────────────────── */
+        let deferredPrompt;
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then((reg) => {
+                        console.log('[Service Worker] Registered successfully:', reg.scope);
+                    })
+                    .catch((err) => {
+                        console.error('[Service Worker] Registration failed:', err);
+                    });
+            });
+        }
+
+        const pwaBanner = document.getElementById('pwaInstallBanner');
+        const btnInstall = document.getElementById('pwaBtnInstall');
+        const btnDismiss = document.getElementById('pwaBtnDismiss');
+
+        // Check if user previously dismissed the prompt during this session or week
+        const isDismissed = localStorage.getItem('pwa_dismissed');
+        const dismissedTime = localStorage.getItem('pwa_dismissed_time');
+        const oneWeek = 7 * 24 * 60 * 60 * 1000;
+
+        const shouldShowPrompt = !isDismissed || (dismissedTime && (Date.now() - Number(dismissedTime) > oneWeek));
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            
+            // Show the install banner if not dismissed recently
+            if (shouldShowPrompt) {
+                setTimeout(() => {
+                    pwaBanner.classList.add('show');
+                }, 2000); // delay showing slightly for better user experience
+            }
+        });
+
+        btnInstall.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            // Hide the PWA install banner
+            pwaBanner.classList.remove('show');
+            // Show the install prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`[PWA] User choice outcome: ${outcome}`);
+            // We've used the prompt, and can't use it again, discard it
+            deferredPrompt = null;
+        });
+
+        btnDismiss.addEventListener('click', () => {
+            pwaBanner.classList.remove('show');
+            // Store the dismissal time so we don't spam the user
+            localStorage.setItem('pwa_dismissed', 'true');
+            localStorage.setItem('pwa_dismissed_time', Date.now().toString());
+        });
+
+        // Listen for successful installation
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('[PWA] App installed successfully');
+            pwaBanner.classList.remove('show');
+            localStorage.setItem('pwa_installed', 'true');
+        });
     </script>
 </body>
 
