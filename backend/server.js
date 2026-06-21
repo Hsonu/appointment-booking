@@ -172,6 +172,45 @@ app.get("/", (req, res) => {
     // res.send("server is live ")
     res.sendFile(path.join(__dirname, "../frontend/index.html"));
 })
+
+app.get("/api/pincode/:pincode", async (req, res) => {
+    try {
+        const pincode = req.params.pincode;
+        if (!/^\d{6}$/.test(pincode)) {
+            return res.status(400).json([{ Status: "Error", Message: "Pincode must be exactly 6 digits." }]);
+        }
+        
+        console.log(`[Pincode Proxy] Querying details for: ${pincode}`);
+        const apiRes = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+        
+        if (!apiRes.ok) {
+            return res.status(apiRes.status).json([{ Status: "Error", Message: "Failed to fetch from Postal Pincode API" }]);
+        }
+        
+        const data = await apiRes.json();
+        res.json(data);
+    } catch (err) {
+        console.error("Pincode proxy error:", err);
+        res.status(500).json([{ Status: "Error", Message: "Internal Server Error during pincode lookup" }]);
+    }
+});
+
+app.get("/api/tunnel", async (req, res) => {
+    try {
+        const response = await fetch("http://127.0.0.1:4040/api/tunnels");
+        if (response.ok) {
+            const data = await response.json();
+            const httpsTunnel = data.tunnels.find(t => t.proto === "https" || (t.public_url && t.public_url.startsWith("https")));
+            if (httpsTunnel) {
+                return res.json({ url: httpsTunnel.public_url });
+            }
+        }
+        res.json({ url: null });
+    } catch (err) {
+        res.json({ url: null });
+    }
+});
+
 // ── Auto-seed Owner account on server start ──────────────────────────────────
 async function seedOwner() {
     try {

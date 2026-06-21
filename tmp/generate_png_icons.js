@@ -67,7 +67,7 @@ const server = http.createServer((req, res) => {
       const filename = is512 ? 'icon-512.png' : 'icon-192.png';
       const base64Data = body.replace(/^data:image\/png;base64,/, "");
       const destPath = path.join(FRONTEND_DIR, filename);
-      
+
       fs.writeFileSync(destPath, base64Data, 'base64');
       console.log('Successfully generated ' + filename + ' at ' + destPath);
       res.writeHead(200);
