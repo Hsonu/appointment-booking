@@ -306,7 +306,7 @@
       if (s === "Cancelled") return `<span class="badge badge-danger"><span class="statusDot dot-cancelled"></span>${s}</span>`;
       if (s === "Return Requested") return `<span class="badge badge-warning" style="background:#fffbeb;color:#b45309;border:1px solid #fef3c7;"><span class="statusDot dot-return-req"></span>${s}</span>`;
       if (s === "Return Completed") return `<span class="badge badge-success" style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;"><span class="statusDot dot-return-comp"></span>${s}</span>`;
-      
+
       // New return / exchange states
       if (s === "Out For Pickup") return `<span class="badge" style="background:#faf5ff;color:#6b21a8;border:1px solid #f3e8ff;"><span class="statusDot" style="background:#8b5cf6;"></span>Out For Pickup</span>`;
       if (s === "Order Picked Up") return `<span class="badge" style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;"><span class="statusDot" style="background:#10b981;"></span>Order Picked Up</span>`;
@@ -363,19 +363,19 @@
             ${getStatusBadge(item.orderStatus)}
             <select class="statusSelect" data-id="${item._id}">
               ${(() => {
-                const baseOptions = ["Order Placed", "Order Confirmed", "Order Packed", "Shipped", "In Transit", "Out For Delivery", "Delivered", "Cancelled"];
-                let endOptions = ["Return Requested", "Out For Pickup", "Order Picked Up", "Return Completed"];
-                if (item.returnType === "Exchange") {
-                  endOptions = ["Return Requested", "Out For Pickup", "Order Picked Up", "Return Completed", "Delivered a replacement", "Reprocess"];
-                } else if (item.returnType === "Refund") {
-                  endOptions = ["Return Requested", "Out For Pickup", "Order Picked Up", "Refund Accepted", "Refund Completed", "Not Delivered", "Reprocess"];
-                }
-                const allOptions = [...baseOptions, ...endOptions];
-                if (item.orderStatus && !allOptions.includes(item.orderStatus)) {
-                  allOptions.push(item.orderStatus);
-                }
-                return allOptions;
-              })()
+            const baseOptions = ["Order Placed", "Order Confirmed", "Order Packed", "Shipped", "In Transit", "Out For Delivery", "Delivered", "Cancelled"];
+            let endOptions = ["Return Requested", "Out For Pickup", "Order Picked Up", "Return Completed"];
+            if (item.returnType === "Exchange") {
+              endOptions = ["Return Requested", "Out For Pickup", "Order Picked Up", "Return Completed", "Delivered a replacement", "Reprocess"];
+            } else if (item.returnType === "Refund") {
+              endOptions = ["Return Requested", "Out For Pickup", "Order Picked Up", "Refund Accepted", "Refund Completed", "Not Delivered", "Reprocess"];
+            }
+            const allOptions = [...baseOptions, ...endOptions];
+            if (item.orderStatus && !allOptions.includes(item.orderStatus)) {
+              allOptions.push(item.orderStatus);
+            }
+            return allOptions;
+          })()
             .map(s => `<option value="${s}" ${item.orderStatus === s ? "selected" : ""}>${s}</option>`).join("")}
             </select>
           </div>

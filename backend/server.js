@@ -80,6 +80,104 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+const https = require("https");
+const querystring = require("querystring");
+
+async function sendWhatsAppSMS(toPhone, messageText) {
+    console.log(`[WhatsApp SMS] Attempting to send message to ${toPhone}: "${messageText}"`);
+
+    const twilioSid = process.env.TWILIO_ACCOUNT_SID;
+    const twilioAuthToken = process.env.TWILIO_AUTH_TOKEN;
+    const twilioFrom = process.env.TWILIO_WHATSAPP_FROM || "whatsapp:+14155238886";
+
+    if (twilioSid && twilioAuthToken) {
+        return new Promise((resolve) => {
+            const formattedTo = toPhone.startsWith("whatsapp:") ? toPhone : `whatsapp:${toPhone.startsWith("+") ? toPhone : "+91" + toPhone}`;
+            const postData = querystring.stringify({
+                To: formattedTo,
+                From: twilioFrom,
+                Body: messageText
+            });
+
+            const auth = Buffer.from(`${twilioSid}:${twilioAuthToken}`).toString("base64");
+            const options = {
+                hostname: "api.twilio.com",
+                port: 443,
+                path: `/2010-04-01/Accounts/${twilioSid}/Messages.json`,
+                method: "POST",
+                headers: {
+                    "Authorization": `Basic ${auth}`,
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Content-Length": Buffer.byteLength(postData)
+                }
+            };
+
+            const req = https.request(options, (res) => {
+                let body = "";
+                res.on("data", (chunk) => { body += chunk; });
+                res.on("end", () => {
+                    if (res.statusCode >= 200 && res.statusCode < 300) {
+                        console.log("✅ WhatsApp message sent via Twilio successfully.");
+                        resolve({ success: true, service: "twilio", status: res.statusCode });
+                    } else {
+                        console.error(`❌ Twilio API Error status ${res.statusCode}:`, body);
+                        resolve({ success: false, service: "twilio", status: res.statusCode, error: body });
+                    }
+                });
+            });
+
+            req.on("error", (err) => {
+                console.error("❌ Failed to send WhatsApp via Twilio:", err.message);
+                resolve({ success: false, error: err.message });
+            });
+
+            req.write(postData);
+            req.end();
+        });
+    }
+
+    const callmebotApiKey = process.env.CALLMEBOT_API_KEY;
+    if (callmebotApiKey) {
+        return new Promise((resolve) => {
+            const formattedTo = toPhone.replace(/\D/g, "");
+            const encodedText = encodeURIComponent(messageText);
+            const path = `/whatsapp.php?phone=${formattedTo}&text=${encodedText}&apikey=${callmebotApiKey}`;
+
+            const options = {
+                hostname: "api.callmebot.com",
+                port: 443,
+                path: path,
+                method: "GET"
+            };
+
+            const req = https.request(options, (res) => {
+                let body = "";
+                res.on("data", (chunk) => { body += chunk; });
+                res.on("end", () => {
+                    if (res.statusCode >= 200 && res.statusCode < 300) {
+                        console.log("✅ WhatsApp message sent via CallMeBot successfully.");
+                        resolve({ success: true, service: "callmebot" });
+                    } else {
+                        console.error(`❌ CallMeBot API Error status ${res.statusCode}:`, body);
+                        resolve({ success: false, service: "callmebot", error: body });
+                    }
+                });
+            });
+
+            req.on("error", (err) => {
+                console.error("❌ Failed to send WhatsApp via CallMeBot:", err.message);
+                resolve({ success: false, error: err.message });
+            });
+
+            req.end();
+        });
+    }
+
+    console.warn("⚠️ WhatsApp SMS not sent: No credentials (TWILIO_ACCOUNT_SID/TWILIO_AUTH_TOKEN or CALLMEBOT_API_KEY) found in backend/.env.");
+    return { success: false, reason: "No credentials configured" };
+}
+
+
 // Safe Razorpay Initialization
 let razorpay = null;
 if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) {
@@ -837,8 +935,73 @@ app.post("/placeOrder", async (req, res) => {
         const viewPlaceOrderData = new placeOrderData(placeOrderDataBody);
         const PlaceOrderResponse = await viewPlaceOrderData.save();
         console.log(req.body);
+
+        // ── Order Success Notifications ──────────────────────────────────
+        const targetEmail = "sonurajsonuraj4515@gmail.com";
+        const targetWhatsApp = "8603632642";
+
+        // 1. Send Email Notification via Nodemailer
+        const emailSubject = `New Order Placed - Order ID: ${PlaceOrderResponse._id}`;
+        const emailHtml = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+                <h2 style="color: #c9a96e; text-align: center; border-bottom: 2px solid #c9a96e; padding-bottom: 10px;">New Order Received!</h2>
+                <p>Hello Admin,</p>
+                <p>A new order has been placed on SJ Jewellery. Here are the details:</p>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                    <tr style="background-color: #f9f9f9;">
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Order ID</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${PlaceOrderResponse._id}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Customer Name</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${PlaceOrderResponse.name || PlaceOrderResponse.customerName}</td>
+                    </tr>
+                    <tr style="background-color: #f9f9f9;">
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Mobile</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${PlaceOrderResponse.phone || PlaceOrderResponse.customerMobileNumber}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Product</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${PlaceOrderResponse.productName}</td>
+                    </tr>
+                    <tr style="background-color: #f9f9f9;">
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Quantity</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${PlaceOrderResponse.qty}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Total Paid/Payable</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">₹${(PlaceOrderResponse.withGstTotalAmount || PlaceOrderResponse.totalAmount).toLocaleString("en-IN")}</td>
+                    </tr>
+                    <tr style="background-color: #f9f9f9;">
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Payment Method</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${PlaceOrderResponse.paymentMethod}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Delivery Address</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${PlaceOrderResponse.customerAdd}</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 20px; font-size: 0.9em; color: #666; text-align: center;">SJ Jewellery Order Management System</p>
+            </div>
+        `;
+
+        transporter.sendMail({
+            from: process.env.SMTP_USER || "sonurajsonuraj4515@gmail.com",
+            to: targetEmail,
+            subject: emailSubject,
+            html: emailHtml
+        })
+        .then(() => console.log(`✅ Order notification email sent successfully to ${targetEmail}`))
+        .catch(err => console.error("❌ Failed to send order email:", err.message));
+
+        // 2. Send WhatsApp Notification
+        const whatsappMsg = `🔔 *New SJ Jewellery Order Received!*\n\n*Order ID:* ${PlaceOrderResponse._id}\n*Customer Name:* ${PlaceOrderResponse.name || PlaceOrderResponse.customerName}\n*Phone:* ${PlaceOrderResponse.phone || PlaceOrderResponse.customerMobileNumber}\n*Product:* ${PlaceOrderResponse.productName}\n*Qty:* ${PlaceOrderResponse.qty}\n*Total Amount:* ₹${(PlaceOrderResponse.withGstTotalAmount || PlaceOrderResponse.totalAmount).toLocaleString("en-IN")}\n*Payment Method:* ${PlaceOrderResponse.paymentMethod}\n*Address:* ${PlaceOrderResponse.customerAdd}`;
+
+        sendWhatsAppSMS(targetWhatsApp, whatsappMsg);
+        // ─────────────────────────────────────────────────────────────────
+
         res.status(200).json(PlaceOrderResponse);
-        console.log(req.body)
+
 
     }
     catch (err) {

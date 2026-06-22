@@ -768,6 +768,7 @@
         }
 
         @media (max-width: 640px) {
+
             /* Navbar: icons-only mode on small screens */
             .navActionBtn {
                 font-size: 0;
@@ -791,6 +792,7 @@
             :root {
                 --header-h: 100px;
             }
+
             #customerDetailsForm {
                 grid-template-columns: 1fr;
             }
@@ -1000,9 +1002,11 @@
                 padding: 6px 8px;
                 max-width: 140px;
             }
+
             .location-label {
                 max-width: 80px;
             }
+
             .location-action {
                 font-size: 0.72rem;
             }
@@ -1014,14 +1018,17 @@
                 max-width: 110px;
                 gap: 6px;
             }
+
             .location-icon-svg {
                 width: 16px;
                 height: 16px;
             }
+
             .location-label {
                 max-width: 60px;
                 font-size: 0.58rem;
             }
+
             .location-action {
                 font-size: 0.68rem;
             }
@@ -1054,9 +1061,11 @@
             </a>
 
             <!-- Location Widget -->
-            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0" aria-label="Select delivery location">
+            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0"
+                aria-label="Select delivery location">
                 <svg viewBox="0 0 24 24" class="location-icon-svg">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    <path
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
                 <div class="location-text-group">
                     <span class="location-label" id="headerLocationLabel">Delivering to India</span>
@@ -1142,8 +1151,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="customerMobileInput">Mobile Number</label>
-                                <input class="inputcss" id="customerMobileInput" type="tel" maxlength="10" inputmode="numeric"
-                                    placeholder="10-digit number">
+                                <input class="inputcss" id="customerMobileInput" type="tel" maxlength="10"
+                                    inputmode="numeric" placeholder="10-digit number">
                                 <small class="error-msg" id="customerMobileError"></small>
                             </div>
                             <div class="form-group form-span-2">
@@ -1176,8 +1185,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="customerPincodeInput">Pincode</label>
-                                <input class="inputcss" id="customerPincodeInput" type="tel" maxlength="6" inputmode="numeric"
-                                    placeholder="6-digit PIN">
+                                <input class="inputcss" id="customerPincodeInput" type="tel" maxlength="6"
+                                    inputmode="numeric" placeholder="6-digit PIN">
                                 <small class="error-msg" id="customerPincodeError"></small>
                             </div>
 
@@ -1719,7 +1728,8 @@
                             window.location.href = "./allProduct.html";
                         }, 2000);
                     } else {
-                        throw new Error("Place order backend submission failed");
+                        const errData = await placeRes.json().catch(() => ({}));
+                        throw new Error(errData.message || "Place order backend submission failed");
                     }
                 } else {
                     // Online Payment Flow (Razorpay)
@@ -1733,7 +1743,8 @@
                     });
 
                     if (!orderRes.ok) {
-                        throw new Error("Could not initialize Razorpay order in backend");
+                        const errData = await orderRes.json().catch(() => ({}));
+                        throw new Error(errData.message || "Could not initialize Razorpay order in backend");
                     }
 
                     const order = await orderRes.json();
@@ -1802,7 +1813,8 @@
                                             window.location.href = "./allProduct.html";
                                         }, 2000);
                                     } else {
-                                        throw new Error("Place order backend submission failed");
+                                        const errData = await placeRes.json().catch(() => ({}));
+                                        throw new Error(errData.message || "Place order backend submission failed");
                                     }
                                 } else {
                                     showToast("❌ Payment signature verification failed.");
@@ -1811,7 +1823,7 @@
                                 }
                             } catch (err) {
                                 console.error(err);
-                                showToast("❌ Checkout verification failed.");
+                                showToast(`❌ Checkout verification failed: ${err.message}`);
                                 checkoutBtn.disabled = false;
                                 checkoutBtn.innerHTML = `Place Order & Pay <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
                             }
@@ -1830,7 +1842,7 @@
                 }
             } catch (err) {
                 console.error("Order process failed:", err);
-                showToast("❌ Order processing error. Please try again.");
+                showToast(`❌ Order processing error: ${err.message}`);
                 document.getElementById("PlaceOrderBtn").disabled = false;
                 if (paymentMethod === "COD") {
                     document.getElementById("PlaceOrderBtn").innerHTML = `Place Order <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
@@ -1895,17 +1907,20 @@
     </script>
 
     <!-- Centered Location Modal Overlay -->
-    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
+    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true"
+        aria-labelledby="locationModalTitle">
         <div class="location-modal-content">
             <button id="closeLocationModal" class="location-close-btn" aria-label="Close modal">&times;</button>
             <h3 id="locationModalTitle">Choose your location</h3>
-            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog speed in your area.</p>
-            
+            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog
+                speed in your area.</p>
+
             <div class="location-input-wrap">
-                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6" autocomplete="off" aria-label="Pincode">
+                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6"
+                    autocomplete="off" aria-label="Pincode">
                 <button id="modalPincodeSubmit" class="location-submit-btn" disabled>Apply</button>
             </div>
-            
+
             <div id="modalPincodeStatus" class="location-status-text"></div>
         </div>
     </div>
@@ -1914,7 +1929,7 @@
         /* ───────────────────────────────────────
            HEADER LOCATION PINCODE CONTROLLER
         ─────────────────────────────────────── */
-        (function() {
+        (function () {
             const locBtn = document.getElementById("headerLocationBtn");
             const modal = document.getElementById("locationModal");
             const closeBtn = document.getElementById("closeLocationModal");
@@ -1986,7 +2001,7 @@
                                     status.style.color = "#22c55e"; // green
                                     status.textContent = `✓ Delivering to ${city}, ${info.State}`;
                                     submit.disabled = false;
-                                    
+
                                     // Save temporary variables in dataset
                                     submit.dataset.city = city;
                                     submit.dataset.pin = pin;
@@ -2028,13 +2043,13 @@
 
     <!-- PWA Service Worker Registration -->
     <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('./service-worker.js')
-                .then(function(reg) { console.log('[SW] Registered:', reg.scope); })
-                .catch(function(err) { console.error('[SW] Failed:', err); });
-        });
-    }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(function (reg) { console.log('[SW] Registered:', reg.scope); })
+                    .catch(function (err) { console.error('[SW] Failed:', err); });
+            });
+        }
     </script>
 </body>
 
