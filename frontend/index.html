@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SJ Jewellery – Luxury Jewellery Collection</title>
+    <title>Netrima Jewels – Luxury Jewellery Collection</title>
     <script src="/auto-logout.js"></script>
     <meta name="description"
-        content="Discover the finest handcrafted gold, diamond & platinum jewellery at SJ Jewellery. Shop rings, necklaces, bangles and more with free delivery.">
+        content="Discover the finest handcrafted gold, diamond & platinum jewellery at Netrima Jewels. Shop rings, necklaces, bangles and more with free delivery.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -19,7 +19,7 @@
     <meta name="theme-color" content="#0d0d0f">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SJ Jewellery">
+    <meta name="apple-mobile-web-app-title" content="Netrima Jewels">
     <link rel="apple-touch-icon" href="icon-192.png">
 
     <style>
@@ -31,7 +31,7 @@
             --gold-dark: #a8854e;
             --gold-light: #e8d4a8;
             --gold-bg: #fdf7ee;
-            --cream: #faf8f5;
+            --cream: #ffffff;
             --dark: #0d0d0f;
             --dark-2: #1a1a1f;
             --dark-3: #2a2a30;
@@ -128,18 +128,13 @@
             top: 0;
             left: 0;
             right: 0;
-            height: var(--header-h);
+            height: auto;
+            min-height: var(--header-h);
             z-index: 1000;
-            background: rgba(13, 13, 15, 0.0);
-            backdrop-filter: blur(0px);
-            border-bottom: 1px solid transparent;
-            transition: background var(--transition), backdrop-filter var(--transition), border-color var(--transition);
-        }
-
-        #siteHeader.scrolled {
             background: rgba(13, 13, 15, 0.95);
             backdrop-filter: blur(16px);
-            border-bottom-color: rgba(201, 169, 110, 0.2);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+            transition: background var(--transition), backdrop-filter var(--transition), border-color var(--transition);
         }
 
         #navInner {
@@ -155,25 +150,48 @@
         /* Logo */
         #navLogo {
             display: flex;
-            flex-direction: column;
-            line-height: 1;
+            align-items: center;
+            gap: 12px;
             flex-shrink: 0;
+        }
+
+        .brand-logo-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1.5px solid var(--gold);
+            object-fit: cover;
+            transition: transform var(--transition);
+        }
+
+        #navLogo:hover .brand-logo-img {
+            transform: rotate(360deg);
+        }
+
+        
+        .mobile-br {
+            display: none;
+        }
+.brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
         }
 
         #navLogo .brand-name {
             font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 700;
             color: var(--gold);
             letter-spacing: 0.04em;
         }
 
         #navLogo .brand-tagline {
-            font-size: 0.62rem;
-            letter-spacing: 0.18em;
-            color: rgba(201, 169, 110, 0.6);
+            font-size: 0.58rem;
+            letter-spacing: 0.14em;
+            color: rgba(201, 169, 110, 0.7);
             text-transform: uppercase;
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
         /* Search */
@@ -300,102 +318,108 @@
         }
 
         /* ═══════════════════════════════════════════
-           HERO VIDEO SECTION
+           HERO SLIDER SECTION
         ═══════════════════════════════════════════ */
         #heroSection {
             position: relative;
             width: 100%;
             height: 100vh;
-            min-height: 600px;
+            min-height: 650px;
+            display: flex;
+            align-items: center;
+            background: #ffffff;
             overflow: hidden;
+            padding-top: var(--header-h);
+            border-bottom: 1px solid var(--border);
         }
 
-        #heroVideo {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        /* Gradient overlays */
-        #heroSection::before {
+        /* Ambient glow in background */
+        #heroSection::after {
             content: '';
             position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(to bottom,
-                    rgba(13, 13, 15, 0.35) 0%,
-                    rgba(13, 13, 15, 0.1) 40%,
-                    rgba(13, 13, 15, 0.55) 75%,
-                    rgba(13, 13, 15, 0.92) 100%);
+            top: 20%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.05) 0%, transparent 70%);
             z-index: 1;
+            pointer-events: none;
         }
 
-        #heroContent {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
+        .heroContainer {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 24px;
+            align-items: center;
+            gap: 48px;
             z-index: 2;
-            width: min(700px, 90%);
-            animation: heroFadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
-        @keyframes heroFadeUp {
+        .heroTextCol {
+            flex: 1.1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            animation: heroFadeRight 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes heroFadeRight {
             from {
                 opacity: 0;
-                transform: translateX(-50%) translateY(40px);
+                transform: translateX(-40px);
             }
-
             to {
                 opacity: 1;
-                transform: translateX(-50%) translateY(0);
+                transform: translateX(0);
             }
         }
 
         .heroEyebrow {
-            font-size: 0.72rem;
-            letter-spacing: 0.28em;
+            font-size: 0.75rem;
+            letter-spacing: 0.32em;
             text-transform: uppercase;
             color: var(--gold);
-            font-weight: 500;
-            margin-bottom: 14px;
-        }
-
-        #heroContent h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.2rem, 5.5vw, 4.2rem);
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.15;
+            font-weight: 600;
             margin-bottom: 16px;
         }
 
-        #heroContent h1 em {
-            font-style: italic;
-            color: var(--gold);
+        .heroTextCol h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--text-h);
+            line-height: 1.15;
+            margin-bottom: 20px;
         }
 
-        #heroContent p {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.75);
-            margin-bottom: 32px;
-            line-height: 1.65;
+        .heroTextCol h1 em {
+            font-style: italic;
+            color: var(--gold-dark);
+        }
+
+        .heroTextCol p {
+            font-size: 1.05rem;
+            color: var(--text-body);
+            margin-bottom: 36px;
+            line-height: 1.7;
+            max-width: 520px;
         }
 
         .heroCta {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 14px 34px;
+            padding: 15px 36px;
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             color: var(--dark);
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             font-weight: 700;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             border-radius: 999px;
             transition: transform var(--transition), box-shadow var(--transition);
@@ -414,10 +438,107 @@
             stroke-width: 2.2;
         }
 
+        /* Slider column */
+        .heroVisualCol {
+            flex: 0.9;
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            animation: heroFadeLeft 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes heroFadeLeft {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .heroSliderViewport {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid rgba(201, 169, 110, 0.25);
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+            background: #121215;
+        }
+
+        .heroSlide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 0.8s ease-in-out;
+            overflow: hidden;
+        }
+
+        .heroSlide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .heroSlide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transform: scale(1.03);
+            transition: transform 6s cubic-bezier(0.1, 1, 0.1, 1);
+        }
+
+        .heroSlide.active img {
+            transform: scale(1.1);
+        }
+
+        .heroSliderNav {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .heroThumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all var(--transition);
+            opacity: 0.5;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .heroThumb:hover {
+            opacity: 0.85;
+            transform: translateY(-2px);
+            border-color: rgba(201, 169, 110, 0.4);
+        }
+
+        .heroThumb.active {
+            opacity: 1;
+            border-color: var(--gold);
+            box-shadow: 0 4px 14px rgba(201, 169, 110, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .heroThumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         /* Scroll indicator */
         .scrollIndicator {
             position: absolute;
-            bottom: 32px;
+            bottom: 24px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
@@ -425,7 +546,7 @@
             flex-direction: column;
             align-items: center;
             gap: 6px;
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--text-muted);
             font-size: 0.65rem;
             letter-spacing: 0.15em;
             text-transform: uppercase;
@@ -435,19 +556,56 @@
         .scrollIndicator::after {
             content: '';
             width: 1px;
-            height: 36px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent);
+            height: 32px;
+            background: linear-gradient(to bottom, var(--text-muted), transparent);
         }
 
         @keyframes scrollBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(6px); }
+        }
 
-            0%,
-            100% {
-                transform: translateX(-50%) translateY(0);
+        /* Responsive layout adaptation */
+        @media (max-width: 900px) {
+            #heroSection {
+                height: auto;
+                min-height: 100vh;
+                padding-top: calc(var(--header-h) + 20px);
+                padding-bottom: 60px;
             }
 
-            50% {
-                transform: translateX(-50%) translateY(8px);
+            .heroContainer {
+                flex-direction: column;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .heroTextCol {
+                align-items: center;
+                text-align: center;
+            }
+
+            .heroTextCol p {
+                max-width: 100%;
+            }
+
+            .heroVisualCol {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .heroSliderViewport {
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .heroSliderViewport {
+                height: 280px;
+            }
+            .heroThumb {
+                width: 52px;
+                height: 52px;
             }
         }
 
@@ -514,6 +672,68 @@
             height: 20px;
             fill: var(--gold);
             flex-shrink: 0;
+        }
+
+        /* ═══════════════════════════════════════════
+           FILTER BAR
+        ═══════════════════════════════════════════ */
+        #filterBar {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 24px;
+            margin-bottom: 32px;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            max-width: 1300px;
+            margin-left: auto;
+            margin-right: auto;
+            width: calc(100% - 48px);
+        }
+
+        #filterInner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        #filterTabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filterTab {
+            padding: 7px 18px;
+            border-radius: 999px;
+            border: 1.5px solid var(--border);
+            background: transparent;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        .filterTab:hover,
+        .filterTab.active {
+            border-color: var(--gold);
+            background: var(--gold);
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        #productCount {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        #productCount strong {
+            color: var(--text-h);
+            font-weight: 600;
         }
 
         /* ═══════════════════════════════════════════
@@ -970,18 +1190,28 @@
             #trustStrip {
                 gap: 20px;
             }
+
+            #filterInner {
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+            }
         }
 
         @media (max-width: 860px) {
+            #siteHeader {
+                min-height: auto !important;
+            }
+
             :root {
-                --header-h: 116px;
+                --header-h: 165px;
             }
 
             #navInner {
                 flex-wrap: wrap;
                 padding: 10px 16px;
                 gap: 8px 12px;
-                height: 100%;
+                height: auto;
                 justify-content: space-between;
             }
 
@@ -989,36 +1219,87 @@
                 order: 1;
             }
 
-            .navActions {
+            #headerLocationBtn {
                 order: 2;
                 margin-left: auto;
-                gap: 2px;
+            }
+
+            .navActions {
+                order: 3;
+                margin-left: 0;
+                gap: 4px;
             }
 
             .navActionBtn {
-                padding: 6px 8px;
+                padding: 8px;
                 font-size: 0.6rem;
-            }
-
-            .navActionBtn svg {
-                width: 18px;
-                height: 18px;
             }
 
             #searchWrapper {
                 display: block;
-                order: 3;
+                order: 4;
                 flex-basis: 100%;
                 max-width: 100%;
                 margin-top: 4px;
             }
         }
 
+        @media (max-width: 768px) {
+            .mobile-br {
+                display: block !important;
+            }
+            #navLogo .brand-name {
+                font-size: 1.05rem !important;
+                line-height: 1.05 !important;
+            }
+            #navLogo .brand-tagline {
+                font-size: 0.5rem !important;
+                letter-spacing: 0.1em !important;
+            }
+
+            #filterTabs {
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                width: 100% !important;
+                padding-bottom: 6px !important;
+                -webkit-overflow-scrolling: touch !important;
+                scrollbar-width: none !important; /* Firefox */
+            }
+            #filterTabs::-webkit-scrollbar {
+                display: none !important; /* Chrome/Safari */
+            }
+            .filterTab {
+                flex-shrink: 0 !important;
+            }
+            
+            .location-text-group {
+                display: none;
+            }
+            .header-location-btn {
+                padding: 8px;
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                background: rgba(255, 255, 255, 0.04);
+                max-width: 38px;
+                height: 38px;
+                justify-content: center;
+                align-items: center;
+                gap: 0;
+            }
+            .location-icon-svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
         @media (max-width: 640px) {
+            :root {
+                --header-h: 165px;
+            }
             /* Navbar: icons-only mode on small screens */
             .navActionBtn {
                 font-size: 0;
-                padding: 6px;
+                padding: 8px;
                 gap: 0;
             }
 
@@ -1036,7 +1317,7 @@
             }
 
             :root {
-                --header-h: 100px;
+                --header-h: 165px;
             }
             #heroContent h1 {
                 font-size: 1.9rem;
@@ -1458,6 +1739,14 @@
                 font-size: 0.68rem;
             }
         }
+
+
+    
+        @media (max-width: 768px) {
+            #headerLocationBtn, .header-location-btn {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 
@@ -1474,9 +1763,12 @@
         <div id="navInner">
 
             <!-- Logo -->
-            <a id="navLogo" href="./index.html" aria-label="SJ Jewellery Home">
-                <span class="brand-name">SJ Jewellery</span>
-                <span class="brand-tagline">Crafted with love</span>
+            <a id="navLogo" href="./index.html" aria-label="Netrima Jewels Home">
+                <img class="brand-logo-img" src="./logo.jpg" alt="Netrima Jewels Logo">
+                <div class="brand-text">
+                    <span class="brand-name">Netrima<br class="mobile-br">Jewels</span>
+                    <span class="brand-tagline">Timeless Beauty</span>
+                </div>
             </a>
 
             <!-- Location Widget -->
@@ -1531,19 +1823,57 @@
 
     <!-- ═══════════════ HERO ═══════════════ -->
     <section id="heroSection" aria-label="Hero banner">
-        <video id="heroVideo" src="https://kinvid1.bluestone.com/output/mp4/VL_VIDEO_1.mp4/VL_VIDEO_1.mp4" autoplay loop
-            muted playsinline aria-hidden="true"></video>
-
-        <div id="heroContent">
-            <p class="heroEyebrow">New Collection 2026</p>
-            <h1>Crafted for <em>Eternity</em>,<br>Worn with Grace</h1>
-            <p>Discover our handcrafted gold, diamond & platinum jewellery — where every piece tells a story.</p>
-            <a href="#productsSection" class="heroCta">
-                Explore Collection
-                <svg viewBox="0 0 24 24">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-            </a>
+        <div class="heroContainer">
+            <!-- Left Text Content -->
+            <div class="heroTextCol">
+                <p class="heroEyebrow">New Collection 2026</p>
+                <h1>Crafted for <em>Eternity</em>,<br>Worn with Grace</h1>
+                <p>Discover our handcrafted gold, diamond & platinum jewellery — where every piece tells a story.</p>
+                <a href="#productsSection" class="heroCta">
+                    Explore Collection
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+            
+            <!-- Right Visual Slider -->
+            <div class="heroVisualCol">
+                <div class="heroSliderViewport">
+                    <!-- Slide 1 -->
+                    <div class="heroSlide active">
+                        <img src="./hero-necklace.jpg" alt="Exquisite Floral Design Necklace and Earring Set">
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="heroSlide">
+                        <img src="./hero-ring.jpg" alt="Elegant Gold Chain Ring">
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="heroSlide">
+                        <img src="./hero-gemstone.jpg" alt="Luxury Multi-Stone Gold Necklaces">
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="heroSlide">
+                        <img src="./hero-bracelet.jpg" alt="Delicate Sparkly Diamond Bracelet">
+                    </div>
+                </div>
+                
+                <!-- Thumbnails -->
+                <div class="heroSliderNav">
+                    <div class="heroThumb active" onclick="setHeroSlide(0)">
+                        <img src="./hero-necklace.jpg" alt="Necklace Set Thumbnail">
+                    </div>
+                    <div class="heroThumb" onclick="setHeroSlide(1)">
+                        <img src="./hero-ring.jpg" alt="Gold Ring Thumbnail">
+                    </div>
+                    <div class="heroThumb" onclick="setHeroSlide(2)">
+                        <img src="./hero-gemstone.jpg" alt="Necklaces Thumbnail">
+                    </div>
+                    <div class="heroThumb" onclick="setHeroSlide(3)">
+                        <img src="./hero-bracelet.jpg" alt="Bracelet Thumbnail">
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="scrollIndicator" aria-hidden="true">Scroll</div>
@@ -1588,6 +1918,21 @@
             <span class="goldLine" aria-hidden="true"></span>
         </div>
 
+        <!-- Filter Bar -->
+        <div id="filterBar">
+            <div id="filterInner">
+                <div id="filterTabs" role="tablist" aria-label="Filter products by category">
+                    <button class="filterTab active" data-filter="all">All</button>
+                    <button class="filterTab" data-filter="rings">Rings</button>
+                    <button class="filterTab" data-filter="necklaces">Necklaces</button>
+                    <button class="filterTab" data-filter="bangles">Bangles</button>
+                    <button class="filterTab" data-filter="earrings">Earrings</button>
+                    <button class="filterTab" data-filter="pendants">Pendants</button>
+                </div>
+                <span id="productCount">Showing <strong id="countNum">–</strong> products</span>
+            </div>
+        </div>
+
         <!-- Product grid — filled by JS -->
         <div id="mainDivCard" role="list" aria-label="Products">
             <!-- Loading skeletons -->
@@ -1623,7 +1968,7 @@
     </section>
 
     <!-- ═══════════════ FEATURES ═══════════════ -->
-    <section id="featuresStrip" aria-label="Why choose SJ Jewellery">
+    <section id="featuresStrip" aria-label="Why choose Netrima Jewels">
         <div class="featuresGrid">
             <div class="featureItem">
                 <div class="featureIcon">
@@ -1674,7 +2019,7 @@
 
                 <!-- Brand -->
                 <div class="footerBrand">
-                    <div class="footerLogo">SJ Jewellery</div>
+                    <div class="footerLogo">Netrima Jewels</div>
                     <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary.
                         Handcrafted with passion, delivered with pride.</p>
                     <div class="footerSocial">
@@ -1736,7 +2081,7 @@
             </div>
 
             <div class="footerBottom">
-                <p class="footerCopy">&copy; 2026 <span>SJ Jewellery</span>. All rights reserved. Crafted with ♥</p>
+                <p class="footerCopy">&copy; 2026 <span>Netrima Jewels</span>. All rights reserved. Crafted with ♥</p>
                 <div class="footerPayments">
                     <span class="payBadge">UPI</span>
                     <span class="payBadge">Razorpay</span>
@@ -1784,21 +2129,95 @@
         }
 
         /* ───────────────────────────────────────
-           SEARCH — filter cards
+           SEARCH & FILTER — filter cards by query & tabs
         ─────────────────────────────────────── */
-        document.getElementById("searchInput").addEventListener("input", (e) => {
-            const q = e.target.value.toLowerCase().trim();
+        let activeFilter = "all";
+
+        function applyFilter() {
+            const q = document.getElementById("searchInput").value.toLowerCase().trim();
+            const queryNum = Number(q);
+
             document.querySelectorAll(".product-card").forEach(card => {
                 const name = card.querySelector(".card-title")?.textContent.toLowerCase() || "";
                 const cat = card.querySelector(".card-category")?.textContent.toLowerCase() || "";
-                card.style.display = (!q || name.includes(q) || cat.includes(q)) ? "" : "none";
+                const subCat = card.querySelector(".card-category")?.dataset.sub?.toLowerCase() || "";
+                const priceText = card.querySelector(".card-price")?.textContent.toLowerCase() || "";
+                const rawPrice = Number(card.querySelector(".card-price")?.dataset.raw) || 0;
+
+                // Tab Filter check
+                const matchesTab = (activeFilter === "all" || cat.includes(activeFilter) || subCat.includes(activeFilter));
+
+                // Search Query check
+                let matchesQuery = true;
+                if (q) {
+                    const matchesName = name.includes(q);
+                    const matchesCategory = cat.includes(q);
+                    const matchesSubCategory = subCat.includes(q);
+                    const matchesPriceText = priceText.includes(q);
+                    
+                    let matchesNumeric = false;
+                    if (!isNaN(queryNum) && queryNum > 0) {
+                        matchesNumeric = (rawPrice <= queryNum);
+                    }
+
+                    let matchesRange = false;
+                    if (q.startsWith("<")) {
+                        const limit = Number(q.replace("<", "").trim());
+                        if (!isNaN(limit)) matchesRange = (rawPrice < limit);
+                    } else if (q.startsWith(">")) {
+                        const limit = Number(q.replace(">", "").trim());
+                        if (!isNaN(limit)) matchesRange = (rawPrice > limit);
+                    }
+
+                    matchesQuery = matchesName || matchesCategory || matchesSubCategory || matchesPriceText || matchesNumeric || matchesRange;
+                }
+
+                if (matchesTab && matchesQuery) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
             });
+            updateCount();
+        }
+
+        document.getElementById("searchInput").addEventListener("input", () => {
+            applyFilter();
         });
+
         document.getElementById("searchInput").addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
-                window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
+                applyFilter();
             }
         });
+
+        /* ───────────────────────────────────────
+           FILTER TABS
+        ─────────────────────────────────────── */
+        document.querySelectorAll(".filterTab").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".filterTab").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                activeFilter = btn.dataset.filter;
+                applyFilter();
+            });
+        });
+
+        function updateCount() {
+            const visible = document.querySelectorAll(".product-card:not([style*='display: none'])").length;
+            const countNumEl = document.getElementById("countNum");
+            if (countNumEl) countNumEl.textContent = visible;
+        }
+
+        // Check for URL query parameter on load
+        function checkUrlQuery() {
+            const params = new URLSearchParams(window.location.search);
+            const query = params.get("q");
+            if (query) {
+                document.getElementById("searchInput").value = query;
+                applyFilter();
+            }
+        }
 
         /* ───────────────────────────────────────
            PRODUCTS — fetch and render
@@ -1869,11 +2288,11 @@
                         `}
                     </div>
                     <div class="card-body">
-                        <div class="card-category">${item.Category || "Jewellery"}</div>
+                        <div class="card-category" data-sub="${item.SubCategory || ''}">${item.Category || "Jewellery"}</div>
                         <div class="card-title">${item.Productname}</div>
                         <div class="card-footer-row">
                             <div class="card-price-wrap">
-                                <div class="card-price">
+                                <div class="card-price" data-raw="${finalPrice}">
                                     ${discount > 0 ? `
                                         <span style="text-decoration: line-through; color: var(--text-muted); font-size: 0.85rem; margin-right: 6px; font-weight: 400;">₹${originalPrice.toLocaleString("en-IN")}</span>
                                         <span>₹${formatted}</span>
@@ -1913,11 +2332,51 @@
                     window.location.href = `buyProduct.html?id=${id}`;
                 });
             });
+
+            updateCount();
+            checkUrlQuery();
         }
 
         getData();
 
+        /* ───────────────────────────────────────
+           HERO SLIDER CONTROLLER
+        ─────────────────────────────────────── */
+        let currentHeroSlideIndex = 0;
+        const heroSlides = document.querySelectorAll(".heroSlide");
+        const heroThumbs = document.querySelectorAll(".heroThumb");
+        let heroSliderInterval;
 
+        function setHeroSlide(index) {
+            if (index < 0 || index >= heroSlides.length) return;
+            currentHeroSlideIndex = index;
+            
+            heroSlides.forEach((slide, i) => {
+                slide.classList.toggle("active", i === index);
+            });
+            
+            heroThumbs.forEach((thumb, i) => {
+                thumb.classList.toggle("active", i === index);
+            });
+            
+            // Reset interval when manual click happens
+            startHeroAutoplay();
+        }
+
+        function nextHeroSlide() {
+            let nextIndex = (currentHeroSlideIndex + 1) % heroSlides.length;
+            setHeroSlide(nextIndex);
+        }
+
+        function startHeroAutoplay() {
+            clearInterval(heroSliderInterval);
+            heroSliderInterval = setInterval(nextHeroSlide, 5000);
+        }
+
+        // Initialize Slider Autoplay
+        if (heroSlides.length > 0) {
+            startHeroAutoplay();
+        }
     </script>
 
     <!-- Centered Location Modal Overlay -->
@@ -2051,6 +2510,29 @@
             }
         })();
     </script>
+
+    <!-- Dynamic Header Height Calculation -->
+    <script>
+        (function() {
+            function updateHeaderHeight() {
+                const header = document.getElementById("siteHeader");
+                if (header) {
+                    const height = header.offsetHeight;
+                    document.documentElement.style.setProperty('--header-h', height + 'px');
+                }
+            }
+            window.addEventListener('resize', updateHeaderHeight);
+            window.addEventListener('DOMContentLoaded', updateHeaderHeight);
+            window.addEventListener('load', updateHeaderHeight);
+            // Run immediately in case elements are already loaded
+            updateHeaderHeight();
+            // Run a few times shortly after load to handle dynamic rendering/font loading
+            setTimeout(updateHeaderHeight, 100);
+            setTimeout(updateHeaderHeight, 500);
+            setTimeout(updateHeaderHeight, 1000);
+        })();
+    </script>
+
 </body>
 
 </html>

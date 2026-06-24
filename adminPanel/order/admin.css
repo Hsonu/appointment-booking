@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════
    ADMIN PANEL — Shared Design System
    Font: Playfair Display + Inter (Google Fonts)
-   Theme: Premium Light Cream + Gold (matches SJ Jewellery Frontend)
+   Theme: Premium Light Cream + Gold (matches Netrima Jewels Frontend)
    ═══════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
@@ -15,10 +15,10 @@
   --gold-shadow: rgba(201, 169, 110, 0.2);
 
   /* ── Page Surfaces ── */
-  --cream: #faf8f5;
+  --cream: #ffffff;
   --white: #ffffff;
   --card-bg: #ffffff;
-  --page-bg: #faf8f5;
+  --page-bg: #ffffff;
 
   /* ── Sidebar ── */
   --sb-width: 248px;

@@ -9,12 +9,12 @@
     <meta name="theme-color" content="#0d0d0f">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SJ Jewellery">
+    <meta name="apple-mobile-web-app-title" content="Netrima Jewels">
     <link rel="apple-touch-icon" href="icon-192.png">
-    <title>Book Appointment – SJ Jewellery</title>
+    <title>Book Appointment – Netrima Jewels</title>
     <script src="/auto-logout.js"></script>
     <meta name="description"
-        content="Book a private jewellery appointment with SJ Jewellery. Get personalised guidance on rings, necklaces, and custom jewellery.">
+        content="Book a private jewellery appointment with Netrima Jewels. Get personalised guidance on rings, necklaces, and custom jewellery.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -26,7 +26,7 @@
             --gold-dark: #a8854e;
             --gold-light: #e8d4a8;
             --gold-bg: #fdf7ee;
-            --cream: #faf8f5;
+            --cream: #ffffff;
             --dark: #0d0d0f;
             --dark-2: #1a1a1f;
             --text-h: #0d0d0f;
@@ -111,7 +111,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: var(--header-h);
+            height: auto;
+            min-height: var(--header-h);
             z-index: 1000;
             background: rgba(13, 13, 15, 0.95);
             backdrop-filter: blur(16px);
@@ -128,27 +129,51 @@
             padding: 0 24px;
         }
 
+                /* Logo */
         #navLogo {
             display: flex;
-            flex-direction: column;
-            line-height: 1;
+            align-items: center;
+            gap: 12px;
             flex-shrink: 0;
+        }
+
+        .brand-logo-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1.5px solid var(--gold);
+            object-fit: cover;
+            transition: transform var(--transition);
+        }
+
+        #navLogo:hover .brand-logo-img {
+            transform: rotate(360deg);
+        }
+
+        
+        .mobile-br {
+            display: none;
+        }
+.brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
         }
 
         #navLogo .brand-name {
             font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 700;
             color: var(--gold);
             letter-spacing: 0.04em;
         }
 
         #navLogo .brand-tagline {
-            font-size: 0.62rem;
-            letter-spacing: 0.18em;
-            color: rgba(201, 169, 110, 0.6);
+            font-size: 0.58rem;
+            letter-spacing: 0.14em;
+            color: rgba(201, 169, 110, 0.7);
             text-transform: uppercase;
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
         #searchWrapper {
@@ -657,6 +682,10 @@
         }
 
         @media (max-width: 860px) {
+            #siteHeader {
+                min-height: auto !important;
+            }
+
             #contactSection {
                 grid-template-columns: 1fr;
             }
@@ -666,7 +695,7 @@
             }
 
             :root {
-                --header-h: 116px;
+                --header-h: 165px;
             }
 
             #navInner {
@@ -707,10 +736,13 @@
         }
 
         @media (max-width: 640px) {
+            :root {
+                --header-h: 165px;
+            }
             /* Navbar: icons-only mode on small screens */
             .navActionBtn {
                 font-size: 0;
-                padding: 6px;
+                padding: 8px;
                 gap: 0;
             }
 
@@ -728,7 +760,7 @@
             }
 
             :root {
-                --header-h: 100px;
+                --header-h: 165px;
             }
             .footerTop {
                 grid-template-columns: 1fr;
@@ -736,6 +768,242 @@
 
             #contactForm {
                 padding: 24px;
+            }
+        }
+    
+
+        /* ═══════════════════════════════════════════
+           HEADER LOCATION WIDGET
+           ═══════════════════════════════════════════ */
+        .header-location-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            transition: all var(--transition);
+            user-select: none;
+            max-width: 220px;
+            flex-shrink: 0;
+        }
+
+        .header-location-btn:hover {
+            background: rgba(201, 169, 110, 0.08);
+            border-color: rgba(201, 169, 110, 0.3);
+        }
+
+        .header-location-btn:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        .location-icon-svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 1.8;
+            flex-shrink: 0;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+        }
+
+        .location-text-group {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .location-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+        }
+
+        .location-action {
+            font-size: 0.8rem;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+        }
+
+        /* ═══════════════════════════════════════════
+           CENTERED LOCATION MODAL
+           ═══════════════════════════════════════════ */
+        .location-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(13, 13, 15, 0.75);
+            backdrop-filter: blur(12px);
+            z-index: 15000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition);
+        }
+
+        .location-modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .location-modal-content {
+            background: rgba(26, 26, 31, 0.95);
+            border: 1.5px solid var(--gold);
+            border-radius: 20px;
+            padding: 32px 24px;
+            width: min(400px, calc(100vw - 32px));
+            text-align: center;
+            position: relative;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(201, 169, 110, 0.15);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .location-modal-overlay.show .location-modal-content {
+            transform: scale(1);
+        }
+
+        .location-close-btn {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color var(--transition);
+            line-height: 1;
+        }
+
+        .location-close-btn:hover {
+            color: #fff;
+        }
+
+        .location-modal-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 12px;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+        }
+
+        .location-modal-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .location-input-wrap {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .location-input-wrap input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #120617;
+            font-size: 0.95rem;
+            font-weight: 500;
+            outline: none;
+            transition: all var(--transition);
+            text-align: center;
+            letter-spacing: 0.05em;
+        }
+
+        .location-input-wrap input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.15);
+        }
+
+        .location-submit-btn {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all var(--transition);
+        }
+
+        .location-submit-btn:disabled {
+            background: #2a2a30;
+            color: var(--text-muted);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .location-submit-btn:not(:disabled):hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(201, 169, 110, 0.3);
+        }
+
+        .location-status-text {
+            font-size: 0.8rem;
+            font-weight: 500;
+            min-height: 20px;
+            transition: color var(--transition);
+            margin-top: 10px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .header-location-btn {
+                padding: 6px 8px;
+                max-width: 140px;
+            }
+            .location-label {
+                max-width: 80px;
+            }
+            .location-action {
+                font-size: 0.72rem;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .header-location-btn {
+                padding: 4px 6px;
+                max-width: 110px;
+                gap: 6px;
+            }
+            .location-icon-svg {
+                width: 16px;
+                height: 16px;
+            }
+            .location-label {
+                max-width: 60px;
+                font-size: 0.58rem;
+            }
+            .location-action {
+                font-size: 0.68rem;
+            }
+        }
+
+
+    
+        @media (max-width: 768px) {
+            #headerLocationBtn, .header-location-btn {
+                display: none !important;
             }
         }
     </style>
@@ -753,36 +1021,85 @@
         </svg><span id="toastMsg"></span></div>
 
     <!-- Header -->
-    <header id="siteHeader">
+    <header id="siteHeader" role="banner">
         <div id="navInner">
-            <a id="navLogo" href="./index.html"><span class="brand-name">SJ Jewellery</span><span
-                    class="brand-tagline">Crafted with love</span></a>
-            <div id="searchWrapper">
-                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2">
+
+            <!-- Logo -->
+            <a id="navLogo" href="./index.html" aria-label="Netrima Jewels Home">
+                <img class="brand-logo-img" src="./logo.jpg" alt="Netrima Jewels Logo">
+                <div class="brand-text">
+                    <span class="brand-name">Netrima<br class="mobile-br">Jewels</span>
+                    <span class="brand-tagline">Timeless Beauty</span>
+                </div>
+            </a>
+
+            <!-- Location Widget -->
+            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0" aria-label="Select delivery location">
+                <svg viewBox="0 0 24 24" class="location-icon-svg">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                <div class="location-text-group">
+                    <span class="location-label" id="headerLocationLabel">Delivering to India</span>
+                    <span class="location-action">Update location</span>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div id="searchWrapper" role="search">
+                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
                     <circle cx="11" cy="11" r="8" />
                     <path d="M21 21l-4.35-4.35" />
                 </svg>
-                <input id="searchInput" type="text" placeholder="Search jewellery…" autocomplete="off">
+                <input id="searchInput" type="text" placeholder="Search rings, necklaces, bangles…" autocomplete="off"
+                    aria-label="Search products">
             </div>
-            <nav class="navActions">
-                <a href="./order.html" class="navActionBtn"><svg viewBox="0 0 24 24">
+
+            <!-- Actions -->
+            <nav class="navActions" aria-label="User actions">
+                <a href="./order.html" class="navActionBtn" id="navOrderBtn">
+                    <svg viewBox="0 0 24 24">
                         <path
                             d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>Orders</a>
-                <a href="./login.html" class="navActionBtn"><svg viewBox="0 0 24 24">
+                    </svg>
+                    Orders
+                </a>
+                <a href="./login.html" class="navActionBtn" id="navLoginBtn">
+                    <svg viewBox="0 0 24 24">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
-                    </svg>Account</a>
-                <a href="./card.html" class="navActionBtn cartWrap"><svg viewBox="0 0 24 24">
+                    </svg>
+                    Account
+                </a>
+                <a href="./card.html" class="navActionBtn cartWrap" id="navCartBtn" aria-label="Shopping cart">
+                    <svg viewBox="0 0 24 24">
                         <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
                         <line x1="3" y1="6" x2="21" y2="6" />
                         <path d="M16 10a4 4 0 01-8 0" />
-                    </svg>Cart<span class="cartBadge">0</span></a>
+                    </svg>
+                    Cart
+                    <span class="cartBadge" id="cartCount" aria-label="items in cart">0</span>
+                </a>
             </nav>
         </div>
     </header>
 
-    <!-- Banner -->
+<!-- Centered Location Modal Overlay -->
+    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
+        <div class="location-modal-content">
+            <button id="closeLocationModal" class="location-close-btn" aria-label="Close modal">&times;</button>
+            <h3 id="locationModalTitle">Choose your location</h3>
+            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog speed in your area.</p>
+            
+            <div class="location-input-wrap">
+                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6" autocomplete="off" aria-label="Pincode">
+                <button id="modalPincodeSubmit" class="location-submit-btn" disabled>Apply</button>
+            </div>
+            
+            <div id="modalPincodeStatus" class="location-status-text"></div>
+        </div>
+    </div>
+
+<!-- Banner -->
     <section id="pageBanner">
         <p id="bannerEyebrow">✦ Get In Touch</p>
         <h1 id="bannerTitle">Book Your Private<br><em>Jewellery Appointment</em></h1>
@@ -820,7 +1137,7 @@
                         <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
                         <circle cx="12" cy="10" r="3" />
                     </svg></div>
-                <div class="contactItemText"><strong>Showroom</strong><span>SJ Jewellery, Seepz, India</span></div>
+                <div class="contactItemText"><strong>Showroom</strong><span>Netrima Jewels, Seepz, India</span></div>
             </div>
             <div class="contactItem">
                 <div class="contactIcon"><svg viewBox="0 0 24 24">
@@ -864,7 +1181,7 @@
         <div class="footerInner">
             <div class="footerTop">
                 <div class="footerBrand">
-                    <div class="footerLogo">SJ Jewellery</div>
+                    <div class="footerLogo">Netrima Jewels</div>
                     <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary.
                         Handcrafted with passion, delivered with pride.</p>
                     <div class="footerSocial">
@@ -913,7 +1230,7 @@
                 </div>
             </div>
             <div class="footerBottom">
-                <p class="footerCopy">&copy; 2026 <span>SJ Jewellery</span>. All rights reserved.</p>
+                <p class="footerCopy">&copy; 2026 <span>Netrima Jewels</span>. All rights reserved.</p>
                 <div class="footerPayments"><span class="payBadge">UPI</span><span class="payBadge">Razorpay</span><span
                         class="payBadge">Net Banking</span><span class="payBadge">COD</span></div>
             </div>
@@ -1031,6 +1348,145 @@
                 .catch(function(err) { console.error('[SW] Failed:', err); });
         });
     }
+    </script>
+
+    <!-- Dynamic Header Height Calculation -->
+    <script>
+        (function() {
+            function updateHeaderHeight() {
+                const header = document.getElementById("siteHeader");
+                if (header) {
+                    const height = header.offsetHeight;
+                    document.documentElement.style.setProperty('--header-h', height + 'px');
+                }
+            }
+            window.addEventListener('resize', updateHeaderHeight);
+            window.addEventListener('DOMContentLoaded', updateHeaderHeight);
+            window.addEventListener('load', updateHeaderHeight);
+            // Run immediately in case elements are already loaded
+            updateHeaderHeight();
+            // Run a few times shortly after load to handle dynamic rendering/font loading
+            setTimeout(updateHeaderHeight, 100);
+            setTimeout(updateHeaderHeight, 500);
+            setTimeout(updateHeaderHeight, 1000);
+        })();
+    </script>
+
+
+<script>
+        /* ───────────────────────────────────────
+           HEADER LOCATION PINCODE CONTROLLER
+        ─────────────────────────────────────── */
+        (function() {
+            const locBtn = document.getElementById("headerLocationBtn");
+            const modal = document.getElementById("locationModal");
+            const closeBtn = document.getElementById("closeLocationModal");
+            const input = document.getElementById("modalPincodeInput");
+            const submit = document.getElementById("modalPincodeSubmit");
+            const status = document.getElementById("modalPincodeStatus");
+            const label = document.getElementById("headerLocationLabel");
+
+            // Open Modal
+            if (locBtn && modal) {
+                locBtn.addEventListener("click", () => {
+                    status.textContent = "";
+                    input.value = "";
+                    submit.disabled = true;
+                    modal.classList.add("show");
+                    input.focus();
+                });
+            }
+
+            // Close Modal
+            if (closeBtn && modal) {
+                closeBtn.addEventListener("click", () => {
+                    modal.classList.remove("show");
+                });
+            }
+
+            // Close Modal on click outside content card
+            if (modal) {
+                modal.addEventListener("click", (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove("show");
+                    }
+                });
+            }
+
+            // Load saved location on startup
+            function loadSavedLocation() {
+                const savedCity = localStorage.getItem("delivery_city");
+                const savedPin = localStorage.getItem("delivery_pincode");
+                if (savedCity && savedPin) {
+                    if (label) label.textContent = `Delivering to ${savedCity} ${savedPin}`;
+                } else if (label) {
+                    label.textContent = "Delivering to India";
+                }
+            }
+            loadSavedLocation();
+
+            // Validate and lookup pincode
+            if (input) {
+                input.addEventListener("input", async (e) => {
+                    const pin = e.target.value.trim();
+                    status.textContent = "";
+                    submit.disabled = true;
+
+                    if (pin.length === 6 && /^\d{6}$/.test(pin)) {
+                        status.style.color = "var(--gold)";
+                        status.textContent = "🔍 Fetching location area details...";
+
+                        try {
+                            const res = await fetch(`${BASE_URL}/api/pincode/${pin}`);
+                            if (!res.ok) throw new Error("Pincode API failed");
+
+                            const data = await res.json();
+                            if (data && data[0] && data[0].Status === "Success") {
+                                const postOfficeList = data[0].PostOffice;
+                                if (postOfficeList && postOfficeList.length > 0) {
+                                    const info = postOfficeList[0];
+                                    const city = info.Block || info.Name || "";
+                                    status.style.color = "#22c55e"; // green
+                                    status.textContent = `✓ Delivering to ${city}, ${info.State}`;
+                                    submit.disabled = false;
+                                    
+                                    // Save temporary variables in dataset
+                                    submit.dataset.city = city;
+                                    submit.dataset.pin = pin;
+                                } else {
+                                    status.style.color = "#ef4444";
+                                    status.textContent = "❌ No delivery area found for this pincode.";
+                                }
+                            } else {
+                                status.style.color = "#ef4444";
+                                status.textContent = "❌ Invalid pincode.";
+                            }
+                        } catch (err) {
+                            console.error("Pincode modal lookup error:", err);
+                            status.style.color = "#ef4444";
+                            status.textContent = "⚠️ Error connecting to postal database proxy.";
+                        }
+                    } else if (pin.length > 6) {
+                        status.style.color = "#ef4444";
+                        status.textContent = "❌ Pincode must be exactly 6 digits.";
+                    }
+                });
+            }
+
+            // Apply location on submit click
+            if (submit) {
+                submit.addEventListener("click", () => {
+                    const city = submit.dataset.city;
+                    const pin = submit.dataset.pin;
+                    if (city && pin) {
+                        localStorage.setItem("delivery_city", city);
+                        localStorage.setItem("delivery_pincode", pin);
+                        loadSavedLocation();
+                        if (modal) modal.classList.remove("show");
+                    }
+                });
+            }
+        })();
     </script>
 </body>
 

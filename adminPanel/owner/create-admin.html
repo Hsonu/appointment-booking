@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Admin – SJ Jewellery Owner</title>
+  <title>Create Admin – Netrima Jewels Owner</title>
   <script src="/auto-logout.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,7 @@
       --gold-dark: #a8854e;
       --gold-light: #e8d4a8;
       --gold-bg: #fdf7ee;
-      --cream: #faf8f5;
+      --cream: #ffffff;
       --white: #ffffff;
       --text-h: #0d0d0f;
       --text-body: #3d3d45;
@@ -490,7 +490,7 @@
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg></div>
       <div>
-        <div class="sidebarBrandName">SJ Jewellery</div>
+        <div class="sidebarBrandName">Netrima Jewels</div>
         <div class="sidebarBrandRole">Owner Panel</div>
       </div>
     </div>
@@ -523,7 +523,7 @@
           <div class="ownerRole">✦ Super Admin</div>
         </div>
       </div>
-      <button class="logoutBtn" onclick="ownerLogout()">
+      <button class="logoutBtn" onclick="ownerLogout()" type="button">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
         </svg>Sign Out
@@ -572,7 +572,7 @@
           </div>
           <div class="hint">Share securely · Min 4 characters</div>
         </div>
-        <button class="goldBtn" id="createBtn">
+        <button class="goldBtn" id="createBtn" type="button">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
@@ -612,7 +612,8 @@
     const alertTxt = document.getElementById("alertText");
     function showAlert(msg, type = "error") { alertTxt.textContent = msg; alertEl.className = `alert ${type} show`; }
 
-    document.getElementById("createBtn").addEventListener("click", async () => {
+    document.getElementById("createBtn").addEventListener("click", async (e) => {
+      e.preventDefault();
       const adminId = document.getElementById("newId").value.trim();
       const password = document.getElementById("newPass").value.trim();
       if (!adminId || !password) return showAlert("Please fill in all fields.");

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Product – SJ Jewellery Admin</title>
+  <title>Add Product – Netrima Jewels Admin</title>
   <script src="/auto-logout.js"></script>
   <link rel="stylesheet" href="./admin.css">
 </head>
@@ -21,7 +21,7 @@
           </svg>
         </div>
         <div>
-          <div id="sidebarTitle">SJ Jewellery</div>
+          <div id="sidebarTitle">Netrima Jewels</div>
           <div id="sidebarSubtitle">Admin Console</div>
         </div>
       </div>
@@ -83,7 +83,7 @@
             <div class="sidebarUserRole">Admin Account</div>
           </div>
         </div>
-        <button onclick="adminLogout()"
+        <button onclick="adminLogout()" type="button"
           style="width:100%;margin-top:10px;background:#fee2e2;color:#b91c1c;border:none;border-radius:8px;padding:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s;"
           onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -207,7 +207,7 @@
               </div>
 
               <div class="btnGroup">
-                <button class="btn btn-success" id="SaveBtn">
+                <button class="btn btn-success" id="SaveBtn" type="button">
                   <svg viewBox="0 0 24 24" fill="#fff">
                     <path
                       d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
@@ -293,12 +293,14 @@
   <script>
     // ── Auth Guard ─────────────────────────────────────────────────────────
     const ADMIN_ID = localStorage.getItem("adminId");
+    const SESSION_TOKEN = localStorage.getItem("adminSessionToken") || "";
     if (!ADMIN_ID) { window.location.href = "./login.html"; }
     document.getElementById("sidebarAdminName").textContent = ADMIN_ID || "Admin";
     document.getElementById("sidebarAvatarChar").textContent = (ADMIN_ID || "A").charAt(0).toUpperCase();
     function adminLogout() {
       localStorage.removeItem("adminId");
       localStorage.removeItem("adminLoggedIn");
+      localStorage.removeItem("adminSessionToken");
       window.location.href = "./login.html";
     }
     // Elements
@@ -428,7 +430,8 @@
     });
 
     // Save
-    SaveBtn.addEventListener("click", async () => {
+    SaveBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
       hideAlert();
       const required = [inputProductName, inputCategoryName, inputUnits, inputRate, inputGST];
       if (required.some(el => !el.value.trim())) {
@@ -458,7 +461,7 @@
         });
 
         // Send admin ID header so product is linked to this admin
-        const res = await fetch(`${BASE_URL}/addProduct`, { method: "POST", headers: { "x-admin-id": ADMIN_ID }, body: formData });
+        const res = await fetch(`${BASE_URL}/addProduct`, { method: "POST", headers: { "x-admin-id": ADMIN_ID, "x-session-token": SESSION_TOKEN }, body: formData });
         if (!res.ok) {
           const errData = await res.json().catch(() => ({}));
           throw new Error(errData.message || "Server error");
@@ -490,7 +493,7 @@
     async function loadRecentProducts() {
       try {
         // Only load this admin's products
-        const res = await fetch(`${BASE_URL}/addProduct`, { headers: { "x-admin-id": ADMIN_ID } });
+        const res = await fetch(`${BASE_URL}/addProduct`, { headers: { "x-admin-id": ADMIN_ID, "x-session-token": SESSION_TOKEN } });
         const data = await res.json();
         const tbody = document.getElementById("recentBody");
         const recent = data.slice(-5).reverse();

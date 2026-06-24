@@ -374,15 +374,15 @@
             <div id="pwaInstallBanner" class="pwa-install-banner" aria-live="polite" aria-label="Install Web App">
                 <div class="pwa-header">
                     <div class="pwa-icon-wrap">
-                        <img src="./icon-192.png" alt="SJ Jewellery Logo">
+                        <img src="./icon-192.png" alt="Netrima Jewels Logo">
                     </div>
                     <div class="pwa-title-group">
-                        <span class="pwa-title">SJ Jewellery</span>
+                        <span class="pwa-title">Netrima Jewels</span>
                         <span class="pwa-subtitle">Official App</span>
                     </div>
                 </div>
                 <div class="pwa-body-text">
-                    Add SJ Jewellery to your home screen for quick access to collections, seamless checkout, and offline updates.
+                    Add Netrima Jewels to your home screen for quick access to collections, seamless checkout, and offline updates.
                 </div>
                 <div class="pwa-actions">
                     <button id="pwaBtnDismiss" class="pwa-btn-dismiss">Not Now</button>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Owner Dashboard – SJ Jewellery</title>
+  <title>Owner Dashboard – Netrima Jewels</title>
   <script src="/auto-logout.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,7 @@
       --gold-dark: #a8854e;
       --gold-light: #e8d4a8;
       --gold-bg: #fdf7ee;
-      --cream: #faf8f5;
+      --cream: #ffffff;
       --white: #ffffff;
       --text-h: #0d0d0f;
       --text-body: #3d3d45;
@@ -522,7 +522,7 @@
         </svg>
       </div>
       <div>
-        <div class="sidebarBrandName">SJ Jewellery</div>
+        <div class="sidebarBrandName">Netrima Jewels</div>
         <div class="sidebarBrandRole">Owner Panel</div>
       </div>
     </div>
@@ -573,7 +573,7 @@
           <div class="ownerRole">✦ Super Admin</div>
         </div>
       </div>
-      <button class="logoutBtn" onclick="ownerLogout()">
+      <button class="logoutBtn" onclick="ownerLogout()" type="button">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
         </svg>
@@ -672,7 +672,7 @@
             <input id="ownerNewPass" class="fInput" type="text" placeholder="Enter new password">
           </div>
         </div>
-        <button class="goldBtn" id="updateOwnerBtn"
+        <button class="goldBtn" id="updateOwnerBtn" type="button"
           style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
@@ -765,7 +765,8 @@
       }
     }
 
-    updateOwnerBtn.addEventListener("click", async () => {
+    updateOwnerBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
       const newAdminId = document.getElementById("ownerNewId").value.trim();
       const newPassword = document.getElementById("ownerNewPass").value.trim();
       if (!newAdminId || !newPassword) {

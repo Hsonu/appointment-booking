@@ -9,11 +9,11 @@
     <meta name="theme-color" content="#0d0d0f">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SJ Jewellery">
+    <meta name="apple-mobile-web-app-title" content="Netrima Jewels">
     <link rel="apple-touch-icon" href="icon-192.png">
-    <title>Secure Checkout – SJ Jewellery</title>
+    <title>Secure Checkout – Netrima Jewels</title>
     <meta name="description"
-        content="Securely place your order for handcrafted luxury jewellery at SJ Jewellery using Razorpay.">
+        content="Securely place your order for handcrafted luxury jewellery at Netrima Jewels using Razorpay.">
     <script src="/auto-logout.js"></script>
 
     <!-- Fonts -->
@@ -32,7 +32,7 @@
             --gold-dark: #a8854e;
             --gold-light: #e8d4a8;
             --gold-bg: #fdf7ee;
-            --cream: #faf8f5;
+            --cream: #ffffff;
             --dark: #0d0d0f;
             --dark-2: #1a1a1f;
             --dark-3: #2a2a30;
@@ -170,7 +170,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: var(--header-h);
+            height: auto;
+            min-height: var(--header-h);
             z-index: 1000;
             background: rgba(13, 13, 15, 0.95);
             backdrop-filter: blur(16px);
@@ -188,27 +189,51 @@
             padding: 0 24px;
         }
 
+                /* Logo */
         #navLogo {
             display: flex;
-            flex-direction: column;
-            line-height: 1;
+            align-items: center;
+            gap: 12px;
             flex-shrink: 0;
+        }
+
+        .brand-logo-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1.5px solid var(--gold);
+            object-fit: cover;
+            transition: transform var(--transition);
+        }
+
+        #navLogo:hover .brand-logo-img {
+            transform: rotate(360deg);
+        }
+
+        
+        .mobile-br {
+            display: none;
+        }
+.brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
         }
 
         #navLogo .brand-name {
             font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 700;
             color: var(--gold);
             letter-spacing: 0.04em;
         }
 
         #navLogo .brand-tagline {
-            font-size: 0.62rem;
-            letter-spacing: 0.18em;
-            color: rgba(201, 169, 110, 0.6);
+            font-size: 0.58rem;
+            letter-spacing: 0.14em;
+            color: rgba(201, 169, 110, 0.7);
             text-transform: uppercase;
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
         #searchWrapper {
@@ -726,15 +751,19 @@
         }
 
         @media (max-width: 860px) {
+            #siteHeader {
+                min-height: auto !important;
+            }
+
             :root {
-                --header-h: 116px;
+                --header-h: 165px;
             }
 
             #navInner {
                 flex-wrap: wrap;
                 padding: 10px 16px;
                 gap: 8px 12px;
-                height: 100%;
+                height: auto;
                 justify-content: space-between;
             }
 
@@ -742,37 +771,72 @@
                 order: 1;
             }
 
-            .navActions {
+            #headerLocationBtn {
                 order: 2;
                 margin-left: auto;
-                gap: 2px;
+            }
+
+            .navActions {
+                order: 3;
+                margin-left: 0;
+                gap: 4px;
             }
 
             .navActionBtn {
-                padding: 6px 8px;
+                padding: 8px;
                 font-size: 0.6rem;
-            }
-
-            .navActionBtn svg {
-                width: 18px;
-                height: 18px;
             }
 
             #searchWrapper {
                 display: block;
-                order: 3;
+                order: 4;
                 flex-basis: 100%;
                 max-width: 100%;
                 margin-top: 4px;
             }
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
+            .mobile-br {
+                display: block !important;
+            }
+            #navLogo .brand-name {
+                font-size: 1.05rem !important;
+                line-height: 1.05 !important;
+            }
+            #navLogo .brand-tagline {
+                font-size: 0.5rem !important;
+                letter-spacing: 0.1em !important;
+            }
 
+            .location-text-group {
+                display: none;
+            }
+            .header-location-btn {
+                padding: 8px;
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                background: rgba(255, 255, 255, 0.04);
+                max-width: 38px;
+                height: 38px;
+                justify-content: center;
+                align-items: center;
+                gap: 0;
+            }
+            .location-icon-svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            :root {
+                --header-h: 165px;
+            }
             /* Navbar: icons-only mode on small screens */
             .navActionBtn {
                 font-size: 0;
-                padding: 6px;
+                padding: 8px;
                 gap: 0;
             }
 
@@ -790,7 +854,7 @@
             }
 
             :root {
-                --header-h: 100px;
+                --header-h: 165px;
             }
 
             #customerDetailsForm {
@@ -1033,6 +1097,12 @@
                 font-size: 0.68rem;
             }
         }
+    
+        @media (max-width: 768px) {
+            #headerLocationBtn, .header-location-btn {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 
@@ -1055,17 +1125,20 @@
     <!-- ═══════════════ HEADER ═══════════════ -->
     <header id="siteHeader" role="banner">
         <div id="navInner">
-            <a id="navLogo" href="./index.html" aria-label="SJ Jewellery Home">
-                <span class="brand-name">SJ Jewellery</span>
-                <span class="brand-tagline">Crafted with love</span>
+
+            <!-- Logo -->
+            <a id="navLogo" href="./index.html" aria-label="Netrima Jewels Home">
+                <img class="brand-logo-img" src="./logo.jpg" alt="Netrima Jewels Logo">
+                <div class="brand-text">
+                    <span class="brand-name">Netrima<br class="mobile-br">Jewels</span>
+                    <span class="brand-tagline">Timeless Beauty</span>
+                </div>
             </a>
 
             <!-- Location Widget -->
-            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0"
-                aria-label="Select delivery location">
+            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0" aria-label="Select delivery location">
                 <svg viewBox="0 0 24 24" class="location-icon-svg">
-                    <path
-                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                 </svg>
                 <div class="location-text-group">
                     <span class="location-label" id="headerLocationLabel">Delivering to India</span>
@@ -1073,16 +1146,17 @@
                 </div>
             </div>
 
-            <!-- Search wrapper -->
+            <!-- Search -->
             <div id="searchWrapper" role="search">
                 <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
                     <circle cx="11" cy="11" r="8" />
                     <path d="M21 21l-4.35-4.35" />
                 </svg>
-                <input id="searchInput" type="text" placeholder="Search rings, necklaces..." autocomplete="off"
-                    aria-label="Search items">
+                <input id="searchInput" type="text" placeholder="Search rings, necklaces, bangles…" autocomplete="off"
+                    aria-label="Search products">
             </div>
 
+            <!-- Actions -->
             <nav class="navActions" aria-label="User actions">
                 <a href="./order.html" class="navActionBtn" id="navOrderBtn">
                     <svg viewBox="0 0 24 24">
@@ -1111,7 +1185,23 @@
         </div>
     </header>
 
-    <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+<!-- Centered Location Modal Overlay -->
+    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
+        <div class="location-modal-content">
+            <button id="closeLocationModal" class="location-close-btn" aria-label="Close modal">&times;</button>
+            <h3 id="locationModalTitle">Choose your location</h3>
+            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog speed in your area.</p>
+            
+            <div class="location-input-wrap">
+                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6" autocomplete="off" aria-label="Pincode">
+                <button id="modalPincodeSubmit" class="location-submit-btn" disabled>Apply</button>
+            </div>
+            
+            <div id="modalPincodeStatus" class="location-status-text"></div>
+        </div>
+    </div>
+
+<!-- ═══════════════ MAIN CONTENT ═══════════════ -->
     <main>
         <div class="container">
             <div class="checkout-title-wrap">
@@ -1907,22 +1997,7 @@
     </script>
 
     <!-- Centered Location Modal Overlay -->
-    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true"
-        aria-labelledby="locationModalTitle">
-        <div class="location-modal-content">
-            <button id="closeLocationModal" class="location-close-btn" aria-label="Close modal">&times;</button>
-            <h3 id="locationModalTitle">Choose your location</h3>
-            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog
-                speed in your area.</p>
-
-            <div class="location-input-wrap">
-                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6"
-                    autocomplete="off" aria-label="Pincode">
-                <button id="modalPincodeSubmit" class="location-submit-btn" disabled>Apply</button>
-            </div>
-
-            <div id="modalPincodeStatus" class="location-status-text"></div>
-        </div>
+    
     </div>
 
     <script>
@@ -2051,6 +2126,29 @@
             });
         }
     </script>
+
+    <!-- Dynamic Header Height Calculation -->
+    <script>
+        (function() {
+            function updateHeaderHeight() {
+                const header = document.getElementById("siteHeader");
+                if (header) {
+                    const height = header.offsetHeight;
+                    document.documentElement.style.setProperty('--header-h', height + 'px');
+                }
+            }
+            window.addEventListener('resize', updateHeaderHeight);
+            window.addEventListener('DOMContentLoaded', updateHeaderHeight);
+            window.addEventListener('load', updateHeaderHeight);
+            // Run immediately in case elements are already loaded
+            updateHeaderHeight();
+            // Run a few times shortly after load to handle dynamic rendering/font loading
+            setTimeout(updateHeaderHeight, 100);
+            setTimeout(updateHeaderHeight, 500);
+            setTimeout(updateHeaderHeight, 1000);
+        })();
+    </script>
+
 </body>
 
 </html>
