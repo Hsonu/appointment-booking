@@ -68,8 +68,8 @@ self.addEventListener('fetch', (event) => {
               cache.put(event.request, networkResponse);
             });
           }
-        }).catch(() => {/* Ignore network update errors offline */});
-        
+        }).catch(() => {/* Ignore network update errors offline */ });
+
         return cachedResponse;
       }
 

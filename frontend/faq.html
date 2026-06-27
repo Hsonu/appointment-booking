@@ -122,7 +122,7 @@
             padding: 0 24px;
         }
 
-                /* Logo */
+        /* Logo */
         #navLogo {
             display: flex;
             align-items: center;
@@ -143,11 +143,12 @@
             transform: rotate(360deg);
         }
 
-        
+
         .mobile-br {
             display: none;
         }
-.brand-text {
+
+        .brand-text {
             display: flex;
             flex-direction: column;
             line-height: 1.1;
@@ -564,10 +565,12 @@
             .mobile-br {
                 display: block !important;
             }
+
             #navLogo .brand-name {
                 font-size: 1.05rem !important;
                 line-height: 1.05 !important;
             }
+
             #navLogo .brand-tagline {
                 font-size: 0.5rem !important;
                 letter-spacing: 0.1em !important;
@@ -576,6 +579,7 @@
             .location-text-group {
                 display: none;
             }
+
             .header-location-btn {
                 padding: 8px;
                 border-radius: 10px;
@@ -587,6 +591,7 @@
                 align-items: center;
                 gap: 0;
             }
+
             .location-icon-svg {
                 width: 18px;
                 height: 18px;
@@ -611,6 +616,7 @@
             :root {
                 --header-h: 165px;
             }
+
             /* Navbar: icons-only mode on small screens */
             .navActionBtn {
                 font-size: 0;
@@ -634,17 +640,20 @@
             :root {
                 --header-h: 165px;
             }
+
             .footerTop {
                 grid-template-columns: 1fr;
             }
         }
-    
+
         @media (max-width: 768px) {
-            #headerLocationBtn, .header-location-btn {
+
+            #headerLocationBtn,
+            .header-location-btn {
                 display: none !important;
             }
         }
-    
+
 
         /* ═══════════════════════════════════════════
            HEADER LOCATION WIDGET
@@ -846,9 +855,11 @@
                 padding: 6px 8px;
                 max-width: 140px;
             }
+
             .location-label {
                 max-width: 80px;
             }
+
             .location-action {
                 font-size: 0.72rem;
             }
@@ -860,23 +871,28 @@
                 max-width: 110px;
                 gap: 6px;
             }
+
             .location-icon-svg {
                 width: 16px;
                 height: 16px;
             }
+
             .location-label {
                 max-width: 60px;
                 font-size: 0.58rem;
             }
+
             .location-action {
                 font-size: 0.68rem;
             }
         }
 
 
-    
+
         @media (max-width: 768px) {
-            #headerLocationBtn, .header-location-btn {
+
+            #headerLocationBtn,
+            .header-location-btn {
                 display: none !important;
             }
         }
@@ -905,9 +921,11 @@
             </a>
 
             <!-- Location Widget -->
-            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0" aria-label="Select delivery location">
+            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0"
+                aria-label="Select delivery location">
                 <svg viewBox="0 0 24 24" class="location-icon-svg">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    <path
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
                 <div class="location-text-group">
                     <span class="location-label" id="headerLocationLabel">Delivering to India</span>
@@ -954,23 +972,26 @@
         </div>
     </header>
 
-<!-- Centered Location Modal Overlay -->
-    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
+    <!-- Centered Location Modal Overlay -->
+    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true"
+        aria-labelledby="locationModalTitle">
         <div class="location-modal-content">
             <button id="closeLocationModal" class="location-close-btn" aria-label="Close modal">&times;</button>
             <h3 id="locationModalTitle">Choose your location</h3>
-            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog speed in your area.</p>
-            
+            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog
+                speed in your area.</p>
+
             <div class="location-input-wrap">
-                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6" autocomplete="off" aria-label="Pincode">
+                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6"
+                    autocomplete="off" aria-label="Pincode">
                 <button id="modalPincodeSubmit" class="location-submit-btn" disabled>Apply</button>
             </div>
-            
+
             <div id="modalPincodeStatus" class="location-status-text"></div>
         </div>
     </div>
 
-<!-- Hero Banner -->
+    <!-- Hero Banner -->
     <div id="heroBanner">
         <img src="https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/AT_Offer/01/Desktop.jpg"
             alt="Netrima Jewels Showroom Banner">
@@ -1190,18 +1211,18 @@
 
     <!-- PWA Service Worker Registration -->
     <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('./service-worker.js')
-                .then(function(reg) { console.log('[SW] Registered:', reg.scope); })
-                .catch(function(err) { console.error('[SW] Failed:', err); });
-        });
-    }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(function (reg) { console.log('[SW] Registered:', reg.scope); })
+                    .catch(function (err) { console.error('[SW] Failed:', err); });
+            });
+        }
     </script>
 
     <!-- Dynamic Header Height Calculation -->
     <script>
-        (function() {
+        (function () {
             function updateHeaderHeight() {
                 const header = document.getElementById("siteHeader");
                 if (header) {
@@ -1222,11 +1243,11 @@
     </script>
 
 
-<script>
+    <script>
         /* ───────────────────────────────────────
            HEADER LOCATION PINCODE CONTROLLER
         ─────────────────────────────────────── */
-        (function() {
+        (function () {
             const locBtn = document.getElementById("headerLocationBtn");
             const modal = document.getElementById("locationModal");
             const closeBtn = document.getElementById("closeLocationModal");
@@ -1298,7 +1319,7 @@
                                     status.style.color = "#22c55e"; // green
                                     status.textContent = `✓ Delivering to ${city}, ${info.State}`;
                                     submit.disabled = false;
-                                    
+
                                     // Save temporary variables in dataset
                                     submit.dataset.city = city;
                                     submit.dataset.pin = pin;

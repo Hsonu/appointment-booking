@@ -31,7 +31,7 @@
             --gold-dark: #a8854e;
             --gold-light: #e8d4a8;
             --gold-bg: #fdf7ee;
-            --cream: #ffffff;
+            --cream: #F7DFD7;
             --dark: #0d0d0f;
             --dark-2: #1a1a1f;
             --dark-3: #2a2a30;
@@ -168,11 +168,12 @@
             transform: rotate(360deg);
         }
 
-        
+
         .mobile-br {
             display: none;
         }
-.brand-text {
+
+        .brand-text {
             display: flex;
             flex-direction: column;
             line-height: 1.1;
@@ -327,7 +328,7 @@
             min-height: 650px;
             display: flex;
             align-items: center;
-            background: #ffffff;
+            background: #F7DFD7;
             overflow: hidden;
             padding-top: var(--header-h);
             border-bottom: 1px solid var(--border);
@@ -373,6 +374,7 @@
                 opacity: 0;
                 transform: translateX(-40px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -454,6 +456,7 @@
                 opacity: 0;
                 transform: translateX(40px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -561,8 +564,15 @@
         }
 
         @keyframes scrollBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(6px); }
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(6px);
+            }
         }
 
         /* Responsive layout adaptation */
@@ -603,76 +613,16 @@
             .heroSliderViewport {
                 height: 280px;
             }
+
             .heroThumb {
                 width: 52px;
                 height: 52px;
             }
         }
 
-        /* ═══════════════════════════════════════════
-           SECTION HEADER
-        ═══════════════════════════════════════════ */
-        .sectionHeader {
-            text-align: center;
-            padding: 72px 24px 48px;
-        }
 
-        .sectionEyebrow {
-            font-size: 0.68rem;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--gold);
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
 
-        .sectionHeader h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-            font-weight: 700;
-            color: var(--text-h);
-            line-height: 1.2;
-        }
 
-        .sectionHeader p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-top: 12px;
-            max-width: 520px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.65;
-        }
-
-        /* ═══════════════════════════════════════════
-           TRUST BADGES STRIP
-        ═══════════════════════════════════════════ */
-        #trustStrip {
-            background: var(--dark);
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: clamp(16px, 4vw, 56px);
-            flex-wrap: wrap;
-        }
-
-        .trustItem {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.8rem;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        .trustItem svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--gold);
-            flex-shrink: 0;
-        }
 
         /* ═══════════════════════════════════════════
            FILTER BAR
@@ -994,56 +944,7 @@
             color: var(--text-muted);
         }
 
-        /* ═══════════════════════════════════════════
-           FEATURES STRIP
-        ═══════════════════════════════════════════ */
-        #featuresStrip {
-            background: var(--gold-bg);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 48px 24px;
-        }
 
-        .featuresGrid {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 32px;
-            text-align: center;
-        }
-
-        .featureIcon {
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 14px;
-            box-shadow: 0 4px 16px rgba(201, 169, 110, 0.3);
-        }
-
-        .featureIcon svg {
-            width: 26px;
-            height: 26px;
-            fill: #fff;
-        }
-
-        .featureTitle {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-h);
-            margin-bottom: 6px;
-        }
-
-        .featureDesc {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            line-height: 1.55;
-        }
 
         /* ═══════════════════════════════════════════
            FOOTER
@@ -1187,9 +1088,7 @@
                 grid-column: 1 / -1;
             }
 
-            #trustStrip {
-                gap: 20px;
-            }
+
 
             #filterInner {
                 flex-direction: column;
@@ -1248,10 +1147,12 @@
             .mobile-br {
                 display: block !important;
             }
+
             #navLogo .brand-name {
                 font-size: 1.05rem !important;
                 line-height: 1.05 !important;
             }
+
             #navLogo .brand-tagline {
                 font-size: 0.5rem !important;
                 letter-spacing: 0.1em !important;
@@ -1263,18 +1164,23 @@
                 width: 100% !important;
                 padding-bottom: 6px !important;
                 -webkit-overflow-scrolling: touch !important;
-                scrollbar-width: none !important; /* Firefox */
+                scrollbar-width: none !important;
+                /* Firefox */
             }
+
             #filterTabs::-webkit-scrollbar {
-                display: none !important; /* Chrome/Safari */
+                display: none !important;
+                /* Chrome/Safari */
             }
+
             .filterTab {
                 flex-shrink: 0 !important;
             }
-            
+
             .location-text-group {
                 display: none;
             }
+
             .header-location-btn {
                 padding: 8px;
                 border-radius: 10px;
@@ -1286,6 +1192,7 @@
                 align-items: center;
                 gap: 0;
             }
+
             .location-icon-svg {
                 width: 18px;
                 height: 18px;
@@ -1296,6 +1203,7 @@
             :root {
                 --header-h: 165px;
             }
+
             /* Navbar: icons-only mode on small screens */
             .navActionBtn {
                 font-size: 0;
@@ -1319,6 +1227,7 @@
             :root {
                 --header-h: 165px;
             }
+
             #heroContent h1 {
                 font-size: 1.9rem;
             }
@@ -1713,9 +1622,11 @@
                 padding: 6px 8px;
                 max-width: 140px;
             }
+
             .location-label {
                 max-width: 80px;
             }
+
             .location-action {
                 font-size: 0.72rem;
             }
@@ -1727,25 +1638,113 @@
                 max-width: 110px;
                 gap: 6px;
             }
+
             .location-icon-svg {
                 width: 16px;
                 height: 16px;
             }
+
             .location-label {
                 max-width: 60px;
                 font-size: 0.58rem;
             }
+
             .location-action {
                 font-size: 0.68rem;
             }
         }
 
 
-    
+
         @media (max-width: 768px) {
-            #headerLocationBtn, .header-location-btn {
+
+            #headerLocationBtn,
+            .header-location-btn {
                 display: none !important;
             }
+        }
+
+        /* ═══════════════════════════════════════════
+           QUICK VIEW MODAL (LIGHTBOX)
+        ═══════════════════════════════════════════ */
+        .quickview-modal {
+            display: none;
+            position: fixed;
+            z-index: 11000;
+            inset: 0;
+            background: rgba(13, 13, 15, 0.85);
+            backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .quickview-modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .quickview-close {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color var(--transition), transform var(--transition);
+            z-index: 11001;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .quickview-close:hover {
+            color: var(--gold);
+            transform: rotate(90deg);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .quickview-content-wrap {
+            max-width: 90%;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            animation: quickzoom var(--transition) forwards;
+            transform: scale(0.9);
+        }
+
+        @keyframes quickzoom {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .quickview-img {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(201, 169, 110, 0.25);
+        }
+
+        .quickview-caption {
+            margin-top: 16px;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-align: center;
+            letter-spacing: 0.02em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -1772,9 +1771,11 @@
             </a>
 
             <!-- Location Widget -->
-            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0" aria-label="Select delivery location">
+            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0"
+                aria-label="Select delivery location">
                 <svg viewBox="0 0 24 24" class="location-icon-svg">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    <path
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
                 <div class="location-text-group">
                     <span class="location-label" id="headerLocationLabel">Delivering to India</span>
@@ -1836,7 +1837,7 @@
                     </svg>
                 </a>
             </div>
-            
+
             <!-- Right Visual Slider -->
             <div class="heroVisualCol">
                 <div class="heroSliderViewport">
@@ -1857,7 +1858,7 @@
                         <img src="./hero-bracelet.jpg" alt="Delicate Sparkly Diamond Bracelet">
                     </div>
                 </div>
-                
+
                 <!-- Thumbnails -->
                 <div class="heroSliderNav">
                     <div class="heroThumb active" onclick="setHeroSlide(0)">
@@ -1879,44 +1880,10 @@
         <div class="scrollIndicator" aria-hidden="true">Scroll</div>
     </section>
 
-    <!-- ═══════════════ TRUST STRIP ═══════════════ -->
-    <div id="trustStrip" role="complementary" aria-label="Trust badges">
-        <div class="trustItem">
-            <svg viewBox="0 0 24 24">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-            100% Certified Jewellery
-        </div>
-        <div class="trustItem">
-            <svg viewBox="0 0 24 24">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-            Free Delivery India Wide
-        </div>
-        <div class="trustItem">
-            <svg viewBox="0 0 24 24">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                <circle cx="12" cy="10" r="3" />
-            </svg>
-            Easy 30-Day Returns
-        </div>
-        <div class="trustItem">
-            <svg viewBox="0 0 24 24">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-            BIS Hallmark Certified
-        </div>
-    </div>
+
 
     <!-- ═══════════════ PRODUCTS ═══════════════ -->
-    <section id="productsSection" aria-labelledby="productsHeading">
-        <div class="sectionHeader">
-            <p class="sectionEyebrow">Our Collection</p>
-            <h2 id="productsHeading">Exquisite Pieces,<br>Timeless Beauty</h2>
-            <p>Each piece is handcrafted by master artisans using the finest materials, made to be treasured forever.
-            </p>
-            <span class="goldLine" aria-hidden="true"></span>
-        </div>
+    <section id="productsSection" aria-label="Our Collection">
 
         <!-- Filter Bar -->
         <div id="filterBar">
@@ -1967,50 +1934,7 @@
         </div>
     </section>
 
-    <!-- ═══════════════ FEATURES ═══════════════ -->
-    <section id="featuresStrip" aria-label="Why choose Netrima Jewels">
-        <div class="featuresGrid">
-            <div class="featureItem">
-                <div class="featureIcon">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
-                </div>
-                <div class="featureTitle">Premium Craftsmanship</div>
-                <div class="featureDesc">Every piece is crafted by expert artisans with decades of heritage.</div>
-            </div>
-            <div class="featureItem">
-                <div class="featureIcon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
-                </div>
-                <div class="featureTitle">BIS Hallmark Certified</div>
-                <div class="featureDesc">All gold and diamond jewellery comes with official BIS certification.</div>
-            </div>
-            <div class="featureItem">
-                <div class="featureIcon">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M1 3h22l-2 13H3L1 3zM1 3l2.5 11M16 16a2 2 0 100 4 2 2 0 000-4zM9 16a2 2 0 100 4 2 2 0 000-4z" />
-                    </svg>
-                </div>
-                <div class="featureTitle">Free Delivery</div>
-                <div class="featureDesc">Free insured delivery pan India. Safe, secure, and on time.</div>
-            </div>
-            <div class="featureItem">
-                <div class="featureIcon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
-                        <circle cx="12" cy="10" r="3" />
-                    </svg>
-                </div>
-                <div class="featureTitle">Easy Returns</div>
-                <div class="featureDesc">Not happy? Return within 30 days for a hassle-free refund.</div>
-            </div>
-        </div>
-    </section>
+
 
     <!-- ═══════════════ FOOTER ═══════════════ -->
     <footer id="siteFooter" role="contentinfo">
@@ -2092,7 +2016,14 @@
         </div>
     </footer>
 
-
+    <!-- Quick View Lightbox Modal -->
+    <div id="quickViewModal" class="quickview-modal" role="dialog" aria-modal="true" aria-label="Product Image Preview">
+        <span class="quickview-close" id="closeQuickView">&times;</span>
+        <div class="quickview-content-wrap">
+            <img class="quickview-img" id="quickViewImg" src="" alt="Product Preview">
+            <div class="quickview-caption" id="quickViewCaption"></div>
+        </div>
+    </div>
 
     <script src="./config.js"></script>
     <script>
@@ -2154,7 +2085,7 @@
                     const matchesCategory = cat.includes(q);
                     const matchesSubCategory = subCat.includes(q);
                     const matchesPriceText = priceText.includes(q);
-                    
+
                     let matchesNumeric = false;
                     if (!isNaN(queryNum) && queryNum > 0) {
                         matchesNumeric = (rawPrice <= queryNum);
@@ -2315,6 +2246,27 @@
                         </div>
                     </div>
                 `;
+
+                // Attach quick view click event directly to the card overlay
+                const imgOverlay = card.querySelector(".card-img-overlay");
+                if (imgOverlay) {
+                    imgOverlay.addEventListener("click", (event) => {
+                        event.stopPropagation();
+                        const qvModal = document.getElementById("quickViewModal");
+                        const qvImg = document.getElementById("quickViewImg");
+                        const qvCaption = document.getElementById("quickViewCaption");
+
+                        if (qvModal && qvImg) {
+                            qvImg.src = item.photo;
+                            if (qvCaption) qvCaption.textContent = item.Productname;
+                            qvModal.style.display = "flex";
+                            // Force reflow for transitions
+                            qvModal.offsetHeight;
+                            qvModal.classList.add("show");
+                        }
+                    });
+                }
+
                 mainDivCard.appendChild(card);
             });
 
@@ -2350,15 +2302,15 @@
         function setHeroSlide(index) {
             if (index < 0 || index >= heroSlides.length) return;
             currentHeroSlideIndex = index;
-            
+
             heroSlides.forEach((slide, i) => {
                 slide.classList.toggle("active", i === index);
             });
-            
+
             heroThumbs.forEach((thumb, i) => {
                 thumb.classList.toggle("active", i === index);
             });
-            
+
             // Reset interval when manual click happens
             startHeroAutoplay();
         }
@@ -2377,20 +2329,51 @@
         if (heroSlides.length > 0) {
             startHeroAutoplay();
         }
+
+        // Close Quick View Modal
+        (function () {
+            const qvModal = document.getElementById("quickViewModal");
+            const closeBtn = document.getElementById("closeQuickView");
+            if (closeBtn && qvModal) {
+                closeBtn.addEventListener("click", () => {
+                    qvModal.classList.remove("show");
+                    setTimeout(() => {
+                        if (!qvModal.classList.contains("show")) {
+                            qvModal.style.display = "none";
+                        }
+                    }, 300);
+                });
+            }
+            if (qvModal) {
+                qvModal.addEventListener("click", (e) => {
+                    if (e.target === qvModal) {
+                        qvModal.classList.remove("show");
+                        setTimeout(() => {
+                            if (!qvModal.classList.contains("show")) {
+                                qvModal.style.display = "none";
+                            }
+                        }, 300);
+                    }
+                });
+            }
+        })();
     </script>
 
     <!-- Centered Location Modal Overlay -->
-    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
+    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true"
+        aria-labelledby="locationModalTitle">
         <div class="location-modal-content">
             <button id="closeLocationModal" class="location-close-btn" aria-label="Close modal">&times;</button>
             <h3 id="locationModalTitle">Choose your location</h3>
-            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog speed in your area.</p>
-            
+            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog
+                speed in your area.</p>
+
             <div class="location-input-wrap">
-                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6" autocomplete="off" aria-label="Pincode">
+                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6"
+                    autocomplete="off" aria-label="Pincode">
                 <button id="modalPincodeSubmit" class="location-submit-btn" disabled>Apply</button>
             </div>
-            
+
             <div id="modalPincodeStatus" class="location-status-text"></div>
         </div>
     </div>
@@ -2399,7 +2382,7 @@
         /* ───────────────────────────────────────
            HEADER LOCATION PINCODE CONTROLLER
         ─────────────────────────────────────── */
-        (function() {
+        (function () {
             const locBtn = document.getElementById("headerLocationBtn");
             const modal = document.getElementById("locationModal");
             const closeBtn = document.getElementById("closeLocationModal");
@@ -2471,7 +2454,7 @@
                                     status.style.color = "#22c55e"; // green
                                     status.textContent = `✓ Delivering to ${city}, ${info.State}`;
                                     submit.disabled = false;
-                                    
+
                                     // Save temporary variables in dataset
                                     submit.dataset.city = city;
                                     submit.dataset.pin = pin;
@@ -2513,7 +2496,7 @@
 
     <!-- Dynamic Header Height Calculation -->
     <script>
-        (function() {
+        (function () {
             function updateHeaderHeight() {
                 const header = document.getElementById("siteHeader");
                 if (header) {
