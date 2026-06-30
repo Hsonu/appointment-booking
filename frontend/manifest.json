@@ -1,7 +1,7 @@
 {
-  "name": "Netrima Jewels - Luxury Collection",
-  "short_name": "Netrima Jewels",
-  "description": "Discover the finest handcrafted gold, diamond & platinum jewellery at Netrima Jewels.",
+  "name": "Sonu Bin - Luxury Collection",
+  "short_name": "Sonu Bin",
+  "description": "Discover the finest handcrafted gold, diamond & platinum jewellery at Sonu Bin.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0d0d0f",

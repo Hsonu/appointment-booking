@@ -946,7 +946,7 @@ app.post("/placeOrder", async (req, res) => {
             <div style="font-family: Arial, sans-serif; max-width: 600px; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
                 <h2 style="color: #c9a96e; text-align: center; border-bottom: 2px solid #c9a96e; padding-bottom: 10px;">New Order Received!</h2>
                 <p>Hello Admin,</p>
-                <p>A new order has been placed on Netrima Jewels. Here are the details:</p>
+                <p>A new order has been placed on Sonu Bin. Here are the details:</p>
                 <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
                     <tr style="background-color: #f9f9f9;">
                         <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Order ID</th>
@@ -981,7 +981,7 @@ app.post("/placeOrder", async (req, res) => {
                         <td style="padding: 8px; border: 1px solid #ddd;">${PlaceOrderResponse.customerAdd}</td>
                     </tr>
                 </table>
-                <p style="margin-top: 20px; font-size: 0.9em; color: #666; text-align: center;">Netrima Jewels Order Management System</p>
+                <p style="margin-top: 20px; font-size: 0.9em; color: #666; text-align: center;">Sonu Bin Order Management System</p>
             </div>
         `;
 
@@ -995,7 +995,7 @@ app.post("/placeOrder", async (req, res) => {
         .catch(err => console.error("❌ Failed to send order email:", err.message));
 
         // 2. Send WhatsApp Notification
-        const whatsappMsg = `🔔 *New Netrima Jewels Order Received!*\n\n*Order ID:* ${PlaceOrderResponse._id}\n*Customer Name:* ${PlaceOrderResponse.name || PlaceOrderResponse.customerName}\n*Phone:* ${PlaceOrderResponse.phone || PlaceOrderResponse.customerMobileNumber}\n*Product:* ${PlaceOrderResponse.productName}\n*Qty:* ${PlaceOrderResponse.qty}\n*Total Amount:* ₹${(PlaceOrderResponse.withGstTotalAmount || PlaceOrderResponse.totalAmount).toLocaleString("en-IN")}\n*Payment Method:* ${PlaceOrderResponse.paymentMethod}\n*Address:* ${PlaceOrderResponse.customerAdd}`;
+        const whatsappMsg = `🔔 *New Sonu Bin Order Received!*\n\n*Order ID:* ${PlaceOrderResponse._id}\n*Customer Name:* ${PlaceOrderResponse.name || PlaceOrderResponse.customerName}\n*Phone:* ${PlaceOrderResponse.phone || PlaceOrderResponse.customerMobileNumber}\n*Product:* ${PlaceOrderResponse.productName}\n*Qty:* ${PlaceOrderResponse.qty}\n*Total Amount:* ₹${(PlaceOrderResponse.withGstTotalAmount || PlaceOrderResponse.totalAmount).toLocaleString("en-IN")}\n*Payment Method:* ${PlaceOrderResponse.paymentMethod}\n*Address:* ${PlaceOrderResponse.customerAdd}`;
 
         sendWhatsAppSMS(targetWhatsApp, whatsappMsg);
         // ─────────────────────────────────────────────────────────────────
