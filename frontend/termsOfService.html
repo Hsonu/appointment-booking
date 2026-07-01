@@ -122,7 +122,7 @@
             padding: 0 24px;
         }
 
-                /* Logo */
+        /* Logo */
         #navLogo {
             display: flex;
             align-items: center;
@@ -143,11 +143,12 @@
             transform: rotate(360deg);
         }
 
-        
+
         .mobile-br {
             display: none;
         }
-.brand-text {
+
+        .brand-text {
             display: flex;
             flex-direction: column;
             line-height: 1.1;
@@ -556,10 +557,12 @@
             .mobile-br {
                 display: block !important;
             }
+
             #navLogo .brand-name {
                 font-size: 1.05rem !important;
                 line-height: 1.05 !important;
             }
+
             #navLogo .brand-tagline {
                 font-size: 0.5rem !important;
                 letter-spacing: 0.1em !important;
@@ -568,6 +571,7 @@
             .location-text-group {
                 display: none;
             }
+
             .header-location-btn {
                 padding: 8px;
                 border-radius: 10px;
@@ -579,6 +583,7 @@
                 align-items: center;
                 gap: 0;
             }
+
             .location-icon-svg {
                 width: 18px;
                 height: 18px;
@@ -603,6 +608,7 @@
             :root {
                 --header-h: 165px;
             }
+
             /* Navbar: icons-only mode on small screens */
             .navActionBtn {
                 font-size: 0;
@@ -626,17 +632,20 @@
             :root {
                 --header-h: 165px;
             }
+
             .footerTop {
                 grid-template-columns: 1fr;
             }
         }
-    
+
         @media (max-width: 768px) {
-            #headerLocationBtn, .header-location-btn {
+
+            #headerLocationBtn,
+            .header-location-btn {
                 display: none !important;
             }
         }
-    
+
 
         /* ═══════════════════════════════════════════
            HEADER LOCATION WIDGET
@@ -838,9 +847,11 @@
                 padding: 6px 8px;
                 max-width: 140px;
             }
+
             .location-label {
                 max-width: 80px;
             }
+
             .location-action {
                 font-size: 0.72rem;
             }
@@ -852,23 +863,28 @@
                 max-width: 110px;
                 gap: 6px;
             }
+
             .location-icon-svg {
                 width: 16px;
                 height: 16px;
             }
+
             .location-label {
                 max-width: 60px;
                 font-size: 0.58rem;
             }
+
             .location-action {
                 font-size: 0.68rem;
             }
         }
 
 
-    
+
         @media (max-width: 768px) {
-            #headerLocationBtn, .header-location-btn {
+
+            #headerLocationBtn,
+            .header-location-btn {
                 display: none !important;
             }
         }
@@ -876,10 +892,13 @@
 </head>
 
 <body>
-<!-- Site-Wide Disclaimer Banner -->
-<div class="site-wide-disclaimer" style="background: #110e08; color: #e8d4a8; text-align: center; padding: 10px 15px; font-size: 0.82rem; font-family: 'Inter', sans-serif; border-bottom: 1px solid #c9a96e; letter-spacing: 0.05em; line-height: 1.4; font-weight: 500; z-index: 9999; position: relative;">
-    <strong>DISCLAIMER:</strong> Sonu Bin offers premium imitation/fashion jewellery only. All products are non-gold fashion jewellery. We do not sell real gold, BIS Hallmarked jewellery, certified diamonds, or precious metal jewellery.
-</div>
+    <!-- Site-Wide Disclaimer Banner -->
+    <div class="site-wide-disclaimer"
+        style="background: #110e08; color: #e8d4a8; text-align: center; padding: 10px 15px; font-size: 0.82rem; font-family: 'Inter', sans-serif; border-bottom: 1px solid #c9a96e; letter-spacing: 0.05em; line-height: 1.4; font-weight: 500; z-index: 9999; position: relative;">
+        <strong>DISCLAIMER:</strong> Sonu Bin offers premium imitation/fashion jewellery only. All products are non-gold
+        fashion jewellery. We do not sell real gold, BIS Hallmarked jewellery, certified diamonds, or precious metal
+        jewellery.
+    </div>
 
     <!-- WhatsApp float -->
     <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products."
@@ -901,9 +920,11 @@
             </a>
 
             <!-- Location Widget -->
-            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0" aria-label="Select delivery location">
+            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0"
+                aria-label="Select delivery location">
                 <svg viewBox="0 0 24 24" class="location-icon-svg">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    <path
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
                 <div class="location-text-group">
                     <span class="location-label" id="headerLocationLabel">Delivering to India</span>
@@ -950,23 +971,26 @@
         </div>
     </header>
 
-<!-- Centered Location Modal Overlay -->
-    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
+    <!-- Centered Location Modal Overlay -->
+    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true"
+        aria-labelledby="locationModalTitle">
         <div class="location-modal-content">
             <button id="closeLocationModal" class="location-close-btn" aria-label="Close modal">&times;</button>
             <h3 id="locationModalTitle">Choose your location</h3>
-            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog speed in your area.</p>
-            
+            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog
+                speed in your area.</p>
+
             <div class="location-input-wrap">
-                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6" autocomplete="off" aria-label="Pincode">
+                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6"
+                    autocomplete="off" aria-label="Pincode">
                 <button id="modalPincodeSubmit" class="location-submit-btn" disabled>Apply</button>
             </div>
-            
+
             <div id="modalPincodeStatus" class="location-status-text"></div>
         </div>
     </div>
 
-<!-- Hero Banner -->
+    <!-- Hero Banner -->
     <div id="heroBanner">
         <img src="https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/AT_Offer/01/Desktop.jpg"
             alt="Sonu Bin Showroom Banner">
@@ -982,48 +1006,70 @@
         <div class="policyCard">
             <div class="lastUpdated">Last Updated: June 15, 2026</div>
 
-            <p>Welcome to Sonu Bin. These Terms of Service ("Terms") govern your access to and use of our website, mobile application, showroom appointments, and the purchase of our premium imitation and fashion jewellery. By using our website or placing an order, you agree to comply with and be bound by these Terms.</p>
+            <p>Welcome to Sonu Bin. These Terms of Service ("Terms") govern your access to and use of our website,
+                mobile application, showroom appointments, and the purchase of our premium imitation and fashion
+                jewellery. By using our website or placing an order, you agree to comply with and be bound by these
+                Terms.</p>
 
             <h2>1. User Account & Security</h2>
             <p>To place orders or book showroom appointments, you may be required to verify your details:</p>
             <ul>
-                <li><strong>OTP Verification:</strong> We use secure One-Time Passwords (OTPs) sent to your mobile number to authenticate your identity. You agree to provide a valid, active 10-digit mobile number belonging to you.</li>
-                <li><strong>Session Security:</strong> Local login tokens are stored securely in your browser to maintain your session. You are responsible for preventing unauthorized access to your account and devices.</li>
+                <li><strong>OTP Verification:</strong> We use secure One-Time Passwords (OTPs) sent to your mobile
+                    number to authenticate your identity. You agree to provide a valid, active 10-digit mobile number
+                    belonging to you.</li>
+                <li><strong>Session Security:</strong> Local login tokens are stored securely in your browser to
+                    maintain your session. You are responsible for preventing unauthorized access to your account and
+                    devices.</li>
             </ul>
 
             <h2>2. Product Accuracy & Metal Pricing</h2>
-            <p>We make every effort to display the details, metal weights, and gemstone characteristics of our jewellery as accurately as possible:</p>
+            <p>We make every effort to display the details, metal weights, and gemstone characteristics of our jewellery
+                as accurately as possible:</p>
             <ul>
-                <li><strong>Product Information:</strong> All products are premium imitation/fashion jewellery. They are not made of real gold and do not include BIS Hallmark or gold certification.</li>
-                <li><strong>Fashion Jewellery Information:</strong> Our products are premium fashion/imitation jewellery only. We do not sell real gold or precious metals.</li>
+                <li><strong>Product Information:</strong> All products are premium imitation/fashion jewellery. They are
+                    not made of real gold and do not include BIS Hallmark or gold certification.</li>
+                <li><strong>Fashion Jewellery Information:</strong> Our products are premium fashion/imitation jewellery
+                    only. We do not sell real gold or precious metals.</li>
             </ul>
 
             <h2>3. Purchases, Payments, and Razorpay</h2>
             <p>When you purchase products from Sonu Bin:</p>
             <ul>
-                <li><strong>Payment Gateway:</strong> All payments are processed through Razorpay, a secure external transaction processor compliance with PCI-DSS. We do not store or see your raw credit card, debit card, or net banking numbers.</li>
-                <li><strong>Cash on Delivery (COD):</strong> COD is available for eligible pin codes and cart values. COD orders are subject to confirmation via WhatsApp or phone call prior to shipping.</li>
+                <li><strong>Payment Gateway:</strong> All payments are processed through Razorpay, a secure external
+                    transaction processor compliance with PCI-DSS. We do not store or see your raw credit card, debit
+                    card, or net banking numbers.</li>
+                <li><strong>Cash on Delivery (COD):</strong> COD is available for eligible pin codes and cart values.
+                    COD orders are subject to confirmation via WhatsApp or phone call prior to shipping.</li>
             </ul>
 
             <h2>4. Shipping, Delivery, and Handover</h2>
             <p>We offer free, fully insured shipping on all orders pan-India:</p>
             <ul>
-                <li><strong>Delivery Security:</strong> Due to the high value of jewellery shipments, deliveries will only be handed over to the buyer or authorized recipient upon presenting a secure pin code sent to the registered mobile number, or a physical signature.</li>
-                <li><strong>Fulfillment Timelines:</strong> Estimated shipping dates are provided at checkout, but may be subject to minor variations due to location accessibility or logistics partner delays.</li>
+                <li><strong>Delivery Security:</strong> Due to the high value of jewellery shipments, deliveries will
+                    only be handed over to the buyer or authorized recipient upon presenting a secure pin code sent to
+                    the registered mobile number, or a physical signature.</li>
+                <li><strong>Fulfillment Timelines:</strong> Estimated shipping dates are provided at checkout, but may
+                    be subject to minor variations due to location accessibility or logistics partner delays.</li>
             </ul>
 
             <h2>5. Returns, Refunds, and Custom Orders</h2>
             <p>Our return policy is governed strictly to protect value and authenticity:</p>
             <ul>
-                <li><strong>Refund Policy:</strong> Returns and refunds are managed in accordance with our <a href="./refundPolicy.html" style="color: var(--gold); text-decoration: underline;">Refund Policy</a>. Eligible standard designs can be returned within 30 days of delivery.</li>
-                <li><strong>Bespoke Items:</strong> Customized engravings, custom-crafted designs, and resizing modifications made at the customer's request are completely non-returnable and non-refundable.</li>
+                <li><strong>Refund Policy:</strong> Returns and refunds are managed in accordance with our <a
+                        href="./refundPolicy.html" style="color: var(--gold); text-decoration: underline;">Refund
+                        Policy</a>. Eligible standard designs can be returned within 30 days of delivery.</li>
+                <li><strong>Bespoke Items:</strong> Customized engravings, custom-crafted designs, and resizing
+                    modifications made at the customer's request are completely non-returnable and non-refundable.</li>
             </ul>
 
             <h2>6. Intellectual Property</h2>
-            <p>All content displayed on this website, including but not limited to texts, high-resolution product photographs, brand logos, custom UI designs, graphics, and software scripts, is the exclusive property of Sonu Bin and is protected by copyright, trademark, and intellectual property laws of India.</p>
+            <p>All content displayed on this website, including but not limited to texts, high-resolution product
+                photographs, brand logos, custom UI designs, graphics, and software scripts, is the exclusive property
+                of Sonu Bin and is protected by copyright, trademark, and intellectual property laws of India.</p>
 
             <h2>7. Limitation of Liability</h2>
-            <p>Sonu Bin shall not be liable for any direct, indirect, incidental, or consequential damages resulting from the use of our services, shipping delays by carriers.</p>
+            <p>Sonu Bin shall not be liable for any direct, indirect, incidental, or consequential damages resulting
+                from the use of our services, shipping delays by carriers.</p>
 
             <h2>8. Contact Information</h2>
             <p>For questions or issues regarding these Terms of Service, please contact our support desk:</p>
@@ -1041,7 +1087,8 @@
             <div class="footerTop">
                 <div class="footerBrand">
                     <div class="footerLogo">Sonu Bin</div>
-                    <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary. Handcrafted with passion, delivered with pride.</p>
+                    <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary.
+                        Handcrafted with passion, delivered with pride.</p>
                     <div class="footerSocial">
                         <a href="#" class="socialIcon" aria-label="Instagram">
                             <svg viewBox="0 0 24 24">
@@ -1057,7 +1104,8 @@
                         </a>
                         <a href="https://wa.me/918603632642" class="socialIcon" aria-label="WhatsApp" target="_blank">
                             <svg viewBox="0 0 24 24">
-                                <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                                <path
+                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
                             </svg>
                         </a>
                     </div>
@@ -1093,11 +1141,12 @@
             </div>
             <div class="footerBottom">
                 <p class="footerCopy">&copy; 2026 <span>Sonu Bin</span>. All Rights Reserved. Crafted with ♥</p>
-<div style="font-size: 0.8rem; color: #a8854e; text-align: center; margin-top: 15px; line-height: 1.6; font-weight: 500;">
-    Premium Fashion Jewellery<br>
-    Subhash Nagar, SEEPZ Gate No. 1, Andheri East, Mumbai, Maharashtra – 400096<br>
-    <strong>Not Real Gold • No BIS Hallmark</strong>
-</div>
+                <div
+                    style="font-size: 0.8rem; color: #a8854e; text-align: center; margin-top: 15px; line-height: 1.6; font-weight: 500;">
+                    Premium Fashion Jewellery<br>
+                    Gram bin dera post-nagwan,thana simri dumraon buxar bihar 802133 <br>
+                    <strong>Not Real Gold • No BIS Hallmark</strong>
+                </div>
                 <div class="footerPayments">
                     <span class="payBadge">UPI</span>
                     <span class="payBadge">Razorpay</span>
@@ -1157,18 +1206,18 @@
 
     <!-- PWA Service Worker Registration -->
     <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('./service-worker.js')
-                .then(function(reg) { console.log('[SW] Registered:', reg.scope); })
-                .catch(function(err) { console.error('[SW] Failed:', err); });
-        });
-    }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(function (reg) { console.log('[SW] Registered:', reg.scope); })
+                    .catch(function (err) { console.error('[SW] Failed:', err); });
+            });
+        }
     </script>
 
     <!-- Dynamic Header Height Calculation -->
     <script>
-        (function() {
+        (function () {
             function updateHeaderHeight() {
                 const header = document.getElementById("siteHeader");
                 if (header) {
@@ -1189,11 +1238,11 @@
     </script>
 
 
-<script>
+    <script>
         /* ───────────────────────────────────────
            HEADER LOCATION PINCODE CONTROLLER
         ─────────────────────────────────────── */
-        (function() {
+        (function () {
             const locBtn = document.getElementById("headerLocationBtn");
             const modal = document.getElementById("locationModal");
             const closeBtn = document.getElementById("closeLocationModal");
@@ -1265,7 +1314,7 @@
                                     status.style.color = "#22c55e"; // green
                                     status.textContent = `✓ Delivering to ${city}, ${info.State}`;
                                     submit.disabled = false;
-                                    
+
                                     // Save temporary variables in dataset
                                     submit.dataset.city = city;
                                     submit.dataset.pin = pin;

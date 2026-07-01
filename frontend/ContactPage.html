@@ -129,7 +129,7 @@
             padding: 0 24px;
         }
 
-                /* Logo */
+        /* Logo */
         #navLogo {
             display: flex;
             align-items: center;
@@ -150,11 +150,12 @@
             transform: rotate(360deg);
         }
 
-        
+
         .mobile-br {
             display: none;
         }
-.brand-text {
+
+        .brand-text {
             display: flex;
             flex-direction: column;
             line-height: 1.1;
@@ -739,6 +740,7 @@
             :root {
                 --header-h: 165px;
             }
+
             /* Navbar: icons-only mode on small screens */
             .navActionBtn {
                 font-size: 0;
@@ -762,6 +764,7 @@
             :root {
                 --header-h: 165px;
             }
+
             .footerTop {
                 grid-template-columns: 1fr;
             }
@@ -770,7 +773,7 @@
                 padding: 24px;
             }
         }
-    
+
 
         /* ═══════════════════════════════════════════
            HEADER LOCATION WIDGET
@@ -972,9 +975,11 @@
                 padding: 6px 8px;
                 max-width: 140px;
             }
+
             .location-label {
                 max-width: 80px;
             }
+
             .location-action {
                 font-size: 0.72rem;
             }
@@ -986,23 +991,28 @@
                 max-width: 110px;
                 gap: 6px;
             }
+
             .location-icon-svg {
                 width: 16px;
                 height: 16px;
             }
+
             .location-label {
                 max-width: 60px;
                 font-size: 0.58rem;
             }
+
             .location-action {
                 font-size: 0.68rem;
             }
         }
 
 
-    
+
         @media (max-width: 768px) {
-            #headerLocationBtn, .header-location-btn {
+
+            #headerLocationBtn,
+            .header-location-btn {
                 display: none !important;
             }
         }
@@ -1010,10 +1020,13 @@
 </head>
 
 <body>
-<!-- Site-Wide Disclaimer Banner -->
-<div class="site-wide-disclaimer" style="background: #110e08; color: #e8d4a8; text-align: center; padding: 10px 15px; font-size: 0.82rem; font-family: 'Inter', sans-serif; border-bottom: 1px solid #c9a96e; letter-spacing: 0.05em; line-height: 1.4; font-weight: 500; z-index: 9999; position: relative;">
-    <strong>DISCLAIMER:</strong> Sonu Bin offers premium imitation/fashion jewellery only. All products are non-gold fashion jewellery. We do not sell real gold, BIS Hallmarked jewellery, certified diamonds, or precious metal jewellery.
-</div>
+    <!-- Site-Wide Disclaimer Banner -->
+    <div class="site-wide-disclaimer"
+        style="background: #110e08; color: #e8d4a8; text-align: center; padding: 10px 15px; font-size: 0.82rem; font-family: 'Inter', sans-serif; border-bottom: 1px solid #c9a96e; letter-spacing: 0.05em; line-height: 1.4; font-weight: 500; z-index: 9999; position: relative;">
+        <strong>DISCLAIMER:</strong> Sonu Bin offers premium imitation/fashion jewellery only. All products are non-gold
+        fashion jewellery. We do not sell real gold, BIS Hallmarked jewellery, certified diamonds, or precious metal
+        jewellery.
+    </div>
 
     <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
         class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
@@ -1038,9 +1051,11 @@
             </a>
 
             <!-- Location Widget -->
-            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0" aria-label="Select delivery location">
+            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0"
+                aria-label="Select delivery location">
                 <svg viewBox="0 0 24 24" class="location-icon-svg">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    <path
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
                 <div class="location-text-group">
                     <span class="location-label" id="headerLocationLabel">Delivering to India</span>
@@ -1087,23 +1102,26 @@
         </div>
     </header>
 
-<!-- Centered Location Modal Overlay -->
-    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
+    <!-- Centered Location Modal Overlay -->
+    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true"
+        aria-labelledby="locationModalTitle">
         <div class="location-modal-content">
             <button id="closeLocationModal" class="location-close-btn" aria-label="Close modal">&times;</button>
             <h3 id="locationModalTitle">Choose your location</h3>
-            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog speed in your area.</p>
-            
+            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog
+                speed in your area.</p>
+
             <div class="location-input-wrap">
-                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6" autocomplete="off" aria-label="Pincode">
+                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6"
+                    autocomplete="off" aria-label="Pincode">
                 <button id="modalPincodeSubmit" class="location-submit-btn" disabled>Apply</button>
             </div>
-            
+
             <div id="modalPincodeStatus" class="location-status-text"></div>
         </div>
     </div>
 
-<!-- Banner -->
+    <!-- Banner -->
     <section id="pageBanner">
         <p id="bannerEyebrow">✦ Get In Touch</p>
         <h1 id="bannerTitle">Book Your Private<br><em>Jewellery Appointment</em></h1>
@@ -1141,7 +1159,8 @@
                         <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
                         <circle cx="12" cy="10" r="3" />
                     </svg></div>
-                <div class="contactItemText"><strong>Showroom</strong><span>Sonu Bin<br>Subhash Nagar, SEEPZ Gate No. 1,<br>Andheri East, Mumbai, Maharashtra – 400096, India</span></div>
+                <div class="contactItemText"><strong>Showroom</strong><span>Sonu Bin<br>Subhash Nagar, SEEPZ Gate No.
+                        1,<br>Andheri East, Mumbai, Maharashtra – 400096, India</span></div>
             </div>
             <div class="contactItem">
                 <div class="contactIcon"><svg viewBox="0 0 24 24">
@@ -1163,7 +1182,8 @@
                 </div>
                 <div class="formGroup">
                     <label for="mobileNumber">Phone Number</label>
-                    <input type="tel" id="mobileNumber" maxlength="10" inputmode="numeric" placeholder="10-digit mobile number" required>
+                    <input type="tel" id="mobileNumber" maxlength="10" inputmode="numeric"
+                        placeholder="10-digit mobile number" required>
                 </div>
                 <div class="formGroup">
                     <label for="emailId">Email Address</label>
@@ -1235,11 +1255,12 @@
             </div>
             <div class="footerBottom">
                 <p class="footerCopy">&copy; 2026 <span>Sonu Bin</span>. All Rights Reserved. Crafted with ♥</p>
-<div style="font-size: 0.8rem; color: #a8854e; text-align: center; margin-top: 15px; line-height: 1.6; font-weight: 500;">
-    Premium Fashion Jewellery<br>
-    Subhash Nagar, SEEPZ Gate No. 1, Andheri East, Mumbai, Maharashtra – 400096<br>
-    <strong>Not Real Gold • No BIS Hallmark</strong>
-</div>
+                <div
+                    style="font-size: 0.8rem; color: #a8854e; text-align: center; margin-top: 15px; line-height: 1.6; font-weight: 500;">
+                    Premium Fashion Jewellery<br>
+                    Gram bin dera post-nagwan,thana simri dumraon buxar bihar 802133 <br>
+                    <strong>Not Real Gold • No BIS Hallmark</strong>
+                </div>
                 <div class="footerPayments"><span class="payBadge">UPI</span><span class="payBadge">Razorpay</span><span
                         class="payBadge">Net Banking</span><span class="payBadge">COD</span></div>
             </div>
@@ -1350,18 +1371,18 @@
 
     <!-- PWA Service Worker Registration -->
     <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('./service-worker.js')
-                .then(function(reg) { console.log('[SW] Registered:', reg.scope); })
-                .catch(function(err) { console.error('[SW] Failed:', err); });
-        });
-    }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(function (reg) { console.log('[SW] Registered:', reg.scope); })
+                    .catch(function (err) { console.error('[SW] Failed:', err); });
+            });
+        }
     </script>
 
     <!-- Dynamic Header Height Calculation -->
     <script>
-        (function() {
+        (function () {
             function updateHeaderHeight() {
                 const header = document.getElementById("siteHeader");
                 if (header) {
@@ -1382,11 +1403,11 @@
     </script>
 
 
-<script>
+    <script>
         /* ───────────────────────────────────────
            HEADER LOCATION PINCODE CONTROLLER
         ─────────────────────────────────────── */
-        (function() {
+        (function () {
             const locBtn = document.getElementById("headerLocationBtn");
             const modal = document.getElementById("locationModal");
             const closeBtn = document.getElementById("closeLocationModal");
@@ -1458,7 +1479,7 @@
                                     status.style.color = "#22c55e"; // green
                                     status.textContent = `✓ Delivering to ${city}, ${info.State}`;
                                     submit.disabled = false;
-                                    
+
                                     // Save temporary variables in dataset
                                     submit.dataset.city = city;
                                     submit.dataset.pin = pin;
