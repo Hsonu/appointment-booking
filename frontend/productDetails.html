@@ -13,7 +13,7 @@
     <link rel="apple-touch-icon" href="icon-192.png">
     <title>Secure Checkout – Sonu Bin</title>
     <meta name="description"
-        content="Securely place your order for handcrafted luxury jewellery at Sonu Bin using Razorpay.">
+        content="Securely place your order for handcrafted luxury jewellery at Sonu Bin using PayU.">
     <script src="/auto-logout.js"></script>
 
     <!-- Fonts -->
@@ -189,7 +189,7 @@
             padding: 0 24px;
         }
 
-                /* Logo */
+        /* Logo */
         #navLogo {
             display: flex;
             align-items: center;
@@ -210,11 +210,12 @@
             transform: rotate(360deg);
         }
 
-        
+
         .mobile-br {
             display: none;
         }
-.brand-text {
+
+        .brand-text {
             display: flex;
             flex-direction: column;
             line-height: 1.1;
@@ -567,7 +568,7 @@
             margin-top: 2px;
         }
 
-        .payment-box svg.razorpay-logo {
+        .payment-box svg.payu-logo {
             height: 24px;
             opacity: 0.8;
         }
@@ -800,10 +801,12 @@
             .mobile-br {
                 display: block !important;
             }
+
             #navLogo .brand-name {
                 font-size: 1.05rem !important;
                 line-height: 1.05 !important;
             }
+
             #navLogo .brand-tagline {
                 font-size: 0.5rem !important;
                 letter-spacing: 0.1em !important;
@@ -812,6 +815,7 @@
             .location-text-group {
                 display: none;
             }
+
             .header-location-btn {
                 padding: 8px;
                 border-radius: 10px;
@@ -823,6 +827,7 @@
                 align-items: center;
                 gap: 0;
             }
+
             .location-icon-svg {
                 width: 18px;
                 height: 18px;
@@ -833,6 +838,7 @@
             :root {
                 --header-h: 165px;
             }
+
             /* Navbar: icons-only mode on small screens */
             .navActionBtn {
                 font-size: 0;
@@ -1097,9 +1103,11 @@
                 font-size: 0.68rem;
             }
         }
-    
+
         @media (max-width: 768px) {
-            #headerLocationBtn, .header-location-btn {
+
+            #headerLocationBtn,
+            .header-location-btn {
                 display: none !important;
             }
         }
@@ -1107,10 +1115,13 @@
 </head>
 
 <body>
-<!-- Site-Wide Disclaimer Banner -->
-<div class="site-wide-disclaimer" style="background: #110e08; color: #e8d4a8; text-align: center; padding: 10px 15px; font-size: 0.82rem; font-family: 'Inter', sans-serif; border-bottom: 1px solid #c9a96e; letter-spacing: 0.05em; line-height: 1.4; font-weight: 500; z-index: 9999; position: relative;">
-    <strong>DISCLAIMER:</strong> Sonu Bin offers premium imitation/fashion jewellery only. All products are non-gold fashion jewellery. We do not sell real gold, BIS Hallmarked jewellery, certified diamonds, or precious metal jewellery.
-</div>
+    <!-- Site-Wide Disclaimer Banner -->
+    <div class="site-wide-disclaimer"
+        style="background: #110e08; color: #e8d4a8; text-align: center; padding: 10px 15px; font-size: 0.82rem; font-family: 'Inter', sans-serif; border-bottom: 1px solid #c9a96e; letter-spacing: 0.05em; line-height: 1.4; font-weight: 500; z-index: 9999; position: relative;">
+        <strong>DISCLAIMER:</strong> Sonu Bin offers premium imitation/fashion jewellery only. All products are non-gold
+        fashion jewellery. We do not sell real gold, BIS Hallmarked jewellery, certified diamonds, or precious metal
+        jewellery.
+    </div>
 
     <!-- WhatsApp Float -->
     <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
@@ -1140,9 +1151,11 @@
             </a>
 
             <!-- Location Widget -->
-            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0" aria-label="Select delivery location">
+            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0"
+                aria-label="Select delivery location">
                 <svg viewBox="0 0 24 24" class="location-icon-svg">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    <path
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                 </svg>
                 <div class="location-text-group">
                     <span class="location-label" id="headerLocationLabel">Delivering to India</span>
@@ -1189,23 +1202,26 @@
         </div>
     </header>
 
-<!-- Centered Location Modal Overlay -->
-    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
+    <!-- Centered Location Modal Overlay -->
+    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true"
+        aria-labelledby="locationModalTitle">
         <div class="location-modal-content">
             <button id="closeLocationModal" class="location-close-btn" aria-label="Close modal">&times;</button>
             <h3 id="locationModalTitle">Choose your location</h3>
-            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog speed in your area.</p>
-            
+            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog
+                speed in your area.</p>
+
             <div class="location-input-wrap">
-                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6" autocomplete="off" aria-label="Pincode">
+                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6"
+                    autocomplete="off" aria-label="Pincode">
                 <button id="modalPincodeSubmit" class="location-submit-btn" disabled>Apply</button>
             </div>
-            
+
             <div id="modalPincodeStatus" class="location-status-text"></div>
         </div>
     </div>
 
-<!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+    <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
     <main>
         <div class="container">
             <div class="checkout-title-wrap">
@@ -1303,14 +1319,14 @@
                                     <div class="payment-circle-inner"></div>
                                 </div>
                                 <div>
-                                    <div class="payment-title">Online Payment (Razorpay)</div>
+                                    <div class="payment-title">Online Payment (PayU)</div>
                                     <div class="payment-desc">Pay instantly using UPI, Credit/Debit cards, or Net
                                         Banking.</div>
                                 </div>
                             </div>
-                            <!-- Razorpay placeholder svg or text -->
+                            <!-- PayU secure payment badge -->
                             <span
-                                style="font-weight: 700; color: #1780EB; font-size: 0.75rem; font-style: italic;">razorpay</span>
+                                style="font-weight: 700; color: #00C853; font-size: 0.75rem; font-style: italic;">PayU</span>
                         </div>
 
                         <div class="payment-box" id="CashOnDeliveryPayment" style="margin-top: 12px;">
@@ -1369,8 +1385,10 @@
                         </div>
 
                         <!-- Checkout Disclaimer Notice -->
-                        <div style="font-size: 0.8rem; color: #a8854e; text-align: center; margin-bottom: 12px; font-weight: 500; line-height: 1.4;">
-                            * By placing this order, you acknowledge that you are purchasing imitation/fashion jewellery and not real gold.
+                        <div
+                            style="font-size: 0.8rem; color: #a8854e; text-align: center; margin-bottom: 12px; font-weight: 500; line-height: 1.4;">
+                            * By placing this order, you acknowledge that you are purchasing imitation/fashion jewellery
+                            and not real gold.
                         </div>
 
                         <!-- Place Order CTA -->
@@ -1389,7 +1407,7 @@
 
     <!-- Scripts -->
     <script src="./config.js"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- No external payment SDK needed – PayU uses server-side form redirect -->
     <script>
         // Dynamic Account navigation link updating & auth check redirect
         const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -1575,7 +1593,7 @@
             document.getElementById("PrepaidPayment").classList.add("selected");
             document.getElementById("CashOnDeliveryPayment").classList.remove("selected");
             document.getElementById("PlaceOrderBtn").innerHTML = `Place Order & Pay <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-            showToast("💳 Razorpay Secure checkout selected");
+            showToast("💳 PayU Secure checkout selected");
         });
 
         document.getElementById("CashOnDeliveryPayment").addEventListener("click", () => {
@@ -1831,113 +1849,59 @@
                         throw new Error(errData.message || "Place order backend submission failed");
                     }
                 } else {
-                    // Online Payment Flow (Razorpay)
+                    // Online Payment Flow (PayU Redirect)
                     console.log("Total Amount to charge:", paymentAmount);
 
-                    showToast("Initiating secure gateway connection…");
-                    const orderRes = await fetch(`${BASE_URL}/create-order`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ amount: paymentAmount })
-                    });
+                    showToast("Initiating secure PayU gateway connection…");
 
-                    if (!orderRes.ok) {
-                        const errData = await orderRes.json().catch(() => ({}));
-                        throw new Error(errData.message || "Could not initialize Razorpay order in backend");
-                    }
+                    const discount = productData.discount || 0;
+                    const discountedRate = productData.Rate * (1 - discount / 100);
 
-                    const order = await orderRes.json();
-                    console.log("Razorpay Order Data:", order);
-
-                    // Dynamically fetch the Razorpay public key from the backend
-                    const keyRes = await fetch(`${BASE_URL}/get-razorpay-key`);
-                    if (!keyRes.ok) {
-                        throw new Error("Could not fetch Razorpay key from backend");
-                    }
-                    const { key } = await keyRes.json();
-
-                    const options = {
-                        key: key,
-                        amount: order.amount,
-                        currency: order.currency,
-                        order_id: order.id,
-                        handler: async function (response) {
-                            try {
-                                showToast("Verifying payment transaction…");
-                                const verifyRes = await fetch(`${BASE_URL}/verify-payment`, {
-                                    method: "POST",
-                                    headers: { "Content-Type": "application/json" },
-                                    body: JSON.stringify(response)
-                                });
-
-                                const verifyData = await verifyRes.json();
-                                if (verifyData.success) {
-                                    showToast("✅ Payment Verified & Received!");
-
-                                    const discount = productData.discount || 0;
-                                    const discountedRate = productData.Rate * (1 - discount / 100);
-                                    const orderPayload = {
-                                        withGstTotalAmount: paymentAmount,
-                                        gst: Number(document.getElementById("GSTSamble").textContent),
-                                        gstAmount: Number(document.getElementById("PeroductGST").textContent.replace(/,/g, "")),
-                                        qty: qty,
-                                        totalAmount: discountedRate * qty,
-                                        address: addressData,
-                                        name: savedName,
-                                        phone: savedPhone,
-                                        email: savedEmail,
-                                        useNumber: localStorage.getItem("userNumber") || savedPhone,
-                                        customerName: savedName,
-                                        customerMobileNumber: localStorage.getItem("userNumber") || savedPhone,
-                                        customerAdd: addressString,
-                                        paymentMethod: "Online Payment",
-                                        paymentType: "Prepaid",
-                                        productName: productData.Productname,
-                                        rate: discountedRate,
-                                        photo: productData.photo,
-                                        description: productData.description || "",
-                                        orderStatus: "Order Placed"
-                                    };
-
-                                    showToast("Creating order records…");
-                                    const placeRes = await fetch(`${BASE_URL}/placeOrder`, {
-                                        method: "POST",
-                                        headers: { "Content-Type": "application/json" },
-                                        body: JSON.stringify(orderPayload)
-                                    });
-
-                                    if (placeRes.ok) {
-                                        showToast("🎉 Order placed successfully!");
-                                        setTimeout(() => {
-                                            window.location.href = "./allProduct.html";
-                                        }, 2000);
-                                    } else {
-                                        const errData = await placeRes.json().catch(() => ({}));
-                                        throw new Error(errData.message || "Place order backend submission failed");
-                                    }
-                                } else {
-                                    showToast("❌ Payment signature verification failed.");
-                                    checkoutBtn.disabled = false;
-                                    checkoutBtn.innerHTML = `Place Order & Pay <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-                                }
-                            } catch (err) {
-                                console.error(err);
-                                showToast(`❌ Checkout verification failed: ${err.message}`);
-                                checkoutBtn.disabled = false;
-                                checkoutBtn.innerHTML = `Place Order & Pay <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-                            }
-                        },
-                        modal: {
-                            ondismiss: function () {
-                                showToast("⚠️ Payment gateway closed by user.");
-                                checkoutBtn.disabled = false;
-                                checkoutBtn.innerHTML = `Place Order & Pay <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-                            }
-                        }
+                    // Prepare order data to be sent through PayU and stored after payment
+                    const orderPayload = {
+                        withGstTotalAmount: paymentAmount,
+                        gst: Number(document.getElementById("GSTSamble").textContent),
+                        gstAmount: Number(document.getElementById("PeroductGST").textContent.replace(/,/g, "")),
+                        qty: qty,
+                        totalAmount: discountedRate * qty,
+                        address: addressData,
+                        name: savedName,
+                        phone: savedPhone,
+                        email: savedEmail,
+                        useNumber: localStorage.getItem("userNumber") || savedPhone,
+                        customerName: savedName,
+                        customerMobileNumber: localStorage.getItem("userNumber") || savedPhone,
+                        customerAdd: addressString,
+                        productName: productData.Productname,
+                        rate: discountedRate,
+                        photo: productData.photo,
+                        description: productData.description || ""
                     };
 
-                    const rzp = new Razorpay(options);
-                    rzp.open();
+                    // Submit payment initiation to backend which returns an auto-submitting HTML form
+                    const payuRes = await fetch(`${BASE_URL}/payu/initiate`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            amount: paymentAmount,
+                            productinfo: productData.Productname,
+                            firstname: savedName,
+                            email: savedEmail || "customer@example.com",
+                            phone: savedPhone,
+                            orderData: orderPayload
+                        })
+                    });
+
+                    if (!payuRes.ok) {
+                        const errData = await payuRes.json().catch(() => ({}));
+                        throw new Error(errData.message || "Could not initialize PayU payment");
+                    }
+
+                    // The response is an HTML page with auto-submitting form to PayU
+                    const payuHtml = await payuRes.text();
+                    document.open();
+                    document.write(payuHtml);
+                    document.close();
                 }
             } catch (err) {
                 console.error("Order process failed:", err);
@@ -2006,7 +1970,7 @@
     </script>
 
     <!-- Centered Location Modal Overlay -->
-    
+
     </div>
 
     <script>
@@ -2138,7 +2102,7 @@
 
     <!-- Dynamic Header Height Calculation -->
     <script>
-        (function() {
+        (function () {
             function updateHeaderHeight() {
                 const header = document.getElementById("siteHeader");
                 if (header) {

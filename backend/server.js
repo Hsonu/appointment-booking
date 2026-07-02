@@ -25,7 +25,7 @@ const Admin = require("./adminSchema");
 const Complaint = require("./complaintSchema");
 const Blog = require("./blogSchema");
 const cors = require("cors");
-const Razorpar = require("razorpay");
+// PayU does not require an npm SDK – it uses standard HTTPS form POST
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 
@@ -36,14 +36,14 @@ function validateEnv() {
         "CLOUDINARY_CLOUD_NAME",
         "CLOUDINARY_API_KEY",
         "CLOUDINARY_API_SECRET",
-        "RAZORPAY_KEY_ID",
-        "RAZORPAY_KEY_SECRET"
+        "PAYU_KEY",
+        "PAYU_SALT"
     ];
     const missing = required.filter(key => !process.env[key]);
     if (missing.length > 0) {
         console.warn("⚠️ WARNING: Missing Environment Variables:");
         missing.forEach(key => console.warn(`   - ${key}`));
-        console.warn("⚠️ Features relying on these variables (like MongoDB, Razorpay, or Cloudinary) will fail.");
+        console.warn("⚠️ Features relying on these variables (like MongoDB, PayU, or Cloudinary) will fail.");
     } else {
         console.log("✅ All required environment variables are verified.");
     }
@@ -178,91 +178,222 @@ async function sendWhatsAppSMS(toPhone, messageText) {
 }
 
 
-// Safe Razorpay Initialization
-let razorpay = null;
-if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) {
-    try {
-        razorpay = new Razorpar({
-            key_id: process.env.RAZORPAY_KEY_ID,
-            key_secret: process.env.RAZORPAY_KEY_SECRET
-        });
-        console.log("✅ Razorpay gateway initialized successfully.");
-    } catch (err) {
-        console.error("❌ Razorpay Initialization Error:", err.message);
-    }
+// ── PayU Payment Gateway Configuration ──────────────────────────────────────
+const PAYU_KEY = process.env.PAYU_KEY;
+const PAYU_SALT = process.env.PAYU_SALT;
+// Use test URL for test/sandbox keys, switch to https://secure.payu.in/_payment for production
+const PAYU_BASE_URL = "https://test.payu.in/_payment";
+
+if (PAYU_KEY && PAYU_SALT) {
+    console.log("✅ PayU payment gateway configured successfully.");
 } else {
-    console.warn("⚠️ Razorpay credentials missing. Payment gateway is disabled.");
+    console.warn("⚠️ PayU credentials missing. Payment gateway is disabled.");
 }
 
-app.post("/create-order", async (req, res, next) => {
+// Helper: Generate PayU hash using SHA-512
+function generatePayUHash(params) {
+    const hashString = `${params.key}|${params.txnid}|${params.amount}|${params.productinfo}|${params.firstname}|${params.email}|${params.udf1 || ""}|${params.udf2 || ""}|${params.udf3 || ""}|${params.udf4 || ""}|${params.udf5 || ""}||||||${PAYU_SALT}`;
+    return crypto.createHash("sha512").update(hashString).digest("hex");
+}
+
+// Helper: Verify PayU reverse hash from response
+function verifyPayUHash(params) {
+    const hashString = `${PAYU_SALT}|${params.status}||||||${params.udf5 || ""}|${params.udf4 || ""}|${params.udf3 || ""}|${params.udf2 || ""}|${params.udf1 || ""}|${params.email}|${params.firstname}|${params.productinfo}|${params.amount}|${params.txnid}|${params.key}`;
+    const calculatedHash = crypto.createHash("sha512").update(hashString).digest("hex");
+    return calculatedHash === params.hash;
+}
+
+// ── POST /payu/initiate – Generate hash and return auto-submitting form ─────
+app.post("/payu/initiate", async (req, res) => {
     try {
-        if (!razorpay) {
-            return res.status(503).json({
-                message: "Razorpay payment gateway is not configured or disabled on this server."
-            });
+        if (!PAYU_KEY || !PAYU_SALT) {
+            return res.status(503).json({ message: "PayU payment gateway is not configured on this server." });
         }
-        const amount = Number(req.body.amount);
-        if (!amount || isNaN(amount) || amount <= 0) {
-            return res.status(400).json({ message: "Invalid amount value." });
+
+        const { amount, productinfo, firstname, email, phone, orderData } = req.body;
+
+        if (!amount || !productinfo || !firstname || !phone) {
+            return res.status(400).json({ message: "Missing required payment fields." });
         }
-        const options = {
-            amount: Math.round(amount * 100),
-            currency: "INR",
-            receipt: "receipt_" + Date.now()
+
+        // Generate unique transaction ID
+        const txnid = "TXN_" + Date.now() + "_" + Math.random().toString(36).substring(2, 8);
+
+        // Determine the base URL for callbacks (use request origin)
+        const protocol = req.headers["x-forwarded-proto"] || req.protocol || "http";
+        const host = req.headers["x-forwarded-host"] || req.headers.host;
+        const baseUrl = `${protocol}://${host}`;
+
+        const surl = `${baseUrl}/payu/success`; // Success callback URL
+        const furl = `${baseUrl}/payu/failure`; // Failure callback URL
+
+        // Store order data as JSON in udf1 so we can retrieve it after payment
+        const udf1 = Buffer.from(JSON.stringify(orderData)).toString("base64");
+
+        const params = {
+            key: PAYU_KEY,
+            txnid,
+            amount: parseFloat(amount).toFixed(2),
+            productinfo,
+            firstname,
+            email: email || "",
+            phone,
+            surl,
+            furl,
+            udf1,
+            udf2: "",
+            udf3: "",
+            udf4: "",
+            udf5: ""
         };
-        const order = await razorpay.orders.create(options);
-        res.status(200).json(order);
+
+        // Generate the secure hash
+        params.hash = generatePayUHash(params);
+
+        console.log(`[PayU] Initiating payment – TxnID: ${txnid}, Amount: ₹${params.amount}, Customer: ${firstname}`);
+
+        // Return an auto-submitting HTML form that redirects to PayU
+        const formHtml = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Redirecting to PayU…</title>
+                <style>
+                    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #0d0d0f; color: #c9a96e; font-family: 'Inter', sans-serif; }
+                    .loader { text-align: center; }
+                    .loader h2 { margin-bottom: 12px; font-size: 1.3rem; }
+                    .loader p { color: #7a7a85; font-size: 0.9rem; }
+                    .spinner { width: 40px; height: 40px; border: 3px solid rgba(201,169,110,0.2); border-top-color: #c9a96e; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+                    @keyframes spin { to { transform: rotate(360deg); } }
+                </style>
+            </head>
+            <body>
+                <div class="loader">
+                    <div class="spinner"></div>
+                    <h2>Redirecting to PayU Secure Payment…</h2>
+                    <p>Please do not close this window.</p>
+                </div>
+                <form id="payuForm" method="POST" action="${PAYU_BASE_URL}">
+                    ${Object.entries(params).map(([k, v]) => `<input type="hidden" name="${k}" value="${v}" />`).join("\n                    ")}
+                </form>
+                <script>document.getElementById('payuForm').submit();</script>
+            </body>
+            </html>
+        `;
+
+        res.setHeader("Content-Type", "text/html");
+        res.send(formHtml);
+
     } catch (err) {
-        next(err);
+        console.error("[PayU] Initiation error:", err);
+        res.status(500).json({ message: "Payment initiation failed." });
     }
 });
 
+// ── POST /payu/success – PayU redirects here on successful payment ──────────
+app.post("/payu/success", async (req, res) => {
+    try {
+        console.log("[PayU] Success callback received:", req.body.txnid);
 
+        const payuResponse = req.body;
 
-app.post("/verify-payment", (req, res) => {
-    console.log("Verify Route Hit");
-    if (!process.env.RAZORPAY_KEY_SECRET) {
-        return res.status(503).json({
-            success: false,
-            message: "Payment gateway credentials are not configured on the server."
-        });
+        // Verify the response hash from PayU
+        if (!verifyPayUHash(payuResponse)) {
+            console.error("[PayU] ❌ Hash verification FAILED for txnid:", payuResponse.txnid);
+            return res.redirect("/productDetails.html?payment=failed&reason=hash_mismatch");
+        }
+
+        console.log("[PayU] ✅ Hash verified for txnid:", payuResponse.txnid);
+
+        // Decode the order data from udf1
+        let orderPayload = {};
+        try {
+            orderPayload = JSON.parse(Buffer.from(payuResponse.udf1 || "", "base64").toString("utf-8"));
+        } catch (e) {
+            console.error("[PayU] Failed to decode order data from udf1:", e.message);
+            return res.redirect("/productDetails.html?payment=failed&reason=invalid_order_data");
+        }
+
+        // Add PayU transaction details to the order
+        orderPayload.transactionId = payuResponse.txnid;
+        orderPayload.payuTxnId = payuResponse.mihpayid || "";
+        orderPayload.paymentStatus = "paid";
+        orderPayload.paymentMethod = "Online Payment";
+        orderPayload.paymentType = "Prepaid";
+        orderPayload.orderStatus = "Order Placed";
+
+        // Resolve admin for this product (same logic as /placeOrder)
+        let adminId = "admin";
+        if (orderPayload.productName) {
+            const productRecord = await addProducts.findOne({ Productname: orderPayload.productName });
+            if (productRecord) {
+                if (productRecord.Units < orderPayload.qty) {
+                    return res.redirect("/productDetails.html?payment=failed&reason=out_of_stock");
+                }
+                productRecord.Units -= orderPayload.qty;
+                await productRecord.save();
+                if (productRecord.createdBy) {
+                    adminId = productRecord.createdBy;
+                }
+            }
+        }
+        orderPayload.adminId = adminId;
+
+        // Save the order to MongoDB
+        const newOrder = new placeOrderData(orderPayload);
+        const savedOrder = await newOrder.save();
+        console.log("[PayU] ✅ Order saved – ID:", savedOrder._id);
+
+        // ── Order Success Notifications ──────────────────────────────────
+        const targetEmail = "sonurajsonuraj4515@gmail.com";
+        const targetWhatsApp = "8603632642";
+
+        const emailSubject = `New Order Placed (PayU) - Order ID: ${savedOrder._id}`;
+        const emailHtml = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+                <h2 style="color: #c9a96e; text-align: center; border-bottom: 2px solid #c9a96e; padding-bottom: 10px;">New Online Order Received!</h2>
+                <p>Hello Admin,</p>
+                <p>A new <strong>prepaid</strong> order has been placed via PayU. Here are the details:</p>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                    <tr style="background-color: #f9f9f9;"><th style="text-align:left;padding:8px;border:1px solid #ddd;">Order ID</th><td style="padding:8px;border:1px solid #ddd;">${savedOrder._id}</td></tr>
+                    <tr><th style="text-align:left;padding:8px;border:1px solid #ddd;">PayU Txn ID</th><td style="padding:8px;border:1px solid #ddd;">${payuResponse.mihpayid || payuResponse.txnid}</td></tr>
+                    <tr style="background-color: #f9f9f9;"><th style="text-align:left;padding:8px;border:1px solid #ddd;">Customer</th><td style="padding:8px;border:1px solid #ddd;">${savedOrder.name || savedOrder.customerName}</td></tr>
+                    <tr><th style="text-align:left;padding:8px;border:1px solid #ddd;">Mobile</th><td style="padding:8px;border:1px solid #ddd;">${savedOrder.phone || savedOrder.customerMobileNumber}</td></tr>
+                    <tr style="background-color: #f9f9f9;"><th style="text-align:left;padding:8px;border:1px solid #ddd;">Product</th><td style="padding:8px;border:1px solid #ddd;">${savedOrder.productName}</td></tr>
+                    <tr><th style="text-align:left;padding:8px;border:1px solid #ddd;">Qty</th><td style="padding:8px;border:1px solid #ddd;">${savedOrder.qty}</td></tr>
+                    <tr style="background-color: #f9f9f9;"><th style="text-align:left;padding:8px;border:1px solid #ddd;">Total Paid</th><td style="padding:8px;border:1px solid #ddd;">₹${(savedOrder.withGstTotalAmount || savedOrder.totalAmount).toLocaleString("en-IN")}</td></tr>
+                    <tr><th style="text-align:left;padding:8px;border:1px solid #ddd;">Address</th><td style="padding:8px;border:1px solid #ddd;">${savedOrder.customerAdd}</td></tr>
+                </table>
+                <p style="margin-top: 20px; font-size: 0.9em; color: #666; text-align: center;">Sonu Bin Order Management System</p>
+            </div>
+        `;
+
+        transporter.sendMail({
+            from: process.env.SMTP_USER || "sonurajsonuraj4515@gmail.com",
+            to: targetEmail,
+            subject: emailSubject,
+            html: emailHtml
+        })
+            .then(() => console.log(`✅ PayU order email sent to ${targetEmail}`))
+            .catch(err => console.error("❌ Failed to send PayU order email:", err.message));
+
+        const whatsappMsg = `🔔 *New Sonu Bin Order (Prepaid via PayU)!*\n\n*Order ID:* ${savedOrder._id}\n*PayU Txn:* ${payuResponse.mihpayid || payuResponse.txnid}\n*Customer:* ${savedOrder.name || savedOrder.customerName}\n*Phone:* ${savedOrder.phone || savedOrder.customerMobileNumber}\n*Product:* ${savedOrder.productName}\n*Qty:* ${savedOrder.qty}\n*Total:* ₹${(savedOrder.withGstTotalAmount || savedOrder.totalAmount).toLocaleString("en-IN")}\n*Address:* ${savedOrder.customerAdd}`;
+        sendWhatsAppSMS(targetWhatsApp, whatsappMsg);
+
+        // Redirect user to order success page
+        res.redirect(`/orderDetails.html?id=${savedOrder._id}&payment=success`);
+
+    } catch (err) {
+        console.error("[PayU] Success callback processing error:", err);
+        res.redirect("/productDetails.html?payment=failed&reason=server_error");
     }
-    const {
-        razorpay_order_id,
-        razorpay_payment_id,
-        razorpay_signature
-    } = req.body;
-
-    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
-        return res.status(400).json({
-            success: false,
-            message: "Missing required payment verification parameters."
-        });
-    }
-
-    const sign = crypto
-        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-        .update(`${razorpay_order_id}|${razorpay_payment_id}`)
-        .digest("hex");
-
-    if (sign === razorpay_signature) {
-        return res.json({
-            success: true,
-            message: "Payment Verified"
-        });
-    }
-
-    res.status(400).json({
-        success: false,
-        message: "Invalid Payment Signature"
-    });
 });
 
-app.get("/get-razorpay-key", (req, res) => {
-    if (!process.env.RAZORPAY_KEY_ID) {
-        return res.status(503).json({ error: "Razorpay key is not configured on the server." });
-    }
-    res.json({ key: process.env.RAZORPAY_KEY_ID });
+// ── POST /payu/failure – PayU redirects here on failed/cancelled payment ────
+app.post("/payu/failure", (req, res) => {
+    console.log("[PayU] Payment failed/cancelled for txnid:", req.body.txnid);
+    const reason = req.body.error_Message || req.body.field9 || "Payment was not completed";
+    res.redirect(`/allProduct.html?payment=failed&reason=${encodeURIComponent(reason)}`);
 });
 
 
@@ -277,14 +408,14 @@ app.get("/api/pincode/:pincode", async (req, res) => {
         if (!/^\d{6}$/.test(pincode)) {
             return res.status(400).json([{ Status: "Error", Message: "Pincode must be exactly 6 digits." }]);
         }
-        
+
         console.log(`[Pincode Proxy] Querying details for: ${pincode}`);
         const apiRes = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
-        
+
         if (!apiRes.ok) {
             return res.status(apiRes.status).json([{ Status: "Error", Message: "Failed to fetch from Postal Pincode API" }]);
         }
-        
+
         const data = await apiRes.json();
         res.json(data);
     } catch (err) {
@@ -356,14 +487,14 @@ app.post("/owner/login", async (req, res) => {
         if (!isMatch) {
             return res.status(401).json({ message: "Invalid owner credentials" });
         }
-        
+
         const sessionToken = crypto.randomBytes(32).toString("hex");
         admin.currentSessionToken = sessionToken;
         await admin.save();
 
-        res.status(200).json({ 
-            message: "Owner login successful", 
-            adminId: admin.adminId, 
+        res.status(200).json({
+            message: "Owner login successful",
+            adminId: admin.adminId,
             role: "owner",
             sessionToken
         });
@@ -657,14 +788,14 @@ app.post("/admin/login", async (req, res) => {
         if (admin.isActive === false) {
             return res.status(403).json({ message: "Account is deactivated. Contact Owner." });
         }
-        
+
         const sessionToken = crypto.randomBytes(32).toString("hex");
         admin.currentSessionToken = sessionToken;
         await admin.save();
 
-        res.status(200).json({ 
-            message: "Login successful", 
-            adminId: admin.adminId, 
+        res.status(200).json({
+            message: "Login successful",
+            adminId: admin.adminId,
             role: admin.role,
             sessionToken
         });
@@ -991,8 +1122,8 @@ app.post("/placeOrder", async (req, res) => {
             subject: emailSubject,
             html: emailHtml
         })
-        .then(() => console.log(`✅ Order notification email sent successfully to ${targetEmail}`))
-        .catch(err => console.error("❌ Failed to send order email:", err.message));
+            .then(() => console.log(`✅ Order notification email sent successfully to ${targetEmail}`))
+            .catch(err => console.error("❌ Failed to send order email:", err.message));
 
         // 2. Send WhatsApp Notification
         const whatsappMsg = `🔔 *New Sonu Bin Order Received!*\n\n*Order ID:* ${PlaceOrderResponse._id}\n*Customer Name:* ${PlaceOrderResponse.name || PlaceOrderResponse.customerName}\n*Phone:* ${PlaceOrderResponse.phone || PlaceOrderResponse.customerMobileNumber}\n*Product:* ${PlaceOrderResponse.productName}\n*Qty:* ${PlaceOrderResponse.qty}\n*Total Amount:* ₹${(PlaceOrderResponse.withGstTotalAmount || PlaceOrderResponse.totalAmount).toLocaleString("en-IN")}\n*Payment Method:* ${PlaceOrderResponse.paymentMethod}\n*Address:* ${PlaceOrderResponse.customerAdd}`;

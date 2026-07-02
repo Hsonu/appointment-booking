@@ -110,6 +110,19 @@ const placeOrderDataSchema = new mongoose.Schema({
     adminId: {
         type: String,
         default: "admin"
+    },
+    // PayU Payment Gateway Fields
+    transactionId: {
+        type: String,
+        default: ""
+    },
+    paymentStatus: {
+        type: String,
+        default: "pending"
+    },
+    payuTxnId: {
+        type: String,
+        default: ""
     }
 });
 
