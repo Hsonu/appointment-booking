@@ -1,0 +1,804 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+header {
+    width: 100%;
+}
+
+#headerMainDiv {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    width: min(1200px, 100%);
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.95);
+    padding: 1rem 1.5rem;
+    box-sizing: border-box;
+}
+
+#headerMainDiv > div {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+#MainLogo {
+    width: 45px;
+    max-width: 60px;
+    height: auto;
+    cursor: pointer;
+}
+
+#CartBtn {
+    width: 34px;
+    height: auto;
+    cursor: pointer;
+}
+
+#LoginBtnClickF {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.ChackOrder {
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+body.login-page {
+    background: radial-gradient(circle at top left, rgba(255, 169, 236, 0.18), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(255, 109, 185, 0.18), transparent 30%),
+                linear-gradient(180deg, #0b0b17 0%, #160821 100%);
+    color: #f6edf8;
+}
+
+.login-section {
+    min-height: calc(100vh - 140px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3.5rem 1.5rem;
+}
+
+.login-card {
+    width: min(440px, 88%);
+    border-radius: 28px;
+    padding: 2.8rem 2.2rem;
+    background: linear-gradient(135deg, rgba(18, 10, 34, 0.98) 0%, rgba(30, 15, 50, 0.98) 100%);
+    border: 1px solid rgba(255, 112, 255, 0.25);
+    box-shadow: 0 0 40px rgba(255, 113, 197, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    backdrop-filter: blur(10px);
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.login-card-header,
+.login-form,
+.button-row,
+.form-note,
+.login-hint {
+    position: relative;
+}
+
+#loginSystem {
+    font-size: 1.6rem;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.01em;
+    word-spacing: 0.1em;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.login-subtitle {
+    color: #f7d0fb;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 1.8rem;
+    line-height: 1.5;
+    word-spacing: 0.05em;
+    letter-spacing: 0.005em;
+}
+
+.otp-message {
+    background: rgba(255, 109, 199, 0.2);
+    border: 1.5px solid rgba(255, 109, 199, 0.4);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1.5rem;
+    margin-top: 0;
+    color: #fff;
+    text-align: center;
+    font-size: 0.9rem;
+    display: none;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.otp-message.show {
+    display: block;
+}
+
+.otp-code {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ff6ec7;
+    letter-spacing: 0.15em;
+    margin-top: 0.8rem;
+    font-family: 'Courier New', monospace;
+    word-spacing: 0.2em;
+    padding: 0.8rem 0;
+}
+
+.login-input-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.4rem;
+    padding: 0;
+}
+
+.login-input-row label {
+    color: #f5d6ff;
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+}
+
+.login-input-row input {
+    width: 100%;
+    border: 1px solid rgba(255, 145, 226, 0.35);
+    border-radius: 18px;
+    padding: 1.1rem 1.3rem;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.98);
+    color: #120617;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+.login-input-row input:focus {
+    outline: none;
+    border-color: rgba(255, 87, 168, 0.8);
+    box-shadow: 0 0 0 8px rgba(255, 121, 206, 0.12);
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.4rem;
+    padding: 0.5rem 0;
+}
+
+#loginBtn,
+#VerifyOTP {
+    width: 100%;
+    max-width: 260px;
+    border: none;
+    border-radius: 999px;
+    padding: 1.1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #ff6ec7 0%, #ff33b8 55%, #d42c95 100%);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+#loginBtn:hover,
+#VerifyOTP:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 30px rgba(255, 86, 180, 0.28);
+}
+
+.form-note {
+    color: #f2d7ff;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 0.8rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+    line-height: 1.4;
+    word-spacing: 0.05em;
+}
+
+.login-hint {
+    color: #f7d0fb;
+    text-align: center;
+    font-size: 0.82rem;
+    margin-top: 1rem;
+    line-height: 1.5;
+    word-spacing: 0.05em;
+}
+
+#OTP {
+    display: none;
+}
+
+@media only screen and (max-width: 680px) {
+    #headerMainDiv {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    #searchInput {
+        width: 90%;
+    }
+
+    .login-card {
+        width: 92% !important;
+        padding: 2.2rem 1.8rem !important;
+        border-radius: 20px;
+    }
+
+    #loginSystem {
+        font-size: 1.4rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .login-subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 1.4rem;
+    }
+
+    .otp-message {
+        padding: 1rem 1.2rem;
+        margin-bottom: 1.3rem;
+        border-radius: 12px;
+    }
+
+    .otp-code {
+        font-size: 1.4rem;
+        letter-spacing: 0.12em;
+        margin-top: 0.6rem;
+    }
+
+    .login-input-row {
+        margin-bottom: 1.2rem;
+    }
+
+    .login-input-row input {
+        padding: 1rem 1.1rem;
+        font-size: 16px;
+    }
+
+    .login-input-row label {
+        font-size: 0.82rem;
+    }
+
+    #loginBtn,
+    #VerifyOTP {
+        max-width: 100%;
+        padding: 0.95rem 1.2rem;
+        font-size: 0.95rem;
+    }
+
+    .form-note {
+        font-size: 0.78rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .login-hint {
+        font-size: 0.76rem;
+        margin-top: 0.8rem;
+    }
+
+    .login-section {
+        padding: 2rem 0.5rem;
+        min-height: calc(100vh - 120px);
+    }
+}
+
+#searchInput {
+    width: 45vw;
+    padding: 10px;
+
+}
+
+.Plogin {
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+#VideoDiv {
+    position: relative;
+    width: 100%;
+}
+
+video {
+    display: block;
+    width: 100%;
+    height: 70vh;
+    object-fit: cover;
+}
+
+
+#VideoDiv::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, 0) 30%,
+            rgba(255, 255, 255, 0.6) 60%,
+            rgba(255, 255, 255, 1) 100%),
+        radial-gradient(at top center,
+            rgba(255, 255, 255, 0.4),
+            transparent 60%);
+    pointer-events: none;
+}
+
+#ProductImage {
+    height: 36vh;
+    width: auto;
+    cursor: pointer;
+}
+
+#CardDiv {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid pink;
+    width: 40vh;
+    margin-left: 15px;
+    padding: 12px;
+    border-radius: 4px;
+}
+
+#CardDiv:hover {
+    box-shadow: 0px 0px 8px 0px pink;
+
+}
+
+/* #titleName{
+        display: flex;
+        justify-content: center;
+    } */
+#imgdiv {
+    display: flex;
+    justify-content: center;
+}
+
+#titleP {
+    font-size: 19px;
+    flex-wrap: wrap;
+    padding: 8px;
+}
+
+#PriceP {
+    font-size: 22px;
+    flex-wrap: wrap;
+    padding: 8px;
+}
+
+#mainDivCard {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.PriceAndBuyBtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.BuyBtn {
+    border: 1px solid pink;
+    padding: 10px;
+    cursor: pointer;
+
+}
+
+.BuyBtn:hover {
+    background-color: pink;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px 0px pink;
+}
+
+#d-img {
+
+    display: flex;
+    padding: 20px;
+    background-color: #00000056;
+    margin-top: 10px;
+}
+
+#main-li {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 4vw;
+    /* font-size: 1.5vw; */
+    font-size: clamp(1vw, 1vw, 1vw);
+    /* gap: 16.6vw; */
+    justify-content: space-evenly;
+}
+
+.li-end {
+    display: flex;
+    flex-direction: column;
+}
+
+li:hover {
+    color: pink;
+    border-bottom: 2px solid pink;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+::placeholder {
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+
+#LoginMainDiv {
+    border: 1px solid black;
+    /* position: absolute; */
+    /* position: relative; */
+    height: 40vh;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff9d;
+    border-radius: 9px;
+    transition: 0.3s;
+    margin: 1vw;
+    /* box-shadow: 10px 10px; */
+}
+
+#LoginMainDiv:hover {
+    box-shadow: 0px 0px 8px 0px pink;
+}
+
+#mainf {
+    display: flex;
+    justify-content: center;
+    /* display: none; */
+}
+
+#loginSystem {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2vw;
+    font-size: 2vw;
+}
+
+#loginBtn {
+    display: flex;
+    justify-content: center;
+    /* outline-color: #0d6efd; */
+    border: 1.5px solid #0d6efd;
+    transition: 0.3s;
+}
+
+input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    border-radius: 3px;
+    border: none;
+}
+
+#loginNUmber,
+#OTP {
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 0.4vw;
+}
+
+/* 
+    #loginBtn {
+        margin-top: 2vw;
+        height: 6vh;
+        cursor: pointer;
+        width: auto;
+    } */
+/* 
+    /* #loginBtn {
+        width: 20vh;
+        cursor: pointer;
+        border: 1px solid black;
+        border-radius: 9px;
+        box-shadow: 10px 10px;
+    }  */
+#loginBtn,
+#VerifyOTP {
+    width: 24vh;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 3px;
+    height: 6vh;
+    align-items: center;
+    margin-top: 2vh;
+    border: 1.5px solid #0d6efd;
+    outline-color: #0d6efd;
+
+}
+
+#loginBtn:hover {
+    background-color: rgb(44, 40, 40);
+    /* background-color: #0d6efd; */
+    color: white;
+    box-shadow: 0px 0px 7px 1px black;
+
+}
+
+#VerifyOTP:hover {
+    background-color: rgb(44, 40, 40);
+    /* background-color: #0d6efd; */
+    color: white;
+    box-shadow: 0px 0px 7px 1px black;
+    transition: 0.3s;
+
+}
+
+#pLoginBtn {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-close {
+    color: black;
+    z-index: 1000
+}
+
+#inpute-p {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+.v_7pKG {
+    height: 20px;
+    width: 20px;
+}
+
+.v_7pKG {
+    cursor: pointer;
+    height: 20px;
+    /* max-height: 3vh; */
+    width: 20px;
+}
+
+.ChackOrder {
+    color: #fff;
+    cursor: pointer;
+    font-size: clamp(12px, 1.2vw, 40px);
+}
+
+@media only screen and (max-width: 768px) {
+    /* #headerMainDiv {
+            width: 100%;
+        } */
+
+    #MainLogo {
+        width: 10vw;
+        max-width: 10vw;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #mainDivCard {
+        display: flex;
+        justify-content: center;
+
+    }
+
+    #CardDiv {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid pink;
+        width: 18vh;
+        margin-left: 15px;
+        padding: 12px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    #ProductImage {
+        height: 14vh;
+        width: auto;
+        cursor: pointer;
+    }
+
+    #titleP {
+        font-size: 3vw;
+        flex-wrap: wrap;
+        padding: 4px;
+    }
+
+    #PriceP {
+        font-size: 4vw;
+        flex-wrap: wrap;
+        /* padding: 8px; */
+    }
+
+    video {
+        display: block;
+        width: 100%;
+        height: 20vh;
+        object-fit: cover;
+    }
+
+    .li-end {
+        display: flex;
+        flex-direction: column;
+        font-size: 3vw;
+    }
+
+    #loginNUmber {
+        height: 5vh;
+        border-radius: 3px;
+        border: 1px solid black;
+        width: 100%;
+    }
+
+    #LoginMainDiv {
+        border: 1px solid black;
+        /* position: absolute; */
+        /* position: relative; */
+        height: 35vh;
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* background-color: #ffffff9d; */
+        background-color: #fff;
+        border-radius: 9px;
+        transition: 0.3s;
+    }
+
+    #loginSystem {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2vw;
+        font-size: 3.5vw;
+    }
+
+
+    #inpute-p {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0;
+    }
+
+    #loginBtn {
+        width: 25vh;
+        cursor: pointer;
+        border: 1px solid black;
+        border-radius: 3px;
+        height: 5vh;
+        align-items: center;
+        border: 1.5px solid #0d6efd;
+        outline-color: #0d6efd
+    }
+
+    #pLoginBtn {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0;
+    }
+
+    .v_7pKG {
+        cursor: pointer;
+        height: 20px;
+        /* max-height: 3vh; */
+        width: 15px;
+    }
+
+    .ChackOrder {
+        color: #fff;
+        cursor: pointer;
+        font-size: clamp(12px, 1.2vw, 40px);
+    }
+
+    #PriceP {
+        /* font-size: 1.5vw; */
+        flex-wrap: wrap;
+        font-size: clamp(12px, 1.2vw, 40px);
+        padding: 2px;
+    }
+
+    #ProductImage {
+        /* height: 14vh;
+            width: auto;
+            cursor: pointer; */
+        height: 36vh;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        object-fit: cover;
+        /* display: block;*/
+    }
+}
+
+.AmountDiv {
+    display: flex;
+    flex-direction: column;
+
+}
+
+#smallgstText {
+    font-size: clamp(10px, 1vw, 40px);
+    color: #999999;
+}
+
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    right: 20px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    transition: 0.3s;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+}
+
+.whatsapp-float img {
+    width: 35px;
+    height: 35px;
+}
+
+@media only screen and (max-width: 768px) {
+    .whatsapp-float {
+        display: flex;
+        width: 52px;
+        height: 52px;
+        bottom: 18px;
+        right: 18px;
+        box-shadow: 0 8px 18px rgba(37, 211, 102, 0.28);
+        z-index: 9999;
+    }
+
+    /* ensure it doesn't cover critical form buttons: slightly lift on small screens */
+    .whatsapp-float.safe-offset {
+        transform: translateY(-6px);
+    }
+}

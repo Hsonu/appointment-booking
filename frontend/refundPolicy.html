@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- PWA configuration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0d0d0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sonu Bin">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <title>Refund & Return Policy – Sonu Bin</title>
+    <script src="/auto-logout.js"></script>
+    <meta name="description"
+        content="Read the Refund and Return Policy of Sonu Bin – 30 days return options, certificate verification guidelines, and refund process details.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #a8854e;
+            --gold-light: #e8d4a8;
+            --gold-bg: #fdf7ee;
+            --cream: #ffffff;
+            --dark: #0d0d0f;
+            --dark-2: #1a1a1f;
+            --text-h: #0d0d0f;
+            --text-body: #3d3d45;
+            --text-muted: #7a7a85;
+            --border: #e8e0d5;
+            --white: #ffffff;
+            --header-h: 72px;
+            --radius: 14px;
+            --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        /* Float Elements */
+        .whatsapp-float {
+            position: fixed;
+            width: 56px;
+            height: 56px;
+            bottom: 28px;
+            right: 28px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+            z-index: 9999;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.12);
+        }
+
+        .whatsapp-float img {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Header */
+        #siteHeader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: auto;
+            min-height: var(--header-h);
+            z-index: 1000;
+            background: rgba(13, 13, 15, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+        }
+
+        #navInner {
+            max-width: 100%;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 0 24px;
+        }
+
+        /* Logo */
+        #navLogo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .brand-logo-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1.5px solid var(--gold);
+            object-fit: cover;
+            transition: transform var(--transition);
+        }
+
+        #navLogo:hover .brand-logo-img {
+            transform: rotate(360deg);
+        }
+
+
+        .mobile-br {
+            display: none;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        #navLogo .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.04em;
+        }
+
+        #navLogo .brand-tagline {
+            font-size: 0.58rem;
+            letter-spacing: 0.14em;
+            color: rgba(201, 169, 110, 0.7);
+            text-transform: uppercase;
+            margin-top: 1px;
+        }
+
+        #searchWrapper {
+            flex: 1;
+            max-width: 440px;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(201, 169, 110, 0.25);
+            border-radius: 999px;
+            padding: 9px 18px 9px 42px;
+            font-size: 0.88rem;
+            color: #fff;
+            outline: none;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #searchInput:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+        }
+
+        #searchIcon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            stroke: rgba(201, 169, 110, 0.6);
+            fill: none;
+            pointer-events: none;
+        }
+
+        .navActions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .navActionBtn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1.5px solid transparent;
+            transition: all var(--transition);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .navActionBtn:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+            background: rgba(201, 169, 110, 0.06);
+            color: var(--gold);
+        }
+
+        .navActionBtn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .cartWrap {
+            position: relative;
+        }
+
+        .cartBadge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Banner */
+        #heroBanner {
+            margin-top: var(--header-h);
+            height: 320px;
+            position: relative;
+            overflow: hidden;
+            background: var(--dark);
+        }
+
+        #heroBanner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        #heroBannerContent {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+        }
+
+        #heroBannerContent p {
+            font-size: 0.68rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        #heroBannerContent h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.15;
+        }
+
+        .goldLine {
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 2px;
+            margin: 16px auto 0;
+        }
+
+        /* Content Sections */
+        .policyContainer {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 64px 24px;
+        }
+
+        .policyCard {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 48px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+        }
+
+        .policyCard h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-top: 32px;
+            margin-bottom: 16px;
+            font-weight: 700;
+            border-left: 3px solid var(--gold);
+            padding-left: 14px;
+        }
+
+        .policyCard h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .policyCard p {
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: var(--text-body);
+            margin-bottom: 20px;
+        }
+
+        .policyCard ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            list-style-type: disc;
+        }
+
+        .policyCard li {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text-body);
+            margin-bottom: 8px;
+        }
+
+        .lastUpdated {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            font-style: italic;
+        }
+
+        /* Footer */
+        #siteFooter {
+            background: var(--dark-2);
+            color: rgba(255, 255, 255, 0.75);
+            padding: 64px 24px 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footerInner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footerTop {
+            display: grid;
+            grid-template-columns: 1.8fr repeat(3, 1fr);
+            gap: 40px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footerLogo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .footerDesc {
+            font-size: 0.84rem;
+            line-height: 1.7;
+            opacity: 0.7;
+            max-width: 280px;
+            margin-bottom: 20px;
+        }
+
+        .footerSocial {
+            display: flex;
+            gap: 10px;
+        }
+
+        .socialIcon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--transition), border-color var(--transition);
+            cursor: pointer;
+        }
+
+        .socialIcon:hover {
+            background: rgba(201, 169, 110, 0.15);
+            border-color: var(--gold);
+        }
+
+        .socialIcon svg {
+            width: 16px;
+            height: 16px;
+            fill: rgba(255, 255, 255, 0.6);
+        }
+
+        .footerCol h4 {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .footerCol ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footerCol ul li a {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            transition: opacity var(--transition), color var(--transition);
+        }
+
+        .footerCol ul li a:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        .footerBottom {
+            padding-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footerCopy {
+            font-size: 0.78rem;
+            opacity: 0.45;
+        }
+
+        .footerCopy span {
+            color: var(--gold);
+            opacity: 1;
+        }
+
+        .footerPayments {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .payBadge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            opacity: 0.6;
+            letter-spacing: 0.05em;
+        }
+
+        /* Responsive Layout styles */
+        @media (max-width: 860px) {
+            #siteHeader {
+                min-height: auto !important;
+            }
+
+            :root {
+                --header-h: 165px;
+            }
+
+            #navInner {
+                flex-wrap: wrap;
+                padding: 10px 16px;
+                gap: 8px 12px;
+                height: auto;
+                justify-content: space-between;
+            }
+
+            #navLogo {
+                order: 1;
+            }
+
+            #headerLocationBtn {
+                order: 2;
+                margin-left: auto;
+            }
+
+            .navActions {
+                order: 3;
+                margin-left: 0;
+                gap: 4px;
+            }
+
+            .navActionBtn {
+                padding: 8px;
+                font-size: 0.6rem;
+            }
+
+            #searchWrapper {
+                display: block;
+                order: 4;
+                flex-basis: 100%;
+                max-width: 100%;
+                margin-top: 4px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-br {
+                display: block !important;
+            }
+
+            #navLogo .brand-name {
+                font-size: 1.05rem !important;
+                line-height: 1.05 !important;
+            }
+
+            #navLogo .brand-tagline {
+                font-size: 0.5rem !important;
+                letter-spacing: 0.1em !important;
+            }
+
+            .location-text-group {
+                display: none;
+            }
+
+            .header-location-btn {
+                padding: 8px;
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                background: rgba(255, 255, 255, 0.04);
+                max-width: 38px;
+                height: 38px;
+                justify-content: center;
+                align-items: center;
+                gap: 0;
+            }
+
+            .location-icon-svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footerTop {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            #heroBanner {
+                height: 240px;
+            }
+
+            .policyCard {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            :root {
+                --header-h: 165px;
+            }
+
+            /* Navbar: icons-only mode on small screens */
+            .navActionBtn {
+                font-size: 0;
+                padding: 8px;
+                gap: 0;
+            }
+
+            .navActionBtn svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .cartBadge {
+                top: 0;
+                right: 0;
+                width: 15px;
+                height: 15px;
+                font-size: 0.55rem;
+            }
+
+            :root {
+                --header-h: 165px;
+            }
+
+            .footerTop {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            #headerLocationBtn,
+            .header-location-btn {
+                display: none !important;
+            }
+        }
+
+
+        /* ═══════════════════════════════════════════
+           HEADER LOCATION WIDGET
+           ═══════════════════════════════════════════ */
+        .header-location-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            transition: all var(--transition);
+            user-select: none;
+            max-width: 220px;
+            flex-shrink: 0;
+        }
+
+        .header-location-btn:hover {
+            background: rgba(201, 169, 110, 0.08);
+            border-color: rgba(201, 169, 110, 0.3);
+        }
+
+        .header-location-btn:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        .location-icon-svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 1.8;
+            flex-shrink: 0;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+        }
+
+        .location-text-group {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .location-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+        }
+
+        .location-action {
+            font-size: 0.8rem;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+        }
+
+        /* ═══════════════════════════════════════════
+           CENTERED LOCATION MODAL
+           ═══════════════════════════════════════════ */
+        .location-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(13, 13, 15, 0.75);
+            backdrop-filter: blur(12px);
+            z-index: 15000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition);
+        }
+
+        .location-modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .location-modal-content {
+            background: rgba(26, 26, 31, 0.95);
+            border: 1.5px solid var(--gold);
+            border-radius: 20px;
+            padding: 32px 24px;
+            width: min(400px, calc(100vw - 32px));
+            text-align: center;
+            position: relative;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(201, 169, 110, 0.15);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .location-modal-overlay.show .location-modal-content {
+            transform: scale(1);
+        }
+
+        .location-close-btn {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color var(--transition);
+            line-height: 1;
+        }
+
+        .location-close-btn:hover {
+            color: #fff;
+        }
+
+        .location-modal-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 12px;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+        }
+
+        .location-modal-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .location-input-wrap {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .location-input-wrap input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #120617;
+            font-size: 0.95rem;
+            font-weight: 500;
+            outline: none;
+            transition: all var(--transition);
+            text-align: center;
+            letter-spacing: 0.05em;
+        }
+
+        .location-input-wrap input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.15);
+        }
+
+        .location-submit-btn {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all var(--transition);
+        }
+
+        .location-submit-btn:disabled {
+            background: #2a2a30;
+            color: var(--text-muted);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .location-submit-btn:not(:disabled):hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(201, 169, 110, 0.3);
+        }
+
+        .location-status-text {
+            font-size: 0.8rem;
+            font-weight: 500;
+            min-height: 20px;
+            transition: color var(--transition);
+            margin-top: 10px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .header-location-btn {
+                padding: 6px 8px;
+                max-width: 140px;
+            }
+
+            .location-label {
+                max-width: 80px;
+            }
+
+            .location-action {
+                font-size: 0.72rem;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .header-location-btn {
+                padding: 4px 6px;
+                max-width: 110px;
+                gap: 6px;
+            }
+
+            .location-icon-svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .location-label {
+                max-width: 60px;
+                font-size: 0.58rem;
+            }
+
+            .location-action {
+                font-size: 0.68rem;
+            }
+        }
+
+
+
+        @media (max-width: 768px) {
+
+            #headerLocationBtn,
+            .header-location-btn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Site-Wide Disclaimer Banner -->
+    <div class="site-wide-disclaimer"
+        style="background: #110e08; color: #e8d4a8; text-align: center; padding: 10px 15px; font-size: 0.82rem; font-family: 'Inter', sans-serif; border-bottom: 1px solid #c9a96e; letter-spacing: 0.05em; line-height: 1.4; font-weight: 500; z-index: 9999; position: relative;">
+        <strong>DISCLAIMER:</strong> Sonu Bin offers premium imitation/fashion jewellery only. All products are non-gold
+        fashion jewellery. We do not sell real gold, BIS Hallmarked jewellery, certified diamonds, or precious metal
+        jewellery.
+    </div>
+
+    <!-- WhatsApp float -->
+    <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products."
+        class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+
+    <!-- Header / Navbar -->
+    <header id="siteHeader" role="banner">
+        <div id="navInner">
+
+            <!-- Logo -->
+            <a id="navLogo" href="./index.html" aria-label="Sonu Bin Home">
+                <img class="brand-logo-img" src="./logo.jpg" alt="Sonu Bin Logo">
+                <div class="brand-text">
+                    <span class="brand-name">Sonu Bin<br class="mobile-br">Jewels</span>
+                    <span class="brand-tagline">Timeless Beauty</span>
+                </div>
+            </a>
+
+            <!-- Location Widget -->
+            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0"
+                aria-label="Select delivery location">
+                <svg viewBox="0 0 24 24" class="location-icon-svg">
+                    <path
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                </svg>
+                <div class="location-text-group">
+                    <span class="location-label" id="headerLocationLabel">Delivering to India</span>
+                    <span class="location-action">Update location</span>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div id="searchWrapper" role="search">
+                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input id="searchInput" type="text" placeholder="Search rings, necklaces, bangles…" autocomplete="off"
+                    aria-label="Search products">
+            </div>
+
+            <!-- Actions -->
+            <nav class="navActions" aria-label="User actions">
+                <a href="./order.html" class="navActionBtn" id="navOrderBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Orders
+                </a>
+                <a href="./login.html" class="navActionBtn" id="navLoginBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    Account
+                </a>
+                <a href="./card.html" class="navActionBtn cartWrap" id="navCartBtn" aria-label="Shopping cart">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    Cart
+                    <span class="cartBadge" id="cartCount" aria-label="items in cart">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Centered Location Modal Overlay -->
+    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true"
+        aria-labelledby="locationModalTitle">
+        <div class="location-modal-content">
+            <button id="closeLocationModal" class="location-close-btn" aria-label="Close modal">&times;</button>
+            <h3 id="locationModalTitle">Choose your location</h3>
+            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog
+                speed in your area.</p>
+
+            <div class="location-input-wrap">
+                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6"
+                    autocomplete="off" aria-label="Pincode">
+                <button id="modalPincodeSubmit" class="location-submit-btn" disabled>Apply</button>
+            </div>
+
+            <div id="modalPincodeStatus" class="location-status-text"></div>
+        </div>
+    </div>
+
+    <!-- Hero Banner -->
+    <div id="heroBanner">
+        <img src="https://cdn.caratlane.com/media/static/images/V4/2026/04_April/Banner/AT_Offer/01/Desktop.jpg"
+            alt="Sonu Bin Showroom Banner">
+        <div id="heroBannerContent">
+            <p>✦ Transparency & Trust</p>
+            <h1>Refund & Return Policy</h1>
+            <span class="goldLine"></span>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="policyContainer">
+        <div class="policyCard">
+            <div class="lastUpdated">Last Updated: June 15, 2026</div>
+
+            <p>Thank you for shopping at Sonu Bin. We take immense pride in our craftsmanship and want you to be
+                completely delighted with your purchase. In the event that you are not satisfied with your selection, we
+                offer a comprehensive return and refund policy outlined below.</p>
+
+            <h2>1. 30-Day Return Window</h2>
+            <p>We provide a <strong>30-day money-back guarantee</strong> for all standard products purchased online. You
+                can return eligible items within 30 days from the delivery date for a full refund or exchange, subject
+                to inspection. Custom designs or customized engravings are not eligible for returns.</p>
+
+            <h2>2. Eligibility Criteria for Returns</h2>
+            <p>To qualify for a refund, the returned jewellery must satisfy all of the following conditions:</p>
+            <ul>
+                <li>The item must be in its original, pristine condition, showing no signs of wear, scratches, damage,
+                    resizing, or alteration.</li>
+                <li>All original packaging must be returned, including the luxury inner gift box, outer protection box,
+                    and padding.</li>
+                <li>You must provide the original sales invoice and original packaging materials.</li>
+                <li>Security tags or labels attached to the piece must remain completely intact.</li>
+            </ul>
+
+            <h2>3. Non-Returnable Items</h2>
+            <p>Certain products cannot be returned or refunded:</p>
+            <ul>
+                <li>Custom-made designs, bespoke orders, and products with customized engravings requested by the
+                    customer.</li>
+                <li>Items showing signs of custom alterations.</li>
+                <li>Items returned past the 30-day return window.</li>
+                <li>Products that show signs of modification or damage not reported immediately upon delivery.</li>
+            </ul>
+
+            <h2>4. Return Pickup and Shipping</h2>
+            <p>We provide free, fully insured return shipping within India for eligible returns:</p>
+            <ul>
+                <li>To initiate a return, contact our customer support team via email or WhatsApp. We will coordinate a
+                    pickup date.</li>
+                <li>Our authorized logistics partner will pick up the package. Do not hand over the package without
+                    verifying the pickup agent's identity.</li>
+                <li>Ensure the package is sealed securely using the packaging materials provided during collection to
+                    maintain insurance coverage.</li>
+            </ul>
+
+            <h2>5. Inspection and Processing</h2>
+            <p>Upon receiving your package, our state-of-the-art laboratory and expert gemologists will inspect the
+                piece:</p>
+            <ul>
+                <li>We verify that the returned product matches the original description, quality, and weight.</li>
+                <li>The inspection process generally takes <strong>2 to 4 business days</strong> from receipt of the
+                    item at our fulfillment facility.</li>
+                <li>If the item passes inspection, we will approve the refund. If the item shows signs of wear,
+                    resizing, or missing certificates, the return may be rejected or subject to a restocking fee.</li>
+            </ul>
+
+            <h2>6. Refund Method & Timelines</h2>
+            <p>Once approved, refunds are processed immediately:</p>
+            <ul>
+                <li>Refunds are credited back to the original payment channel used during purchase (credit card, debit
+                    card, net banking, or UPI via PayU).</li>
+                <li>For Cash on Delivery (COD) orders, we will request your bank details to process the refund via NEFT
+                    / IMPS transfer.</li>
+                <li>Refunds normally take <strong>5 to 7 business days</strong> to reflect in your account, depending on
+                    your financial institution.</li>
+            </ul>
+
+            <h2>7. Contact and Support</h2>
+            <p>To request a return or check on a refund status, please contact us:</p>
+            <ul>
+                <li><strong>Email:</strong> sonurajsonuraj4515@gmail.com</li>
+                <li><strong>Phone / WhatsApp:</strong> +91 8603632642</li>
+                <li><strong>Working Hours:</strong> Mon - Sat, 10:00 AM - 7:00 PM IST</li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="siteFooter" role="contentinfo">
+        <div class="footerInner">
+            <div class="footerTop">
+                <div class="footerBrand">
+                    <div class="footerLogo">Sonu Bin</div>
+                    <p class="footerDesc">We believe every woman deserves jewellery that makes her feel extraordinary.
+                        Handcrafted with passion, delivered with pride.</p>
+                    <div class="footerSocial">
+                        <a href="#" class="socialIcon" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                            </svg>
+                        </a>
+                        <a href="#" class="socialIcon" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/918603632642" class="socialIcon" aria-label="WhatsApp" target="_blank">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footerCol">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="./allProduct.html">All Jewelry</a></li>
+                        <li><a href="./allProduct.html">Rings</a></li>
+                        <li><a href="./allProduct.html">Necklaces</a></li>
+                        <li><a href="./allProduct.html">New Arrivals</a></li>
+                    </ul>
+                </div>
+                <div class="footerCol">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="./aboutPage.html">About Us</a></li>
+                        <li><a href="./ContactPage.html">Contact</a></li>
+                        <li><a href="./faq.html">FAQ</a></li>
+                        <li><a href="./shippingInfo.html">Shipping Info</a></li>
+                        <li><a href="./blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footerCol">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="./termsOfService.html">Terms of Service</a></li>
+                        <li><a href="./privacyPolicy.html">Privacy Policy</a></li>
+                        <li><a href="./refundPolicy.html">Refund Policy</a></li>
+                        <li><a href="./shippingPolicy.html">Shipping Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footerBottom">
+                <p class="footerCopy">&copy; 2026 <span>Sonu Bin</span>. All Rights Reserved. Crafted with ♥</p>
+                <div
+                    style="font-size: 0.8rem; color: #a8854e; text-align: center; margin-top: 15px; line-height: 1.6; font-weight: 500;">
+                    Premium Fashion Jewellery<br>
+                    Gram bin dera post-nagwan,thana simri dumraon buxar bihar 802133 <br>
+                    <strong>Not Real Gold • No BIS Hallmark</strong>
+                </div>
+                <div class="footerPayments">
+                    <span class="payBadge">UPI</span>
+                    <span class="payBadge">PayU</span>
+                    <span class="payBadge">Net Banking</span>
+                    <span class="payBadge">COD</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./config.js"></script>
+    <script>
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        const navLoginBtn = document.getElementById("navLoginBtn") || document.querySelector("a[href='./login.html']");
+        if (navLoginBtn && isLoggedIn) {
+            navLoginBtn.href = "./profile.html";
+        }
+
+        if (!isLoggedIn) {
+            const navOrderBtn = document.getElementById("navOrderBtn");
+            const navCartBtn = document.getElementById("navCartBtn");
+            if (navOrderBtn) {
+                navOrderBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    window.location.href = "./login.html";
+                });
+            }
+            if (navCartBtn) {
+                navCartBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    window.location.href = "./login.html";
+                });
+            }
+        }
+
+        async function fetchCartCount() {
+            try {
+                const res = await fetch(`${BASE_URL}/Card`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const badge = document.querySelector(".cartBadge");
+                    if (badge) badge.textContent = data.length;
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        fetchCartCount();
+
+        document.getElementById("searchInput").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
+            }
+        });
+    </script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(function (reg) { console.log('[SW] Registered:', reg.scope); })
+                    .catch(function (err) { console.error('[SW] Failed:', err); });
+            });
+        }
+    </script>
+
+    <!-- Dynamic Header Height Calculation -->
+    <script>
+        (function () {
+            function updateHeaderHeight() {
+                const header = document.getElementById("siteHeader");
+                if (header) {
+                    const height = header.offsetHeight;
+                    document.documentElement.style.setProperty('--header-h', height + 'px');
+                }
+            }
+            window.addEventListener('resize', updateHeaderHeight);
+            window.addEventListener('DOMContentLoaded', updateHeaderHeight);
+            window.addEventListener('load', updateHeaderHeight);
+            // Run immediately in case elements are already loaded
+            updateHeaderHeight();
+            // Run a few times shortly after load to handle dynamic rendering/font loading
+            setTimeout(updateHeaderHeight, 100);
+            setTimeout(updateHeaderHeight, 500);
+            setTimeout(updateHeaderHeight, 1000);
+        })();
+    </script>
+
+
+    <script>
+        /* ───────────────────────────────────────
+           HEADER LOCATION PINCODE CONTROLLER
+        ─────────────────────────────────────── */
+        (function () {
+            const locBtn = document.getElementById("headerLocationBtn");
+            const modal = document.getElementById("locationModal");
+            const closeBtn = document.getElementById("closeLocationModal");
+            const input = document.getElementById("modalPincodeInput");
+            const submit = document.getElementById("modalPincodeSubmit");
+            const status = document.getElementById("modalPincodeStatus");
+            const label = document.getElementById("headerLocationLabel");
+
+            // Open Modal
+            if (locBtn && modal) {
+                locBtn.addEventListener("click", () => {
+                    status.textContent = "";
+                    input.value = "";
+                    submit.disabled = true;
+                    modal.classList.add("show");
+                    input.focus();
+                });
+            }
+
+            // Close Modal
+            if (closeBtn && modal) {
+                closeBtn.addEventListener("click", () => {
+                    modal.classList.remove("show");
+                });
+            }
+
+            // Close Modal on click outside content card
+            if (modal) {
+                modal.addEventListener("click", (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove("show");
+                    }
+                });
+            }
+
+            // Load saved location on startup
+            function loadSavedLocation() {
+                const savedCity = localStorage.getItem("delivery_city");
+                const savedPin = localStorage.getItem("delivery_pincode");
+                if (savedCity && savedPin) {
+                    if (label) label.textContent = `Delivering to ${savedCity} ${savedPin}`;
+                } else if (label) {
+                    label.textContent = "Delivering to India";
+                }
+            }
+            loadSavedLocation();
+
+            // Validate and lookup pincode
+            if (input) {
+                input.addEventListener("input", async (e) => {
+                    const pin = e.target.value.trim();
+                    status.textContent = "";
+                    submit.disabled = true;
+
+                    if (pin.length === 6 && /^\d{6}$/.test(pin)) {
+                        status.style.color = "var(--gold)";
+                        status.textContent = "🔍 Fetching location area details...";
+
+                        try {
+                            const res = await fetch(`${BASE_URL}/api/pincode/${pin}`);
+                            if (!res.ok) throw new Error("Pincode API failed");
+
+                            const data = await res.json();
+                            if (data && data[0] && data[0].Status === "Success") {
+                                const postOfficeList = data[0].PostOffice;
+                                if (postOfficeList && postOfficeList.length > 0) {
+                                    const info = postOfficeList[0];
+                                    const city = info.Block || info.Name || "";
+                                    status.style.color = "#22c55e"; // green
+                                    status.textContent = `✓ Delivering to ${city}, ${info.State}`;
+                                    submit.disabled = false;
+
+                                    // Save temporary variables in dataset
+                                    submit.dataset.city = city;
+                                    submit.dataset.pin = pin;
+                                } else {
+                                    status.style.color = "#ef4444";
+                                    status.textContent = "❌ No delivery area found for this pincode.";
+                                }
+                            } else {
+                                status.style.color = "#ef4444";
+                                status.textContent = "❌ Invalid pincode.";
+                            }
+                        } catch (err) {
+                            console.error("Pincode modal lookup error:", err);
+                            status.style.color = "#ef4444";
+                            status.textContent = "⚠️ Error connecting to postal database proxy.";
+                        }
+                    } else if (pin.length > 6) {
+                        status.style.color = "#ef4444";
+                        status.textContent = "❌ Pincode must be exactly 6 digits.";
+                    }
+                });
+            }
+
+            // Apply location on submit click
+            if (submit) {
+                submit.addEventListener("click", () => {
+                    const city = submit.dataset.city;
+                    const pin = submit.dataset.pin;
+                    if (city && pin) {
+                        localStorage.setItem("delivery_city", city);
+                        localStorage.setItem("delivery_pincode", pin);
+                        loadSavedLocation();
+                        if (modal) modal.classList.remove("show");
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

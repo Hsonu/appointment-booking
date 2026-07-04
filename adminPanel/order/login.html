@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login – Sonu Bin</title>
+  <script src="/auto-logout.js"></script>
+  <meta name="description" content="Admin login portal for Sonu Bin management panel.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --gold:#c9a96e; --gold-dark:#a8854e; --gold-light:#e8d4a8;
+      --gold-bg:#fdf7ee; --gold-shadow:rgba(201,169,110,0.2);
+      --cream: #ffffff; --white:#ffffff;
+      --text-h:#0d0d0f; --text-body:#3d3d45; --text-muted:#7a7a85;
+      --border:#e8e0d5;
+      --transition:0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+    body {
+      font-family:'Inter',system-ui,sans-serif;
+      min-height:100vh;
+      display:flex; align-items:center; justify-content:center;
+      background:var(--cream);
+      padding:24px;
+      position:relative;
+    }
+
+    /* Decorative blobs */
+    body::before, body::after {
+      content:''; position:fixed;
+      border-radius:50%; pointer-events:none;
+    }
+    body::before {
+      width:600px; height:600px;
+      background:radial-gradient(circle, rgba(201,169,110,0.1), transparent 70%);
+      top:-150px; left:-150px;
+    }
+    body::after {
+      width:400px; height:400px;
+      background:radial-gradient(circle, rgba(201,169,110,0.07), transparent 70%);
+      bottom:-80px; right:-80px;
+    }
+
+    .loginWrapper {
+      display:flex;
+      border-radius:22px;
+      overflow:hidden;
+      width:min(920px,100%);
+      box-shadow:0 24px 60px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.04);
+      border:1px solid var(--border);
+      position:relative;
+      z-index:1;
+    }
+
+    /* Left brand panel */
+    .loginBrand {
+      background:linear-gradient(150deg, #2c1a0a 0%, #4a2c0f 50%, #2c1a0a 100%);
+      padding:52px 44px;
+      display:flex; flex-direction:column; justify-content:space-between;
+      width:42%; position:relative; overflow:hidden;
+    }
+    .loginBrand::before {
+      content:''; position:absolute;
+      width:300px; height:300px; border-radius:50%;
+      background:rgba(201,169,110,0.1);
+      bottom:-80px; right:-80px;
+    }
+    .loginBrand::after {
+      content:''; position:absolute;
+      width:180px; height:180px; border-radius:50%;
+      background:rgba(201,169,110,0.08);
+      top:40px; right:30px;
+    }
+
+    /* Gold shimmer line */
+    .brandGoldLine {
+      width:44px; height:2px;
+      background:linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius:2px; margin:16px 0;
+    }
+
+    .brandLogo {
+      display:flex; align-items:center; gap:13px;
+      position:relative; z-index:1;
+    }
+    .brandIcon {
+      width:46px; height:46px;
+      background:linear-gradient(135deg, var(--gold), var(--gold-dark));
+      border-radius:12px;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 6px 18px rgba(201,169,110,0.3);
+    }
+    .brandIcon svg { width:26px; height:26px; fill:#fff; }
+    .brandName {
+      font-family:'Playfair Display',serif;
+      font-size:1.2rem; font-weight:700; color:#fff; letter-spacing:0.03em;
+    }
+    .brandTagline { font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-light); margin-top:2px; }
+
+    .brandCopy { position:relative; z-index:1; }
+    .brandHeadline {
+      font-family:'Playfair Display',serif;
+      font-size:1.75rem; font-weight:700; color:#fff; line-height:1.28;
+    }
+    .brandHeadline em { font-style:italic; color:var(--gold-light); }
+    .brandDesc { font-size:0.82rem; color:rgba(255,255,255,0.68); line-height:1.65; }
+
+    .brandFeatures { position:relative; z-index:1; }
+    .brandFeature {
+      display:flex; align-items:center; gap:10px;
+      color:rgba(255,255,255,0.78); font-size:0.8rem; margin-bottom:11px;
+    }
+    .brandFeature svg { width:15px; height:15px; fill:var(--gold-light); flex-shrink:0; }
+
+    /* Right form panel */
+    .loginForm {
+      background:var(--white);
+      padding:52px 48px;
+      flex:1; display:flex; flex-direction:column; justify-content:center;
+    }
+
+    .formEyebrow {
+      font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--gold-dark); font-weight:600; margin-bottom:8px;
+    }
+    .formHeading {
+      font-family:'Playfair Display',serif;
+      font-size:1.65rem; font-weight:700; color:var(--text-h); margin-bottom:4px;
+    }
+    .formSubheading { font-size:0.84rem; color:var(--text-muted); margin-bottom:32px; }
+
+    .alertBanner {
+      display:none; align-items:center; gap:10px;
+      background:#fef2f2; color:#b91c1c;
+      border:1px solid #fca5a5;
+      padding:11px 14px; border-radius:9px;
+      font-size:0.83rem; font-weight:500;
+      margin-bottom:16px;
+      animation:fadeIn 0.3s ease;
+    }
+    .alertBanner.show { display:flex; }
+    .alertBanner svg { width:17px; height:17px; flex-shrink:0; }
+
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(-4px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .formGroup { margin-bottom:18px; }
+    .formLabel {
+      display:block;
+      font-size:0.7rem; font-weight:600;
+      letter-spacing:0.08em; text-transform:uppercase;
+      color:var(--text-body); margin-bottom:8px;
+    }
+    .inputWrap { position:relative; }
+    .inputIcon {
+      position:absolute; left:13px; top:50%; transform:translateY(-50%);
+      display:flex; align-items:center;
+    }
+    .inputIcon svg { width:16px; height:16px; stroke:var(--gold-dark); fill:none; }
+    .formInput {
+      width:100%;
+      background:var(--cream);
+      border:1.5px solid var(--border);
+      border-radius:9px;
+      padding:11px 13px 11px 42px;
+      font-size:0.88rem; color:var(--text-h);
+      outline:none; transition:all var(--transition); font-family:inherit;
+    }
+    .formInput::placeholder { color:var(--text-muted); }
+    .formInput:focus {
+      border-color:var(--gold);
+      box-shadow:0 0 0 3px rgba(201,169,110,0.15);
+      background:var(--white);
+    }
+
+    .togglePwd {
+      position:absolute; right:12px; top:50%; transform:translateY(-50%);
+      cursor:pointer; display:flex; align-items:center;
+      background:none; border:none; padding:4px;
+    }
+    .togglePwd svg { width:16px; height:16px; stroke:var(--text-muted); fill:none; }
+    .togglePwd:hover svg { stroke:var(--gold-dark); }
+
+    #loginBtn {
+      width:100%;
+      background:linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color:var(--text-h);
+      border:none; border-radius:9px;
+      padding:13px; font-size:0.9rem; font-weight:700;
+      letter-spacing:0.06em; text-transform:uppercase;
+      cursor:pointer; margin-top:8px;
+      transition:all var(--transition); font-family:inherit;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    #loginBtn:hover {
+      transform:translateY(-2px);
+      box-shadow:0 10px 28px rgba(201,169,110,0.3);
+    }
+    #loginBtn:active { transform:translateY(0); }
+    #loginBtn svg { width:17px; height:17px; fill:none; stroke:var(--text-h); stroke-width:2.5; }
+
+    .loginFootnote {
+      text-align:center;
+      font-size:0.75rem; color:var(--text-muted);
+      margin-top:22px;
+    }
+    .loginFootnote a { color:var(--gold-dark); text-decoration:none; font-weight:600; }
+    .loginFootnote a:hover { text-decoration:underline; }
+
+    @media (max-width:640px) {
+      .loginBrand { display:none; }
+      .loginForm { padding:38px 28px; border-radius:22px; }
+      .loginWrapper { border-radius:22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="loginWrapper">
+
+    <!-- Left Brand Panel -->
+    <div class="loginBrand">
+      <div class="brandLogo">
+        <div class="brandIcon">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div>
+          <div class="brandName">Sonu Bin</div>
+          <div class="brandTagline">Admin Console</div>
+        </div>
+      </div>
+
+      <div class="brandCopy">
+        <div class="brandHeadline">Manage Your<br><em>Jewellery Empire</em></div>
+        <div class="brandGoldLine"></div>
+        <div class="brandDesc">Access products, orders, and real-time status updates from a single premium dashboard.</div>
+      </div>
+
+      <div class="brandFeatures">
+        <div class="brandFeature">
+          <svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          Manage Products &amp; Inventory
+        </div>
+        <div class="brandFeature">
+          <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          Track &amp; Update Order Status
+        </div>
+        <div class="brandFeature">
+          <svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          Analyse Sales &amp; Reports
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Form Panel -->
+    <div class="loginForm">
+      <div class="formEyebrow">Admin Portal</div>
+      <div class="formHeading">Welcome Back</div>
+      <div class="formSubheading">Sign in to your admin account to continue</div>
+
+      <div class="alertBanner" id="formMessage">
+        <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="messageText"></span>
+      </div>
+
+      <div class="formGroup">
+        <label class="formLabel" for="adminId">Admin ID</label>
+        <div class="inputWrap">
+          <span class="inputIcon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <input id="adminId" class="formInput" type="text" placeholder="Enter your admin ID" autocomplete="username">
+        </div>
+      </div>
+
+      <div class="formGroup">
+        <label class="formLabel" for="adminPassword">Password</label>
+        <div class="inputWrap">
+          <span class="inputIcon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </span>
+          <input id="adminPassword" class="formInput" type="password" placeholder="Enter your password" autocomplete="current-password" style="padding-right:42px;">
+          <button class="togglePwd" type="button" id="togglePwd" aria-label="Toggle password visibility">
+            <svg id="eyeIcon" viewBox="0 0 24 24" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <button id="loginBtn" type="button">
+        <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+        Sign In to Dashboard
+      </button>
+
+      <p class="loginFootnote">
+        Protected admin access · Sonu Bin &copy; 2026
+      </p>
+    </div>
+  </div>
+
+  <script src="./config.js"></script>
+  <script>
+    const adminIdInput = document.querySelector("#adminId");
+    const adminPasswordInput = document.querySelector("#adminPassword");
+    const alertBanner = document.querySelector("#formMessage");
+    const messageText = document.querySelector("#messageText");
+    const loginBtn = document.querySelector("#loginBtn");
+    const togglePwd = document.querySelector("#togglePwd");
+
+    // Redirect if already logged in
+    if (localStorage.getItem("adminId")) {
+      window.location.href = "./addProduct.html";
+    }
+
+    function showMessage(msg) {
+      messageText.textContent = msg;
+      alertBanner.classList.add("show");
+    }
+
+    togglePwd.addEventListener("click", () => {
+      const input = adminPasswordInput;
+      const isHidden = input.type === "password";
+      input.type = isHidden ? "text" : "password";
+    });
+
+    loginBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      alertBanner.classList.remove("show");
+
+      const adminId = adminIdInput.value.trim();
+      const password = adminPasswordInput.value.trim();
+
+      if (!adminId || !password) {
+        showMessage("Please enter both admin ID and password.");
+        return;
+      }
+
+      loginBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Signing in…`;
+      loginBtn.disabled = true;
+
+      try {
+        const res = await fetch(`${BASE_URL}/admin/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ adminId, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          localStorage.setItem("adminId", data.adminId);
+          localStorage.setItem("adminLoggedIn", "true");
+          if (data.sessionToken) {
+            localStorage.setItem("adminSessionToken", data.sessionToken);
+          }
+          loginBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Redirecting…`;
+          setTimeout(() => window.location.href = "./addProduct.html", 600);
+        } else {
+          showMessage(data.message || "Invalid admin ID or password. Please try again.");
+          adminPasswordInput.value = "";
+          adminPasswordInput.focus();
+          loginBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg> Sign In to Dashboard`;
+          loginBtn.disabled = false;
+        }
+      } catch (err) {
+        showMessage("Connection error. Is the server running?");
+        loginBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg> Sign In to Dashboard`;
+        loginBtn.disabled = false;
+      }
+    });
+
+    [adminIdInput, adminPasswordInput].forEach(el => {
+      el.addEventListener("keydown", e => { if (e.key === "Enter") loginBtn.click(); });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Admin – Sonu Bin</title>
+  <meta name="description" content="Create a new admin account for Sonu Bin management panel.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --primary:#6366f1; --primary-dark:#4f46e5;
+      --success:#10b981; --success-light:rgba(16,185,129,0.08);
+      --danger:#ef4444; --danger-light:rgba(239,68,68,0.08);
+      --border:#e2e8f0; --text-h:#0f172a; --text-muted:#64748b;
+      --transition:0.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    body {
+      font-family:'Inter',system-ui,sans-serif;
+      min-height:100vh;
+      display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+      padding:24px;
+    }
+    body::before, body::after {
+      content:'';
+      position:fixed;
+      border-radius:50%;
+      pointer-events:none;
+    }
+    body::before {
+      width:500px; height:500px;
+      background:radial-gradient(circle, rgba(99,102,241,0.18), transparent 70%);
+      top:-100px; left:-100px;
+    }
+    body::after {
+      width:400px; height:400px;
+      background:radial-gradient(circle, rgba(129,140,248,0.12), transparent 70%);
+      bottom:-80px; right:-80px;
+    }
+    .loginWrapper {
+      display:flex;
+      border-radius:20px;
+      overflow:hidden;
+      width:min(900px,100%);
+      box-shadow:0 25px 60px rgba(0,0,0,0.5);
+      position:relative;
+      z-index:1;
+    }
+    .loginBrand {
+      background: linear-gradient(160deg, #059669 0%, #10b981 50%, #34d399 100%);
+      padding:48px 40px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      width:42%;
+      position:relative;
+      overflow:hidden;
+    }
+    .loginBrand::before {
+      content:'';
+      position:absolute;
+      width:250px; height:250px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.06);
+      bottom:-60px; right:-60px;
+    }
+    .loginBrand::after {
+      content:'';
+      position:absolute;
+      width:150px; height:150px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.05);
+      top:30px; right:20px;
+    }
+    .brandLogo { display:flex; align-items:center; gap:12px; position:relative; z-index:1; }
+    .brandIcon {
+      width:44px; height:44px;
+      background:rgba(255,255,255,0.2);
+      border-radius:12px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .brandIcon svg { width:24px; height:24px; fill:#fff; }
+    .brandName { font-size:1.2rem; font-weight:700; color:#fff; }
+    .brandTagline { font-size:0.72rem; color:rgba(255,255,255,0.7); margin-top:1px; }
+    .brandCopy { position:relative; z-index:1; }
+    .brandHeadline { font-size:1.7rem; font-weight:700; color:#fff; line-height:1.25; margin-bottom:12px; }
+    .brandDesc { font-size:0.84rem; color:rgba(255,255,255,0.75); line-height:1.6; }
+    .brandFeatures { position:relative; z-index:1; }
+    .brandFeature { display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.85); font-size:0.8rem; margin-bottom:10px; }
+    .brandFeature svg { width:16px; height:16px; fill:rgba(255,255,255,0.9); flex-shrink:0; }
+
+    .loginForm {
+      background:#fff;
+      padding:48px 44px;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .formHeading { font-size:1.5rem; font-weight:700; color:var(--text-h); margin-bottom:4px; }
+    .formSubheading { font-size:0.85rem; color:var(--text-muted); margin-bottom:32px; }
+
+    .alertBanner {
+      display:none; align-items:center; gap:10px;
+      padding:11px 14px;
+      border-radius:9px;
+      font-size:0.83rem; font-weight:500;
+      margin-bottom:16px;
+      animation:fadeIn 0.3s ease;
+    }
+    .alertBanner.show { display:flex; }
+    .alertBanner.error { background:var(--danger-light); color:#b91c1c; border:1px solid #fca5a5; }
+    .alertBanner.success { background:var(--success-light); color:#065f46; border:1px solid #6ee7b7; }
+    .alertBanner svg { width:17px; height:17px; flex-shrink:0; }
+
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(-4px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .formGroup { margin-bottom:18px; }
+    .formLabel { display:block; font-size:0.78rem; font-weight:600; color:var(--text-h); margin-bottom:7px; }
+    .inputWrap { position:relative; }
+    .inputIcon { position:absolute; left:13px; top:50%; transform:translateY(-50%); display:flex; align-items:center; }
+    .inputIcon svg { width:17px; height:17px; stroke:#94a3b8; fill:none; }
+    .formInput {
+      width:100%;
+      background:#f8fafc;
+      border:1.5px solid #e2e8f0;
+      border-radius:9px;
+      padding:10px 12px 10px 40px;
+      font-size:0.9rem;
+      color:var(--text-h);
+      outline:none;
+      transition:all var(--transition);
+      font-family:inherit;
+    }
+    .formInput::placeholder { color:#94a3b8; }
+    .formInput:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(99,102,241,0.12); background:#fff; }
+    .togglePwd {
+      position:absolute; right:12px; top:50%; transform:translateY(-50%);
+      cursor:pointer; display:flex; align-items:center;
+      background:none; border:none; padding:4px;
+    }
+    .togglePwd svg { width:17px; height:17px; stroke:#94a3b8; fill:none; }
+    .togglePwd:hover svg { stroke:var(--primary); }
+
+    #registerBtn {
+      width:100%;
+      background:linear-gradient(135deg, #10b981, #059669);
+      color:#fff;
+      border:none;
+      border-radius:9px;
+      padding:12px;
+      font-size:0.95rem;
+      font-weight:700;
+      cursor:pointer;
+      margin-top:8px;
+      transition:all var(--transition);
+      font-family:inherit;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    #registerBtn:hover { transform:translateY(-1px); box-shadow:0 8px 20px rgba(16,185,129,0.35); }
+    #registerBtn:active { transform:translateY(0); }
+    #registerBtn:disabled { opacity:0.7; cursor:not-allowed; }
+
+    .loginFootnote { text-align:center; font-size:0.75rem; color:var(--text-muted); margin-top:20px; }
+    .loginFootnote a { color:var(--primary); text-decoration:none; font-weight:600; }
+    .loginFootnote a:hover { text-decoration:underline; }
+
+    @media (max-width:640px) {
+      .loginBrand { display:none; }
+      .loginForm { padding:36px 28px; border-radius:20px; }
+      .loginWrapper { border-radius:20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="loginWrapper">
+    <!-- Left Brand Panel -->
+    <div class="loginBrand">
+      <div class="brandLogo">
+        <div class="brandIcon">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div>
+          <div class="brandName">Sonu Bin</div>
+          <div class="brandTagline">Premium Admin Console</div>
+        </div>
+      </div>
+      <div class="brandCopy">
+        <div class="brandHeadline">Create Your Admin Account</div>
+        <div class="brandDesc">Register a new admin to manage products, track orders, and monitor your business independently.</div>
+      </div>
+      <div class="brandFeatures">
+        <div class="brandFeature">
+          <svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          Add &amp; Manage Your Products
+        </div>
+        <div class="brandFeature">
+          <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2"/></svg>
+          See Only Your Orders
+        </div>
+        <div class="brandFeature">
+          <svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          Isolated Sales Data
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Form Panel -->
+    <div class="loginForm">
+      <div class="formHeading">Create Admin Account ✨</div>
+      <div class="formSubheading">Set up your unique admin ID and password</div>
+
+      <div class="alertBanner" id="formMessage">
+        <svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="messageText"></span>
+      </div>
+
+      <div class="formGroup">
+        <label class="formLabel" for="adminId">Admin ID (Username)</label>
+        <div class="inputWrap">
+          <span class="inputIcon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <input id="adminId" class="formInput" type="text" placeholder="Choose a unique admin ID" autocomplete="username">
+        </div>
+      </div>
+
+      <div class="formGroup">
+        <label class="formLabel" for="adminPassword">Password</label>
+        <div class="inputWrap">
+          <span class="inputIcon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </span>
+          <input id="adminPassword" class="formInput" type="password" placeholder="Create a strong password" autocomplete="new-password">
+          <button class="togglePwd" type="button" id="togglePwd1" aria-label="Toggle password visibility">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="formGroup">
+        <label class="formLabel" for="adminPasswordConfirm">Confirm Password</label>
+        <div class="inputWrap">
+          <span class="inputIcon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </span>
+          <input id="adminPasswordConfirm" class="formInput" type="password" placeholder="Re-enter password" autocomplete="new-password">
+          <button class="togglePwd" type="button" id="togglePwd2" aria-label="Toggle confirm password visibility">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <button id="registerBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="#fff" width="18" height="18"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        Create Admin Account
+      </button>
+
+      <p class="loginFootnote">
+        Already have an account? <a href="./login.html">Sign In</a>
+        &nbsp;·&nbsp; Sonu Bin &copy; 2026
+      </p>
+    </div>
+  </div>
+
+  <script src="./config.js"></script>
+  <script>
+    const adminIdInput  = document.querySelector("#adminId");
+    const adminPwdInput = document.querySelector("#adminPassword");
+    const adminPwdConfirmInput = document.querySelector("#adminPasswordConfirm");
+    const alertBanner   = document.querySelector("#formMessage");
+    const messageText   = document.querySelector("#messageText");
+    const registerBtn   = document.querySelector("#registerBtn");
+
+    function showMessage(msg, type = "error") {
+      messageText.textContent = msg;
+      alertBanner.className = `alertBanner ${type} show`;
+    }
+
+    document.querySelector("#togglePwd1").addEventListener("click", () => {
+      adminPwdInput.type = adminPwdInput.type === "password" ? "text" : "password";
+    });
+    document.querySelector("#togglePwd2").addEventListener("click", () => {
+      adminPwdConfirmInput.type = adminPwdConfirmInput.type === "password" ? "text" : "password";
+    });
+
+    registerBtn.addEventListener("click", async () => {
+      alertBanner.classList.remove("show");
+
+      const adminId  = adminIdInput.value.trim();
+      const password = adminPwdInput.value.trim();
+      const confirm  = adminPwdConfirmInput.value.trim();
+
+      if (!adminId || !password || !confirm) {
+        showMessage("Please fill in all fields.");
+        return;
+      }
+      if (adminId.length < 3) {
+        showMessage("Admin ID must be at least 3 characters.");
+        return;
+      }
+      if (password.length < 4) {
+        showMessage("Password must be at least 4 characters.");
+        return;
+      }
+      if (password !== confirm) {
+        showMessage("Passwords do not match.");
+        return;
+      }
+
+      registerBtn.textContent = "Creating Account…";
+      registerBtn.disabled = true;
+
+      try {
+        const res = await fetch(`${BASE_URL}/admin/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ adminId, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          showMessage(`✅ Account "${adminId}" created! Redirecting to login…`, "success");
+          setTimeout(() => window.location.href = "./login.html", 1800);
+        } else {
+          showMessage(data.message || "Registration failed. Please try again.");
+          registerBtn.textContent = "Create Admin Account";
+          registerBtn.disabled = false;
+        }
+      } catch (err) {
+        showMessage("Connection error. Is the server running?");
+        registerBtn.textContent = "Create Admin Account";
+        registerBtn.disabled = false;
+      }
+    });
+
+    [adminIdInput, adminPwdInput, adminPwdConfirmInput].forEach(el => {
+      el.addEventListener("keydown", e => { if (e.key === "Enter") registerBtn.click(); });
+    });
+  </script>
+</body>
+</html>

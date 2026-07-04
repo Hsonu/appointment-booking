@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Status – Sonu Bin Admin</title>
+  <script src="/auto-logout.js"></script>
+  <link rel="stylesheet" href="./admin.css">
+  <style>
+    .statusDot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .dot-confirmed {
+      background: #f59e0b;
+    }
+
+    .dot-shipped {
+      background: #3b82f6;
+    }
+
+    .dot-delivered {
+      background: #10b981;
+    }
+
+    .dot-cancelled {
+      background: #ef4444;
+    }
+
+    .dot-return-req {
+      background: #f59e0b;
+    }
+
+    .dot-return-comp {
+      background: #10b981;
+    }
+
+    .dot-other {
+      background: #94a3b8;
+    }
+
+    /* Status dropdown in table rows */
+    .statusSelect {
+      padding: 6px 10px;
+      border: 1.5px solid #e8e0d5;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #3d3d45;
+      background: #faf8f5;
+      font-family: inherit;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.28s ease, box-shadow 0.28s ease;
+      min-width: 150px;
+    }
+
+    .statusSelect:focus {
+      border-color: #c9a96e;
+      box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+      background: #fff;
+    }
+
+    .statusSelect:hover {
+      border-color: #c9a96e;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="adminLayout">
+
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div id="sidebarHeader">
+        <div id="sidebarLogo">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+        </div>
+        <div>
+          <div id="sidebarTitle">Sonu Bin</div>
+          <div id="sidebarSubtitle">Admin Console</div>
+        </div>
+      </div>
+      <nav id="sidebarNav">
+        <div class="navSection">
+          <div class="navSectionLabel">Main</div>
+          <a class="navItem" href="../Dashboard.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+            </svg>
+            Dashboard
+          </a>
+          <a class="navItem" href="./Order.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            Products
+          </a>
+          <a class="navItem active" href="./status.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2" />
+            </svg>
+            Orders
+            <span class="navBadge" id="sidebarOrderCount">…</span>
+          </a>
+          <a class="navItem" href="./returns.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10" />
+              <polyline points="1 20 1 14 7 14" />
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+            </svg>
+            Returns
+          </a>
+          <a class="navItem" href="./order-cancel.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="15" y1="9" x2="9" y2="15" />
+            </svg>
+            Cancelled
+          </a>
+          <a class="navItem" href="./complaints.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            Complaints
+          </a>
+        </div>
+      </nav>
+      <div id="sidebarFooter">
+        <div class="sidebarUser">
+          <div class="sidebarAvatar" id="sidebarAvatarChar">A</div>
+          <div>
+            <div class="sidebarUserName" id="sidebarAdminName">Admin</div>
+            <div class="sidebarUserRole">Admin Account</div>
+          </div>
+        </div>
+        <button onclick="adminLogout()" type="button"
+          style="width:100%;margin-top:10px;background:#fee2e2;color:#b91c1c;border:none;border-radius:8px;padding:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;"
+          onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+          </svg>
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <div id="adminContent">
+      <header id="adminTopbar">
+        <div class="topbarLeft">
+          <span class="topbarPageTitle">Order Status</span>
+          <span class="topbarBreadcrumb">Home / Orders</span>
+        </div>
+        <div class="topbarRight">
+          <button class="btn btn-primary btn-sm" onclick="loadOrders()" type="button">
+            <svg viewBox="0 0 24 24" fill="#fff" style="width:15px;height:15px;">
+              <path
+                d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
+            </svg>
+            Refresh
+          </button>
+        </div>
+      </header>
+
+      <main id="adminBody">
+        <!-- Filter Row -->
+        <div class="adminCard fadeIn" style="margin-bottom:16px;">
+          <div class="adminCardBody" style="padding:16px 22px;">
+            <div class="searchRow">
+              <div class="formGroup">
+                <label class="formLabel">From Date</label>
+                <input class="formInput" id="formDate" type="date">
+              </div>
+              <div class="formGroup">
+                <label class="formLabel">To Date</label>
+                <input class="formInput" id="toDate" type="date">
+              </div>
+              <div class="formGroup">
+                <label class="formLabel">Status Filter</label>
+                <select class="formInput formSelect" id="statusFilter">
+                  <option value="">All Statuses</option>
+                  <option>Order Placed</option>
+                  <option>Order Confirmed</option>
+                  <option>Order Packed</option>
+                  <option>Shipped</option>
+                  <option>In Transit</option>
+                  <option>Out For Delivery</option>
+                  <option>Delivered</option>
+                  <option>Cancelled</option>
+                  <option>Return Requested</option>
+                  <option>Out For Pickup</option>
+                  <option>Order Picked Up</option>
+                  <option>Return Completed</option>
+                  <option>Delivered a replacement</option>
+                  <option>Refund Accepted</option>
+                  <option>Refund Completed</option>
+                  <option>Not Delivered</option>
+                  <option>Reprocess</option>
+                </select>
+              </div>
+              <div class="formGroup" style="justify-content:flex-end;">
+                <label class="formLabel">&nbsp;</label>
+                <button class="btn btn-primary" id="searchBtn" type="button">
+                  <svg viewBox="0 0 24 24" fill="#fff">
+                    <path
+                      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                  </svg>
+                  Filter
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toast notification -->
+        <div id="toast"
+          style="display:none;position:fixed;bottom:24px;right:24px;background:#10b981;color:#fff;padding:12px 20px;border-radius:10px;font-size:0.85rem;font-weight:600;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.2);animation:fadeIn 0.3s ease;">
+          ✓ Order status updated
+        </div>
+
+        <!-- Orders Table -->
+        <div class="adminCard fadeIn">
+          <div class="adminCardHeader">
+            <div>
+              <div class="adminCardTitle">All Orders</div>
+              <div class="adminCardSubtitle" id="orderCountLabel">Loading…</div>
+            </div>
+          </div>
+          <div class="tableWrapper">
+            <table class="adminTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Customer</th>
+                  <th>Product</th>
+                  <th>Qty</th>
+                  <th>Rate</th>
+                  <th>GST</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Address</th>
+                  <th>Mobile</th>
+                  <th>Order Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="orderTableBody">
+                <tr>
+                  <td colspan="12">
+                    <div class="emptyState">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+                        <rect x="9" y="3" width="6" height="4" rx="2" />
+                      </svg>
+                      <p>Loading orders…</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="./config.js"></script>
+  <script>
+    // ── Auth Guard ───────────────────────────────────────────────────────────
+    const ADMIN_ID = localStorage.getItem("adminId");
+    const SESSION_TOKEN = localStorage.getItem("adminSessionToken") || "";
+    if (!ADMIN_ID) { window.location.href = "./login.html"; }
+    document.getElementById("sidebarAdminName").textContent = ADMIN_ID || "Admin";
+    document.getElementById("sidebarAvatarChar").textContent = (ADMIN_ID || "A").charAt(0).toUpperCase();
+    function adminLogout() {
+      localStorage.removeItem("adminId");
+      localStorage.removeItem("adminLoggedIn");
+      window.location.href = "./login.html";
+    }
+
+    let allOrders = [];
+
+    function escapeHTML(str) {
+      if (!str) return "";
+      return str.replace(/[&<>'"]/g,
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
+
+    function getStatusBadge(s) {
+      if (!s) return `<span class="badge badge-gray">—</span>`;
+      if (s === "Delivered") return `<span class="badge badge-success"><span class="statusDot dot-delivered"></span>${s}</span>`;
+      if (s === "Cancelled") return `<span class="badge badge-danger"><span class="statusDot dot-cancelled"></span>${s}</span>`;
+      if (s === "Return Requested") return `<span class="badge badge-warning" style="background:#fffbeb;color:#b45309;border:1px solid #fef3c7;"><span class="statusDot dot-return-req"></span>${s}</span>`;
+      if (s === "Return Completed") return `<span class="badge badge-success" style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;"><span class="statusDot dot-return-comp"></span>${s}</span>`;
+
+      // New return / exchange states
+      if (s === "Out For Pickup") return `<span class="badge" style="background:#faf5ff;color:#6b21a8;border:1px solid #f3e8ff;"><span class="statusDot" style="background:#8b5cf6;"></span>Out For Pickup</span>`;
+      if (s === "Order Picked Up") return `<span class="badge" style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;"><span class="statusDot" style="background:#10b981;"></span>Order Picked Up</span>`;
+      if (s === "Delivered a replacement") return `<span class="badge badge-success" style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;"><span class="statusDot dot-delivered"></span>Delivered replacement</span>`;
+      if (s === "Refund Accepted") return `<span class="badge badge-danger" style="background:#fef2f2;color:#ef4444;border:1px solid #fee2e2;"><span class="statusDot dot-cancelled"></span>Refund Accepted</span>`;
+      if (s === "Refund Completed") return `<span class="badge badge-success" style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;"><span class="statusDot dot-return-comp"></span>Refund Completed</span>`;
+      if (s === "Not Delivered") return `<span class="badge badge-gray" style="background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;"><span class="statusDot dot-other"></span>Not Delivered</span>`;
+      if (s === "Reprocess") return `<span class="badge badge-info" style="background:#f0f9ff;color:#0284c7;border:1px solid #bae6fd;"><span class="statusDot dot-shipped"></span>Reprocessing</span>`;
+
+      if (["In Transit", "Shipped", "Out For Delivery"].includes(s)) return `<span class="badge badge-info"><span class="statusDot dot-shipped"></span>${s}</span>`;
+      return `<span class="badge badge-warning"><span class="statusDot dot-confirmed"></span>${s}</span>`;
+    }
+
+    function showToast(msg = "Updated!", color = "#10b981") {
+      const t = document.getElementById("toast");
+      t.textContent = "✓ " + msg;
+      t.style.background = color;
+      t.style.display = "block";
+      setTimeout(() => t.style.display = "none", 2500);
+    }
+
+    function renderOrders(data) {
+      const tbody = document.getElementById("orderTableBody");
+      document.getElementById("orderCountLabel").textContent = `${data.length} order${data.length !== 1 ? "s" : ""} found`;
+      document.getElementById("sidebarOrderCount").textContent = data.length;
+
+      if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="12"><div class="emptyState"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg><p>No orders found</p></div></td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = data.map((item, idx) => {
+        const rateAmt = parseFloat(item.rate || 0);
+        const totalAmt = parseFloat(item.withGstTotalAmount || item.totalAmount || 0);
+        const hasDetails = item.cancelReason || item.returnType || item.returnReason;
+        return `
+      <tr class="orderRow" data-id="${item._id}">
+        <td style="color:#94a3b8;font-size:0.75rem;white-space:nowrap;">
+          #${idx + 1}
+          ${hasDetails ? `
+            <button class="toggleDetailsBtn" style="background:none;border:none;color:#c9a96e;padding:2px;cursor:pointer;margin-left:4px;vertical-align:middle;transition:transform 0.28s ease;" title="View Cancellation/Return Details">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          ` : ''}
+        </td>
+        <td style="font-weight:600;color:#0f172a;">${item.customerName || "—"}</td>
+        <td>${item.productName || "—"}</td>
+        <td>${item.qty || "—"}</td>
+        <td>₹${rateAmt.toLocaleString("en-IN")}</td>
+        <td>${item.gst || 0}%</td>
+        <td style="font-weight:600;">₹${totalAmt.toLocaleString("en-IN")}</td>
+        <td>
+          <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-start;">
+            ${getStatusBadge(item.orderStatus)}
+            <select class="statusSelect" data-id="${item._id}">
+              ${(() => {
+            const baseOptions = ["Order Placed", "Order Confirmed", "Order Packed", "Shipped", "In Transit", "Out For Delivery", "Delivered", "Cancelled"];
+            let endOptions = ["Return Requested", "Out For Pickup", "Order Picked Up", "Return Completed"];
+            if (item.returnType === "Exchange") {
+              endOptions = ["Return Requested", "Out For Pickup", "Order Picked Up", "Return Completed", "Delivered a replacement", "Reprocess"];
+            } else if (item.returnType === "Refund") {
+              endOptions = ["Return Requested", "Out For Pickup", "Order Picked Up", "Refund Accepted", "Refund Completed", "Not Delivered", "Reprocess"];
+            }
+            const allOptions = [...baseOptions, ...endOptions];
+            if (item.orderStatus && !allOptions.includes(item.orderStatus)) {
+              allOptions.push(item.orderStatus);
+            }
+            return allOptions;
+          })()
+            .map(s => `<option value="${s}" ${item.orderStatus === s ? "selected" : ""}>${s}</option>`).join("")}
+            </select>
+          </div>
+        </td>
+        <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${item.customerAdd || ''}">${item.customerAdd || "—"}</td>
+        <td>${item.customerMobileNumber || "—"}</td>
+        <td style="white-space:nowrap;font-size:0.78rem;color:#64748b;">${item.orderDate ? new Date(item.orderDate).toLocaleDateString("en-IN") : "—"}</td>
+        <td>
+          <button class="btn btn-primary btn-sm updateBtn" type="button" data-id="${item._id}">Update</button>
+        </td>
+      </tr>
+      ${hasDetails ? `
+      <tr class="detailsRow" id="details-${item._id}" style="display:none; background:#faf8f5;">
+        <td colspan="12" style="padding:12px 20px; border-bottom:1.5px solid #e8e0d5;">
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:0.82rem; color:#475569; text-align:left;">
+            ${item.cancelReason ? `
+              <div>
+                <strong style="color:#ef4444;">Cancellation Reason:</strong> 
+                <span style="background:#fef2f2; padding:4px 8px; border-radius:6px; border:1px solid #fee2e2; display:inline-block; margin-top:2px;">${escapeHTML(item.cancelReason)}</span>
+              </div>
+            ` : ''}
+            ${item.returnType ? `
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <div>
+                  <strong style="color:#b45309;">Return Request Type:</strong> 
+                  <span style="background:#fffbeb; color:#b45309; padding:2px 8px; border-radius:6px; border:1px solid #fef3c7; font-weight:600;">${item.returnType}</span>
+                </div>
+                <div>
+                  <strong>Return Reason:</strong> 
+                  <span style="background:#f8fafc; padding:4px 8px; border-radius:6px; border:1px solid #e2e8f0; display:inline-block; margin-top:2px;">${escapeHTML(item.returnReason)}</span>
+                </div>
+                ${item.returnType.toLowerCase() === "refund" ? `
+                  <div>
+                    <strong style="color:#854d0e;">Refund Payment Details:</strong> 
+                    <span style="background:#fdf7ee; color:#854d0e; padding:4px 8px; border-radius:6px; border:1px solid #fbeed5; font-family:monospace; font-weight:600; display:inline-block; margin-top:2px;">${escapeHTML(item.refundPaymentDetails || "None provided")}</span>
+                  </div>
+                  <div>
+                    <strong style="color:#475569;">Refund Status:</strong> 
+                    ${item.orderStatus === "Refund Completed" ? `
+                      <span style="background:#f0fdf4; color:#16a34a; padding:2px 8px; border-radius:6px; border:1px solid #bbf7d0; font-weight:600; display:inline-block; margin-top:2px;">✓ Payment Completed</span>
+                    ` : item.orderStatus === "Refund Accepted" ? `
+                      <span style="background:#eff6ff; color:#1d4ed8; padding:2px 8px; border-radius:6px; border:1px solid #bfdbfe; font-weight:600; display:inline-block; margin-top:2px;">Approved (Processing Payment)</span>
+                    ` : item.orderStatus === "Out For Pickup" ? `
+                      <span style="background:#faf5ff; color:#6b21a8; padding:2px 8px; border-radius:6px; border:1px solid #f3e8ff; font-weight:600; display:inline-block; margin-top:2px;">Out For Pickup</span>
+                    ` : item.orderStatus === "Order Picked Up" ? `
+                      <span style="background:#eff6ff; color:#1d4ed8; padding:2px 8px; border-radius:6px; border:1px solid #bfdbfe; font-weight:600; display:inline-block; margin-top:2px;">Order Picked Up</span>
+                    ` : `
+                      <span style="background:#fffbeb; color:#b45309; padding:2px 8px; border-radius:6px; border:1px solid #fef3c7; font-weight:600; display:inline-block; margin-top:2px;">Pending Approval</span>
+                    `}
+                  </div>
+                ` : ''}
+              </div>
+            ` : ''}
+          </div>
+        </td>
+      </tr>
+      ` : ''}
+    `;
+      }).join("");
+
+      // Attach update event listeners
+      document.querySelectorAll(".updateBtn").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+          e.preventDefault();
+          const id = btn.dataset.id;
+          const row = btn.closest("tr");
+          const status = row.querySelector(".statusSelect").value;
+          btn.textContent = "…";
+          btn.disabled = true;
+          try {
+            const res = await fetch(`${BASE_URL}/updateOrderStatus/${id}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                "x-admin-id": ADMIN_ID,
+                "x-session-token": SESSION_TOKEN
+              },
+              body: JSON.stringify({ status })
+            });
+            if (!res.ok) throw new Error();
+            showToast("Order status updated!");
+            const badge = row.querySelector(".badge");
+            if (badge) badge.outerHTML = getStatusBadge(status);
+          } catch {
+            showToast("Update failed", "#ef4444");
+          } finally {
+            btn.textContent = "Update"; btn.disabled = false;
+          }
+        });
+      });
+
+      // Attach details toggle event listeners
+      document.querySelectorAll(".toggleDetailsBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const row = btn.closest("tr");
+          const nextRow = row.nextElementSibling;
+          if (nextRow && nextRow.classList.contains("detailsRow")) {
+            const isHidden = nextRow.style.display === "none";
+            nextRow.style.display = isHidden ? "table-row" : "none";
+            btn.style.transform = isHidden ? "rotate(180deg)" : "rotate(0deg)";
+          }
+        });
+      });
+    }
+
+    async function loadOrders() {
+      try {
+        // Send x-admin-id header so only this admin's orders are returned
+        const res = await fetch(`${BASE_URL}/viwePlaceOrder`, { headers: { "x-admin-id": ADMIN_ID, "x-session-token": SESSION_TOKEN } });
+        allOrders = await res.json();
+        applyFilter();
+      } catch (err) {
+        document.getElementById("orderTableBody").innerHTML = `<tr><td colspan="12"><div class="emptyState"><p>Failed to load orders. Check server connection.</p></div></td></tr>`;
+      }
+    }
+
+    function applyFilter() {
+      let filtered = [...allOrders];
+      const statusFilter = document.getElementById("statusFilter").value;
+      const from = document.getElementById("formDate").value;
+      const to = document.getElementById("toDate").value;
+
+      if (statusFilter) filtered = filtered.filter(o => o.orderStatus === statusFilter);
+      if (from) filtered = filtered.filter(o => new Date(o.orderDate) >= new Date(from));
+      if (to) filtered = filtered.filter(o => new Date(o.orderDate) <= new Date(to + "T23:59:59"));
+
+      renderOrders(filtered);
+    }
+
+    document.getElementById("searchBtn").addEventListener("click", (e) => { e.preventDefault(); applyFilter(); });
+    loadOrders();
+  </script>
+</body>
+
+</html>

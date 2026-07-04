@@ -1,0 +1,2803 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- PWA configuration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0d0d0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sonu Bin">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <title>Order Details – Sonu Bin</title>
+    <script src="/auto-logout.js"></script>
+    <meta name="description" content="View your order receipt, tracking details, and purchase summary at Sonu Bin.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ═══════════════════════════════════════════
+           DESIGN TOKENS
+        ═══════════════════════════════════════════ */
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #a8854e;
+            --gold-light: #e8d4a8;
+            --gold-bg: #fdf7ee;
+            --cream: #ffffff;
+            --dark: #0d0d0f;
+            --dark-2: #1a1a1f;
+            --dark-3: #2a2a30;
+            --text-h: #0d0d0f;
+            --text-body: #3d3d45;
+            --text-muted: #7a7a85;
+            --border: #e8e0d5;
+            --white: #ffffff;
+            --header-h: 72px;
+            --radius: 14px;
+            --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ═══════════════════════════════════════════
+           RESET & BASE
+        ═══════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* ═══════════════════════════════════════════
+           WHATSAPP FLOAT
+        ═══════════════════════════════════════════ */
+        .whatsapp-float {
+            position: fixed;
+            width: 56px;
+            height: 56px;
+            bottom: 28px;
+            right: 28px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+            z-index: 9999;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
+        }
+
+        .whatsapp-float img {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* ═══════════════════════════════════════════
+           HEADER / NAVBAR
+        ═══════════════════════════════════════════ */
+        #siteHeader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: auto;
+            min-height: var(--header-h);
+            z-index: 1000;
+            background: rgba(13, 13, 15, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+            transition: background var(--transition), backdrop-filter var(--transition), border-color var(--transition);
+        }
+
+        #navInner {
+            max-width: 100%;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 0 24px;
+        }
+
+                /* Logo */
+        #navLogo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .brand-logo-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1.5px solid var(--gold);
+            object-fit: cover;
+            transition: transform var(--transition);
+        }
+
+        #navLogo:hover .brand-logo-img {
+            transform: rotate(360deg);
+        }
+
+        
+        .mobile-br {
+            display: none;
+        }
+.brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        #navLogo .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.04em;
+        }
+
+        #navLogo .brand-tagline {
+            font-size: 0.58rem;
+            letter-spacing: 0.14em;
+            color: rgba(201, 169, 110, 0.7);
+            text-transform: uppercase;
+            margin-top: 1px;
+        }
+
+        #searchWrapper {
+            flex: 1;
+            max-width: 440px;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(201, 169, 110, 0.25);
+            border-radius: 999px;
+            padding: 9px 18px 9px 42px;
+            font-size: 0.88rem;
+            color: #fff;
+            outline: none;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #searchInput:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+        }
+
+        #searchIcon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            stroke: rgba(201, 169, 110, 0.6);
+            fill: none;
+            pointer-events: none;
+        }
+
+        .navActions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .navActionBtn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1.5px solid transparent;
+            transition: border-color var(--transition), background var(--transition);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .navActionBtn:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+            background: rgba(201, 169, 110, 0.06);
+            color: var(--gold);
+        }
+
+        .navActionBtn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .cartWrap {
+            position: relative;
+        }
+
+        .cartBadge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ═══════════════════════════════════════════
+           MAIN SECTION
+        ═══════════════════════════════════════════ */
+        main {
+            margin-top: calc(var(--header-h) + 40px);
+            flex: 1;
+            padding-bottom: 72px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .details-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 32px;
+            border-bottom: 1.5px solid var(--border);
+            padding-bottom: 24px;
+        }
+
+        .details-header-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+            font-weight: 700;
+            color: var(--text-h);
+        }
+
+        .details-header-title p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            background: #fff;
+            color: var(--text-body);
+            transition: all var(--transition);
+        }
+
+        .btn-back:hover {
+            border-color: var(--gold);
+            color: var(--gold-dark);
+            transform: translateX(-2px);
+        }
+
+        .btn-back svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+        }
+
+        /* Detail Cards */
+        .detail-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+        }
+
+        .detail-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--text-h);
+            margin-bottom: 20px;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Order item row styling */
+        .order-product-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding-bottom: 12px;
+        }
+
+        .product-img-wrap {
+            width: 130px;
+            height: 130px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8f4ef;
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            flex-shrink: 0;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-desc-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .ProductNamesummary {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-h);
+        }
+
+        .ProductNameDetails {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .productSummaryrate {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--gold-dark);
+            margin-top: 4px;
+        }
+
+        /* Status Banner */
+        .status-banner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gold-bg);
+            border: 1px solid rgba(201, 169, 110, 0.25);
+            padding: 14px 20px;
+            border-radius: 10px;
+            margin-top: 18px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0px rgba(16, 185, 129, 0.3);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0px rgba(16, 185, 129, 0);
+            }
+        }
+
+        .status-text {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-h);
+        }
+
+        .productSummarystatus {
+            font-weight: 700;
+            color: var(--gold-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Flipkart-style Order Tracking Timeline */
+        .timeline-container {
+            padding: 24px 0 10px;
+            margin: 20px 0 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            /* Hide scrollbar for clean visual appearance */
+        }
+
+        .timeline-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tracking-timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            min-width: 480px;
+            padding: 0 10px;
+        }
+
+        .tracking-timeline::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .timeline-progress-bar {
+            position: absolute;
+            top: 16px;
+            left: 0;
+            height: 4px;
+            background: #10b981;
+            z-index: 1;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+
+        .timeline-step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .step-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3.5px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #64748b;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 5px #fff;
+        }
+
+        .timeline-step.completed .step-dot {
+            background: #10b981;
+            border-color: #10b981;
+            color: #fff;
+        }
+
+        .timeline-step.active .step-dot {
+            border-color: #10b981;
+            color: #10b981;
+            box-shadow: 0 0 0 5px #fff, 0 0 12px rgba(16, 185, 129, 0.35);
+        }
+
+        .step-label {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #64748b;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .timeline-step.active .step-label,
+        .timeline-step.completed .step-label {
+            color: #0f172a;
+        }
+
+        .step-date {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
+        /* Columns inside info card */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .info-col h4 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 12px;
+        }
+
+        .info-col p {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+
+        .info-col p strong {
+            color: var(--text-h);
+        }
+
+        /* Invoice table breakdown */
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        .invoice-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 0.88rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .invoice-row.total {
+            border-top: 2px solid var(--border);
+            border-bottom: none;
+            padding-top: 14px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-h);
+        }
+
+        /* Loading Skeletons */
+        .skeleton-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 30px;
+            border: 1px solid var(--border);
+            margin-bottom: 28px;
+        }
+
+        .skeleton-title {
+            height: 18px;
+            width: 30%;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 4px;
+            margin-bottom: 24px;
+        }
+
+        .skeleton-img-box {
+            width: 130px;
+            height: 130px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+        }
+
+        .skeleton-line {
+            height: 12px;
+            background: linear-gradient(90deg, #f0ebe3 25%, #e8e0d5 50%, #f0ebe3 75%);
+            background-size: 200%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .skeleton-line.l1 {
+            width: 55%;
+        }
+
+        .skeleton-line.l2 {
+            width: 80%;
+        }
+
+        .skeleton-line.l3 {
+            width: 35%;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .mobile-br {
+                display: block !important;
+            }
+            #navLogo .brand-name {
+                font-size: 1.05rem !important;
+                line-height: 1.05 !important;
+            }
+            #navLogo .brand-tagline {
+                font-size: 0.5rem !important;
+                letter-spacing: 0.1em !important;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .order-product-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .product-img-wrap {
+                width: 100%;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 860px) {
+            #siteHeader {
+                min-height: auto !important;
+            }
+
+            :root {
+                --header-h: 165px;
+            }
+
+            #navInner {
+                flex-wrap: wrap;
+                padding: 10px 16px;
+                gap: 8px 12px;
+                height: auto;
+                justify-content: space-between;
+            }
+
+            #navLogo {
+                order: 1;
+            }
+
+            #headerLocationBtn {
+                order: 2;
+                margin-left: auto;
+            }
+
+            .navActions {
+                order: 3;
+                margin-left: 0;
+                gap: 4px;
+            }
+
+            .navActionBtn {
+                padding: 8px;
+                font-size: 0.6rem;
+            }
+
+            #searchWrapper {
+                display: block;
+                order: 4;
+                flex-basis: 100%;
+                max-width: 100%;
+                margin-top: 4px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .location-text-group {
+                display: none;
+            }
+            .header-location-btn {
+                padding: 8px;
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                background: rgba(255, 255, 255, 0.04);
+                max-width: 38px;
+                height: 38px;
+                justify-content: center;
+                align-items: center;
+                gap: 0;
+            }
+            .location-icon-svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            :root {
+                --header-h: 165px;
+            }
+            /* Navbar: icons-only mode on small screens */
+            .navActionBtn {
+                font-size: 0;
+                padding: 8px;
+                gap: 0;
+            }
+
+            .navActionBtn svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .cartBadge {
+                top: 0;
+                right: 0;
+                width: 15px;
+                height: 15px;
+                font-size: 0.55rem;
+            }
+
+            :root {
+                --header-h: 165px;
+            }
+            .details-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .btn-back {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ═══════════════════════════════════════════
+           MODAL SYSTEM & COMPLAINTS
+        ═══════════════════════════════════════════ */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(13, 13, 15, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 500px;
+            padding: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            transform: scale(0.9);
+            transition: transform var(--transition);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--dark);
+        }
+
+        .modal-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text-h);
+            margin-bottom: 16px;
+        }
+
+        .modal-question {
+            font-size: 0.95rem;
+            color: var(--text-body);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .input-group label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-group textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1.5px solid var(--border);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            resize: none;
+            transition: border-color var(--transition);
+        }
+
+        .input-group textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn-secondary {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: var(--cream);
+            border: 1.5px solid var(--border);
+            color: var(--text-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-muted);
+            background: #fff;
+        }
+
+        .btn-danger {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+        }
+
+        .btn-primary {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-dark);
+            box-shadow: 0 4px 12px rgba(201, 169, 110, 0.25);
+        }
+
+        .btn-action-cancel {
+            background: #fff;
+            border: 1.5px solid #ef4444;
+            color: #ef4444;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition);
+        }
+
+        .btn-action-cancel:hover:not(:disabled) {
+            background: #ef4444;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+        }
+
+        .btn-action-cancel:disabled {
+            border-color: var(--border);
+            color: var(--text-muted);
+            background: #fff;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-action-cancel-return {
+            background: #fff;
+            border: 1.5px solid #ef4444;
+            color: #ef4444;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition);
+        }
+
+        .btn-action-cancel-return:hover:not(:disabled) {
+            background: #ef4444;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+        }
+
+        .btn-action-cancel-return:disabled {
+            border-color: var(--border);
+            color: var(--text-muted);
+            background: #fff;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-action-complain {
+            background: #fff;
+            border: 1.5px solid var(--gold);
+            color: var(--gold-dark);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition);
+        }
+
+        .btn-action-complain:hover {
+            background: var(--gold);
+            color: var(--dark);
+            box-shadow: 0 4px 12px rgba(201, 169, 110, 0.15);
+        }
+
+        /* Toast notifications */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--dark);
+            color: #fff;
+            border: 1px solid var(--gold);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast-notification.active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Complaints section styling */
+        .complaints-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+        }
+
+        .complaints-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .complaint-item {
+            padding: 16px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .complaint-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .complaint-status {
+            background: var(--gold-bg);
+            color: var(--gold-dark);
+            padding: 2px 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .complaint-text {
+            font-size: 0.88rem;
+            color: var(--text-body);
+            line-height: 1.5;
+        }
+
+        /* Return request styling */
+        .return-options-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .return-option-card {
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .return-option-card:hover {
+            border-color: var(--gold);
+            background: var(--gold-bg);
+        }
+
+        .return-option-card input[type="radio"] {
+            accent-color: var(--gold-dark);
+            cursor: pointer;
+        }
+
+        .return-option-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-h);
+        }
+
+        .btn-action-return {
+            background: #fff;
+            border: 1.5px solid var(--gold);
+            color: var(--gold-dark);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition);
+        }
+
+        .btn-action-return:hover:not(:disabled) {
+            background: var(--gold);
+            color: var(--dark);
+            box-shadow: 0 4px 12px rgba(201, 169, 110, 0.15);
+        }
+
+        .btn-action-return:disabled {
+            border-color: var(--border);
+            color: var(--text-muted);
+            background: #fff;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Print styles for downloadable retail tax invoice */
+        .print-header {
+            display: none;
+        }
+
+        @media print {
+            .print-header {
+                display: block !important;
+            }
+
+            body {
+                background: #ffffff !important;
+                color: #0d0d0f !important;
+                font-size: 10pt;
+                padding: 0;
+                margin: 0;
+            }
+
+            #siteHeader,
+            .btn-back,
+            #downloadInvoiceBtn,
+            .whatsapp-float {
+                display: none !important;
+            }
+
+            main {
+                margin-top: 0 !important;
+                padding: 0 !important;
+            }
+
+            .container {
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+
+            .detail-card {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin-bottom: 24px;
+                background: transparent !important;
+                page-break-inside: avoid;
+            }
+
+            .detail-card h3 {
+                border-bottom: 2px solid #0d0d0f !important;
+                color: #0d0d0f !important;
+                font-size: 13pt;
+                font-weight: bold;
+                padding-bottom: 6px;
+                margin-bottom: 15px;
+            }
+
+            .timeline-container,
+            .status-banner {
+                display: none !important;
+            }
+
+            .product-img-wrap {
+                width: 90px !important;
+                height: 90px !important;
+                border: 1px solid #e8e0d5 !important;
+            }
+
+            .order-product-row {
+                gap: 20px !important;
+                padding-bottom: 10px !important;
+            }
+
+            .ProductNamesummary {
+                font-size: 12pt !important;
+                color: #0d0d0f !important;
+            }
+
+            .ProductNameDetails {
+                font-size: 8.5pt !important;
+                color: #55555d !important;
+            }
+
+            .productSummaryrate {
+                font-size: 12pt !important;
+                color: #a8854e !important;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 24px !important;
+            }
+
+            .info-col h4 {
+                color: #a8854e !important;
+                border-bottom: 1px solid #e8e0d5;
+                padding-bottom: 4px;
+                margin-bottom: 8px;
+                font-size: 9pt;
+            }
+
+            .invoice-table {
+                margin-top: 8px !important;
+            }
+
+            .invoice-row {
+                padding: 6px 0 !important;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+            }
+
+            .invoice-row.total {
+                border-top: 2px solid #0d0d0f !important;
+                color: #0d0d0f !important;
+                font-size: 12pt !important;
+                padding-top: 10px !important;
+            }
+        }
+    
+
+        /* ═══════════════════════════════════════════
+           HEADER LOCATION WIDGET
+           ═══════════════════════════════════════════ */
+        .header-location-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            transition: all var(--transition);
+            user-select: none;
+            max-width: 220px;
+            flex-shrink: 0;
+        }
+
+        .header-location-btn:hover {
+            background: rgba(201, 169, 110, 0.08);
+            border-color: rgba(201, 169, 110, 0.3);
+        }
+
+        .header-location-btn:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        .location-icon-svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 1.8;
+            flex-shrink: 0;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+        }
+
+        .location-text-group {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .location-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+        }
+
+        .location-action {
+            font-size: 0.8rem;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+        }
+
+        /* ═══════════════════════════════════════════
+           CENTERED LOCATION MODAL
+           ═══════════════════════════════════════════ */
+        .location-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(13, 13, 15, 0.75);
+            backdrop-filter: blur(12px);
+            z-index: 15000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition);
+        }
+
+        .location-modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .location-modal-content {
+            background: rgba(26, 26, 31, 0.95);
+            border: 1.5px solid var(--gold);
+            border-radius: 20px;
+            padding: 32px 24px;
+            width: min(400px, calc(100vw - 32px));
+            text-align: center;
+            position: relative;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(201, 169, 110, 0.15);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .location-modal-overlay.show .location-modal-content {
+            transform: scale(1);
+        }
+
+        .location-close-btn {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color var(--transition);
+            line-height: 1;
+        }
+
+        .location-close-btn:hover {
+            color: #fff;
+        }
+
+        .location-modal-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 12px;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+        }
+
+        .location-modal-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .location-input-wrap {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .location-input-wrap input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #120617;
+            font-size: 0.95rem;
+            font-weight: 500;
+            outline: none;
+            transition: all var(--transition);
+            text-align: center;
+            letter-spacing: 0.05em;
+        }
+
+        .location-input-wrap input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.15);
+        }
+
+        .location-submit-btn {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all var(--transition);
+        }
+
+        .location-submit-btn:disabled {
+            background: #2a2a30;
+            color: var(--text-muted);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .location-submit-btn:not(:disabled):hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(201, 169, 110, 0.3);
+        }
+
+        .location-status-text {
+            font-size: 0.8rem;
+            font-weight: 500;
+            min-height: 20px;
+            transition: color var(--transition);
+            margin-top: 10px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .header-location-btn {
+                padding: 6px 8px;
+                max-width: 140px;
+            }
+            .location-label {
+                max-width: 80px;
+            }
+            .location-action {
+                font-size: 0.72rem;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .header-location-btn {
+                padding: 4px 6px;
+                max-width: 110px;
+                gap: 6px;
+            }
+            .location-icon-svg {
+                width: 16px;
+                height: 16px;
+            }
+            .location-label {
+                max-width: 60px;
+                font-size: 0.58rem;
+            }
+            .location-action {
+                font-size: 0.68rem;
+            }
+        }
+
+
+    
+        @media (max-width: 768px) {
+            #headerLocationBtn, .header-location-btn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<!-- Site-Wide Disclaimer Banner -->
+<div class="site-wide-disclaimer" style="background: #110e08; color: #e8d4a8; text-align: center; padding: 10px 15px; font-size: 0.82rem; font-family: 'Inter', sans-serif; border-bottom: 1px solid #c9a96e; letter-spacing: 0.05em; line-height: 1.4; font-weight: 500; z-index: 9999; position: relative;">
+    <strong>DISCLAIMER:</strong> Sonu Bin offers premium imitation/fashion jewellery only. All products are non-gold fashion jewellery. We do not sell real gold, BIS Hallmarked jewellery, certified diamonds, or precious metal jewellery.
+</div>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/918603632642?text=Hello,%20I%20am%20interested%20in%20your%20jewellery%20products.%20Could%20you%20please%20provide%20more%20details?"
+        class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header id="siteHeader" role="banner">
+        <div id="navInner">
+
+            <!-- Logo -->
+            <a id="navLogo" href="./index.html" aria-label="Sonu Bin Home">
+                <img class="brand-logo-img" src="./logo.jpg" alt="Sonu Bin Logo">
+                <div class="brand-text">
+                    <span class="brand-name">Sonu Bin<br class="mobile-br">Jewels</span>
+                    <span class="brand-tagline">Timeless Beauty</span>
+                </div>
+            </a>
+
+            <!-- Location Widget -->
+            <div id="headerLocationBtn" class="header-location-btn" role="button" tabindex="0" aria-label="Select delivery location">
+                <svg viewBox="0 0 24 24" class="location-icon-svg">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                <div class="location-text-group">
+                    <span class="location-label" id="headerLocationLabel">Delivering to India</span>
+                    <span class="location-action">Update location</span>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div id="searchWrapper" role="search">
+                <svg id="searchIcon" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input id="searchInput" type="text" placeholder="Search rings, necklaces, bangles…" autocomplete="off"
+                    aria-label="Search products">
+            </div>
+
+            <!-- Actions -->
+            <nav class="navActions" aria-label="User actions">
+                <a href="./order.html" class="navActionBtn" id="navOrderBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Orders
+                </a>
+                <a href="./login.html" class="navActionBtn" id="navLoginBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    Account
+                </a>
+                <a href="./card.html" class="navActionBtn cartWrap" id="navCartBtn" aria-label="Shopping cart">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    Cart
+                    <span class="cartBadge" id="cartCount" aria-label="items in cart">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+<!-- Centered Location Modal Overlay -->
+    <div id="locationModal" class="location-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
+        <div class="location-modal-content">
+            <button id="closeLocationModal" class="location-close-btn" aria-label="Close modal">&times;</button>
+            <h3 id="locationModalTitle">Choose your location</h3>
+            <p class="location-modal-desc">Enter your 6-digit Indian pincode to check delivery coverage and catalog speed in your area.</p>
+            
+            <div class="location-input-wrap">
+                <input id="modalPincodeInput" type="text" placeholder="Enter 6-digit Pincode" maxlength="6" autocomplete="off" aria-label="Pincode">
+                <button id="modalPincodeSubmit" class="location-submit-btn" disabled>Apply</button>
+            </div>
+            
+            <div id="modalPincodeStatus" class="location-status-text"></div>
+        </div>
+    </div>
+
+<!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+    <main>
+        <div class="container">
+            <!-- Print-Only Tax Invoice Header -->
+            <div class="print-header">
+                <div
+                    style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px double #0d0d0f; padding-bottom:15px; margin-bottom:25px;">
+                    <div>
+                        <h1
+                            style="font-family:'Playfair Display', serif; font-size:24pt; color:#0d0d0f; margin:0; font-weight:700;">
+                            Sonu Bin</h1>
+                        <p
+                            style="font-size:9pt; text-transform:uppercase; letter-spacing:2px; margin:2px 0 0; color:#3d3d45; font-weight:600;">
+                            Luxury &amp; Elegance Certified</p>
+                    </div>
+                    <div style="text-align:right;">
+                        <h2 style="font-size:14pt; margin:0; color:#0d0d0f; font-weight:700;">RETAIL TAX INVOICE</h2>
+                        <p id="printInvoiceDate" style="font-size:9pt; margin:4px 0 0; color:#3d3d45; font-weight:500;">
+                            Date: —</p>
+                        <p id="printInvoiceNo" style="font-size:9pt; margin:2px 0 0; color:#3d3d45; font-weight:600;">
+                            Invoice No: —</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="details-header">
+                <div class="details-header-title">
+                    <h1>Order Overview</h1>
+                    <p id="invoiceNumber">Loading transaction data…</p>
+                </div>
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <button id="downloadInvoiceBtn" class="btn-back"
+                        style="border-color:var(--gold); color:var(--gold-dark); cursor:pointer;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                            style="width:14px; height:14px;">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                        </svg>
+                        Download Invoice
+                    </button>
+                    <a href="./order.html" class="btn-back">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="19" y1="12" x2="5" y2="12" />
+                            <polyline points="12 19 5 12 12 5" />
+                        </svg>
+                        Back to Orders
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 1: Product overview -->
+            <div class="detail-card">
+                <h3>Purchased Jewel</h3>
+
+                <div class="order-product-row" id="productBlock">
+                    <!-- Skeleton -->
+                    <div class="skeleton-img-box"></div>
+                    <div style="flex:1">
+                        <div class="skeleton-line l1"></div>
+                        <div class="skeleton-line l2"></div>
+                        <div class="skeleton-line l3"></div>
+                    </div>
+                </div>
+
+                <!-- Flipkart-style Horizontal Order Tracking Timeline -->
+                <div class="timeline-container">
+                    <div class="tracking-timeline" id="timelineContainer">
+                        <!-- Populated dynamically by javascript -->
+                    </div>
+                </div>
+
+                <div class="status-banner">
+                    <div class="status-dot"></div>
+                    <div class="status-text">
+                        Delivery Status: <span class="productSummarystatus" id="orderStatusLabel">Pending</span>
+                    </div>
+                </div>
+                <!-- Order Actions -->
+                <div class="order-actions" id="orderActions"
+                    style="display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap;"></div>
+            </div>
+
+            <!-- Return & Refund Details Card -->
+            <div class="detail-card" id="returnDetailsCard" style="display: none;">
+                <h3>Return & Refund Details</h3>
+                <div class="info-grid">
+                    <div class="info-col">
+                        <h4>Request Information</h4>
+                        <p>Request Type: <strong id="returnDetailType">—</strong></p>
+                        <p style="margin-top: 6px;">Return Reason: <span id="returnDetailReason" style="color: var(--text-body); font-weight: 500;">—</span></p>
+                    </div>
+                    <div class="info-col" id="returnDetailRefundCol">
+                        <h4>Refund Payment Details</h4>
+                        <p id="returnDetailRefundPayment" style="background: var(--cream); padding: 8px 12px; border-radius: 8px; font-family: monospace; font-weight: 600; font-size: 0.82rem; border: 1px dashed rgba(201, 169, 110, 0.4); margin-top: 6px;">—</p>
+                        <p style="margin-top: 8px;">Refund Status: <strong id="returnDetailRefundStatus" style="color: var(--gold);">Pending</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Details grid -->
+            <div class="detail-card">
+                <h3>Delivery & Payment Details</h3>
+
+                <div class="info-grid">
+                    <!-- Column 1: Address details -->
+                    <div class="info-col">
+                        <h4>Shipping Address</h4>
+                        <p><strong id="DeliveryCutomerName">Loading Name…</strong></p>
+                        <p id="DeliveryCutomerPhoneNumber">Loading Phone…</p>
+                        <p id="DeliveryAddress" style="margin-top: 10px; color: var(--text-body); font-weight: 500;">
+                            Loading Address…</p>
+                    </div>
+
+                    <!-- Column 2: Payment Receipt -->
+                    <div class="info-col">
+                        <h4>Receipt Invoice</h4>
+                        <p>Method: <strong id="paymentMethod">Online Payment</strong></p>
+
+                        <div class="invoice-table">
+                            <div class="invoice-row">
+                                <span>Subtotal</span>
+                                <span>₹<span id="ProductPrice">0.00</span></span>
+                            </div>
+                            <div class="invoice-row">
+                                <span id="gstName">GST (<span id="GSTSamble">0</span>%)</span>
+                                <span>₹<span id="PeroductGST">0.00</span></span>
+                            </div>
+                            <div class="invoice-row total">
+                                <span>Total Amount Paid</span>
+                                <span>₹<span id="totalAmount">0.00</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Complaints Card -->
+            <div class="complaints-card" id="complaintsCard" style="display: none;">
+                <h3>Order Complaints & Support</h3>
+                <div class="complaints-list" id="complaintsList">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Cancellation Modal -->
+    <div id="cancelOrderModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeCancelModal">&times;</button>
+            <h3>Cancel Order</h3>
+            <p class="modal-question">Are you sure you want to cancel this order?</p>
+            <div class="input-group">
+                <label for="cancelReasonInput">Please provide a reason for cancellation:</label>
+                <textarea id="cancelReasonInput"
+                    placeholder="e.g., Ordered by mistake, wrong size, delayed delivery..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button id="cancelModalBackBtn" class="btn-secondary">No, Keep Order</button>
+                <button id="cancelModalConfirmBtn" class="btn-danger">Yes, Cancel Order</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complaint Modal -->
+    <div id="complaintModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeComplaintModal">&times;</button>
+            <h3>File a Complaint</h3>
+            <p class="modal-question">Please describe the issue you are facing with this order.</p>
+            <div class="input-group">
+                <label for="complaintTextInput">Complaint details:</label>
+                <textarea id="complaintTextInput"
+                    placeholder="e.g., Wrong item delivered, damage on item, polishing issue..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button id="complaintModalBackBtn" class="btn-secondary">Cancel</button>
+                <button id="complaintModalSubmitBtn" class="btn-primary">Submit Complaint</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Return Order Modal -->
+    <div id="returnOrderModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeReturnModal">&times;</button>
+            <h3>Return Order</h3>
+            <p class="modal-question">Please select a return option and describe the reason.</p>
+
+            <div class="input-group">
+                <label>Select Return Type:</label>
+                <div class="return-options-group">
+                    <label class="return-option-card">
+                        <input type="radio" name="returnType" value="Refund" checked>
+                        <span class="return-option-label">Refund</span>
+                    </label>
+                    <label class="return-option-card">
+                        <input type="radio" name="returnType" value="Exchange">
+                        <span class="return-option-label">Exchange</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="returnReasonInput">Reason for Return:</label>
+                <textarea id="returnReasonInput"
+                    placeholder="e.g., Wrong size, damaged product, not as expected..."></textarea>
+            </div>
+
+            <div class="input-group" id="refundPaymentDetailsGroup">
+                <label for="refundPaymentInput">Refund Payment Method Details:</label>
+                <textarea id="refundPaymentInput"
+                    placeholder="Enter bank transfer details (A/C No, IFSC, bank name) or UPI ID..."></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button id="returnModalBackBtn" class="btn-secondary">No, Keep Order</button>
+                <button id="returnModalSubmitBtn" class="btn-primary">Submit Return</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Return Modal -->
+    <div id="cancelReturnModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeCancelReturnModal">&times;</button>
+            <h3>Cancel Return Request</h3>
+            <p class="modal-question">Are you sure you want to cancel your return request? The order status will revert
+                to "Delivered".</p>
+            <div class="modal-actions">
+                <button id="cancelReturnModalBackBtn" class="btn-secondary">No, Keep Request</button>
+                <button id="cancelReturnModalConfirmBtn" class="btn-danger">Yes, Cancel Return</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="toast-notification">
+        <span id="toastMessage"></span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./config.js"></script>
+    <script>
+        // Global state for current order
+        let currentOrder = null;
+
+        // Dynamic Account navigation link updating & auth check redirect
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        if (!isLoggedIn) {
+            window.location.href = "./login.html";
+        }
+        const navLoginBtn = document.getElementById("navLoginBtn");
+        if (navLoginBtn && isLoggedIn) {
+            navLoginBtn.href = "./profile.html";
+        }
+
+        // Fetch cart badge count
+        async function fetchCartCount() {
+            try {
+                const res = await fetch(`${BASE_URL}/Card`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById("cartCount").textContent = data.length;
+                }
+            } catch (err) {
+                console.error("Cart count fetch failed", err);
+            }
+        }
+        fetchCartCount();
+
+        // Redirect navbar search to allProduct list
+        document.getElementById("searchInput").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                window.location.href = `./allProduct.html?q=${encodeURIComponent(e.target.value)}`;
+            }
+        });
+
+        // Load Single Placed Order details
+        async function orderstatuse() {
+            let parmas = new URLSearchParams(window.location.search)
+            let id = parmas.get("id");
+            if (!id) {
+                document.getElementById("invoiceNumber").textContent = "❌ Order ID missing";
+                return;
+            }
+
+            try {
+                let res = await fetch(`${BASE_URL}/statusSingleData/${id}`);
+                if (!res.ok) throw new Error("API lookup failed");
+
+                let data = await res.json();
+                console.log("Order Detail Data:", data);
+
+                document.getElementById("invoiceNumber").textContent = `ID: #${id}`;
+
+                // Update Purchased Product Layout
+                const finalWithGstPrice = (data.withGstTotalAmount || 0).toLocaleString("en-IN");
+                const productBlock = document.getElementById("productBlock");
+                productBlock.innerHTML = `
+                    <div class="product-img-wrap">
+                        <img class="product-img" src="${data.photo || 'https://via.placeholder.com/150'}" alt="${data.productName}" loading="lazy">
+                    </div>
+                    <div class="product-desc-box">
+                        <div class="ProductNamesummary">${data.productName}</div>
+                        <p class="ProductNameDetails">${data.description || 'Exclusive Handcrafted collection item.'}</p>
+                        <div class="productSummaryrate">₹${finalWithGstPrice}</div>
+                    </div>`;
+
+                // Update Badges & Status
+                const orderStatus = data.orderStatus || "Placed";
+                document.getElementById("orderStatusLabel").textContent = orderStatus;
+
+                // Render progress timeline
+                renderTimeline(orderStatus, data.orderDate);
+
+                // Populate print invoice details
+                const invoiceDate = data.orderDate ? new Date(data.orderDate).toLocaleDateString("en-IN", {
+                    day: "numeric", month: "long", year: "numeric"
+                }) : new Date().toLocaleDateString("en-IN", {
+                    day: "numeric", month: "long", year: "numeric"
+                });
+                document.getElementById("printInvoiceDate").textContent = `Date: ${invoiceDate}`;
+
+                const printInvoiceNo = document.getElementById("printInvoiceNo");
+                if (printInvoiceNo) {
+                    printInvoiceNo.textContent = `Invoice No: SJ-${id.toUpperCase()}`;
+                }
+
+                // Delivery information
+                document.getElementById("DeliveryCutomerName").textContent = data.name || "Customer";
+                document.getElementById("DeliveryCutomerPhoneNumber").textContent = `Phone: +91 ${data.phone || 'N/A'}`;
+                document.getElementById("DeliveryAddress").textContent = data.customerAdd || "No Address Supplied";
+                document.getElementById("paymentMethod").textContent = data.paymentMethod || "Online Payment";
+
+                // Receipt calculations
+                document.getElementById("ProductPrice").textContent = (data.totalAmount || 0).toLocaleString("en-IN");
+                document.getElementById("GSTSamble").textContent = data.gst || "3";
+                document.getElementById("PeroductGST").textContent = (data.gstAmount || 0).toLocaleString("en-IN");
+                document.getElementById("totalAmount").textContent = (data.withGstTotalAmount || 0).toLocaleString("en-IN");
+
+                // Store order data globally
+                currentOrder = data;
+
+                // Render actions
+                renderActionButtons(data, id);
+
+                // Load complaints
+                loadComplaints(id);
+
+                // Populate Return & Refund Details Card
+                const returnDetailsCard = document.getElementById("returnDetailsCard");
+                if (returnDetailsCard) {
+                    const isCOD = data.paymentMethod === "COD";
+                    // Show card if there is a return request (even if COD)
+                    if (data.returnType || data.returnReason) {
+                        returnDetailsCard.style.display = "block";
+                        document.getElementById("returnDetailType").textContent = data.returnType || "Return";
+                        document.getElementById("returnDetailReason").textContent = data.returnReason || "Not provided";
+                        
+                        const refundCol = document.getElementById("returnDetailRefundCol");
+                        // Show refund details column if returnType is Refund (for both COD and Online Payment)
+                        if (data.returnType === "Refund") {
+                            refundCol.style.display = "block";
+                            document.getElementById("returnDetailRefundPayment").textContent = data.refundPaymentDetails || "No details provided";
+                            
+                            const refundStatus = document.getElementById("returnDetailRefundStatus");
+                            if (data.orderStatus === "Refund Completed") {
+                                refundStatus.innerHTML = `<span style="color: #10b981; font-weight: 700;">✓ Payment Completed</span>`;
+                            } else if (data.orderStatus === "Refund Accepted") {
+                                refundStatus.innerHTML = `<span style="color: #3b82f6; font-weight: 700;">Approved (Processing Payment)</span>`;
+                            } else if (data.orderStatus === "Out For Pickup") {
+                                refundStatus.innerHTML = `<span style="color: #8b5cf6; font-weight: 700;">Out For Pickup</span>`;
+                            } else if (data.orderStatus === "Order Picked Up") {
+                                refundStatus.innerHTML = `<span style="color: #3b82f6; font-weight: 700;">Order Picked Up</span>`;
+                            } else {
+                                refundStatus.innerHTML = `<span style="color: #f59e0b; font-weight: 700;">Pending Approval</span>`;
+                            }
+                        } else {
+                            refundCol.style.display = "none";
+                        }
+                    } else {
+                        returnDetailsCard.style.display = "none";
+                    }
+                }
+
+            } catch (err) {
+                console.error(err);
+                document.getElementById("invoiceNumber").textContent = "⚠️ Failed to fetch order summary details.";
+            }
+        }
+
+        // Bind download/print invoice action listener
+        document.getElementById("downloadInvoiceBtn").addEventListener("click", () => {
+            window.print();
+        });
+
+        function getStatusStepIndex(status) {
+            status = (status || "").toLowerCase().trim();
+            if (status === "order confirmed" || status === "order placed" || status === "pending" || status === "placed") return 0;
+            if (status === "order packed") return 1;
+            if (status === "shipped" || status === "in transit" || status === "out for delivery") return 2;
+            if (status === "delivered") return 3;
+            return 0; // default to first step
+        }
+
+        function renderTimeline(status, orderDate) {
+            const container = document.getElementById("timelineContainer");
+            if (!container) return;
+
+            const isCancelled = (status || "").toLowerCase().includes("cancel");
+            const isReturn = (status || "").toLowerCase().includes("return") ||
+                (status || "").toLowerCase().includes("refund") ||
+                (status || "").toLowerCase().includes("replace") ||
+                (status || "").toLowerCase().includes("reprocess") ||
+                (status || "").toLowerCase().includes("pickup") ||
+                (status || "").toLowerCase().includes("picked") ||
+                (status || "").toLowerCase().includes("not delivered");
+
+            const formattedDate = orderDate ? new Date(orderDate).toLocaleDateString("en-IN", {
+                day: "numeric", month: "short"
+            }) : "";
+
+            if (isReturn) {
+                const isCOD = currentOrder && currentOrder.paymentMethod === "COD";
+                const returnType = currentOrder ? currentOrder.returnType : "Return";
+                const sLower = (status || "").toLowerCase().trim();
+                
+                // Progress calculations
+                let step3Class = "";
+                let step3Dot = "3";
+                let step3Label = "Out For Pickup";
+                
+                let step4Class = "";
+                let step4Dot = "4";
+                let step4Label = returnType === "Refund" ? "Refund Completed" : "Exchange Completed";
+                
+                let progressPercent = 33;
+                let progressColor = "#f59e0b"; // orange
+
+                if (sLower === "return requested") {
+                    step3Class = "";
+                    step3Dot = "3";
+                    step3Label = "Pickup Pending";
+                    progressPercent = 33;
+                } else if (sLower === "out for pickup") {
+                    step3Class = "active";
+                    step3Dot = "3";
+                    step3Label = "Out For Pickup";
+                    progressPercent = 50;
+                } else if (sLower === "order picked up") {
+                    step3Class = "completed";
+                    step3Dot = "✓";
+                    step3Label = "Order Picked Up";
+                    progressPercent = 66;
+                } else if (sLower === "refund accepted" || sLower === "reprocess") {
+                    step3Class = "completed";
+                    step3Dot = "✓";
+                    step3Label = "Order Picked Up";
+                    step4Class = "active";
+                    step4Label = returnType === "Refund" ? "Refund Accepted" : "Reprocessing";
+                    progressPercent = 83;
+                } else if (sLower === "refund completed" || sLower === "return completed" || sLower === "delivered a replacement" || sLower === "not delivered") {
+                    step3Class = "completed";
+                    step3Dot = "✓";
+                    step3Label = "Order Picked Up";
+                    step4Class = "completed";
+                    step4Dot = "✓";
+                    progressColor = "#10b981"; // green
+                    progressPercent = 100;
+                    if (sLower === "refund completed") step4Label = "Refund Completed";
+                    else if (sLower === "delivered a replacement") step4Label = "Replacement Delivered";
+                    else if (sLower === "not delivered") step4Label = "Not Delivered (Refunded)";
+                    else step4Label = "Return Completed";
+                }
+
+                container.innerHTML = `
+                    <div class="tracking-timeline" style="min-width: 480px; justify-content: space-between;">
+                        <div class="timeline-progress-bar" style="width: ${progressPercent}%; background: ${progressColor};"></div>
+                        <div class="timeline-step completed">
+                            <div class="step-dot" style="background:#10b981; border-color:#10b981; color:#fff;">✓</div>
+                            <div class="step-label">Delivered</div>
+                        </div>
+                        <div class="timeline-step completed">
+                            <div class="step-dot" style="background:#10b981; border-color:#10b981; color:#fff;">✓</div>
+                            <div class="step-label">Return Requested (${returnType})</div>
+                        </div>
+                        <div class="timeline-step ${step3Class}">
+                            <div class="step-dot" style="${step3Class === 'completed' ? 'background:#10b981; border-color:#10b981; color:#fff;' : step3Class === 'active' ? 'border-color:#f59e0b; color:#f59e0b;' : ''}">${step3Dot}</div>
+                            <div class="step-label">${step3Label}</div>
+                        </div>
+                        <div class="timeline-step ${step4Class}">
+                            <div class="step-dot" style="${step4Class === 'completed' ? 'background:#10b981; border-color:#10b981; color:#fff;' : step4Class === 'active' ? 'border-color:#f59e0b; color:#f59e0b;' : ''}">${step4Dot}</div>
+                            <div class="step-label">${step4Label}</div>
+                        </div>
+                    </div>`;
+                return;
+            }
+
+            if (isCancelled) {
+                container.innerHTML = `
+                    <div class="tracking-timeline" style="min-width: 300px; justify-content: space-around;">
+                        <div class="timeline-progress-bar" style="width: 100%; background: #ef4444;"></div>
+                        <div class="timeline-step completed" style="flex: none;">
+                            <div class="step-dot" style="background:#10b981; border-color:#10b981; color:#fff;">✓</div>
+                            <div class="step-label">Ordered</div>
+                            <div class="step-date">${formattedDate}</div>
+                        </div>
+                        <div class="timeline-step completed" style="flex: none;">
+                            <div class="step-dot" style="background:#ef4444; border-color:#ef4444; color:#fff;">✕</div>
+                            <div class="step-label" style="color:#ef4444;">Cancelled</div>
+                            <div class="step-date">Cancelled</div>
+                        </div>
+                    </div>`;
+                return;
+            }
+
+            // Normal timeline
+            const steps = ["Ordered", "Packed", "Shipped", "Delivered"];
+            const stepIndex = getStatusStepIndex(status); // 0, 1, 2, or 3
+
+            // Progress percentage (0, 33%, 66%, 100%)
+            const progressPercent = (stepIndex / (steps.length - 1)) * 100;
+
+            let stepsHTML = "";
+            steps.forEach((label, idx) => {
+                let statusClass = "";
+                let dotContent = idx + 1;
+
+                if (idx < stepIndex) {
+                    statusClass = "completed";
+                    dotContent = "✓";
+                } else if (idx === stepIndex) {
+                    statusClass = "active";
+                    if (stepIndex === 3) {
+                        statusClass = "completed";
+                        dotContent = "✓";
+                    }
+                }
+
+                let dateStr = "";
+                if (idx === 0) dateStr = formattedDate;
+                if (idx === stepIndex && stepIndex > 0) {
+                    dateStr = "Today"; // Placeholder or approximate date
+                }
+
+                stepsHTML += `
+                    <div class="timeline-step ${statusClass}">
+                        <div class="step-dot">${dotContent}</div>
+                        <div class="step-label">${label}</div>
+                        <div class="step-date">${dateStr}</div>
+                    </div>`;
+            });
+
+            container.innerHTML = `
+                <div class="timeline-progress-bar" style="width: ${progressPercent}%;"></div>
+                ${stepsHTML}
+            `;
+        }
+
+        // Modal management
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add("active");
+            if (modalId === "returnOrderModal" && currentOrder) {
+                const refundRadioCard = document.querySelector('input[name="returnType"][value="Refund"]').closest('.return-option-card');
+                const exchangeRadio = document.querySelector('input[name="returnType"][value="Exchange"]');
+                const refundRadio = document.querySelector('input[name="returnType"][value="Refund"]');
+                const payGroup = document.getElementById("refundPaymentDetailsGroup");
+                
+                // Both Refund and Exchange options are active (alive) and shown
+                if (refundRadio) {
+                    refundRadio.disabled = false;
+                }
+                if (refundRadioCard) {
+                    refundRadioCard.style.opacity = "1";
+                    refundRadioCard.style.pointerEvents = "auto";
+                    refundRadioCard.style.display = "flex";
+                }
+                if (exchangeRadio) {
+                    exchangeRadio.disabled = false;
+                }
+                
+                // Select Refund by default and show details group
+                if (refundRadio) refundRadio.checked = true;
+                if (payGroup) payGroup.style.display = "block";
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove("active");
+            if (modalId === "cancelOrderModal") {
+                document.getElementById("cancelReasonInput").value = "";
+            } else if (modalId === "complaintModal") {
+                document.getElementById("complaintTextInput").value = "";
+            } else if (modalId === "returnOrderModal") {
+                document.getElementById("returnReasonInput").value = "";
+                document.getElementById("refundPaymentInput").value = "";
+                const radios = document.getElementsByName("returnType");
+                if (radios.length > 0) radios[0].checked = true;
+                const payGroup = document.getElementById("refundPaymentDetailsGroup");
+                if (payGroup) payGroup.style.display = "block";
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toastNotification");
+            const toastMsg = document.getElementById("toastMessage");
+            if (toast && toastMsg) {
+                toastMsg.textContent = message;
+                toast.classList.add("active");
+                setTimeout(() => {
+                    toast.classList.remove("active");
+                }, 4000);
+            }
+        }
+
+        function escapeHTML(str) {
+            if (!str) return "";
+            return str.replace(/[&<>'"]/g,
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        function renderActionButtons(data, orderId) {
+            const orderActions = document.getElementById("orderActions");
+            if (!orderActions) return;
+            orderActions.innerHTML = "";
+
+            const status = (data.orderStatus || "").toLowerCase();
+            const isDelivered = status.includes("deliver") || status.includes("replace");
+            const isCancelled = status.includes("cancel") || status.includes("refund") || status.includes("not delivered");
+            const isReturned = status.includes("return") || status.includes("refund") || status.includes("replace") || status.includes("reprocess") || status.includes("pickup") || status.includes("picked") || status.includes("not delivered");
+
+            // Cancel Order Button
+            const cancelBtn = document.createElement("button");
+            cancelBtn.className = "btn-action-cancel";
+            cancelBtn.id = "cancelOrderBtn";
+            if (isDelivered) {
+                cancelBtn.disabled = true;
+                cancelBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                    </svg>
+                    Delivered (Cannot Cancel)`;
+            } else if (isCancelled) {
+                cancelBtn.disabled = true;
+                let cancelLabel = "Cancelled";
+                if (status === "refund accepted") cancelLabel = "Refund Accepted (Cannot Cancel)";
+                if (status === "not delivered") cancelLabel = "Not Delivered (Cannot Cancel)";
+                cancelBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                    </svg>
+                    ${cancelLabel}`;
+            } else if (isReturned) {
+                cancelBtn.disabled = true;
+                cancelBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                    </svg>
+                    Returned (Cannot Cancel)`;
+            } else {
+                cancelBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                    </svg>
+                    Cancel Order`;
+                cancelBtn.addEventListener("click", () => openModal("cancelOrderModal"));
+            }
+            orderActions.appendChild(cancelBtn);
+
+            // Complain Button
+            const complainBtn = document.createElement("button");
+            complainBtn.className = "btn-action-complain";
+            complainBtn.id = "complainBtn";
+            complainBtn.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                Report Issue / Complain`;
+            complainBtn.addEventListener("click", () => openModal("complaintModal"));
+            orderActions.appendChild(complainBtn);
+
+            // Return Order Button (only show if delivered or returned)
+            const showReturnBtn = isDelivered || isReturned;
+            if (showReturnBtn) {
+                const returnBtn = document.createElement("button");
+                returnBtn.className = "btn-action-return";
+                returnBtn.id = "returnOrderBtn";
+                
+                const isProcessedOrPending = ["return requested", "out for pickup", "order picked up", "refund accepted", "refund completed", "not delivered", "reprocess", "return completed", "cancelled"].includes(status);
+                
+                if (isProcessedOrPending) {
+                    returnBtn.disabled = true;
+                    let returnLabel = "Return Completed";
+                    if (status.includes("requested")) {
+                        returnLabel = "Return Requested";
+                    } else if (status === "out for pickup") {
+                        returnLabel = "Out For Pickup";
+                    } else if (status === "order picked up") {
+                        returnLabel = "Order Picked Up";
+                    } else if (status === "refund accepted") {
+                        returnLabel = "Refund Accepted";
+                    } else if (status === "refund completed") {
+                        returnLabel = "Refund Completed";
+                    } else if (status === "reprocess") {
+                        returnLabel = "Reprocessing Exchange";
+                    } else if (status === "not delivered") {
+                        returnLabel = "Not Delivered (Refunded)";
+                    } else if (status === "cancelled") {
+                        returnLabel = "Cancelled";
+                    }
+                    returnBtn.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                            <polyline points="23 4 23 10 17 10" />
+                            <polyline points="1 20 1 14 7 14" />
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                        </svg>
+                        ${returnLabel}`;
+                } else if ((data.exchangeCount || 0) >= 3) {
+                    returnBtn.disabled = true;
+                    returnBtn.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                            <polyline points="23 4 23 10 17 10" />
+                            <polyline points="1 20 1 14 7 14" />
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                        </svg>
+                        Return Limit Reached (Max 3)`;
+                } else {
+                    returnBtn.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                            <polyline points="23 4 23 10 17 10" />
+                            <polyline points="1 20 1 14 7 14" />
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                        </svg>
+                        Return Order`;
+                    returnBtn.addEventListener("click", () => openModal("returnOrderModal"));
+                }
+                orderActions.appendChild(returnBtn);
+
+                if (isReturned && status.includes("requested")) {
+                    const cancelReturnBtn = document.createElement("button");
+                    cancelReturnBtn.className = "btn-action-cancel-return";
+                    cancelReturnBtn.id = "cancelReturnBtn";
+                    cancelReturnBtn.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:16px; height:16px;">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="15" y1="9" x2="9" y2="15" />
+                        </svg>
+                        Cancel Return Request`;
+                    cancelReturnBtn.addEventListener("click", () => openModal("cancelReturnModal"));
+                    orderActions.appendChild(cancelReturnBtn);
+                }
+            }
+        }
+
+        async function loadComplaints(orderId) {
+            try {
+                const res = await fetch(`${BASE_URL}/orderComplaints/${orderId}`);
+                if (res.ok) {
+                    const complaints = await res.json();
+                    const complaintsCard = document.getElementById("complaintsCard");
+                    const complaintsList = document.getElementById("complaintsList");
+                    if (!complaintsCard || !complaintsList) return;
+
+                    if (complaints.length > 0) {
+                        complaintsCard.style.display = "block";
+                        complaintsList.innerHTML = complaints.map(c => `
+                            <div class="complaint-item">
+                                <div class="complaint-meta">
+                                    <span>Filed on ${new Date(c.createdAt).toLocaleDateString("en-IN", {
+                            day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
+                        })}</span>
+                                    <span class="complaint-status">${c.status}</span>
+                                </div>
+                                <div class="complaint-text">${escapeHTML(c.complaintText)}</div>
+                            </div>
+                        `).join("");
+                    } else {
+                        complaintsCard.style.display = "none";
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to load complaints", err);
+            }
+        }
+
+        // Setup Modal Event Listeners
+        document.getElementById("closeCancelModal").addEventListener("click", () => closeModal("cancelOrderModal"));
+        document.getElementById("cancelModalBackBtn").addEventListener("click", () => closeModal("cancelOrderModal"));
+        document.getElementById("closeComplaintModal").addEventListener("click", () => closeModal("complaintModal"));
+        document.getElementById("complaintModalBackBtn").addEventListener("click", () => closeModal("complaintModal"));
+
+        // Confirm cancellation action
+        document.getElementById("cancelModalConfirmBtn").addEventListener("click", async () => {
+            if (!currentOrder) return;
+            const reason = document.getElementById("cancelReasonInput").value.trim();
+            if (!reason) {
+                alert("Please provide a reason for cancellation.");
+                return;
+            }
+
+            try {
+                const confirmBtn = document.getElementById("cancelModalConfirmBtn");
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = "Cancelling...";
+
+                const res = await fetch(`${BASE_URL}/cancelOrder/${currentOrder._id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ reason })
+                });
+
+                if (res.ok) {
+                    showToast("Cancel order successfully");
+                    closeModal("cancelOrderModal");
+                    // Refresh order details page data
+                    await orderstatuse();
+                } else {
+                    const errData = await res.json();
+                    alert(`Error: ${errData.message || "Failed to cancel order"}`);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error: Network or server issue.");
+            } finally {
+                const confirmBtn = document.getElementById("cancelModalConfirmBtn");
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = "Yes, Cancel Order";
+            }
+        });
+
+        // Submit complaint action
+        document.getElementById("complaintModalSubmitBtn").addEventListener("click", async () => {
+            if (!currentOrder) return;
+            const complaintText = document.getElementById("complaintTextInput").value.trim();
+            if (!complaintText) {
+                alert("Please describe your complaint.");
+                return;
+            }
+
+            const customerMobileNumber = currentOrder.customerMobileNumber || currentOrder.useNumber || currentOrder.phone || localStorage.getItem("userNumber") || "N/A";
+            const productName = currentOrder.productName || "Product";
+
+            try {
+                const submitBtn = document.getElementById("complaintModalSubmitBtn");
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Submitting...";
+
+                const res = await fetch(`${BASE_URL}/submitComplaint`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        orderId: currentOrder._id,
+                        customerMobileNumber,
+                        productName,
+                        complaintText
+                    })
+                });
+
+                if (res.ok) {
+                    showToast("Complaint submitted successfully");
+                    closeModal("complaintModal");
+                    await loadComplaints(currentOrder._id);
+                } else {
+                    const errData = await res.json();
+                    alert(`Error: ${errData.message || "Failed to submit complaint"}`);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error: Network or server issue.");
+            } finally {
+                const submitBtn = document.getElementById("complaintModalSubmitBtn");
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Complaint";
+            }
+        });
+
+        // Setup Return Modal Event Listeners
+        document.getElementById("closeReturnModal").addEventListener("click", () => closeModal("returnOrderModal"));
+        document.getElementById("returnModalBackBtn").addEventListener("click", () => closeModal("returnOrderModal"));
+
+        // Toggle Payment Details field based on Return Type selection
+        const returnTypeRadios = document.getElementsByName("returnType");
+        returnTypeRadios.forEach(radio => {
+            radio.addEventListener("change", (e) => {
+                const payGroup = document.getElementById("refundPaymentDetailsGroup");
+                if (payGroup) {
+                    payGroup.style.display = e.target.value === "Refund" ? "block" : "none";
+                }
+            });
+        });
+
+        // Submit return request action
+        document.getElementById("returnModalSubmitBtn").addEventListener("click", async () => {
+            if (!currentOrder) return;
+
+            // Get selected return type
+            let returnType = "Refund";
+            const selectedRadio = document.querySelector('input[name="returnType"]:checked');
+            if (selectedRadio) {
+                returnType = selectedRadio.value;
+            }
+
+            const returnReason = document.getElementById("returnReasonInput").value.trim();
+            if (!returnReason) {
+                alert("Please provide a reason for the return.");
+                return;
+            }
+
+            let refundPaymentDetails = "";
+            if (returnType === "Refund") {
+                refundPaymentDetails = document.getElementById("refundPaymentInput").value.trim();
+                if (!refundPaymentDetails) {
+                    alert("Please provide your payment details for the refund.");
+                    return;
+                }
+            }
+
+            try {
+                const submitBtn = document.getElementById("returnModalSubmitBtn");
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Submitting...";
+
+                const res = await fetch(`${BASE_URL}/returnOrder/${currentOrder._id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        returnType,
+                        returnReason,
+                        refundPaymentDetails
+                    })
+                });
+
+                if (res.ok) {
+                    showToast("Return request submitted successfully");
+                    closeModal("returnOrderModal");
+                    // Refresh order details page data
+                    await orderstatuse();
+                } else {
+                    const errData = await res.json();
+                    alert(`Error: ${errData.message || "Failed to submit return request"}`);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error: Network or server issue.");
+            } finally {
+                const submitBtn = document.getElementById("returnModalSubmitBtn");
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Return";
+            }
+        });
+
+        // Setup Cancel Return Modal Event Listeners
+        document.getElementById("closeCancelReturnModal").addEventListener("click", () => closeModal("cancelReturnModal"));
+        document.getElementById("cancelReturnModalBackBtn").addEventListener("click", () => closeModal("cancelReturnModal"));
+
+        document.getElementById("cancelReturnModalConfirmBtn").addEventListener("click", async () => {
+            if (!currentOrder) return;
+            try {
+                const confirmBtn = document.getElementById("cancelReturnModalConfirmBtn");
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = "Cancelling...";
+
+                const res = await fetch(`${BASE_URL}/cancelReturn/${currentOrder._id}`, {
+                    method: "POST"
+                });
+
+                if (res.ok) {
+                    showToast("Return request cancelled successfully");
+                    closeModal("cancelReturnModal");
+                    await orderstatuse();
+                } else {
+                    const errData = await res.json();
+                    alert(`Error: ${errData.message || "Failed to cancel return request"}`);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error: Network or server issue.");
+            } finally {
+                const confirmBtn = document.getElementById("cancelReturnModalConfirmBtn");
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = "Yes, Cancel Return";
+            }
+        });
+
+        orderstatuse();
+    </script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('./service-worker.js')
+                .then(function(reg) { console.log('[SW] Registered:', reg.scope); })
+                .catch(function(err) { console.error('[SW] Failed:', err); });
+        });
+    }
+    </script>
+
+    <!-- Dynamic Header Height Calculation -->
+    <script>
+        (function() {
+            function updateHeaderHeight() {
+                const header = document.getElementById("siteHeader");
+                if (header) {
+                    const height = header.offsetHeight;
+                    document.documentElement.style.setProperty('--header-h', height + 'px');
+                }
+            }
+            window.addEventListener('resize', updateHeaderHeight);
+            window.addEventListener('DOMContentLoaded', updateHeaderHeight);
+            window.addEventListener('load', updateHeaderHeight);
+            // Run immediately in case elements are already loaded
+            updateHeaderHeight();
+            // Run a few times shortly after load to handle dynamic rendering/font loading
+            setTimeout(updateHeaderHeight, 100);
+            setTimeout(updateHeaderHeight, 500);
+            setTimeout(updateHeaderHeight, 1000);
+        })();
+    </script>
+
+
+<script>
+        /* ───────────────────────────────────────
+           HEADER LOCATION PINCODE CONTROLLER
+        ─────────────────────────────────────── */
+        (function() {
+            const locBtn = document.getElementById("headerLocationBtn");
+            const modal = document.getElementById("locationModal");
+            const closeBtn = document.getElementById("closeLocationModal");
+            const input = document.getElementById("modalPincodeInput");
+            const submit = document.getElementById("modalPincodeSubmit");
+            const status = document.getElementById("modalPincodeStatus");
+            const label = document.getElementById("headerLocationLabel");
+
+            // Open Modal
+            if (locBtn && modal) {
+                locBtn.addEventListener("click", () => {
+                    status.textContent = "";
+                    input.value = "";
+                    submit.disabled = true;
+                    modal.classList.add("show");
+                    input.focus();
+                });
+            }
+
+            // Close Modal
+            if (closeBtn && modal) {
+                closeBtn.addEventListener("click", () => {
+                    modal.classList.remove("show");
+                });
+            }
+
+            // Close Modal on click outside content card
+            if (modal) {
+                modal.addEventListener("click", (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove("show");
+                    }
+                });
+            }
+
+            // Load saved location on startup
+            function loadSavedLocation() {
+                const savedCity = localStorage.getItem("delivery_city");
+                const savedPin = localStorage.getItem("delivery_pincode");
+                if (savedCity && savedPin) {
+                    if (label) label.textContent = `Delivering to ${savedCity} ${savedPin}`;
+                } else if (label) {
+                    label.textContent = "Delivering to India";
+                }
+            }
+            loadSavedLocation();
+
+            // Validate and lookup pincode
+            if (input) {
+                input.addEventListener("input", async (e) => {
+                    const pin = e.target.value.trim();
+                    status.textContent = "";
+                    submit.disabled = true;
+
+                    if (pin.length === 6 && /^\d{6}$/.test(pin)) {
+                        status.style.color = "var(--gold)";
+                        status.textContent = "🔍 Fetching location area details...";
+
+                        try {
+                            const res = await fetch(`${BASE_URL}/api/pincode/${pin}`);
+                            if (!res.ok) throw new Error("Pincode API failed");
+
+                            const data = await res.json();
+                            if (data && data[0] && data[0].Status === "Success") {
+                                const postOfficeList = data[0].PostOffice;
+                                if (postOfficeList && postOfficeList.length > 0) {
+                                    const info = postOfficeList[0];
+                                    const city = info.Block || info.Name || "";
+                                    status.style.color = "#22c55e"; // green
+                                    status.textContent = `✓ Delivering to ${city}, ${info.State}`;
+                                    submit.disabled = false;
+                                    
+                                    // Save temporary variables in dataset
+                                    submit.dataset.city = city;
+                                    submit.dataset.pin = pin;
+                                } else {
+                                    status.style.color = "#ef4444";
+                                    status.textContent = "❌ No delivery area found for this pincode.";
+                                }
+                            } else {
+                                status.style.color = "#ef4444";
+                                status.textContent = "❌ Invalid pincode.";
+                            }
+                        } catch (err) {
+                            console.error("Pincode modal lookup error:", err);
+                            status.style.color = "#ef4444";
+                            status.textContent = "⚠️ Error connecting to postal database proxy.";
+                        }
+                    } else if (pin.length > 6) {
+                        status.style.color = "#ef4444";
+                        status.textContent = "❌ Pincode must be exactly 6 digits.";
+                    }
+                });
+            }
+
+            // Apply location on submit click
+            if (submit) {
+                submit.addEventListener("click", () => {
+                    const city = submit.dataset.city;
+                    const pin = submit.dataset.pin;
+                    if (city && pin) {
+                        localStorage.setItem("delivery_city", city);
+                        localStorage.setItem("delivery_pincode", pin);
+                        loadSavedLocation();
+                        if (modal) modal.classList.remove("show");
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

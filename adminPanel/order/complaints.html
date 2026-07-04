@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaints – Sonu Bin Admin</title>
+  <script src="/auto-logout.js"></script>
+  <link rel="stylesheet" href="./admin.css">
+  <style>
+    .complaintText {
+      color: #334155;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+<div id="adminLayout">
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div id="sidebarHeader">
+      <div id="sidebarLogo">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div>
+        <div id="sidebarTitle">Sonu Bin</div>
+        <div id="sidebarSubtitle">Admin Console</div>
+      </div>
+    </div>
+    <nav id="sidebarNav">
+      <div class="navSection">
+        <div class="navSectionLabel">Main</div>
+        <a class="navItem" href="../Dashboard.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a class="navItem" href="./Order.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          Products
+        </a>
+        <a class="navItem" href="./status.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2"/></svg>
+          Orders
+        </a>
+        <a class="navItem" href="./returns.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10" />
+            <polyline points="1 20 1 14 7 14" />
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+          </svg>
+          Returns
+        </a>
+        <a class="navItem" href="./order-cancel.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="15" y1="9" x2="9" y2="15" />
+          </svg>
+          Cancelled
+        </a>
+        <a class="navItem active" href="./complaints.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+          Complaints
+        </a>
+      </div>
+    </nav>
+    <div id="sidebarFooter">
+      <div class="sidebarUser">
+        <div class="sidebarAvatar" id="sidebarAvatarChar">A</div>
+        <div>
+          <div class="sidebarUserName" id="sidebarAdminName">Admin</div>
+          <div class="sidebarUserRole">Admin Account</div>
+        </div>
+      </div>
+      <button onclick="adminLogout()" type="button" style="width:100%;margin-top:10px;background:#fee2e2;color:#b91c1c;border:none;border-radius:8px;padding:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;" onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Content -->
+  <div id="adminContent">
+    <header id="adminTopbar">
+      <div class="topbarLeft">
+        <span class="topbarPageTitle">Complaints</span>
+        <span class="topbarBreadcrumb">Home / Complaints</span>
+      </div>
+      <div class="topbarRight">
+        <button class="btn btn-primary btn-sm" onclick="loadComplaints()" type="button">
+          <svg viewBox="0 0 24 24" fill="#fff" style="width:15px;height:15px;"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+          Refresh
+        </button>
+      </div>
+    </header>
+
+    <main id="adminBody">
+      <!-- Toast notification -->
+      <div id="toast" style="display:none;position:fixed;bottom:24px;right:24px;background:#10b981;color:#fff;padding:12px 20px;border-radius:10px;font-size:0.85rem;font-weight:600;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.2);animation:fadeIn 0.3s ease;">
+        ✓ Complaint status updated
+      </div>
+
+      <!-- Complaints List Card -->
+      <div class="adminCard fadeIn">
+        <div class="adminCardHeader">
+          <div>
+            <div class="adminCardTitle">Customer Complaints</div>
+            <div class="adminCardSubtitle" id="complaintsCountLabel">Loading…</div>
+          </div>
+        </div>
+        
+        <div class="tableWrapper">
+          <table class="adminTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Order ID</th>
+                <th>Product Name</th>
+                <th>Customer Phone</th>
+                <th>Date Filed</th>
+                <th>Complaint Description</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="complaintsTableBody">
+              <tr>
+                <td colspan="8">
+                  <div class="emptyState">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                      <line x1="12" y1="9" x2="12" y2="13" />
+                      <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                    <p>Loading complaints…</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="./config.js"></script>
+<script>
+  const ADMIN_ID = localStorage.getItem("adminId");
+  const SESSION_TOKEN = localStorage.getItem("adminSessionToken") || "";
+  if (!ADMIN_ID) { window.location.href = "./login.html"; }
+  document.getElementById("sidebarAdminName").textContent = ADMIN_ID || "Admin";
+  document.getElementById("sidebarAvatarChar").textContent = (ADMIN_ID || "A").charAt(0).toUpperCase();
+
+  function adminLogout() {
+    localStorage.removeItem("adminId");
+    localStorage.removeItem("adminLoggedIn");
+    window.location.href = "./login.html";
+  }
+
+  function getStatusBadge(s) {
+    s = s || "Pending";
+    if (s === "Resolved") {
+      return `<span class="badge badge-success">${s}</span>`;
+    }
+    if (s === "In Progress") {
+      return `<span class="badge badge-info">${s}</span>`;
+    }
+    return `<span class="badge badge-danger">${s}</span>`;
+  }
+
+  function showToast(msg="Updated!", color="#10b981") {
+    const t = document.getElementById("toast");
+    t.textContent = "✓ " + msg;
+    t.style.background = color;
+    t.style.display = "block";
+    setTimeout(() => t.style.display = "none", 2500);
+  }
+
+  async function loadComplaints() {
+    try {
+      // First, get all orders for this admin to match complaints
+      const ordersRes = await fetch(`${BASE_URL}/viwePlaceOrder`, { headers: { "x-admin-id": ADMIN_ID, "x-session-token": SESSION_TOKEN } });
+      const orders = await ordersRes.json();
+      const orderIds = new Set(orders.map(o => o._id));
+
+      // Fetch all complaints
+      const res = await fetch(`${BASE_URL}/admin/allComplaints`, { headers: { "x-admin-id": ADMIN_ID, "x-session-token": SESSION_TOKEN } });
+      if (!res.ok) throw new Error("Failed to fetch complaints");
+      const allComplaints = await res.json();
+
+      // Filter complaints to only show those belonging to this admin's orders
+      const adminComplaints = allComplaints.filter(c => orderIds.has(c.orderId));
+
+      renderComplaints(adminComplaints);
+    } catch (err) {
+      console.error(err);
+      document.getElementById("complaintsTableBody").innerHTML = `
+        <tr>
+          <td colspan="8">
+            <div class="emptyState">
+              <p>Failed to load complaints. Check server connection.</p>
+            </div>
+          </td>
+        </tr>`;
+    }
+  }
+
+  function renderComplaints(complaints) {
+    const tbody = document.getElementById("complaintsTableBody");
+    document.getElementById("complaintsCountLabel").textContent = `${complaints.length} complaint${complaints.length !== 1 ? "s" : ""} found`;
+
+    if (!complaints.length) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8">
+            <div class="emptyState">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              <p>No complaints found</p>
+            </div>
+          </td>
+        </tr>`;
+      return;
+    }
+
+    tbody.innerHTML = complaints.map((c, idx) => {
+      return `
+        <tr>
+          <td style="color:#94a3b8;font-size:0.75rem;">#${idx+1}</td>
+          <td style="font-weight:600;font-size:0.8rem;color:#0f172a;">#${c.orderId}</td>
+          <td style="font-weight:500;">${c.productName || "—"}</td>
+          <td>${c.customerMobileNumber || "—"}</td>
+          <td style="white-space:nowrap;font-size:0.78rem;color:#64748b;">${c.createdAt ? new Date(c.createdAt).toLocaleDateString("en-IN") : "—"}</td>
+          <td>
+            <div class="complaintText">${c.complaintText}</div>
+          </td>
+          <td>
+            <select class="statusSelect complaintStatusSelect" data-id="${c._id}" style="padding: 6px 10px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 0.78rem; font-weight: 500; cursor: pointer; outline: none;">
+              <option value="Pending" ${c.status === "Pending" ? "selected" : ""}>Pending</option>
+              <option value="In Progress" ${c.status === "In Progress" ? "selected" : ""}>In Progress</option>
+              <option value="Resolved" ${c.status === "Resolved" ? "selected" : ""}>Resolved</option>
+            </select>
+          </td>
+          <td>
+            <button class="btn btn-primary btn-sm updateComplaintBtn" type="button" data-id="${c._id}">Update</button>
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    // Attach event listeners
+    document.querySelectorAll(".updateComplaintBtn").forEach(btn => {
+      btn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const id = btn.dataset.id;
+        const row = btn.closest("tr");
+        const status = row.querySelector(".complaintStatusSelect").value;
+        btn.textContent = "…";
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(`${BASE_URL}/updateComplaintStatus/${id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "x-admin-id": ADMIN_ID,
+              "x-session-token": SESSION_TOKEN
+            },
+            body: JSON.stringify({ status })
+          });
+          if (!res.ok) throw new Error();
+          showToast("Complaint status updated!");
+          await loadComplaints();
+        } catch (err) {
+          showToast("Update failed", "#ef4444");
+        } finally {
+          btn.textContent = "Update";
+          btn.disabled = false;
+        }
+      });
+    });
+  }
+
+  loadComplaints();
+</script>
+</body>
+</html>

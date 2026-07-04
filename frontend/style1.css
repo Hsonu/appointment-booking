@@ -1,0 +1,509 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+#headerMainDiv {
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    /* padding: 2vw; */
+    padding: clamp(2px, 0.5vw, 48px);
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+#CartBtn {
+    min-width: 30px;
+    /* width: 3vw; */
+    max-width: 3vw;
+    height: auto;
+    cursor: pointer;
+}
+
+#CartBtn {
+    width: 3vw;
+    height: auto;
+    cursor: pointer;
+}
+
+#MainLogo {
+    width: 3vw;
+    height: auto;
+    cursor: pointer;
+}
+
+#searchInput {
+    width: 45vw;
+    padding: 10px;
+
+}
+
+.Plogin {
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+#VideoDiv {
+    position: relative;
+    width: 100%;
+}
+
+video {
+    display: block;
+    width: 100%;
+    height: 70vh;
+    object-fit: cover;
+}
+
+
+#VideoDiv::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, 0) 30%,
+            rgba(255, 255, 255, 0.6) 60%,
+            rgba(255, 255, 255, 1) 100%),
+        radial-gradient(at top center,
+            rgba(255, 255, 255, 0.4),
+            transparent 60%);
+    pointer-events: none;
+}
+
+#ProductImage {
+    height: 36vh;
+    width: auto;
+    cursor: pointer;
+}
+
+#CardDiv {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid pink;
+    width: 40vh;
+    margin-left: 15px;
+    padding: 12px;
+    border-radius: 4px;
+}
+
+#CardDiv:hover {
+    box-shadow: 0px 0px 8px 0px pink;
+
+}
+
+/* #titleName{
+        display: flex;
+        justify-content: center;
+    } */
+#imgdiv {
+    display: flex;
+    justify-content: center;
+}
+
+#titleP {
+    font-size: 19px;
+    flex-wrap: wrap;
+    padding: 8px;
+}
+
+#PriceP {
+    font-size: 22px;
+    flex-wrap: wrap;
+    padding: 8px;
+}
+
+#mainDivCard {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.PriceAndBuyBtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.BuyBtn {
+    border: 1px solid pink;
+    padding: 10px;
+    cursor: pointer;
+
+}
+
+.BuyBtn:hover {
+    background-color: pink;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px 0px pink;
+}
+
+#d-img {
+
+    display: flex;
+    padding: 20px;
+    background-color: #00000056;
+    margin-top: 10px;
+}
+
+#main-li {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 4vw;
+    /* font-size: 1.5vw; */
+    font-size: clamp(1vw, 1vw, 1vw);
+    /* gap: 16.6vw; */
+    justify-content: space-evenly;
+}
+
+.li-end {
+    display: flex;
+    flex-direction: column;
+}
+
+li:hover {
+    color: pink;
+    border-bottom: 2px solid pink;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+::placeholder {
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+
+#LoginMainDiv {
+    border: 1px solid black;
+    /* position: absolute; */
+    /* position: relative; */
+    height: 40vh;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff9d;
+    border-radius: 9px;
+    transition: 0.3s;
+    margin: 1vw;
+    /* box-shadow: 10px 10px; */
+}
+
+#LoginMainDiv:hover {
+    box-shadow: 0px 0px 8px 0px pink;
+}
+
+#mainf {
+    display: flex;
+    justify-content: center;
+    /* display: none; */
+}
+
+#loginSystem {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2vw;
+    font-size: 2vw;
+}
+
+#loginBtn {
+    display: flex;
+    justify-content: center;
+    /* outline-color: #0d6efd; */
+    border: 1.5px solid #0d6efd;
+    transition: 0.3s;
+}
+
+input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    border-radius: 3px;
+    border: none;
+}
+
+#loginNUmber,
+#OTP {
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 0.4vw;
+}
+
+/* 
+    #loginBtn {
+        margin-top: 2vw;
+        height: 6vh;
+        cursor: pointer;
+        width: auto;
+    } */
+/* 
+    /* #loginBtn {
+        width: 20vh;
+        cursor: pointer;
+        border: 1px solid black;
+        border-radius: 9px;
+        box-shadow: 10px 10px;
+    }  */
+#loginBtn,
+#VerifyOTP {
+    width: 24vh;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 3px;
+    height: 6vh;
+    align-items: center;
+    margin-top: 2vh;
+    border: 1.5px solid #0d6efd;
+    outline-color: #0d6efd;
+
+}
+
+#loginBtn:hover {
+    background-color: rgb(44, 40, 40);
+    /* background-color: #0d6efd; */
+    color: white;
+    box-shadow: 0px 0px 7px 1px black;
+
+}
+
+#VerifyOTP:hover {
+    background-color: rgb(44, 40, 40);
+    /* background-color: #0d6efd; */
+    color: white;
+    box-shadow: 0px 0px 7px 1px black;
+    transition: 0.3s;
+
+}
+
+#pLoginBtn {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-close {
+    color: black;
+    z-index: 1000
+}
+
+#inpute-p {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+.v_7pKG {
+    height: 20px;
+    width: 20px;
+}
+
+.v_7pKG {
+    cursor: pointer;
+    height: 20px;
+    /* max-height: 3vh; */
+    width: 20px;
+}
+
+.ChackOrder {
+    color: #fff;
+    cursor: pointer;
+    font-size: clamp(12px, 1.2vw, 40px);
+}
+
+@media only screen and (max-width: 768px) {
+    /* #headerMainDiv {
+            width: 100%;
+        } */
+
+    #MainLogo {
+        width: 10vw;
+        max-width: 10vw;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #mainDivCard {
+        display: flex;
+        justify-content: center;
+
+    }
+
+    #CardDiv {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid pink;
+        width: 18vh;
+        margin-left: 15px;
+        padding: 12px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    #ProductImage {
+        height: 14vh;
+        width: auto;
+        cursor: pointer;
+    }
+
+    #titleP {
+        font-size: 3vw;
+        flex-wrap: wrap;
+        padding: 4px;
+    }
+
+    #PriceP {
+        font-size: 4vw;
+        flex-wrap: wrap;
+        /* padding: 8px; */
+    }
+
+    video {
+        display: block;
+        width: 100%;
+        height: 20vh;
+        object-fit: cover;
+    }
+
+    .li-end {
+        display: flex;
+        flex-direction: column;
+        font-size: 3vw;
+    }
+
+    #loginNUmber {
+        height: 5vh;
+        border-radius: 3px;
+        border: 1px solid black;
+        width: 100%;
+    }
+
+    #LoginMainDiv {
+        border: 1px solid black;
+        /* position: absolute; */
+        /* position: relative; */
+        height: 35vh;
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* background-color: #ffffff9d; */
+        background-color: #fff;
+        border-radius: 9px;
+        transition: 0.3s;
+    }
+
+    #loginSystem {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2vw;
+        font-size: 3.5vw;
+    }
+
+
+    #inpute-p {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0;
+    }
+
+    #loginBtn {
+        width: 25vh;
+        cursor: pointer;
+        border: 1px solid black;
+        border-radius: 3px;
+        height: 5vh;
+        align-items: center;
+        border: 1.5px solid #0d6efd;
+        outline-color: #0d6efd
+    }
+
+    #pLoginBtn {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0;
+    }
+
+    .v_7pKG {
+        cursor: pointer;
+        height: 20px;
+        /* max-height: 3vh; */
+        width: 15px;
+    }
+
+    .ChackOrder {
+        color: #fff;
+        cursor: pointer;
+        font-size: clamp(12px, 1.2vw, 40px);
+    }
+
+    #PriceP {
+        /* font-size: 1.5vw; */
+        flex-wrap: wrap;
+        font-size: clamp(12px, 1.2vw, 40px);
+        padding: 2px;
+    }
+
+    #ProductImage {
+        /* height: 14vh;
+            width: auto;
+            cursor: pointer; */
+        height: 36vh;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        object-fit: cover;
+        /* display: block;*/
+    }
+}
+
+.AmountDiv {
+    display: flex;
+    flex-direction: column;
+
+}
+
+#smallgstText {
+    font-size: clamp(10px, 1vw, 40px);
+    color: #999999;
+}
+
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    right: 20px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    transition: 0.3s;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+}
+
+.whatsapp-float img {
+    width: 35px;
+    height: 35px;
+}
